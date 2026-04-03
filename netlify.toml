@@ -1,5 +1,5 @@
 # Netlify: публикуем только собранный статик из dist/
 # Подключи репозиторий в Netlify — сборка и корень будут верными.
 [build]
-  command = "node scripts/build-i18n.mjs"
+  command = "npm run build"
   publish = "dist"

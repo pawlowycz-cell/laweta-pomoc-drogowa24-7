@@ -509,7 +509,7 @@ function writeVercelProjectJson(html) {
   }
   const cfg = {
     $schema: 'https://openapi.vercel.sh/vercel.json',
-    buildCommand: 'node scripts/build-i18n.mjs',
+    buildCommand: 'npm run build',
     outputDirectory: 'dist',
     redirects,
     rewrites,
