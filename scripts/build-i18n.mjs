@@ -31,6 +31,9 @@ const LEGACY_SITE_HOSTS = [
 const OG_IMAGE_PATH = '/assets/innser-logo.png';
 const OG_IMAGE_WIDTH = '1024';
 const OG_IMAGE_HEIGHT = '811';
+/** Вкладка браузера: червоний дорожній трикутник (як «Слой 0» / аварійний знак), не логотип INNSER. */
+const FAVICON_SVG_PATH = '/assets/favicon-emergency-triangle.svg';
+const FAVICON_PNG_PATH = '/assets/favicon-emergency-triangle.png';
 
 const LOCALES = {
   pl: {
@@ -268,9 +271,10 @@ function writeRootRedirect() {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="icon" href="/assets/innser-logo.svg" type="image/svg+xml" sizes="any">
-<link rel="icon" href="${OG_IMAGE_PATH}" type="image/png" sizes="32x32">
-<link rel="apple-touch-icon" href="${OG_IMAGE_PATH}" sizes="180x180">
+<link rel="shortcut icon" href="${FAVICON_PNG_PATH}" type="image/png">
+<link rel="icon" href="${FAVICON_SVG_PATH}" type="image/svg+xml" sizes="any">
+<link rel="icon" href="${FAVICON_PNG_PATH}" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
 <title>INNSER — Pomoc Drogowa Warszawa 24h | Holowanie | Awaryjne Odpalanie | Wymiana Koła</title>
 <meta name="description" content="INNSER — Profesjonalna pomoc drogowa Warszawa i okolice 24/7. Tania laweta, holowanie, autolaweta HDS, skup aut, złomowanie. Odpalanie, wymiana koła, otwieranie aut. Zadzwoń: 506-001-057">
 <link rel="canonical" href="${SITE}/pl/">
@@ -427,7 +431,7 @@ function writeNetlifyRedirects(html) {
   const lines = [
     '# INNSER i18n — отдаём index.html внутри каждой языковой папки',
     '# SPA: блог и карточки услуг (история + прямые ссылки); svc* из разметки innser-v6.html',
-    `/favicon.ico  ${OG_IMAGE_PATH}  302`,
+    `/favicon.ico  ${FAVICON_PNG_PATH}  302`,
   ];
   // Legacy /ua → canonical /uk/ (hreflang uk). Absolute URL + trailing slash = один 301 (без /ua/→/uk→/uk/).
   // Порядок: сначала /ua/* и /ua/, потом /ua — иначе Netlify может сопоставить /ua/ с правилом /ua и отдать Location: /uk (второй хоп).
@@ -474,7 +478,7 @@ function writeVercelProjectJson(html) {
   }));
   const redirects = [
     ...legacyRedirects,
-    { source: '/favicon.ico', destination: OG_IMAGE_PATH, permanent: false },
+    { source: '/favicon.ico', destination: FAVICON_PNG_PATH, permanent: false },
     { source: '/ua/:path*', destination: '/uk/:path*', permanent: true },
     { source: '/ua/', destination: '/uk/', permanent: true },
     { source: '/ua', destination: '/uk/', permanent: true },
