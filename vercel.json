@@ -4,6 +4,28 @@
   "outputDirectory": "dist",
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "laweta-pomoc-drogowa24-7.com"
+        }
+      ],
+      "destination": "https://www.laweta-warszawa.net/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.laweta-pomoc-drogowa24-7.com"
+        }
+      ],
+      "destination": "https://www.laweta-warszawa.net/:path*",
+      "permanent": true
+    },
+    {
       "source": "/ua/:path*",
       "destination": "/uk/:path*",
       "permanent": true

@@ -4,7 +4,7 @@
  *   dist/index.html — redirect (localStorage + Accept-Language-style logic)
  *   dist/pl/index.html, dist/en/index.html, dist/ru/index.html, dist/uk/index.html
  *
- * Deploy: upload contents of dist/ to the site web root (e.g. www.laweta-pomoc-drogowa24-7.com).
+ * Deploy: upload contents of dist/ to the site web root (e.g. www.laweta-warszawa.net).
  */
 import fs from 'fs';
 import path from 'path';
@@ -19,7 +19,12 @@ const IMAGES_SRC = path.join(ROOT, 'images');
 /** Файлы из этой папки копируются в корень dist/ (например google123….html для Search Console). */
 const PUBLIC_SRC = path.join(ROOT, 'public');
 
-const SITE = 'https://www.laweta-pomoc-drogowa24-7.com';
+const SITE = 'https://www.laweta-warszawa.net';
+/** Старый домен: 301 на SITE (тот же путь) — мост для Google и закладок. Добавь оба хоста в Vercel → Domains. */
+const LEGACY_SITE_HOSTS = [
+  'laweta-pomoc-drogowa24-7.com',
+  'www.laweta-pomoc-drogowa24-7.com',
+];
 /** Open Graph / Twitter — wspólny plik (skopiowany do dist/images/) */
 const OG_IMAGE_PATH = '/images/laweta-warszawa-24h.png';
 const OG_IMAGE_WIDTH = '418';
@@ -259,12 +264,33 @@ function buildLocaleHtml(raw, key) {
 }
 
 function writeRootRedirect() {
+  const ogImg = `${SITE}${OG_IMAGE_PATH}`;
   const redirectHtml = `<!DOCTYPE html>
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>INNSER</title>
+<link rel="icon" href="/assets/innser-logo.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/innser-logo.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/assets/innser-logo.png">
+<title>INNSER — Pomoc Drogowa Warszawa 24h | Holowanie | Awaryjne Odpalanie | Wymiana Koła</title>
+<meta name="description" content="INNSER — Profesjonalna pomoc drogowa Warszawa i okolice 24/7. Tania laweta, holowanie, autolaweta HDS, skup aut, złomowanie. Odpalanie, wymiana koła, otwieranie aut. Zadzwoń: 506-001-057">
+<link rel="canonical" href="${SITE}/pl/">
+<meta property="og:title" content="INNSER — Pomoc Drogowa Warszawa 24h | Holowanie | Odpalanie">
+<meta property="og:description" content="Profesjonalna pomoc drogowa Warszawa 24/7 — tania laweta, tanie holowanie, autolaweta HDS, holowanie powypadkowe, skup aut, złomowanie pojazdów. Odpalanie, wymiana koła, otwieranie aut. Zadzwoń: 506-001-057">
+<meta property="og:type" content="website">
+<meta property="og:url" content="${SITE}/pl/">
+<meta property="og:locale" content="pl_PL">
+<meta property="og:site_name" content="INNSER Pomoc Drogowa">
+<meta property="og:image" content="${ogImg}">
+<meta property="og:image:width" content="${OG_IMAGE_WIDTH}">
+<meta property="og:image:height" content="${OG_IMAGE_HEIGHT}">
+<meta property="og:image:alt" content="Żółta laweta INNSER z HDS — pomoc drogowa Warszawa 24/7">
+<meta property="og:image:type" content="image/png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="INNSER — Pomoc Drogowa Warszawa 24h">
+<meta name="twitter:description" content="Tania pomoc drogowa i tania laweta Warszawa — holowanie, autolaweta HDS, skup aut, złomowanie, odpalanie, wymiana koła 24/7. Zadzwoń: 506-001-057">
+<meta name="twitter:image" content="${ogImg}">
 <script>
 (function(){
   try{
@@ -441,7 +467,14 @@ function writeNetlifyRedirects(html) {
  */
 function writeVercelProjectJson(html) {
   const svcIds = discoverSvcPageIds(html);
+  const legacyRedirects = LEGACY_SITE_HOSTS.map((host) => ({
+    source: '/:path*',
+    has: [{ type: 'host', value: host }],
+    destination: `${SITE}/:path*`,
+    permanent: true,
+  }));
   const redirects = [
+    ...legacyRedirects,
     { source: '/ua/:path*', destination: '/uk/:path*', permanent: true },
     { source: '/ua/', destination: '/uk/', permanent: true },
     { source: '/ua', destination: '/uk/', permanent: true },
