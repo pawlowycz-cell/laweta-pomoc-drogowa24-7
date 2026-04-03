@@ -31,8 +31,7 @@ const LEGACY_SITE_HOSTS = [
 const OG_IMAGE_PATH = '/assets/innser-logo.png';
 const OG_IMAGE_WIDTH = '1024';
 const OG_IMAGE_HEIGHT = '811';
-/** Вкладка браузера: червоний дорожній трикутник (як «Слой 0» / аварійний знак), не логотип INNSER. */
-const FAVICON_SVG_PATH = '/assets/favicon-emergency-triangle.svg';
+/** Вкладка браузера: червона рамка + помаранчевий центр (як референс Google), тільки PNG у head — без SVG. */
 const FAVICON_PNG_PATH = '/assets/favicon-emergency-triangle.png';
 
 const LOCALES = {
@@ -272,7 +271,7 @@ function writeRootRedirect() {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="shortcut icon" href="${FAVICON_PNG_PATH}" type="image/png">
-<link rel="icon" href="${FAVICON_SVG_PATH}" type="image/svg+xml" sizes="any">
+<link rel="icon" href="${FAVICON_PNG_PATH}" type="image/png" sizes="64x64">
 <link rel="icon" href="${FAVICON_PNG_PATH}" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
 <title>INNSER — Pomoc Drogowa Warszawa 24h | Holowanie | Awaryjne Odpalanie | Wymiana Koła</title>
