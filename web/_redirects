@@ -1,0 +1,2 @@
+# Netlify: przekierowanie wersji bez „www” na kanoniczną (opcjonalnie)
+https://laweta-warszawa.net/*  https://www.laweta-warszawa.net/:splat  301!
