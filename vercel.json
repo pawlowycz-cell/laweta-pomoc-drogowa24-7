@@ -11,7 +11,7 @@
           "value": "laweta-pomoc-drogowa24-7.com"
         }
       ],
-      "destination": "https://www.laweta-warszawa.net/:path*",
+      "destination": "https://www.warszawa-laweta.com/:path*",
       "permanent": true
     },
     {
@@ -22,7 +22,29 @@
           "value": "www.laweta-pomoc-drogowa24-7.com"
         }
       ],
-      "destination": "https://www.laweta-warszawa.net/:path*",
+      "destination": "https://www.warszawa-laweta.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "laweta-warszawa.net"
+        }
+      ],
+      "destination": "https://www.warszawa-laweta.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.laweta-warszawa.net"
+        }
+      ],
+      "destination": "https://www.warszawa-laweta.com/:path*",
       "permanent": true
     },
     {

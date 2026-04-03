@@ -4,7 +4,7 @@
  *   dist/index.html — redirect (localStorage + Accept-Language-style logic)
  *   dist/pl/index.html, dist/en/index.html, dist/ru/index.html, dist/uk/index.html
  *
- * Deploy: upload contents of dist/ to the site web root (e.g. www.laweta-warszawa.net).
+ * Deploy: upload contents of dist/ to the site web root (e.g. www.warszawa-laweta.com).
  */
 import fs from 'fs';
 import path from 'path';
@@ -19,11 +19,13 @@ const IMAGES_SRC = path.join(ROOT, 'images');
 /** Файлы из этой папки копируются в корень dist/ (например google123….html для Search Console). */
 const PUBLIC_SRC = path.join(ROOT, 'public');
 
-const SITE = 'https://www.laweta-warszawa.net';
-/** Старый домен: 301 на SITE (тот же путь) — мост для Google и закладок. Добавь оба хоста в Vercel → Domains. */
+const SITE = 'https://www.warszawa-laweta.com';
+/** Старые домены: 301 на SITE (тот же путь). Все хосты добавь в Vercel → Domains + DNS. */
 const LEGACY_SITE_HOSTS = [
   'laweta-pomoc-drogowa24-7.com',
   'www.laweta-pomoc-drogowa24-7.com',
+  'laweta-warszawa.net',
+  'www.laweta-warszawa.net',
 ];
 /** Open Graph / Twitter — logo marki (jak favicon; zdjęcie lawety zostaje w treści strony) */
 const OG_IMAGE_PATH = '/assets/innser-logo.png';
