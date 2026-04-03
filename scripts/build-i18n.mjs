@@ -31,8 +31,11 @@ const LEGACY_SITE_HOSTS = [
 const OG_IMAGE_PATH = '/assets/innser-logo.png';
 const OG_IMAGE_WIDTH = '1024';
 const OG_IMAGE_HEIGHT = '811';
-/** Вкладка браузера: червона рамка + помаранчевий центр (як референс Google), тільки PNG у head — без SVG. */
+/** Вкладка браузера — PNG трикутника. ?v= ламає кеш Safari. Підніми число після зміни іконки. */
 const FAVICON_PNG_PATH = '/assets/favicon-emergency-triangle.png';
+const FAVICON_CACHE_BUST = '5';
+const faviconHref = () => `${FAVICON_PNG_PATH}?v=${FAVICON_CACHE_BUST}`;
+const appleTouchHref = () => `/apple-touch-icon.png?v=${FAVICON_CACHE_BUST}`;
 
 const LOCALES = {
   pl: {
@@ -270,10 +273,10 @@ function writeRootRedirect() {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="shortcut icon" href="${FAVICON_PNG_PATH}" type="image/png">
-<link rel="icon" href="${FAVICON_PNG_PATH}" type="image/png" sizes="64x64">
-<link rel="icon" href="${FAVICON_PNG_PATH}" type="image/png" sizes="32x32">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+<link rel="shortcut icon" href="${faviconHref()}" type="image/png">
+<link rel="icon" href="${faviconHref()}" type="image/png" sizes="64x64">
+<link rel="icon" href="${faviconHref()}" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="${appleTouchHref()}" sizes="180x180">
 <title>INNSER — Pomoc Drogowa Warszawa 24h | Holowanie | Awaryjne Odpalanie | Wymiana Koła</title>
 <meta name="description" content="INNSER — Profesjonalna pomoc drogowa Warszawa i okolice 24/7. Tania laweta, holowanie, autolaweta HDS, skup aut, złomowanie. Odpalanie, wymiana koła, otwieranie aut. Zadzwoń: 506-001-057">
 <link rel="canonical" href="${SITE}/pl/">
@@ -430,7 +433,7 @@ function writeNetlifyRedirects(html) {
   const lines = [
     '# INNSER i18n — отдаём index.html внутри каждой языковой папки',
     '# SPA: блог и карточки услуг (история + прямые ссылки); svc* из разметки innser-v6.html',
-    `/favicon.ico  ${FAVICON_PNG_PATH}  302`,
+    `/favicon.ico  ${faviconHref()}  302`,
   ];
   // Legacy /ua → canonical /uk/ (hreflang uk). Absolute URL + trailing slash = один 301 (без /ua/→/uk→/uk/).
   // Порядок: сначала /ua/* и /ua/, потом /ua — иначе Netlify может сопоставить /ua/ с правилом /ua и отдать Location: /uk (второй хоп).
@@ -477,7 +480,7 @@ function writeVercelProjectJson(html) {
   }));
   const redirects = [
     ...legacyRedirects,
-    { source: '/favicon.ico', destination: FAVICON_PNG_PATH, permanent: false },
+    { source: '/favicon.ico', destination: faviconHref(), permanent: false },
     { source: '/ua/:path*', destination: '/uk/:path*', permanent: true },
     { source: '/ua/', destination: '/uk/', permanent: true },
     { source: '/ua', destination: '/uk/', permanent: true },

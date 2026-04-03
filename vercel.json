@@ -49,7 +49,7 @@
     },
     {
       "source": "/favicon.ico",
-      "destination": "/assets/favicon-emergency-triangle.png",
+      "destination": "/assets/favicon-emergency-triangle.png?v=5",
       "permanent": false
     },
     {
