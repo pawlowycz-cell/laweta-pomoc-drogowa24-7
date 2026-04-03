@@ -1,7 +1,9 @@
 {
-  "name": "innser-site",
+  "name": "site",
   "private": true,
   "scripts": {
-    "build": "node scripts/build-i18n.mjs"
+    "build": "node scripts/build.mjs",
+    "build:innser": "node scripts/build-i18n.mjs",
+    "preview": "npm run build && npx --yes serve dist -l 4321"
   }
 }
