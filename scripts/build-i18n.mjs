@@ -25,10 +25,10 @@ const LEGACY_SITE_HOSTS = [
   'laweta-pomoc-drogowa24-7.com',
   'www.laweta-pomoc-drogowa24-7.com',
 ];
-/** Open Graph / Twitter — wspólny plik (skopiowany do dist/images/) */
-const OG_IMAGE_PATH = '/images/laweta-warszawa-24h.png';
-const OG_IMAGE_WIDTH = '418';
-const OG_IMAGE_HEIGHT = '287';
+/** Open Graph / Twitter — logo marki (jak favicon; zdjęcie lawety zostaje w treści strony) */
+const OG_IMAGE_PATH = '/assets/innser-logo.png';
+const OG_IMAGE_WIDTH = '1024';
+const OG_IMAGE_HEIGHT = '811';
 
 const LOCALES = {
   pl: {
@@ -45,8 +45,7 @@ const LOCALES = {
     twitterTitle: 'INNSER — Pomoc Drogowa Warszawa 24h',
     twitterDescription:
       'Tania pomoc drogowa i tania laweta Warszawa — holowanie, autolaweta HDS, skup aut, złomowanie, odpalanie, wymiana koła 24/7. Zadzwoń: 506-001-057',
-    ogImageAlt:
-      'Żółta laweta INNSER z HDS — pomoc drogowa Warszawa 24/7',
+    ogImageAlt: 'INNSER — logo pomocy drogowej Warszawa 24/7',
   },
   en: {
     pathSeg: 'en',
@@ -62,8 +61,7 @@ const LOCALES = {
     twitterTitle: 'INNSER — Roadside Assistance Warsaw 24h',
     twitterDescription:
       'Affordable tow truck and flatbed Warsaw — towing, HDS flatbed, car purchase, scrapping, jump start, tire change 24/7. Call: 506-001-057',
-    ogImageAlt:
-      'INNSER yellow flatbed with HDS — roadside assistance Warsaw 24/7',
+    ogImageAlt: 'INNSER — roadside assistance Warsaw logo',
   },
   ru: {
     pathSeg: 'ru',
@@ -80,8 +78,7 @@ const LOCALES = {
     twitterTitle: 'INNSER — Эвакуатор Варшава 24/7 | Прикур',
     twitterDescription:
       'Варшава: прикур кабелями, прикур бустером, эвакуатор HDS, эвакуация, скупка авто, утилизация, замена колеса 24/7. 506-001-057',
-    ogImageAlt:
-      'Жёлтая лафета INNSER с КМУ — помощь на дороге Варшава 24/7',
+    ogImageAlt: 'INNSER — логотип помощи на дороге Варшава 24/7',
   },
   uk: {
     pathSeg: 'uk',
@@ -98,8 +95,7 @@ const LOCALES = {
     twitterTitle: 'INNSER — Евакуатор Варшава цілодобово | Доступні ціни',
     twitterDescription:
       'Варшава: цілодобовий евакуатор, доступні ціни на послуги евакуатора й допомогу на дорозі — 24/7. 506-001-057',
-    ogImageAlt:
-      'Жовта лафета INNSER з КМУ — допомога на дорозі Варшава 24/7',
+    ogImageAlt: 'INNSER — логотип допомоги на дорозі Варшава 24/7',
   },
 };
 
@@ -285,7 +281,7 @@ function writeRootRedirect() {
 <meta property="og:image" content="${ogImg}">
 <meta property="og:image:width" content="${OG_IMAGE_WIDTH}">
 <meta property="og:image:height" content="${OG_IMAGE_HEIGHT}">
-<meta property="og:image:alt" content="Żółta laweta INNSER z HDS — pomoc drogowa Warszawa 24/7">
+<meta property="og:image:alt" content="INNSER — logo pomocy drogowej Warszawa 24/7">
 <meta property="og:image:type" content="image/png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="INNSER — Pomoc Drogowa Warszawa 24h">
