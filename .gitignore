@@ -1,0 +1,6 @@
+# Сборка пересоздаётся на Vercel и локально: node scripts/build-i18n.mjs
+dist/
+
+.DS_Store
+Thumbs.db
+*.log

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 220" width="240" height="220">
+  <defs>
+    <linearGradient id="border" x1="0%" y1="100%" x2="50%" y2="0%">
+      <stop offset="0%" stop-color="#b32d00"/>
+      <stop offset="100%" stop-color="#ff6b35"/>
+    </linearGradient>
+    <linearGradient id="face" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#e89400"/>
+      <stop offset="100%" stop-color="#FFD100"/>
+    </linearGradient>
+  </defs>
+  <polygon points="120,18 218,188 22,188" fill="url(#face)" stroke="url(#border)" stroke-width="10" stroke-linejoin="round"/>
+  <polygon points="120,58 158,138 82,138" fill="#0a0a0a"/>
+  <rect x="32" y="158" width="176" height="36" fill="#0a0a0a" rx="4"/>
+  <text x="120" y="184" text-anchor="middle" fill="#f2f2ed" font-family="system-ui,Segoe UI,sans-serif" font-size="20" font-weight="800" font-style="italic" letter-spacing="2">INNSER</text>
+</svg>
