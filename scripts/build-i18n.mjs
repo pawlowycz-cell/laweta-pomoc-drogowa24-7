@@ -266,9 +266,9 @@ function writeRootRedirect() {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
 <link rel="icon" href="/assets/innser-logo.svg" type="image/svg+xml">
-<link rel="icon" href="/assets/innser-logo.png" type="image/png" sizes="32x32">
-<link rel="apple-touch-icon" href="/assets/innser-logo.png">
 <title>INNSER — Pomoc Drogowa Warszawa 24h | Holowanie | Awaryjne Odpalanie | Wymiana Koła</title>
 <meta name="description" content="INNSER — Profesjonalna pomoc drogowa Warszawa i okolice 24/7. Tania laweta, holowanie, autolaweta HDS, skup aut, złomowanie. Odpalanie, wymiana koła, otwieranie aut. Zadzwoń: 506-001-057">
 <link rel="canonical" href="${SITE}/pl/">
@@ -425,6 +425,7 @@ function writeNetlifyRedirects(html) {
   const lines = [
     '# INNSER i18n — отдаём index.html внутри каждой языковой папки',
     '# SPA: блог и карточки услуг (история + прямые ссылки); svc* из разметки innser-v6.html',
+    '/favicon.ico  /favicon.png  302',
   ];
   // Legacy /ua → canonical /uk/ (hreflang uk). Absolute URL + trailing slash = один 301 (без /ua/→/uk→/uk/).
   // Порядок: сначала /ua/* и /ua/, потом /ua — иначе Netlify может сопоставить /ua/ с правилом /ua и отдать Location: /uk (второй хоп).
@@ -471,6 +472,7 @@ function writeVercelProjectJson(html) {
   }));
   const redirects = [
     ...legacyRedirects,
+    { source: '/favicon.ico', destination: '/favicon.png', permanent: false },
     { source: '/ua/:path*', destination: '/uk/:path*', permanent: true },
     { source: '/ua/', destination: '/uk/', permanent: true },
     { source: '/ua', destination: '/uk/', permanent: true },
