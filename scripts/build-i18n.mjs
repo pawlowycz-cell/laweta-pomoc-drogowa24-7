@@ -20,8 +20,6 @@ const IMAGES_SRC = path.join(ROOT, 'images');
 const PUBLIC_SRC = path.join(ROOT, 'public');
 
 const SITE = 'https://www.warszawa-laweta.com';
-/** PNG для вкладки: отдельное имя файла — Safari/CDN часто держат вечный кеш для /favicon.png и /favicon.ico. */
-const TAB_ICON_PATH = '/icon-tab.png';
 /** Старые домены: 301 на SITE (тот же путь). Все хосты добавь в Vercel → Domains + DNS. */
 const LEGACY_SITE_HOSTS = [
   'laweta-pomoc-drogowa24-7.com',
@@ -29,7 +27,7 @@ const LEGACY_SITE_HOSTS = [
   'laweta-warszawa.net',
   'www.laweta-warszawa.net',
 ];
-/** Open Graph / Twitter — logo marki (jak favicon; zdjęcie lawety zostaje w treści strony) */
+/** Open Graph / Twitter + raster favicon (plik .png w repo — faktycznie JPEG 1024×811 z początkowego commitu). */
 const OG_IMAGE_PATH = '/assets/innser-logo.png';
 const OG_IMAGE_WIDTH = '1024';
 const OG_IMAGE_HEIGHT = '811';
@@ -270,10 +268,9 @@ function writeRootRedirect() {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="shortcut icon" href="${TAB_ICON_PATH}" type="image/png">
-<link rel="icon" href="${TAB_ICON_PATH}" type="image/png" sizes="64x64">
 <link rel="icon" href="/assets/innser-logo.svg" type="image/svg+xml" sizes="any">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+<link rel="icon" href="${OG_IMAGE_PATH}" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="${OG_IMAGE_PATH}" sizes="180x180">
 <title>INNSER — Pomoc Drogowa Warszawa 24h | Holowanie | Awaryjne Odpalanie | Wymiana Koła</title>
 <meta name="description" content="INNSER — Profesjonalna pomoc drogowa Warszawa i okolice 24/7. Tania laweta, holowanie, autolaweta HDS, skup aut, złomowanie. Odpalanie, wymiana koła, otwieranie aut. Zadzwoń: 506-001-057">
 <link rel="canonical" href="${SITE}/pl/">
@@ -287,7 +284,7 @@ function writeRootRedirect() {
 <meta property="og:image:width" content="${OG_IMAGE_WIDTH}">
 <meta property="og:image:height" content="${OG_IMAGE_HEIGHT}">
 <meta property="og:image:alt" content="INNSER — logo pomocy drogowej Warszawa 24/7">
-<meta property="og:image:type" content="image/png">
+<meta property="og:image:type" content="image/jpeg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="INNSER — Pomoc Drogowa Warszawa 24h">
 <meta name="twitter:description" content="Tania pomoc drogowa i tania laweta Warszawa — holowanie, autolaweta HDS, skup aut, złomowanie, odpalanie, wymiana koła 24/7. Zadzwoń: 506-001-057">
@@ -430,7 +427,7 @@ function writeNetlifyRedirects(html) {
   const lines = [
     '# INNSER i18n — отдаём index.html внутри каждой языковой папки',
     '# SPA: блог и карточки услуг (история + прямые ссылки); svc* из разметки innser-v6.html',
-    `/favicon.ico  ${TAB_ICON_PATH}  302`,
+    `/favicon.ico  ${OG_IMAGE_PATH}  302`,
   ];
   // Legacy /ua → canonical /uk/ (hreflang uk). Absolute URL + trailing slash = один 301 (без /ua/→/uk→/uk/).
   // Порядок: сначала /ua/* и /ua/, потом /ua — иначе Netlify может сопоставить /ua/ с правилом /ua и отдать Location: /uk (второй хоп).
@@ -477,7 +474,7 @@ function writeVercelProjectJson(html) {
   }));
   const redirects = [
     ...legacyRedirects,
-    { source: '/favicon.ico', destination: TAB_ICON_PATH, permanent: false },
+    { source: '/favicon.ico', destination: OG_IMAGE_PATH, permanent: false },
     { source: '/ua/:path*', destination: '/uk/:path*', permanent: true },
     { source: '/ua/', destination: '/uk/', permanent: true },
     { source: '/ua', destination: '/uk/', permanent: true },

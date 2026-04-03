@@ -49,7 +49,7 @@
     },
     {
       "source": "/favicon.ico",
-      "destination": "/icon-tab.png",
+      "destination": "/assets/innser-logo.png",
       "permanent": false
     },
     {
