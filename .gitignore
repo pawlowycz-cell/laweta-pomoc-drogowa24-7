@@ -1,6 +1,9 @@
-# Сборка пересоздаётся на Vercel и локально: node scripts/build-i18n.mjs
+# Сборки пересоздаются на Vercel и локально
 dist/
+sites/innser/dist/
 
 .DS_Store
 Thumbs.db
 *.log
+
+node_modules/

@@ -1,0 +1,552 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "laweta-pomoc-drogowa24-7.com"
+        }
+      ],
+      "destination": "https://www.warszawa-laweta.com/",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "laweta-pomoc-drogowa24-7.com"
+        }
+      ],
+      "destination": "https://www.warszawa-laweta.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.laweta-pomoc-drogowa24-7.com"
+        }
+      ],
+      "destination": "https://www.warszawa-laweta.com/",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.laweta-pomoc-drogowa24-7.com"
+        }
+      ],
+      "destination": "https://www.warszawa-laweta.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/favicon.ico",
+      "destination": "/assets/favicon-emergency-triangle.png?v=5",
+      "permanent": false
+    },
+    {
+      "source": "/ua/:path*",
+      "destination": "/uk/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/ua/",
+      "destination": "/uk/",
+      "permanent": true
+    },
+    {
+      "source": "/ua",
+      "destination": "/uk/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/book-online",
+      "destination": "/pl/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/book-online/",
+      "destination": "/pl/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/category/all-products",
+      "destination": "/pl/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/category/all-products/",
+      "destination": "/pl/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/product-page/:path*",
+      "destination": "/pl/",
+      "permanent": true
+    },
+    {
+      "source": "/en/book-online",
+      "destination": "/en/",
+      "permanent": true
+    },
+    {
+      "source": "/en/book-online/",
+      "destination": "/en/",
+      "permanent": true
+    },
+    {
+      "source": "/en/category/all-products",
+      "destination": "/en/",
+      "permanent": true
+    },
+    {
+      "source": "/en/category/all-products/",
+      "destination": "/en/",
+      "permanent": true
+    },
+    {
+      "source": "/en/product-page/:path*",
+      "destination": "/en/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/book-online",
+      "destination": "/ru/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/book-online/",
+      "destination": "/ru/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/category/all-products",
+      "destination": "/ru/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/category/all-products/",
+      "destination": "/ru/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/product-page/:path*",
+      "destination": "/ru/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/book-online",
+      "destination": "/uk/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/book-online/",
+      "destination": "/uk/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/category/all-products",
+      "destination": "/uk/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/category/all-products/",
+      "destination": "/uk/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/product-page/:path*",
+      "destination": "/uk/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/blog/evo1",
+      "destination": "/uk/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/blog/evo1/",
+      "destination": "/uk/blog/",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/pl",
+      "destination": "/pl/index.html"
+    },
+    {
+      "source": "/pl/",
+      "destination": "/pl/index.html"
+    },
+    {
+      "source": "/pl/blog",
+      "destination": "/pl/index.html"
+    },
+    {
+      "source": "/pl/blog/",
+      "destination": "/pl/index.html"
+    },
+    {
+      "source": "/pl/blog/:path*",
+      "destination": "/pl/index.html"
+    },
+    {
+      "source": "/pl/svc1",
+      "destination": "/pl/index.html"
+    },
+    {
+      "source": "/pl/svc1/",
+      "destination": "/pl/index.html"
+    },
+    {
+      "source": "/pl/svc2",
+      "destination": "/pl/index.html"
+    },
+    {
+      "source": "/pl/svc2/",
+      "destination": "/pl/index.html"
+    },
+    {
+      "source": "/pl/svc3",
+      "destination": "/pl/index.html"
+    },
+    {
+      "source": "/pl/svc3/",
+      "destination": "/pl/index.html"
+    },
+    {
+      "source": "/pl/svc4",
+      "destination": "/pl/index.html"
+    },
+    {
+      "source": "/pl/svc4/",
+      "destination": "/pl/index.html"
+    },
+    {
+      "source": "/pl/svc5",
+      "destination": "/pl/index.html"
+    },
+    {
+      "source": "/pl/svc5/",
+      "destination": "/pl/index.html"
+    },
+    {
+      "source": "/pl/svc6",
+      "destination": "/pl/index.html"
+    },
+    {
+      "source": "/pl/svc6/",
+      "destination": "/pl/index.html"
+    },
+    {
+      "source": "/pl/svc7",
+      "destination": "/pl/index.html"
+    },
+    {
+      "source": "/pl/svc7/",
+      "destination": "/pl/index.html"
+    },
+    {
+      "source": "/pl/svc8",
+      "destination": "/pl/index.html"
+    },
+    {
+      "source": "/pl/svc8/",
+      "destination": "/pl/index.html"
+    },
+    {
+      "source": "/pl/svc9",
+      "destination": "/pl/index.html"
+    },
+    {
+      "source": "/pl/svc9/",
+      "destination": "/pl/index.html"
+    },
+    {
+      "source": "/en",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/en/",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/en/blog",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/en/blog/",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/en/blog/:path*",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/en/svc1",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/en/svc1/",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/en/svc2",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/en/svc2/",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/en/svc3",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/en/svc3/",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/en/svc4",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/en/svc4/",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/en/svc5",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/en/svc5/",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/en/svc6",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/en/svc6/",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/en/svc7",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/en/svc7/",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/en/svc8",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/en/svc8/",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/en/svc9",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/en/svc9/",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/ru",
+      "destination": "/ru/index.html"
+    },
+    {
+      "source": "/ru/",
+      "destination": "/ru/index.html"
+    },
+    {
+      "source": "/ru/blog",
+      "destination": "/ru/index.html"
+    },
+    {
+      "source": "/ru/blog/",
+      "destination": "/ru/index.html"
+    },
+    {
+      "source": "/ru/blog/:path*",
+      "destination": "/ru/index.html"
+    },
+    {
+      "source": "/ru/svc1",
+      "destination": "/ru/index.html"
+    },
+    {
+      "source": "/ru/svc1/",
+      "destination": "/ru/index.html"
+    },
+    {
+      "source": "/ru/svc2",
+      "destination": "/ru/index.html"
+    },
+    {
+      "source": "/ru/svc2/",
+      "destination": "/ru/index.html"
+    },
+    {
+      "source": "/ru/svc3",
+      "destination": "/ru/index.html"
+    },
+    {
+      "source": "/ru/svc3/",
+      "destination": "/ru/index.html"
+    },
+    {
+      "source": "/ru/svc4",
+      "destination": "/ru/index.html"
+    },
+    {
+      "source": "/ru/svc4/",
+      "destination": "/ru/index.html"
+    },
+    {
+      "source": "/ru/svc5",
+      "destination": "/ru/index.html"
+    },
+    {
+      "source": "/ru/svc5/",
+      "destination": "/ru/index.html"
+    },
+    {
+      "source": "/ru/svc6",
+      "destination": "/ru/index.html"
+    },
+    {
+      "source": "/ru/svc6/",
+      "destination": "/ru/index.html"
+    },
+    {
+      "source": "/ru/svc7",
+      "destination": "/ru/index.html"
+    },
+    {
+      "source": "/ru/svc7/",
+      "destination": "/ru/index.html"
+    },
+    {
+      "source": "/ru/svc8",
+      "destination": "/ru/index.html"
+    },
+    {
+      "source": "/ru/svc8/",
+      "destination": "/ru/index.html"
+    },
+    {
+      "source": "/ru/svc9",
+      "destination": "/ru/index.html"
+    },
+    {
+      "source": "/ru/svc9/",
+      "destination": "/ru/index.html"
+    },
+    {
+      "source": "/uk",
+      "destination": "/uk/index.html"
+    },
+    {
+      "source": "/uk/",
+      "destination": "/uk/index.html"
+    },
+    {
+      "source": "/uk/blog",
+      "destination": "/uk/index.html"
+    },
+    {
+      "source": "/uk/blog/",
+      "destination": "/uk/index.html"
+    },
+    {
+      "source": "/uk/blog/:path*",
+      "destination": "/uk/index.html"
+    },
+    {
+      "source": "/uk/svc1",
+      "destination": "/uk/index.html"
+    },
+    {
+      "source": "/uk/svc1/",
+      "destination": "/uk/index.html"
+    },
+    {
+      "source": "/uk/svc2",
+      "destination": "/uk/index.html"
+    },
+    {
+      "source": "/uk/svc2/",
+      "destination": "/uk/index.html"
+    },
+    {
+      "source": "/uk/svc3",
+      "destination": "/uk/index.html"
+    },
+    {
+      "source": "/uk/svc3/",
+      "destination": "/uk/index.html"
+    },
+    {
+      "source": "/uk/svc4",
+      "destination": "/uk/index.html"
+    },
+    {
+      "source": "/uk/svc4/",
+      "destination": "/uk/index.html"
+    },
+    {
+      "source": "/uk/svc5",
+      "destination": "/uk/index.html"
+    },
+    {
+      "source": "/uk/svc5/",
+      "destination": "/uk/index.html"
+    },
+    {
+      "source": "/uk/svc6",
+      "destination": "/uk/index.html"
+    },
+    {
+      "source": "/uk/svc6/",
+      "destination": "/uk/index.html"
+    },
+    {
+      "source": "/uk/svc7",
+      "destination": "/uk/index.html"
+    },
+    {
+      "source": "/uk/svc7/",
+      "destination": "/uk/index.html"
+    },
+    {
+      "source": "/uk/svc8",
+      "destination": "/uk/index.html"
+    },
+    {
+      "source": "/uk/svc8/",
+      "destination": "/uk/index.html"
+    },
+    {
+      "source": "/uk/svc9",
+      "destination": "/uk/index.html"
+    },
+    {
+      "source": "/uk/svc9/",
+      "destination": "/uk/index.html"
+    }
+  ]
+}

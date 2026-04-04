@@ -1,31 +1,32 @@
 #!/usr/bin/env node
 /**
- * Builds SEO locale copies from innser-v6.html into dist/
- *   dist/index.html — redirect (localStorage + Accept-Language-style logic)
- *   dist/pl/index.html, dist/en/index.html, dist/ru/index.html, dist/uk/index.html
- *
- * Deploy: upload contents of dist/ to the site web root (e.g. www.warszawa-laweta.com).
+ * INNSER (warszawa-laweta.com): исходники в корне репо — innser-v6.html, assets/, public/.
+ * Сборка в sites/innser/dist/ (Vercel: Root Directory = sites/innser).
+ * sites/innser/vercel.json в git: мост laweta-pomoc-* → warszawa-laweta.com (без laweta-warszawa.net).
  */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.join(__dirname, '..');
-const SRC = path.join(ROOT, 'innser-v6.html');
-const OUT = path.join(ROOT, 'dist');
-const ASSETS_SRC = path.join(ROOT, 'assets');
-const IMAGES_SRC = path.join(ROOT, 'images');
+const REPO_ROOT = path.join(__dirname, '..');
+/** Куда кладём готовый сайт INNSER (не смешивать с laweta-warszawa.net). */
+const INNSER_DIST_ROOT = path.join(REPO_ROOT, 'sites', 'innser');
+const SRC = path.join(REPO_ROOT, 'innser-v6.html');
+const OUT = path.join(INNSER_DIST_ROOT, 'dist');
+const ASSETS_SRC = path.join(REPO_ROOT, 'assets');
+const IMAGES_SRC = path.join(REPO_ROOT, 'images');
 /** Файлы из этой папки копируются в корень dist/ (например google123….html для Search Console). */
-const PUBLIC_SRC = path.join(ROOT, 'public');
+const PUBLIC_SRC = path.join(REPO_ROOT, 'public');
 
 const SITE = 'https://www.warszawa-laweta.com';
-/** Старые домены: 301 на SITE (тот же путь). Все хосты добавь в Vercel → Domains + DNS. */
+/**
+ * Мост SEO: laweta-pomoc-drogowa24-7 → канонический INNSER (www.warszawa-laweta.com), путь сохраняется.
+ * laweta-warszawa.net — отдельный сайт (визитка в web/), проект из корня репо, не этот dist.
+ */
 const LEGACY_SITE_HOSTS = [
   'laweta-pomoc-drogowa24-7.com',
   'www.laweta-pomoc-drogowa24-7.com',
-  'laweta-warszawa.net',
-  'www.laweta-warszawa.net',
 ];
 /** Open Graph / Twitter + raster favicon (plik .png w repo — faktycznie JPEG 1024×811 z początkowego commitu). */
 const OG_IMAGE_PATH = '/assets/innser-logo.png';
@@ -433,8 +434,12 @@ function writeNetlifyRedirects(html) {
   const lines = [
     '# INNSER i18n — отдаём index.html внутри каждой языковой папки',
     '# SPA: блог и карточки услуг (история + прямые ссылки); svc* из разметки innser-v6.html',
-    `/favicon.ico  ${faviconHref()}  302`,
+    '# Мост: старые домены → www.warszawa-laweta.com (тот же :splat); laweta-warszawa.net отдельный проект',
   ];
+  for (const host of LEGACY_SITE_HOSTS) {
+    lines.push(`https://${host}/*  ${SITE}/:splat  301!`);
+  }
+  lines.push(`/favicon.ico  ${faviconHref()}  302`);
   // Legacy /ua → canonical /uk/ (hreflang uk). Absolute URL + trailing slash = один 301 (без /ua/→/uk→/uk/).
   // Порядок: сначала /ua/* и /ua/, потом /ua — иначе Netlify может сопоставить /ua/ с правилом /ua и отдать Location: /uk (второй хоп).
   lines.push(`/ua/*  ${SITE}/uk/:splat  301`);
@@ -467,17 +472,25 @@ function writeNetlifyRedirects(html) {
 }
 
 /**
- * Vercel: те же SPA/i18n подстановки, что в _redirects (rewrite → отдаём locale index.html).
- * Файл в корне репозитория — при деплое из Git Vercel читает vercel.json и собирает в dist/.
+ * Vercel (INNSER): те же SPA/i18n подстановки, что в _redirects.
+ * Пишем sites/innser/vercel.json — второй проект Vercel: Root Directory = sites/innser.
  */
 function writeVercelProjectJson(html) {
   const svcIds = discoverSvcPageIds(html);
-  const legacyRedirects = LEGACY_SITE_HOSTS.map((host) => ({
-    source: '/:path*',
-    has: [{ type: 'host', value: host }],
-    destination: `${SITE}/:path*`,
-    permanent: true,
-  }));
+  const legacyRedirects = LEGACY_SITE_HOSTS.flatMap((host) => [
+    {
+      source: '/',
+      has: [{ type: 'host', value: host }],
+      destination: `${SITE}/`,
+      permanent: true,
+    },
+    {
+      source: '/:path*',
+      has: [{ type: 'host', value: host }],
+      destination: `${SITE}/:path*`,
+      permanent: true,
+    },
+  ]);
   const redirects = [
     ...legacyRedirects,
     { source: '/favicon.ico', destination: faviconHref(), permanent: false },
@@ -512,12 +525,13 @@ function writeVercelProjectJson(html) {
   }
   const cfg = {
     $schema: 'https://openapi.vercel.sh/vercel.json',
+    framework: null,
     buildCommand: 'npm run build',
     outputDirectory: 'dist',
     redirects,
     rewrites,
   };
-  fs.writeFileSync(path.join(ROOT, 'vercel.json'), JSON.stringify(cfg, null, 2) + '\n', 'utf8');
+  fs.writeFileSync(path.join(INNSER_DIST_ROOT, 'vercel.json'), JSON.stringify(cfg, null, 2) + '\n', 'utf8');
 }
 
 /** Копирует assets/ в dist/assets — на Netlify заливай только содержимое dist/ (и index.html будет рядом с assets/). */
@@ -531,7 +545,7 @@ function copyAssetsIntoDist() {
   const dst = path.join(OUT, 'assets');
   fs.rmSync(dst, { recursive: true, force: true });
   fs.cpSync(ASSETS_SRC, dst, { recursive: true });
-  console.log('Copied', path.relative(ROOT, ASSETS_SRC), '->', path.relative(ROOT, dst));
+  console.log('Copied', path.relative(REPO_ROOT, ASSETS_SRC), '->', path.relative(REPO_ROOT, dst));
 }
 
 /** Фото для карточек услуг 7–9: skup-samochodow.png, zlomowanie-pojazdow.png, laweta-warszawa-24h.png */
@@ -545,7 +559,7 @@ function copyServiceImagesIntoDist() {
   const dst = path.join(OUT, 'images');
   fs.rmSync(dst, { recursive: true, force: true });
   fs.cpSync(IMAGES_SRC, dst, { recursive: true });
-  console.log('Copied', path.relative(ROOT, IMAGES_SRC), '->', path.relative(ROOT, dst));
+  console.log('Copied', path.relative(REPO_ROOT, IMAGES_SRC), '->', path.relative(REPO_ROOT, dst));
 }
 
 function copyPublicRootFiles() {
@@ -556,7 +570,7 @@ function copyPublicRootFiles() {
     const src = path.join(PUBLIC_SRC, name);
     if (!fs.statSync(src).isFile()) continue;
     fs.copyFileSync(src, path.join(OUT, name));
-    console.log('Copied', path.relative(ROOT, src), '->', path.join(path.relative(ROOT, OUT), name));
+    console.log('Copied', path.relative(REPO_ROOT, src), '->', path.join(path.relative(REPO_ROOT, OUT), name));
     n++;
   }
 }
@@ -580,23 +594,23 @@ function main() {
     fs.mkdirSync(dir, { recursive: true });
     const html = buildLocaleHtml(raw, key);
     fs.writeFileSync(path.join(dir, 'index.html'), html, 'utf8');
-    console.log('Wrote', path.relative(ROOT, path.join(dir, 'index.html')));
+    console.log('Wrote', path.relative(REPO_ROOT, path.join(dir, 'index.html')));
   }
 
   writeDeepRouteHtmlCopies(raw);
 
   writeRootRedirect();
-  console.log('Wrote', path.relative(ROOT, path.join(OUT, 'index.html')));
+  console.log('Wrote', path.relative(REPO_ROOT, path.join(OUT, 'index.html')));
 
   writeSitemapAndRobots(raw);
-  console.log('Wrote', path.relative(ROOT, path.join(OUT, 'sitemap.xml')));
-  console.log('Wrote', path.relative(ROOT, path.join(OUT, 'robots.txt')));
+  console.log('Wrote', path.relative(REPO_ROOT, path.join(OUT, 'sitemap.xml')));
+  console.log('Wrote', path.relative(REPO_ROOT, path.join(OUT, 'robots.txt')));
 
   writeNetlifyRedirects(raw);
-  console.log('Wrote', path.relative(ROOT, path.join(OUT, '_redirects')));
+  console.log('Wrote', path.relative(REPO_ROOT, path.join(OUT, '_redirects')));
 
   writeVercelProjectJson(raw);
-  console.log('Wrote', path.relative(ROOT, path.join(ROOT, 'vercel.json')));
+  console.log('Wrote', path.relative(REPO_ROOT, path.join(INNSER_DIST_ROOT, 'vercel.json')));
 
   copyAssetsIntoDist();
   copyServiceImagesIntoDist();
@@ -607,7 +621,7 @@ function main() {
   );
   console.log('Не оборачивай в лишнюю папку: в корне заливки должен лежать index.html.');
   console.log(
-    'Vercel: подключи этот репозиторий (или залей проект) — build: node scripts/build-i18n.mjs, output: dist; vercel.json в корне обновлён скриптом.'
+    'Vercel (INNSER): отдельный проект, Root Directory = sites/innser, build: npm run build, output: dist; vercel.json лежит в sites/innser/.'
   );
 }
 

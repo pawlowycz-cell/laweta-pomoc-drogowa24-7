@@ -2,8 +2,10 @@
   "name": "site",
   "private": true,
   "scripts": {
+    "import:pomoc": "node scripts/import-pomoc-html.mjs",
     "build": "node scripts/build.mjs",
     "build:innser": "node scripts/build-i18n.mjs",
+    "prepare:all": "node scripts/prepare-all.mjs",
     "preview": "npm run build && npx --yes serve dist -l 4321"
   }
 }

@@ -1,8 +1,39 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "redirects": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "laweta-pomoc-drogowa24-7.com" }],
+      "destination": "https://www.warszawa-laweta.com/",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "laweta-pomoc-drogowa24-7.com" }],
+      "destination": "https://www.warszawa-laweta.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "www.laweta-pomoc-drogowa24-7.com" }],
+      "destination": "https://www.warszawa-laweta.com/",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.laweta-pomoc-drogowa24-7.com" }],
+      "destination": "https://www.warszawa-laweta.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "laweta-warszawa.net" }],
+      "destination": "https://www.laweta-warszawa.net/",
+      "permanent": true
+    },
     {
       "source": "/:path*",
       "has": [{ "type": "host", "value": "laweta-warszawa.net" }],

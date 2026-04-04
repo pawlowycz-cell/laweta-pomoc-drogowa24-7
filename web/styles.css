@@ -346,17 +346,16 @@ html[lang="ru"] .nav-brand {
   box-shadow: none;
 }
 
-/* ——— Hero split ——— */
+/* ——— Hero ——— */
 .hero {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: min(88vh, 900px);
+  grid-template-columns: 1fr;
+  min-height: min(70vh, 720px);
   align-items: stretch;
 }
 
 @media (max-width: 768px) {
   .hero {
-    grid-template-columns: 1fr;
     min-height: unset;
   }
 }
@@ -374,13 +373,6 @@ html[lang="ru"] .nav-brand {
   justify-content: center;
   gap: 0.25rem;
   border-bottom: 4px solid var(--black);
-}
-
-@media (min-width: 769px) {
-  .hero-copy {
-    border-bottom: none;
-    border-right: 4px solid var(--black);
-  }
 }
 
 .city {
@@ -504,31 +496,6 @@ html[lang="ru"] .hero-title {
 
 .phone-hero:hover {
   color: var(--red-dark);
-}
-
-/* Visual panel */
-.hero-visual {
-  background: var(--black);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  overflow: hidden;
-}
-
-.hero-visual img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-}
-
-@media (max-width: 768px) {
-  .hero-visual {
-    min-height: 220px;
-    max-height: 55vh;
-  }
 }
 
 /* ——— Content sections ——— */
