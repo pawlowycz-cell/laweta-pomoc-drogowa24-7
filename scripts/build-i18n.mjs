@@ -4,6 +4,7 @@
  * Сборка в sites/innser/dist/ (Vercel: Root Directory = sites/innser).
  * sites/innser/vercel.json в git: мост laweta-pomoc-* → warszawa-laweta.com (без laweta-warszawa.net).
  */
+import { spawnSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -32,12 +33,22 @@ const LEGACY_SITE_HOSTS = [
 const OG_IMAGE_PATH = '/assets/innser-logo.png';
 const OG_IMAGE_WIDTH = '1024';
 const OG_IMAGE_HEIGHT = '811';
-/** Вкладка браузера та іконка в Google — PNG трикутника. ?v= ламає кеш після заміни файлу. */
+/** Вкладка / Google: справжній favicon.ico (не PNG під виглядом .ico) + favicon-48.png. ?v= ламає кеш. */
 const FAVICON_PATH = '/assets/favicon-triangle-alert.png';
-const FAVICON_CACHE_BUST = '13';
+const FAVICON_48_PATH = '/assets/favicon-48.png';
+const FAVICON_CACHE_BUST = '14';
 const FAVICON_MIME = 'image/png';
 const faviconHref = () => `${FAVICON_PATH}?v=${FAVICON_CACHE_BUST}`;
+const faviconIcoHref = () => `/favicon.ico?v=${FAVICON_CACHE_BUST}`;
+const favicon48Href = () => `${FAVICON_48_PATH}?v=${FAVICON_CACHE_BUST}`;
 const appleTouchHref = () => faviconHref();
+
+function faviconHeadBlock() {
+  return `<link rel="icon" href="${faviconIcoHref()}" sizes="any">
+<link rel="icon" href="${favicon48Href()}" type="${FAVICON_MIME}" sizes="48x48">
+<link rel="shortcut icon" href="${faviconIcoHref()}">
+<link rel="apple-touch-icon" href="${appleTouchHref()}" sizes="180x180">`;
+}
 
 const LOCALES = {
   pl: {
@@ -196,6 +207,11 @@ function buildLocaleHtml(raw, key) {
 
   let html = raw;
 
+  html = html.replace(
+    /<link rel="icon"[^>]*>\s*\n(?:<link rel="icon"[^>]*>\s*\n)?<link rel="shortcut icon"[^>]*>\s*\n<link rel="apple-touch-icon"[^>]*>/,
+    faviconHeadBlock()
+  );
+
   html = html.replace(/<html lang="[^"]*">/, `<html lang="${L.htmlLang}">`);
 
   html = html.replace(
@@ -278,9 +294,7 @@ function writeRootRedirect() {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="icon" href="${faviconHref()}" type="${FAVICON_MIME}">
-<link rel="shortcut icon" href="${faviconHref()}" type="${FAVICON_MIME}">
-<link rel="apple-touch-icon" href="${appleTouchHref()}" sizes="180x180">
+${faviconHeadBlock()}
 <title>INNSER — Pomoc Drogowa Warszawa 24h | Holowanie | Awaryjne Odpalanie | Wymiana Koła</title>
 <meta name="description" content="INNSER — Profesjonalna pomoc drogowa Warszawa i okolice 24/7. Tania laweta, holowanie, autolaweta HDS, skup aut, złomowanie. Odpalanie, wymiana koła, otwieranie aut. Zadzwoń: 506-001-057">
 <link rel="canonical" href="${SITE}/pl/">
@@ -581,17 +595,38 @@ function copyPublicRootFiles() {
   }
 }
 
-/** Кореневий /favicon.ico (копія PNG): Vercel/Netlify віддають статику раніше за redirects — legacy-домени не роблять другий запит на /assets/* під 301 на warszawa-laweta. */
-function copyRootFaviconIco() {
+/**
+ * Кореневий /favicon.ico — справжній ICO (не PNG під ім'ям .ico: Chrome погано оновлює кеш).
+ * У репо: assets/favicon-root.ico + assets/favicon-48.png (для Vercel без Python).
+ * Якщо favicon-root.ico немає — generate-favicons.py з favicon-triangle-alert.png (локально, потрібен Pillow).
+ */
+function generateRootFavicons() {
+  const bundledIco = path.join(OUT, 'assets', 'favicon-root.ico');
+  if (fs.existsSync(bundledIco)) {
+    fs.copyFileSync(bundledIco, path.join(OUT, 'favicon.ico'));
+    console.log(
+      'Wrote',
+      path.relative(REPO_ROOT, path.join(OUT, 'favicon.ico')),
+      '(from assets/favicon-root.ico)'
+    );
+    return;
+  }
   const fromDistAsset = path.join(OUT, 'assets', 'favicon-triangle-alert.png');
   const fromRepo = path.join(ASSETS_SRC, 'favicon-triangle-alert.png');
   const from = fs.existsSync(fromDistAsset) ? fromDistAsset : fromRepo;
   if (!fs.existsSync(from)) {
-    console.warn('favicon-triangle-alert.png not found; skip root favicon.ico');
+    console.warn('favicon-triangle-alert.png not found; skip favicon.ico');
     return;
   }
-  fs.copyFileSync(from, path.join(OUT, 'favicon.ico'));
-  console.log('Wrote', path.relative(REPO_ROOT, path.join(OUT, 'favicon.ico')), '(same PNG; root favicon for all hosts)');
+  const py = path.join(REPO_ROOT, 'scripts', 'generate-favicons.py');
+  const r = spawnSync('python3', [py, from, OUT], { encoding: 'utf8' });
+  if (r.status !== 0) {
+    console.error(r.stderr || r.stdout || 'generate-favicons.py failed');
+    console.warn('Fallback: копіюємо PNG як favicon.ico (може кешуватись некоректно в Chrome)');
+    fs.copyFileSync(from, path.join(OUT, 'favicon.ico'));
+    return;
+  }
+  if (r.stdout) process.stdout.write(r.stdout);
 }
 
 function main() {
@@ -634,7 +669,7 @@ function main() {
   copyAssetsIntoDist();
   copyServiceImagesIntoDist();
   copyPublicRootFiles();
-  copyRootFaviconIco();
+  generateRootFavicons();
 
   console.log(
     '\nNetlify: перетащи на Deploy ОДНУ папку — ВСЁ СОДЕРЖИМОЕ папки dist/ (index.html, pl, en, ru, uk, assets, images, robots.txt, sitemap.xml, _redirects, файлы из public/).'
