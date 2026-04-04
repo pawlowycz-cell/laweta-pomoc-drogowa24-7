@@ -50,7 +50,7 @@
     },
     {
       "source": "/favicon.ico",
-      "destination": "/assets/favicon-emergency-triangle.png?v=5",
+      "destination": "/assets/favicon-triangle-alert.png?v=8",
       "permanent": false
     },
     {

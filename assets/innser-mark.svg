@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" width="240" height="200">
+  <title>INNSER</title>
+  <defs>
+    <linearGradient id="b" x1="0%" y1="100%" x2="50%" y2="0%">
+      <stop offset="0%" stop-color="#b32d00"/>
+      <stop offset="100%" stop-color="#ff6b35"/>
+    </linearGradient>
+    <linearGradient id="f" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#e89400"/>
+      <stop offset="100%" stop-color="#FFD100"/>
+    </linearGradient>
+  </defs>
+  <polygon points="120,18 218,188 22,188" fill="url(#f)" stroke="url(#b)" stroke-width="10" stroke-linejoin="round"/>
+  <polygon points="120,58 158,138 82,138" fill="#0a0a0a"/>
+</svg>

@@ -32,11 +32,12 @@ const LEGACY_SITE_HOSTS = [
 const OG_IMAGE_PATH = '/assets/innser-logo.png';
 const OG_IMAGE_WIDTH = '1024';
 const OG_IMAGE_HEIGHT = '811';
-/** Вкладка браузера — PNG трикутника. ?v= ламає кеш Safari. Підніми число після зміни іконки. */
-const FAVICON_PNG_PATH = '/assets/favicon-emergency-triangle.png';
-const FAVICON_CACHE_BUST = '5';
-const faviconHref = () => `${FAVICON_PNG_PATH}?v=${FAVICON_CACHE_BUST}`;
-const appleTouchHref = () => `/apple-touch-icon.png?v=${FAVICON_CACHE_BUST}`;
+/** Вкладка браузера — PNG аварійного трикутника (без тексту). ?v= ламає кеш. */
+const FAVICON_PATH = '/assets/favicon-triangle-alert.png';
+const FAVICON_CACHE_BUST = '8';
+const FAVICON_MIME = 'image/png';
+const faviconHref = () => `${FAVICON_PATH}?v=${FAVICON_CACHE_BUST}`;
+const appleTouchHref = () => faviconHref();
 
 const LOCALES = {
   pl: {
@@ -274,9 +275,8 @@ function writeRootRedirect() {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="shortcut icon" href="${faviconHref()}" type="image/png">
-<link rel="icon" href="${faviconHref()}" type="image/png" sizes="64x64">
-<link rel="icon" href="${faviconHref()}" type="image/png" sizes="32x32">
+<link rel="icon" href="${faviconHref()}" type="${FAVICON_MIME}">
+<link rel="shortcut icon" href="${faviconHref()}" type="${FAVICON_MIME}">
 <link rel="apple-touch-icon" href="${appleTouchHref()}" sizes="180x180">
 <title>INNSER — Pomoc Drogowa Warszawa 24h | Holowanie | Awaryjne Odpalanie | Wymiana Koła</title>
 <meta name="description" content="INNSER — Profesjonalna pomoc drogowa Warszawa i okolice 24/7. Tania laweta, holowanie, autolaweta HDS, skup aut, złomowanie. Odpalanie, wymiana koła, otwieranie aut. Zadzwoń: 506-001-057">
