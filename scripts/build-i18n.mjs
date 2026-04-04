@@ -34,7 +34,7 @@ const OG_IMAGE_WIDTH = '1024';
 const OG_IMAGE_HEIGHT = '811';
 /** Вкладка браузера та іконка в Google — PNG трикутника. ?v= ламає кеш після заміни файлу. */
 const FAVICON_PATH = '/assets/favicon-triangle-alert.png';
-const FAVICON_CACHE_BUST = '12';
+const FAVICON_CACHE_BUST = '13';
 const FAVICON_MIME = 'image/png';
 const faviconHref = () => `${FAVICON_PATH}?v=${FAVICON_CACHE_BUST}`;
 const appleTouchHref = () => faviconHref();
