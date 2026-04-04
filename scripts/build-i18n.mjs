@@ -23,6 +23,14 @@ const IMAGES_SRC = path.join(REPO_ROOT, 'images');
 const PUBLIC_SRC = path.join(REPO_ROOT, 'public');
 
 const SITE = 'https://www.warszawa-laweta.com';
+
+/**
+ * Своя іконка (вкладка, Google, apple-touch з цього ж PNG):
+ * ім’я файлу в assets/, наприклад 'innser-logo.png' або 'my-favicon.png'.
+ * Залиш '' — тоді береться ланцюжок favicon-triangle-alert → favicon.png → … нижче.
+ * Перебити без правки файлу: змінна середовища INNSER_FAVICON (наприклад у Vercel).
+ */
+const FAVICON_SOURCE_FILE = 'favicon.png';
 /**
  * Мост SEO: laweta-pomoc-drogowa24-7 → канонический INNSER (www.warszawa-laweta.com), путь сохраняется.
  * laweta-warszawa.net — окремий сайт (папка ~/Desktop/MINI COD, не цей репозиторій).
@@ -46,8 +54,13 @@ let FAVICON_ASSET_NAME = 'favicon.png';
 let FAVICON_TAB_ASSET_NAME = '';
 
 function resolveFaviconSourcePng() {
-  // Порядок: спочатку яскравий «дорожній» трикутник (без чорного центру як у старому favicon.png) —
-  // краще в Google / у маленькій іконці; далі fallback.
+  const override = (process.env.INNSER_FAVICON || FAVICON_SOURCE_FILE || '').trim();
+  if (override) {
+    const p = path.join(ASSETS_SRC, override);
+    if (fs.existsSync(p)) return p;
+    console.warn('Favicon: файл не знайдено (INNSER_FAVICON / FAVICON_SOURCE_FILE):', p);
+  }
+  // Порядок за замовчуванням: яскравий дорожній знак → старий favicon.png → emergency.
   for (const name of [
     'favicon-triangle-alert.png',
     'favicon.png',
