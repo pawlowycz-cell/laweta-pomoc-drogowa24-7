@@ -129,8 +129,8 @@ body{font-family:'Open Sans',sans-serif;background:var(--k);color:var(--w);overf
 
 /* TOPBAR — layout (TOPBAR-STRIP) */
 .topbar{background:var(--r);padding:0;font-family:'Oswald',sans-serif;animation:pulse 2.5s ease infinite;width:100%}
-.topbar-inner{max-width:1100px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px 24px;flex-wrap:wrap}
-.topbar-msg{color:#fff;font-size:.82rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;line-height:1.35;flex:1 1 auto;min-width:min(100%,220px)}
+.topbar-inner{max-width:1100px;margin:0 auto;padding:12px 22px;min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:16px 28px;flex-wrap:wrap}
+.topbar-msg{color:#fff;font-size:.84rem;font-weight:600;letter-spacing:.055em;text-transform:uppercase;line-height:1.4;flex:1 1 auto;min-width:min(100%,200px)}
 .topbar-dial{display:inline-flex;align-items:center;gap:8px;flex-shrink:0;color:#fff!important;text-decoration:none;font-weight:700;font-size:.88rem;letter-spacing:.04em;white-space:nowrap;padding:7px 16px;border-radius:999px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.38);transition:background .2s,border-color .2s,transform .15s}
 .topbar-dial:hover{background:rgba(0,0,0,.38);border-color:rgba(255,255,255,.6);transform:translateY(-1px)}
 .topbar-dial-ico{line-height:1}
@@ -138,14 +138,14 @@ body{font-family:'Open Sans',sans-serif;background:var(--k);color:var(--w);overf
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.82}}
 
 /* NAV */
-nav{background:var(--k);border-bottom:3px solid var(--y);position:sticky;top:0;z-index:999;padding:0 10px;width:100%}
-.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px;gap:6px;width:100%}
+nav{background:var(--k);border-bottom:3px solid var(--y);position:sticky;top:0;z-index:999;padding:0 16px;width:100%}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;min-height:60px;gap:12px 20px;width:100%}
 .nav-logo{flex-shrink:0;min-width:0}
 .nav-logo img{height:44px;object-fit:contain;display:block;max-width:110px}
-.nav-menu{display:flex;align-items:center;gap:2px;list-style:none}
+.nav-menu{display:flex;align-items:center;gap:4px;list-style:none;flex:1 1 auto;justify-content:center;min-width:0;margin:0 8px}
 .nav-menu a{color:var(--y);text-decoration:none;font-family:'Oswald',sans-serif;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;padding:5px 9px;border-radius:3px;transition:background .2s,color .2s;white-space:nowrap}
 .nav-menu a:hover{background:var(--y);color:var(--k)}
-.nav-actions{display:flex;align-items:center;gap:10px 14px;flex-shrink:0}
+.nav-actions{display:flex;align-items:center;gap:12px 16px;flex-shrink:0;margin-left:auto}
 .lang-sw{display:flex;gap:5px;align-items:center;flex-shrink:0}
 .lang-btn{background:none;border:1px solid rgba(255,200,0,.3);border-radius:6px;cursor:pointer;padding:4px 7px;display:flex;align-items:center;gap:4px;font-family:'Oswald',sans-serif;font-size:.65rem;color:rgba(255,255,255,.55);letter-spacing:.04em;transition:all .2s;flex-shrink:0;line-height:1}
 .lang-btn:hover,.lang-btn.active{background:var(--y);color:var(--k);border-color:var(--y)}
@@ -166,7 +166,7 @@ nav{background:var(--k);border-bottom:3px solid var(--y);position:sticky;top:0;z
 .hero-copy{width:100%;max-width:100%;min-width:0;box-sizing:border-box}
 .hero-h1{font-family:'Oswald',sans-serif;font-size:clamp(2.2rem,6vw,4.2rem);font-weight:700;line-height:1.1;color:var(--y);text-transform:uppercase}
 .hero-h1 span{color:#fff}
-.hero-sub{font-size:.95rem;color:rgba(255,255,255,.72);margin:14px auto 22px;line-height:1.65;max-width:min(100%,36rem);width:100%;box-sizing:border-box;hyphens:none;overflow-wrap:break-word}
+.hero-sub{font-size:.95rem;color:rgba(255,255,255,.72);margin:14px auto 22px;line-height:1.65;max-width:min(100%,36rem);width:100%;box-sizing:border-box;hyphens:none;word-break:normal;overflow-wrap:normal}
 .badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px;justify-content:center}
 .badge{background:var(--y);color:var(--k);font-family:'Oswald',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.07em;padding:5px 13px;border-radius:3px;text-transform:uppercase}
 .badge.ol{background:transparent;border:2px solid var(--y);color:var(--y)}
@@ -178,7 +178,7 @@ nav{background:var(--k);border-bottom:3px solid var(--y);position:sticky;top:0;z
 .big-phone-pill{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:500;background:var(--y);color:var(--k);font-family:'Oswald',sans-serif;font-size:1.5rem;font-weight:700;padding:15px 40px;border-radius:60px;text-decoration:none;letter-spacing:.06em;white-space:nowrap;box-shadow:0 6px 32px rgba(255,215,0,.5),0 2px 8px rgba(0,0,0,.4);animation:bounce-pill 2s ease-in-out infinite}
 @keyframes bounce-pill{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-10px)}}
 .hero-truck{animation:fl 3s ease-in-out infinite;line-height:0;display:flex;align-items:center;justify-content:center}
-.hero-truck-img{width:min(100%,420px);max-width:100%;height:auto;object-fit:contain;filter:drop-shadow(0 14px 32px rgba(0,0,0,.55));vertical-align:middle}
+.hero-truck-img{width:min(100%,420px);max-width:100%;height:auto;object-fit:contain;filter:drop-shadow(0 14px 32px rgba(0,0,0,.55));vertical-align:middle;display:block}
 @keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
 
 /* SECTIONS */
@@ -280,11 +280,11 @@ footer{background:#0a0a0a;border-top:3px solid var(--y);padding:24px 16px;text-a
     text-align:left;
     gap:40px 56px;
   }
-  .hero-copy{ flex:1; min-width:0; max-width:640px; }
+  .hero-copy{ flex:1 1 42%; min-width:min(13rem,100%); max-width:640px; }
   .hero-sub{ margin-left:0; margin-right:0; max-width:none; }
   .badges, .cta{ justify-content:flex-start; }
-  .hero-truck{ flex-shrink:0; align-self:center; }
-  .hero-truck-img{ width:min(100%,min(520px,42vw)); }
+  .hero-truck{ flex:0 0 auto; align-self:center; min-width:min(200px,38vw); display:flex; }
+  .hero-truck-img{ width:min(100%,min(520px,42vw)); display:block; height:auto; }
   .hero-bg{ font-size:min(18vw,240px); }
 }
 

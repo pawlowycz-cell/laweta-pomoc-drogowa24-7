@@ -49,15 +49,11 @@ if (!html.includes('DESKTOP / TABLET WIDE')) {
     text-align:left;
     gap:40px 56px;
   }
-  .hero-copy{ flex:1; min-width:0; max-width:640px; }
+  .hero-copy{ flex:1 1 42%; min-width:min(13rem,100%); max-width:640px; }
   .hero-sub{ margin-left:0; margin-right:0; max-width:none; }
   .badges, .cta{ justify-content:flex-start; }
-  .hero-truck{
-    flex-shrink:0;
-    align-self:center;
-    font-size:clamp(4.5rem,9vw,7.5rem);
-    line-height:1;
-  }
+  .hero-truck{ flex:0 0 auto; align-self:center; min-width:min(200px,38vw); display:flex; }
+  .hero-truck-img{ width:min(100%,min(520px,42vw)); display:block; height:auto; }
   .hero-bg{ font-size:min(18vw,240px); }
 }
 
@@ -74,8 +70,8 @@ if (!html.includes('TOPBAR-STRIP')) {
     /\/\* TOPBAR \*\/\s*\.topbar\{[^}]+\}\s*\.topbar a\{[^}]+\}/,
     `/* TOPBAR — layout (TOPBAR-STRIP) */
 .topbar{background:var(--r);padding:0;font-family:'Oswald',sans-serif;animation:pulse 2.5s ease infinite;width:100%}
-.topbar-inner{max-width:1100px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px 24px;flex-wrap:wrap}
-.topbar-msg{color:#fff;font-size:.82rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;line-height:1.35;flex:1 1 auto;min-width:min(100%,220px)}
+.topbar-inner{max-width:1100px;margin:0 auto;padding:12px 22px;min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:16px 28px;flex-wrap:wrap}
+.topbar-msg{color:#fff;font-size:.84rem;font-weight:600;letter-spacing:.055em;text-transform:uppercase;line-height:1.4;flex:1 1 auto;min-width:min(100%,200px)}
 .topbar-dial{display:inline-flex;align-items:center;gap:8px;flex-shrink:0;color:#fff!important;text-decoration:none;font-weight:700;font-size:.88rem;letter-spacing:.04em;white-space:nowrap;padding:7px 16px;border-radius:999px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.38);transition:background .2s,border-color .2s,transform .15s}
 .topbar-dial:hover{background:rgba(0,0,0,.38);border-color:rgba(255,255,255,.6);transform:translateY(-1px)}
 .topbar-dial-ico{line-height:1}
@@ -102,11 +98,12 @@ if (!html.includes('hero-tow-truck.png')) {
     '<div class="hero-truck"><img class="hero-truck-img" src="/images/hero-tow-truck.png" width="640" height="360" alt="Laweta Warszawa — pomoc drogowa 24/7" decoding="async" fetchpriority="high"></div>'
   );
 }
-if (!html.includes('.hero-truck-img{')) {
+// Base hero truck: pomoc uses emoji font-size rule; always rewrite if still present (desktop mq may already add .hero-truck-img)
+if (/\.hero-truck\{font-size:clamp\(5rem/.test(html)) {
   html = html.replace(
     /\.hero-truck\{font-size:clamp\(5rem[^}]+\}/,
     `.hero-truck{animation:fl 3s ease-in-out infinite;line-height:0;display:flex;align-items:center;justify-content:center}
-.hero-truck-img{width:min(100%,420px);max-width:100%;height:auto;object-fit:contain;filter:drop-shadow(0 14px 32px rgba(0,0,0,.5))}`
+.hero-truck-img{width:min(100%,420px);max-width:100%;height:auto;object-fit:contain;filter:drop-shadow(0 14px 32px rgba(0,0,0,.55));vertical-align:middle;display:block}`
   );
 }
 
@@ -114,7 +111,7 @@ if (!html.includes('.hero-truck-img{')) {
 if (html.includes('DESKTOP / TABLET WIDE') && html.includes('font-size:clamp(4.5rem,9vw,7.5rem)')) {
   html = html.replace(
     /\.hero-truck\{\s*flex-shrink:0;\s*align-self:center;\s*font-size:clamp\(4\.5rem,9vw,7\.5rem\);\s*line-height:1;\s*\}/,
-    `.hero-truck{ flex-shrink:0; align-self:center; }\n  .hero-truck-img{ width:min(100%,min(520px,42vw)); }`
+    `.hero-truck{ flex:0 0 auto; align-self:center; min-width:min(200px,38vw); display:flex; }\n  .hero-truck-img{ width:min(100%,min(520px,42vw)); display:block; height:auto; }`
   );
 }
 
@@ -173,7 +170,7 @@ if (!html.includes('.hero-copy{width:100%')) {
 if (!html.includes('max-width:min(100%,36rem)')) {
   html = html.replace(
     /\.hero-sub\{font-size:\.95rem;color:rgba\(255,255,255,\.72\);margin:14px 0 22px;line-height:1\.65;max-width:560px\}/,
-    '.hero-sub{font-size:.95rem;color:rgba(255,255,255,.72);margin:14px auto 22px;line-height:1.65;max-width:min(100%,36rem);width:100%;box-sizing:border-box;hyphens:none;overflow-wrap:break-word}'
+    '.hero-sub{font-size:.95rem;color:rgba(255,255,255,.72);margin:14px auto 22px;line-height:1.65;max-width:min(100%,36rem);width:100%;box-sizing:border-box;hyphens:none;word-break:normal;overflow-wrap:normal}'
   );
 }
 html = html.replace(
@@ -186,6 +183,34 @@ if (!html.includes('margin-top:28px')) {
     '.hero-truck{ display:flex; margin-top:28px; justify-content:center; align-self:center; width:100%; }\n  .hero-truck-img{ width:min(100%,min(92vw,420px)); }'
   );
 }
+
+// Desktop hero: min-width:0 on .hero-copy lets flex shrink text to ~1ch (broken Cyrillic)
+html = html.replace(
+  /\.hero-copy\{ flex:1; min-width:0; max-width:640px; \}/g,
+  '.hero-copy{ flex:1 1 42%; min-width:min(13rem,100%); max-width:640px; }'
+);
+html = html.replace(
+  /\.hero-sub\{[^}]*overflow-wrap:break-word\}/,
+  (m) => m.replace('overflow-wrap:break-word', 'word-break:normal;overflow-wrap:normal')
+);
+
+// Nav / top bar rhythm (pomoc ships tighter defaults)
+html = html.replace(
+  /nav\{background:var\(--k\);border-bottom:3px solid var\(--y\);position:sticky;top:0;z-index:999;padding:0 10px;width:100%\}/,
+  'nav{background:var(--k);border-bottom:3px solid var(--y);position:sticky;top:0;z-index:999;padding:0 16px;width:100%}'
+);
+html = html.replace(
+  /\.nav-inner\{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px;gap:6px;width:100%\}/,
+  '.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;min-height:60px;gap:12px 20px;width:100%}'
+);
+html = html.replace(
+  /\.nav-menu\{display:flex;align-items:center;gap:2px;list-style:none\}/,
+  '.nav-menu{display:flex;align-items:center;gap:4px;list-style:none;flex:1 1 auto;justify-content:center;min-width:0;margin:0 8px}'
+);
+html = html.replace(
+  /\.nav-actions\{display:flex;align-items:center;gap:10px 14px;flex-shrink:0\}/,
+  '.nav-actions{display:flex;align-items:center;gap:12px 16px;flex-shrink:0;margin-left:auto}'
+);
 
 fs.writeFileSync(dst, html);
 console.log('Wrote', dst, '(' + html.length + ' bytes)');
