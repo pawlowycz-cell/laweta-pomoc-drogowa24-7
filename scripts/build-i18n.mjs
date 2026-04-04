@@ -33,20 +33,24 @@ const LEGACY_SITE_HOSTS = [
 const OG_IMAGE_PATH = '/assets/innser-logo.png';
 const OG_IMAGE_WIDTH = '1024';
 const OG_IMAGE_HEIGHT = '811';
-/** Вкладка / Google: справжній favicon.ico (не PNG під виглядом .ico) + favicon-48.png. ?v= ламає кеш. */
+/**
+ * Вкладка: окремий шлях innser-tab-icon.ico (копія кореневого ICO) — Chrome часто не скидає кеш для /favicon.ico навіть з ?v=.
+ * /favicon.ico лишається для краулерів і автозапитів без HTML.
+ */
 const FAVICON_PATH = '/assets/favicon-triangle-alert.png';
 const FAVICON_48_PATH = '/assets/favicon-48.png';
-const FAVICON_CACHE_BUST = '14';
+const FAVICON_TAB_ICO_PATH = '/assets/innser-tab-icon.ico';
+const FAVICON_CACHE_BUST = '15';
 const FAVICON_MIME = 'image/png';
 const faviconHref = () => `${FAVICON_PATH}?v=${FAVICON_CACHE_BUST}`;
-const faviconIcoHref = () => `/favicon.ico?v=${FAVICON_CACHE_BUST}`;
+const faviconTabIcoHref = () => `${FAVICON_TAB_ICO_PATH}?v=${FAVICON_CACHE_BUST}`;
 const favicon48Href = () => `${FAVICON_48_PATH}?v=${FAVICON_CACHE_BUST}`;
 const appleTouchHref = () => faviconHref();
 
 function faviconHeadBlock() {
-  return `<link rel="icon" href="${faviconIcoHref()}" sizes="any">
+  return `<link rel="icon" href="${faviconTabIcoHref()}" sizes="any">
 <link rel="icon" href="${favicon48Href()}" type="${FAVICON_MIME}" sizes="48x48">
-<link rel="shortcut icon" href="${faviconIcoHref()}">
+<link rel="shortcut icon" href="${faviconTabIcoHref()}">
 <link rel="apple-touch-icon" href="${appleTouchHref()}" sizes="180x180">`;
 }
 
@@ -603,11 +607,13 @@ function copyPublicRootFiles() {
 function generateRootFavicons() {
   const bundledIco = path.join(OUT, 'assets', 'favicon-root.ico');
   if (fs.existsSync(bundledIco)) {
-    fs.copyFileSync(bundledIco, path.join(OUT, 'favicon.ico'));
+    const rootIco = path.join(OUT, 'favicon.ico');
+    fs.copyFileSync(bundledIco, rootIco);
+    fs.copyFileSync(rootIco, path.join(OUT, 'assets', 'innser-tab-icon.ico'));
     console.log(
       'Wrote',
-      path.relative(REPO_ROOT, path.join(OUT, 'favicon.ico')),
-      '(from assets/favicon-root.ico)'
+      path.relative(REPO_ROOT, rootIco),
+      '+ assets/innser-tab-icon.ico (from assets/favicon-root.ico)'
     );
     return;
   }
@@ -623,10 +629,13 @@ function generateRootFavicons() {
   if (r.status !== 0) {
     console.error(r.stderr || r.stdout || 'generate-favicons.py failed');
     console.warn('Fallback: копіюємо PNG як favicon.ico (може кешуватись некоректно в Chrome)');
-    fs.copyFileSync(from, path.join(OUT, 'favicon.ico'));
+    const rootIco = path.join(OUT, 'favicon.ico');
+    fs.copyFileSync(from, rootIco);
+    fs.copyFileSync(rootIco, path.join(OUT, 'assets', 'innser-tab-icon.ico'));
     return;
   }
   if (r.stdout) process.stdout.write(r.stdout);
+  fs.copyFileSync(path.join(OUT, 'favicon.ico'), path.join(OUT, 'assets', 'innser-tab-icon.ico'));
 }
 
 function main() {
