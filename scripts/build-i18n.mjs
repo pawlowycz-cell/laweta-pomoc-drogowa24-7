@@ -582,6 +582,10 @@ function writeVercelProjectJson(html) {
         source: '/favicon.png',
         headers: [{ key: 'Cache-Control', value: 'public, max-age=0, must-revalidate' }],
       },
+      {
+        source: '/apple-touch-icon.png',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=0, must-revalidate' }],
+      },
     ],
   };
   fs.writeFileSync(path.join(INNSER_DIST_ROOT, 'vercel.json'), JSON.stringify(cfg, null, 2) + '\n', 'utf8');
@@ -622,6 +626,8 @@ function copyPublicRootFiles() {
     if (name.startsWith('.')) continue;
     // Не класти public/favicon.png у dist — він часто старий/інший; кореневий favicon.png пишемо з assets у main().
     if (name === 'favicon.png') continue;
+    // Safari тягне /apple-touch-icon.png окремо від <link>; public/ був інший файл → різні іконки в Safari.
+    if (name === 'apple-touch-icon.png') continue;
     const src = path.join(PUBLIC_SRC, name);
     if (!fs.statSync(src).isFile()) continue;
     fs.copyFileSync(src, path.join(OUT, name));
@@ -658,6 +664,24 @@ async function generateRootFavicons() {
       fs.copyFileSync(bundledIco, outRoot);
       console.log('Fallback:', path.relative(REPO_ROOT, bundledIco), '→ favicon.ico');
     }
+  }
+}
+
+/** 180×180 з того ж PNG, що й favicon — щоб Safari (який часто бере /apple-touch-icon.png) не показував іншу картинку. */
+async function writeAppleTouchIconPng(pngBuffer) {
+  const outPath = path.join(OUT, 'apple-touch-icon.png');
+  try {
+    const requireInnser = createRequire(INNSER_PKG_JSON);
+    const sharp = requireInnser('sharp');
+    await sharp(pngBuffer)
+      .resize(180, 180, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+      .png()
+      .toFile(outPath);
+    console.log('Wrote', path.relative(REPO_ROOT, outPath), '(180×180 from favicon)');
+  } catch (e) {
+    console.warn('apple-touch-icon.png (sharp) failed:', e.message);
+    fs.writeFileSync(outPath, pngBuffer);
+    console.log('Wrote', path.relative(REPO_ROOT, outPath), '(fallback: raw favicon bytes)');
   }
 }
 
@@ -715,6 +739,7 @@ async function main() {
   fs.writeFileSync(path.join(OUT, 'favicon.png'), faviconBuf);
   console.log('Wrote', path.relative(REPO_ROOT, path.join(OUT, 'favicon.png')), '(same bytes as assets favicon)');
   await generateRootFavicons();
+  await writeAppleTouchIconPng(faviconBuf);
 
   console.log(
     '\nNetlify: перетащи на Deploy ОДНУ папку — ВСЁ СОДЕРЖИМОЕ папки dist/ (index.html, pl, en, ru, uk, assets, images, robots.txt, sitemap.xml, _redirects, файлы из public/).'
