@@ -1,48 +1,53 @@
-Два проекта Vercel из одного репозитория
-=========================================
+Два сайта: INNSER (большой) и визитка laweta-warszawa.net
+==========================================================
 
-Локально (проверка перед push):  npm run prepare:all
-  — импорт pomoc из Downloads (если есть) + dist визитки + sites/innser/dist + vercel.json INNSER.
-
-  На Vercel команды раздельно: корень репо → только npm run build;
-  проект sites/innser → только npm run build (там вызывается build-i18n).
-
-ПРОЕКТ «визитка pomoc» — www.laweta-warszawa.net
-------------------------------------------------
-  HTML-источник:  ~/Downloads/pomoc-drogowa-warszawa (5).html
-  Импорт:         npm run import:pomoc
-                  или: node scripts/import-pomoc-html.mjs "<путь-к-файлу>"
-  Сборка:         npm run build   → копия web/ в dist/
-
-  Vercel:
-    Root Directory:  (корень репо)
-    Build:           npm run build
-    Output:          dist
-    Конфиг:          vercel.json в корне
-
-  Домены ТОЛЬКО здесь:
-    - www.laweta-warszawa.net
-    - laweta-warszawa.net   (редирект на www — в корневом vercel.json)
-
-  НЕ вешать сюда: warszawa-laweta.com, laweta-pomoc-drogowa24-7.com
+ВАЖНО: онлайн обновляется из Git. Правки только на рабочем столе
+~/Desktop/MINI COD без копирования в репозиторий на сайте не появятся.
 
 
-ПРОЕКТ «INNSER» — warszawa-laweta.com + мост laweta-pomoc
-----------------------------------------------------------
+1) INNSER — папка репозитория INNSER COD (большой сайт)
+-------------------------------------------------------
+  Сборка:  npm run prepare:all   или   npm run build
+  → sites/innser/dist/
+
   Vercel:
     Root Directory:  sites/innser
     Build:           npm run build
     Output:          dist
     Конфиг:          sites/innser/vercel.json
 
-  Домены:
-    - www.warszawa-laweta.com, warszawa-laweta.com
-    - laweta-pomoc-drogowa24-7.com, www.laweta-pomoc-drogowa24-7.com
-      → 301 на https://www.warszawa-laweta.com с тем же путём
-
-  НЕ вешать сюда: laweta-warszawa.net (это визитка pomoc из web/)
+  Домены: www.warszawa-laweta.com, warszawa-laweta.com, laweta-pomoc-* → мост на warszawa-laweta.com
 
 
-Если на warszawa-laweta.com открывается маленькая визитка
-----------------------------------------------------------
-  Домен привязан к проекту из корня. Убрать с корня, добавить на sites/innser.
+2) Визитка laweta-warszawa.net — копия в репо: mini-site/
+---------------------------------------------------------
+  Исходники в Git:  INNSER COD/mini-site/  (то же содержимое, что на Desktop/MINI COD)
+
+  Если правили на рабочем столе, перед commit:
+    npm run sync:mini-in
+    (копирует ~/Desktop/MINI COD → mini-site/)
+
+  Удобно править прямо в Cursor: папка mini-site/ в этом же репозитории.
+
+  Локально:  npm run preview:mini
+
+  Импорт pomoc HTML:
+    node mini-site/scripts/import-pomoc-html.mjs "<файл>"
+    (из корня репо: cwd любой, путь к скрипту полный)
+
+  Vercel (визитка):
+    Root Directory:  mini-site
+    Build:           (пусто / не нужен)
+    Output:          .  (как в mini-site/vercel.json)
+    Конфиг:          mini-site/vercel.json
+
+  Домены только здесь: www.laweta-warszawa.net, laweta-warszawa.net
+
+  Если проект Vercel всё ещё смотрит на корень репо или старый output:
+    в настройках проекта укажите Root Directory = mini-site и сделайте Redeploy.
+
+
+Проверка «не меняется на сайте»
+--------------------------------
+  Сделали push в Git? В Vercel прошла новая сборка?
+  Откройте laweta-warszawa.net в окне инкогнито (без кеша).

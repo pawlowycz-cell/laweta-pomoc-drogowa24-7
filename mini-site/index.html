@@ -361,7 +361,7 @@ footer{background:#0a0a0a;border-top:3px solid var(--y);padding:24px 16px;text-a
 <!-- NAV -->
 <nav>
 <div class="nav-inner">
-  <a href="#" class="nav-logo" aria-label="INNSER — pomoc drogowa 24/7"><img id="logo-img" class="nav-logo-img" src="/images/logo-hazard.png" width="59" height="57" alt="" decoding="async"><span class="nav-logo-word">INNSER</span></a>
+  <a href="#" class="nav-logo" aria-label="ASSISTANCE — pomoc drogowa 24/7"><img id="logo-img" class="nav-logo-img" src="/images/warning-triangle.svg" width="59" height="57" alt="" decoding="async"><span class="nav-logo-word">ASSISTANCE</span></a>
   <ul class="nav-menu" id="navMenu">
     <li><a href="#services" class="nl" data-k="ms">Usługi</a></li>
     <li><a href="#prices" class="nl" data-k="mp">Cennik</a></li>
@@ -656,6 +656,8 @@ function setLang(l) {
     var k = a.getAttribute('data-k');
     if(t[k]) a.textContent = t[k];
   });
+  var brandWord = document.querySelector('.nav-logo-word');
+  if (brandWord) brandWord.textContent = 'ASSISTANCE';
 }
 
 function toggleMenu() {

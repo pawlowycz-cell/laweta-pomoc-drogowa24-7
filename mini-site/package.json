@@ -1,0 +1,9 @@
+{
+  "name": "laweta-warszawa-mini",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "import:pomoc": "node scripts/import-pomoc-html.mjs",
+    "preview": "npx --yes serve . -l 4322"
+  }
+}

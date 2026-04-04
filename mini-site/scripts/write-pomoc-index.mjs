@@ -1,16 +1,16 @@
 #!/usr/bin/env node
 /**
- * Generates web/index.html from the pomoc landing HTML (same transforms as import-pomoc-html.mjs).
- * Run from repo root: node scripts/write-pomoc-index.mjs [path-to-source.html]
+ * Generates index.html from the pomoc landing HTML (same transforms as import-pomoc-html.mjs).
+ * Run: node scripts/write-pomoc-index.mjs [path-to-source.html]
  */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.join(__dirname, '..');
+const SITE_ROOT = path.join(__dirname, '..');
 const src = process.argv[2] || path.join(process.env.HOME || '', 'Downloads/pomoc-drogowa-warszawa (5).html');
-const dst = path.join(ROOT, 'web', 'index.html');
+const dst = path.join(SITE_ROOT, 'index.html');
 
 if (!fs.existsSync(src)) {
   console.error('Source not found:', src);

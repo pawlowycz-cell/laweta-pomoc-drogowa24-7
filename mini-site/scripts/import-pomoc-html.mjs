@@ -3,9 +3,9 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.join(__dirname, '..');
+const SITE_ROOT = path.join(__dirname, '..');
 const src = process.argv[2] || path.join(process.env.HOME, 'Downloads/pomoc-drogowa-warszawa (5).html');
-const dst = path.join(ROOT, 'web', 'index.html');
+const dst = path.join(SITE_ROOT, 'index.html');
 
 if (!fs.existsSync(src)) {
   console.error('Source not found:', src);
@@ -46,11 +46,11 @@ if (!html.includes('favicon.svg')) {
   }
 }
 
-// Nav: INNSER wordmark + hazard triangle (transparent PNG)
-const NAV_LOGO_INNSER =
-  '<a href="#" class="nav-logo" aria-label="INNSER — pomoc drogowa 24/7"><img id="logo-img" class="nav-logo-img" src="/images/logo-hazard.png" width="59" height="57" alt="" decoding="async"><span class="nav-logo-word">INNSER</span></a>';
-if (!html.includes('logo-hazard.png')) {
-  html = html.replace(/<a href="#" class="nav-logo"[^>]*>ASSISTANCE<\/a>/, NAV_LOGO_INNSER);
+// Nav: ASSISTANCE + SVG triangle only (no text baked into raster)
+const NAV_LOGO_ASSISTANCE =
+  '<a href="#" class="nav-logo" aria-label="ASSISTANCE — pomoc drogowa 24/7"><img id="logo-img" class="nav-logo-img" src="/images/warning-triangle.svg" width="59" height="57" alt="" decoding="async"><span class="nav-logo-word">ASSISTANCE</span></a>';
+if (!html.includes('nav-logo-word')) {
+  html = html.replace(/<a href="#" class="nav-logo"[^>]*>ASSISTANCE<\/a>/, NAV_LOGO_ASSISTANCE);
 }
 if (!html.includes('.nav-logo-word')) {
   html = html.replace(

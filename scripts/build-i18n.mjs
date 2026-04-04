@@ -25,7 +25,7 @@ const PUBLIC_SRC = path.join(REPO_ROOT, 'public');
 const SITE = 'https://www.warszawa-laweta.com';
 /**
  * Мост SEO: laweta-pomoc-drogowa24-7 → канонический INNSER (www.warszawa-laweta.com), путь сохраняется.
- * laweta-warszawa.net — отдельный сайт (визитка в web/), проект из корня репо, не этот dist.
+ * laweta-warszawa.net — окремий сайт (папка ~/Desktop/MINI COD, не цей репозиторій).
  */
 const LEGACY_SITE_HOSTS = [
   'laweta-pomoc-drogowa24-7.com',
@@ -481,7 +481,7 @@ function writeNetlifyRedirects(html) {
   const lines = [
     '# INNSER i18n — отдаём index.html внутри каждой языковой папки',
     '# SPA: блог и карточки услуг (история + прямые ссылки); svc* из разметки innser-v6.html',
-    '# Мост: старые домены → www.warszawa-laweta.com (тот же :splat); laweta-warszawa.net отдельный проект',
+    '# Мост: старые домены → www.warszawa-laweta.com (тот же :splat); laweta-warszawa.net — отдельный проект MINI COD',
   ];
   for (const host of LEGACY_SITE_HOSTS) {
     lines.push(`https://${host}/favicon.ico  /favicon.ico  200!`);

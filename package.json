@@ -2,10 +2,11 @@
   "name": "site",
   "private": true,
   "scripts": {
-    "import:pomoc": "node scripts/import-pomoc-html.mjs",
-    "build": "node scripts/build.mjs",
+    "build": "node scripts/build-i18n.mjs",
     "build:innser": "npm install --prefix sites/innser --no-audit --no-fund --loglevel=error && node scripts/build-i18n.mjs",
     "prepare:all": "node scripts/prepare-all.mjs",
-    "preview": "npm run build && npx --yes serve dist -l 4321"
+    "preview": "npm run build && npx --yes serve sites/innser/dist -l 4321",
+    "sync:mini-in": "node scripts/sync-mini-from-desktop.mjs",
+    "preview:mini": "npx --yes serve mini-site -l 4322"
   }
 }
