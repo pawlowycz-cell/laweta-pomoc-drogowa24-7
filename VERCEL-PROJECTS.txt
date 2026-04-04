@@ -37,9 +37,9 @@
 
   Vercel (визитка):
     Root Directory:  mini-site
-    Build:           (пусто / не нужен)
-    Output:          .  (как в mini-site/vercel.json)
-    Конфиг:          mini-site/vercel.json
+    Build Command:   npm run build   (в package.json — проверка index.html)
+    Output Directory: оставить ПУСТЫМ (не dist и не «.»). Иначе будет 404.
+    Конфиг:          mini-site/vercel.json (без outputDirectory — раздача из корня mini-site)
 
   Домены только здесь: www.laweta-warszawa.net, laweta-warszawa.net
 

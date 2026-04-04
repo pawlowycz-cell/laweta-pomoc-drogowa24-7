@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build": "test -f index.html",
     "import:pomoc": "node scripts/import-pomoc-html.mjs",
     "preview": "npx --yes serve . -l 4322"
   }
