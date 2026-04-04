@@ -34,5 +34,39 @@ if (!html.includes('favicon.svg')) {
   );
 }
 
+// Desktop: hide fixed call pill (overlaps hero on wide screens); two-column hero
+if (!html.includes('DESKTOP / TABLET WIDE')) {
+  html = html.replace(
+    '/* MOBILE OVERLAY MENU */',
+    `/* ===== DESKTOP / TABLET WIDE — hero row, no floating pill overlap ===== */
+@media (min-width:761px){
+  .big-phone-pill{ display:none !important; }
+  #hero{ padding:72px 24px 80px; }
+  .hero-inner{
+    flex-direction:row;
+    align-items:center;
+    justify-content:space-between;
+    text-align:left;
+    gap:40px 56px;
+  }
+  .hero-copy{ flex:1; min-width:0; max-width:640px; }
+  .hero-sub{ margin-left:0; margin-right:0; max-width:none; }
+  .badges, .cta{ justify-content:flex-start; }
+  .hero-truck{
+    flex-shrink:0;
+    align-self:center;
+    font-size:clamp(4.5rem,9vw,7.5rem);
+    line-height:1;
+  }
+  .hero-bg{ font-size:min(18vw,240px); }
+}
+
+/* MOBILE OVERLAY MENU */`
+  );
+}
+if (!html.includes('class="hero-copy"')) {
+  html = html.replace(/<div class="hero-inner">\s*<div>/, '<div class="hero-inner">\n    <div class="hero-copy">');
+}
+
 fs.writeFileSync(dst, html);
 console.log('Wrote', dst, '(' + html.length + ' bytes)');

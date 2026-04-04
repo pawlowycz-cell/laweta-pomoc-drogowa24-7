@@ -254,6 +254,29 @@ footer{background:#0a0a0a;border-top:3px solid var(--y);padding:24px 16px;text-a
   .nav-phone span{ display:none; }
 }
 
+/* ===== DESKTOP / TABLET WIDE — hero row, no floating pill overlap ===== */
+@media (min-width:761px){
+  .big-phone-pill{ display:none !important; }
+  #hero{ padding:72px 24px 80px; }
+  .hero-inner{
+    flex-direction:row;
+    align-items:center;
+    justify-content:space-between;
+    text-align:left;
+    gap:40px 56px;
+  }
+  .hero-copy{ flex:1; min-width:0; max-width:640px; }
+  .hero-sub{ margin-left:0; margin-right:0; max-width:none; }
+  .badges, .cta{ justify-content:flex-start; }
+  .hero-truck{
+    flex-shrink:0;
+    align-self:center;
+    font-size:clamp(4.5rem,9vw,7.5rem);
+    line-height:1;
+  }
+  .hero-bg{ font-size:min(18vw,240px); }
+}
+
 /* MOBILE OVERLAY MENU */
 .mob-overlay{
   display:none;
@@ -353,7 +376,7 @@ footer{background:#0a0a0a;border-top:3px solid var(--y);padding:24px 16px;text-a
 <section id="hero">
   <div class="hero-bg">24/7</div>
   <div class="hero-inner">
-    <div>
+    <div class="hero-copy">
       <h1 class="hero-h1" id="hh">Pomoc Drogowa<br><span>Warszawa</span></h1>
       <p class="hero-sub" id="hs">Laweta, holowanie, uruchamianie akumulatora, zmiana koła. Działamy 24/7 — w Warszawie i w całej Polsce.</p>
       <div class="badges">
@@ -472,7 +495,7 @@ footer{background:#0a0a0a;border-top:3px solid var(--y);padding:24px 16px;text-a
 
 <!-- FOOTER -->
 <footer>
-  <p class="fc" id="ft">© 2026 Pomoc Drogowa Warszawa · <a href="tel:+48506001057">506-001-057</a> · Partner: <a href="https://www.warszawa-laweta.com" target="_blank">warszawa-laweta.com</a></p>
+  <p class="fc" id="ft">© 2025 Pomoc Drogowa Warszawa · <a href="tel:+48506001057">506-001-057</a> · Partner: <a href="https://www.warszawa-laweta.com" target="_blank">warszawa-laweta.com</a></p>
 </footer>
 
 <script>
@@ -521,7 +544,7 @@ var T = {
     spa:'Nasi Partnerzy',plb:'Oficjalny partner',pds:'Sprawdź naszego zaufanego partnera — profesjonalne usługi lawety w Warszawie',
     sco:'Kontakt',c1t:'Zadzwoń teraz',
     smap:'Nasza lokalizacja', smaptitle:'Warszawa i cała Polska',
-    ft:'© 2026 Pomoc Drogowa Warszawa · <a href="tel:+48506001057">506-001-057</a> · Partner: <a href="https://www.warszawa-laweta.com" target="_blank">warszawa-laweta.com</a>'
+    ft:'© 2025 Pomoc Drogowa Warszawa · <a href="tel:+48506001057">506-001-057</a> · Partner: <a href="https://www.warszawa-laweta.com" target="_blank">warszawa-laweta.com</a>'
   },
   en:{
     tb:'🚨 Working 24/7 — Warsaw & all Poland 🚨 &nbsp;|&nbsp; <a href="tel:+48506001057">📞 +48 506 001 057</a>',
@@ -547,7 +570,7 @@ var T = {
     spa:'Our Partners',plb:'Official partner',pds:'Check our trusted partner — professional towing in Warsaw',
     sco:'Contact',c1t:'Call now',
     smap:'Our location', smaptitle:'Warsaw & all Poland',
-    ft:'© 2026 Pomoc Drogowa Warsaw · <a href="tel:+48506001057">506-001-057</a> · Partner: <a href="https://www.warszawa-laweta.com" target="_blank">warszawa-laweta.com</a>'
+    ft:'© 2025 Pomoc Drogowa Warsaw · <a href="tel:+48506001057">506-001-057</a> · Partner: <a href="https://www.warszawa-laweta.com" target="_blank">warszawa-laweta.com</a>'
   },
   ru:{
     tb:'🚨 Работаем 24/7 — Варшава и вся Польша 🚨 &nbsp;|&nbsp; <a href="tel:+48506001057">📞 +48 506 001 057</a>',
@@ -573,7 +596,7 @@ var T = {
     spa:'Наши Партнёры',plb:'Официальный партнёр',pds:'Посетите сайт нашего проверенного партнёра — профессиональные услуги эвакуатора в Варшаве',
     sco:'Контакт',c1t:'Позвонить',
     smap:'Наше местоположение', smaptitle:'Варшава и вся Польша',
-    ft:'© 2026 Эвакуатор Варшава · <a href="tel:+48506001057">506-001-057</a> · Партнёр: <a href="https://www.warszawa-laweta.com" target="_blank">warszawa-laweta.com</a>'
+    ft:'© 2025 Эвакуатор Варшава · <a href="tel:+48506001057">506-001-057</a> · Партнёр: <a href="https://www.warszawa-laweta.com" target="_blank">warszawa-laweta.com</a>'
   }
 };
 
