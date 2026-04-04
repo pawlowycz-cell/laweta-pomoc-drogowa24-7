@@ -36,11 +36,11 @@ const OG_IMAGE_PATH = '/assets/innser-logo.png';
 const OG_IMAGE_WIDTH = '1024';
 const OG_IMAGE_HEIGHT = '811';
 /**
- * Одна картинка: assets/favicon.png (заміни файл — і все). Якщо немає — беремо favicon-emergency-triangle.png, потім favicon-triangle-alert.png.
- * У HTML — ?h=<хеш файла>: після зміни PNG кеш браузера зламається без ручного v=.
+ * Джерело: assets/favicon.png (або emergency / triangle-alert як fallback).
+ * У dist пишемо /assets/favicon-<10 hex від sha256>.png — новий шлях при зміні файлу (Chrome/CDN часто ігнорують ?query для іконок).
+ * Плюс дублікат favicon.png для краулерів і генерації .ico.
  */
-const FAVICON_PUBLIC_PNG = '/assets/favicon.png';
-let FAVICON_QS = 'h=0';
+let FAVICON_ASSET_NAME = 'favicon.png';
 
 function resolveFaviconSourcePng() {
   for (const name of ['favicon.png', 'favicon-emergency-triangle.png', 'favicon-triangle-alert.png']) {
@@ -51,7 +51,7 @@ function resolveFaviconSourcePng() {
 }
 
 function faviconPngHref() {
-  return `${FAVICON_PUBLIC_PNG}?${FAVICON_QS}`;
+  return `/assets/${FAVICON_ASSET_NAME}`;
 }
 
 function faviconHeadBlock() {
@@ -609,7 +609,7 @@ function copyPublicRootFiles() {
 /** Кореневий /favicon.ico з того ж PNG (квадрат 256 через sharp → png-to-ico). Fallback: assets/favicon-root.ico. */
 async function generateRootFavicons() {
   const outRoot = path.join(OUT, 'favicon.ico');
-  const pngPath = path.join(OUT, 'assets', 'favicon.png');
+  const pngPath = path.join(OUT, 'assets', FAVICON_ASSET_NAME);
   const sqPath = path.join(OUT, '.favicon-256-square.png');
   const bundledIco = path.join(OUT, 'assets', 'favicon-root.ico');
   if (!fs.existsSync(pngPath)) {
@@ -654,8 +654,8 @@ async function main() {
     process.exit(1);
   }
   const faviconBuf = fs.readFileSync(faviconSrc);
-  FAVICON_QS =
-    'h=' + crypto.createHash('sha256').update(faviconBuf).digest('hex').slice(0, 12);
+  FAVICON_ASSET_NAME =
+    'favicon-' + crypto.createHash('sha256').update(faviconBuf).digest('hex').slice(0, 10) + '.png';
 
   fs.mkdirSync(OUT, { recursive: true });
 
@@ -686,6 +686,7 @@ async function main() {
   copyAssetsIntoDist();
   copyServiceImagesIntoDist();
   copyPublicRootFiles();
+  fs.writeFileSync(path.join(OUT, 'assets', FAVICON_ASSET_NAME), faviconBuf);
   fs.writeFileSync(path.join(OUT, 'assets', 'favicon.png'), faviconBuf);
   await generateRootFavicons();
 
