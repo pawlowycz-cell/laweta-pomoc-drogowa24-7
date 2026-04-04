@@ -37,12 +37,11 @@ const OG_IMAGE_WIDTH = '1024';
 const OG_IMAGE_HEIGHT = '811';
 /**
  * Джерело: assets/favicon.png (або emergency / triangle-alert).
- * Вкладка: data-URL (64×64 PNG у HTML) — без окремого запиту й кешу URL, що ламав оновлення.
- * Apple + файли: /assets/favicon-<hash>.png та favicon.ico.
+ * Вкладка + Apple: один URL /assets/favicon-<hash>.png (без data-URI) — те саме зображення на всіх мовах;
+ * інакше частина браузерів тягне /favicon.ico або інший розмір і іконка виглядає «іншою».
+ * Корінь: favicon.ico з того ж PNG.
  */
 let FAVICON_ASSET_NAME = 'favicon.png';
-/** data:image/png;base64,... для rel=icon / shortcut icon */
-let FAVICON_TAB_DATA_URI = '';
 
 function resolveFaviconSourcePng() {
   for (const name of ['favicon.png', 'favicon-emergency-triangle.png', 'favicon-triangle-alert.png']) {
@@ -56,25 +55,11 @@ function faviconPngHref() {
   return `/assets/${FAVICON_ASSET_NAME}`;
 }
 
-async function buildFaviconTabDataUri(pngBuffer) {
-  FAVICON_TAB_DATA_URI = '';
-  try {
-    const sharp = createRequire(INNSER_PKG_JSON)('sharp');
-    const out = await sharp(pngBuffer)
-      .resize(64, 64, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-      .png({ compressionLevel: 9 })
-      .toBuffer();
-    FAVICON_TAB_DATA_URI = 'data:image/png;base64,' + out.toString('base64');
-  } catch (e) {
-    console.warn('favicon data-URI (sharp) failed:', e.message);
-  }
-}
-
 function faviconHeadBlock() {
-  const tabHref = FAVICON_TAB_DATA_URI || faviconPngHref();
-  const appleHref = faviconPngHref();
-  return `<link rel="icon" type="image/png" href="${tabHref}" sizes="64x64">
-<link rel="apple-touch-icon" href="${appleHref}" sizes="180x180">`;
+  const href = faviconPngHref();
+  return `<link rel="icon" type="image/png" href="${href}" sizes="any">
+<link rel="shortcut icon" type="image/png" href="${href}">
+<link rel="apple-touch-icon" href="${href}" sizes="180x180">`;
 }
 
 const LOCALES = {
@@ -672,11 +657,6 @@ async function main() {
   const faviconBuf = fs.readFileSync(faviconSrc);
   FAVICON_ASSET_NAME =
     'favicon-' + crypto.createHash('sha256').update(faviconBuf).digest('hex').slice(0, 10) + '.png';
-
-  await buildFaviconTabDataUri(faviconBuf);
-  if (FAVICON_TAB_DATA_URI) {
-    console.log('Favicon tab: inline data-URI (64×64), len=', FAVICON_TAB_DATA_URI.length);
-  }
 
   fs.mkdirSync(OUT, { recursive: true });
 
