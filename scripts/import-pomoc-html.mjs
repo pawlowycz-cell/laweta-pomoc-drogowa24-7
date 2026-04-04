@@ -130,5 +130,34 @@ html = html.replace(/tb:'🚨 Pracujemy 24\/7[^']*'/, `tb:'${TB_PL}'`);
 html = html.replace(/tb:'🚨 Working 24\/7[^']*'/, `tb:'${TB_EN}'`);
 html = html.replace(/tb:'🚨 Работаем 24\/7[^']*'/, `tb:'${TB_RU}'`);
 
+// Nav: languages + phone card (replace pomoc defaults; no duplicate CSS)
+const NAV_CLUSTER_CSS = `.nav-actions{display:flex;align-items:center;gap:10px 14px;flex-shrink:0}
+.lang-sw{display:flex;gap:5px;align-items:center;flex-shrink:0}
+.lang-btn{background:none;border:1px solid rgba(255,200,0,.3);border-radius:6px;cursor:pointer;padding:4px 7px;display:flex;align-items:center;gap:4px;font-family:'Oswald',sans-serif;font-size:.65rem;color:rgba(255,255,255,.55);letter-spacing:.04em;transition:all .2s;flex-shrink:0;line-height:1}
+.lang-btn:hover,.lang-btn.active{background:var(--y);color:var(--k);border-color:var(--y)}
+.lang-btn .fl{font-size:.95rem;line-height:1}
+.nav-phone{background:linear-gradient(180deg,var(--y) 0%,var(--y2) 100%);color:var(--k);font-family:'Oswald',sans-serif;text-decoration:none;display:inline-flex;align-items:center;gap:10px;flex-shrink:0;padding:8px 14px;border-radius:10px;border:1px solid rgba(0,0,0,.12);box-shadow:0 2px 14px rgba(255,215,0,.22);transition:transform .15s,box-shadow .2s;white-space:normal}
+.nav-phone:hover{background:linear-gradient(180deg,var(--y2) 0%,#e6b800 100%);box-shadow:0 4px 18px rgba(255,215,0,.35);transform:translateY(-1px)}
+.nav-phone-icon{font-size:1.2rem;line-height:1;filter:drop-shadow(0 1px 0 rgba(255,255,255,.4))}
+.nav-phone-text{display:flex;flex-direction:column;align-items:flex-start;gap:1px;line-height:1.1;text-align:left}
+.nav-phone-tag{font-size:.58rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:.88;color:rgba(0,0,0,.55)}
+.ph-num{font-size:1.02rem;font-weight:800;letter-spacing:.08em;font-variant-numeric:tabular-nums}`;
+const NAV_POMOC_CLUSTER =
+  /\.lang-sw\{display:flex;gap:4px[^}]+\}\s*\.lang-btn\{[^}]+\}\s*\.lang-btn:hover,.lang-btn\.active\{[^}]+\}\s*\.lang-btn \.fl\{[^}]+\}\s*\.nav-phone\{[^}]+\}\s*\.nav-phone:hover\{[^}]+\}/;
+if (!html.includes('nav-phone-text')) {
+  if (NAV_POMOC_CLUSTER.test(html)) {
+    html = html.replace(NAV_POMOC_CLUSTER, NAV_CLUSTER_CSS);
+  }
+  html = html.replace(
+    /<div style="display:flex;align-items:center;gap:8px;flex-shrink:0">/g,
+    '<div class="nav-actions">'
+  );
+  html = html.replace(
+    /<a href="tel:\+48506001057" class="nav-phone">📞 <span class="ph-num">506-001-057<\/span><\/a>/,
+    '<a href="tel:+48506001057" class="nav-phone" aria-label="Zadzwoń 506 001 057"><span class="nav-phone-icon" aria-hidden="true">📞</span><span class="nav-phone-text"><span class="nav-phone-tag">24/7</span><span class="ph-num">506-001-057</span></span></a>'
+  );
+  html = html.replace(/\.nav-phone span\{ display:none; \}/, '.nav-phone .nav-phone-text{ display:none; }');
+}
+
 fs.writeFileSync(dst, html);
 console.log('Wrote', dst, '(' + html.length + ' bytes)');
