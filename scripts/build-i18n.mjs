@@ -34,7 +34,7 @@ const OG_IMAGE_WIDTH = '1024';
 const OG_IMAGE_HEIGHT = '811';
 /** Вкладка браузера та іконка в Google — PNG трикутника. ?v= ламає кеш після заміни файлу. */
 const FAVICON_PATH = '/assets/favicon-triangle-alert.png';
-const FAVICON_CACHE_BUST = '10';
+const FAVICON_CACHE_BUST = '11';
 const FAVICON_MIME = 'image/png';
 const faviconHref = () => `${FAVICON_PATH}?v=${FAVICON_CACHE_BUST}`;
 const appleTouchHref = () => faviconHref();
@@ -442,6 +442,10 @@ function writeNetlifyRedirects(html) {
     '# SPA: блог и карточки услуг (история + прямые ссылки); svc* из разметки innser-v6.html',
     '# Мост: старые домены → www.warszawa-laweta.com (тот же :splat); laweta-warszawa.net отдельный проект',
   ];
+  // Favicon на legacy-хості: той самий PNG без 301 на warszawa-laweta — інакше Google SERP для laweta-pomoc-* тримає стару іконку.
+  for (const host of LEGACY_SITE_HOSTS) {
+    lines.push(`https://${host}/favicon.ico  ${faviconHref()}  302!`);
+  }
   for (const host of LEGACY_SITE_HOSTS) {
     lines.push(`https://${host}/*  ${SITE}/:splat  301!`);
   }
@@ -484,13 +488,21 @@ function writeNetlifyRedirects(html) {
 function writeVercelProjectJson(html) {
   const svcIds = discoverSvcPageIds(html);
   // Внешний destination: Vercel не подставляет :path* в абсолютный URL — только $1 из группы в source.
+  const faviconDest = faviconHref();
+  const legacyFaviconFirst = LEGACY_SITE_HOSTS.map((host) => ({
+    source: '/favicon.ico',
+    has: [{ type: 'host', value: host }],
+    destination: faviconDest,
+    permanent: false,
+  }));
   const legacyRedirects = LEGACY_SITE_HOSTS.flatMap((host) => [
     { source: '/', has: [{ type: 'host', value: host }], destination: `${SITE}/`, permanent: true },
     { source: '/(.*)', has: [{ type: 'host', value: host }], destination: `${SITE}/$1`, permanent: true },
   ]);
   const redirects = [
+    ...legacyFaviconFirst,
     ...legacyRedirects,
-    { source: '/favicon.ico', destination: faviconHref(), permanent: false },
+    { source: '/favicon.ico', destination: faviconDest, permanent: false },
     { source: '/ua/:path*', destination: '/uk/:path*', permanent: true },
     { source: '/ua/', destination: '/uk/', permanent: true },
     { source: '/ua', destination: '/uk/', permanent: true },

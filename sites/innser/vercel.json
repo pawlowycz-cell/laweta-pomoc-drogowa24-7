@@ -5,6 +5,28 @@
   "outputDirectory": "dist",
   "redirects": [
     {
+      "source": "/favicon.ico",
+      "has": [
+        {
+          "type": "host",
+          "value": "laweta-pomoc-drogowa24-7.com"
+        }
+      ],
+      "destination": "/assets/favicon-triangle-alert.png?v=11",
+      "permanent": false
+    },
+    {
+      "source": "/favicon.ico",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.laweta-pomoc-drogowa24-7.com"
+        }
+      ],
+      "destination": "/assets/favicon-triangle-alert.png?v=11",
+      "permanent": false
+    },
+    {
       "source": "/",
       "has": [
         {
@@ -50,7 +72,7 @@
     },
     {
       "source": "/favicon.ico",
-      "destination": "/assets/favicon-triangle-alert.png?v=10",
+      "destination": "/assets/favicon-triangle-alert.png?v=11",
       "permanent": false
     },
     {
