@@ -51,8 +51,19 @@ function resolveFaviconSourcePng() {
   return null;
 }
 
+/** Підвантаження іконки вкладки дуже агресивно кешує Chrome; новий query після кожного деплою змушує підтягнути той самий PNG знову. */
+function faviconCacheQuery() {
+  const id =
+    process.env.VERCEL_DEPLOYMENT_ID ||
+    process.env.VERCEL_GIT_COMMIT_SHA ||
+    process.env.FAVICON_CACHE_BUST ||
+    '';
+  const safe = String(id).replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 24);
+  return safe ? `?v=${safe}` : '';
+}
+
 function faviconPngHref() {
-  return `/assets/${FAVICON_ASSET_NAME}`;
+  return `/assets/${FAVICON_ASSET_NAME}${faviconCacheQuery()}`;
 }
 
 function faviconHeadBlock() {
@@ -562,6 +573,16 @@ function writeVercelProjectJson(html) {
     outputDirectory: 'dist',
     redirects,
     rewrites,
+    headers: [
+      {
+        source: '/favicon.ico',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=0, must-revalidate' }],
+      },
+      {
+        source: '/favicon.png',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=0, must-revalidate' }],
+      },
+    ],
   };
   fs.writeFileSync(path.join(INNSER_DIST_ROOT, 'vercel.json'), JSON.stringify(cfg, null, 2) + '\n', 'utf8');
 }
