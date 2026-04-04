@@ -34,6 +34,33 @@ if (!html.includes('favicon.svg')) {
   );
 }
 
+// Remove base64 logo injector from fresh pomoc (we use /images/logo-hazard.png in markup)
+{
+  const logoStart = '// ---- LOGO — load immediately ----';
+  const logoEnd = '// ---- AUTO LANGUAGE DETECTION ----';
+  const i = html.indexOf(logoStart);
+  const j = html.indexOf(logoEnd);
+  if (i !== -1 && j !== -1 && j > i) {
+    const lineStart = html.lastIndexOf('\n', i) + 1;
+    html = html.slice(0, lineStart) + html.slice(j);
+  }
+}
+
+// Nav: INNSER wordmark + hazard triangle (transparent PNG)
+const NAV_LOGO_INNSER =
+  '<a href="#" class="nav-logo" aria-label="INNSER — pomoc drogowa 24/7"><img id="logo-img" class="nav-logo-img" src="/images/logo-hazard.png" width="59" height="57" alt="" decoding="async"><span class="nav-logo-word">INNSER</span></a>';
+if (!html.includes('logo-hazard.png')) {
+  html = html.replace(/<a href="#" class="nav-logo"[^>]*>ASSISTANCE<\/a>/, NAV_LOGO_INNSER);
+}
+if (!html.includes('.nav-logo-word')) {
+  html = html.replace(
+    /\.nav-logo\{flex-shrink:0;min-width:0\}\s*\.nav-logo img\{[^}]+\}/,
+    `.nav-logo{display:flex;align-items:center;gap:10px 12px;text-decoration:none;color:var(--y);flex-shrink:0;min-width:0}
+.nav-logo-img{height:46px;width:auto;max-height:52px;object-fit:contain;display:block;flex-shrink:0}
+.nav-logo-word{font-family:'Oswald',sans-serif;font-size:clamp(1.05rem,2.5vw,1.35rem);font-weight:700;letter-spacing:.14em;color:var(--y);line-height:1;white-space:nowrap}`
+  );
+}
+
 // Desktop: hide fixed call pill (overlaps hero on wide screens); two-column hero
 if (!html.includes('DESKTOP / TABLET WIDE')) {
   html = html.replace(

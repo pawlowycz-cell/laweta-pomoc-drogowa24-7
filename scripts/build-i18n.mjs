@@ -28,13 +28,13 @@ const LEGACY_SITE_HOSTS = [
   'laweta-pomoc-drogowa24-7.com',
   'www.laweta-pomoc-drogowa24-7.com',
 ];
-/** Open Graph / Twitter + raster favicon (plik .png w repo — faktycznie JPEG 1024×811 z początkowego commitu). */
+/** Open Graph / Twitter — innser-logo.png (окремо від favicon). */
 const OG_IMAGE_PATH = '/assets/innser-logo.png';
 const OG_IMAGE_WIDTH = '1024';
 const OG_IMAGE_HEIGHT = '811';
-/** Вкладка браузера — PNG аварійного трикутника (без тексту). ?v= ламає кеш. */
+/** Вкладка браузера та іконка в Google — PNG трикутника. ?v= ламає кеш після заміни файлу. */
 const FAVICON_PATH = '/assets/favicon-triangle-alert.png';
-const FAVICON_CACHE_BUST = '8';
+const FAVICON_CACHE_BUST = '10';
 const FAVICON_MIME = 'image/png';
 const faviconHref = () => `${FAVICON_PATH}?v=${FAVICON_CACHE_BUST}`;
 const appleTouchHref = () => faviconHref();
