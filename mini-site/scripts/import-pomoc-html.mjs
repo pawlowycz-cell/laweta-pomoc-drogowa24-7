@@ -46,17 +46,16 @@ if (!html.includes('favicon.svg')) {
   }
 }
 
-// Nav: ASSISTANCE + SVG triangle only (no text baked into raster)
+// Nav: только ASSISTANCE (без трикутника)
 const NAV_LOGO_ASSISTANCE =
-  '<a href="#" class="nav-logo" aria-label="ASSISTANCE — pomoc drogowa 24/7"><img id="logo-img" class="nav-logo-img" src="/images/warning-triangle.svg" width="59" height="57" alt="" decoding="async"><span class="nav-logo-word">ASSISTANCE</span></a>';
+  '<a href="#" class="nav-logo" aria-label="ASSISTANCE — pomoc drogowa 24/7"><span class="nav-logo-word">ASSISTANCE</span></a>';
 if (!html.includes('nav-logo-word')) {
   html = html.replace(/<a href="#" class="nav-logo"[^>]*>ASSISTANCE<\/a>/, NAV_LOGO_ASSISTANCE);
 }
 if (!html.includes('.nav-logo-word')) {
   html = html.replace(
     /\.nav-logo\{flex-shrink:0;min-width:0\}\s*\.nav-logo img\{[^}]+\}/,
-    `.nav-logo{display:flex;align-items:center;gap:10px 12px;text-decoration:none;color:var(--y);flex-shrink:0;min-width:0}
-.nav-logo-img{height:46px;width:auto;max-height:52px;object-fit:contain;display:block;flex-shrink:0}
+    `.nav-logo{display:flex;align-items:center;text-decoration:none;color:var(--y);flex-shrink:0;min-width:0}
 .nav-logo-word{font-family:'Oswald',sans-serif;font-size:clamp(1.05rem,2.5vw,1.35rem);font-weight:700;letter-spacing:.14em;color:var(--y);line-height:1;white-space:nowrap}`
   );
 }

@@ -140,8 +140,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--k);color:var(--w);overf
 /* NAV */
 nav{background:var(--k);border-bottom:3px solid var(--y);position:sticky;top:0;z-index:999;padding:0 16px;width:100%}
 .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;min-height:60px;gap:12px 20px;width:100%}
-.nav-logo{display:flex;align-items:center;gap:10px 12px;text-decoration:none;color:var(--y);flex-shrink:0;min-width:0}
-.nav-logo-img{height:46px;width:auto;max-height:52px;object-fit:contain;display:block;flex-shrink:0}
+.nav-logo{display:flex;align-items:center;text-decoration:none;color:var(--y);flex-shrink:0;min-width:0}
 .nav-logo-word{font-family:'Oswald',sans-serif;font-size:clamp(1.05rem,2.5vw,1.35rem);font-weight:700;letter-spacing:.14em;color:var(--y);line-height:1;white-space:nowrap}
 .nav-menu{display:flex;align-items:center;gap:4px;list-style:none;flex:1 1 auto;justify-content:center;min-width:0;margin:0 8px}
 .nav-menu a{color:var(--y);text-decoration:none;font-family:'Oswald',sans-serif;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;padding:5px 9px;border-radius:3px;transition:background .2s,color .2s;white-space:nowrap}
@@ -361,7 +360,7 @@ footer{background:#0a0a0a;border-top:3px solid var(--y);padding:24px 16px;text-a
 <!-- NAV -->
 <nav>
 <div class="nav-inner">
-  <a href="#" class="nav-logo" aria-label="ASSISTANCE — pomoc drogowa 24/7"><img id="logo-img" class="nav-logo-img" src="/images/warning-triangle.svg" width="59" height="57" alt="" decoding="async"><span class="nav-logo-word">ASSISTANCE</span></a>
+  <a href="#" class="nav-logo" aria-label="ASSISTANCE — pomoc drogowa 24/7"><span class="nav-logo-word">ASSISTANCE</span></a>
   <ul class="nav-menu" id="navMenu">
     <li><a href="#services" class="nl" data-k="ms">Usługi</a></li>
     <li><a href="#prices" class="nl" data-k="mp">Cennik</a></li>
