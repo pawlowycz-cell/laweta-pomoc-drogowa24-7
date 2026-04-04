@@ -599,6 +599,8 @@ function copyPublicRootFiles() {
   let n = 0;
   for (const name of fs.readdirSync(PUBLIC_SRC)) {
     if (name.startsWith('.')) continue;
+    // Не класти public/favicon.png у dist — він часто старий/інший; кореневий favicon.png пишемо з assets у main().
+    if (name === 'favicon.png') continue;
     const src = path.join(PUBLIC_SRC, name);
     if (!fs.statSync(src).isFile()) continue;
     fs.copyFileSync(src, path.join(OUT, name));
@@ -689,6 +691,8 @@ async function main() {
   copyPublicRootFiles();
   fs.writeFileSync(path.join(OUT, 'assets', FAVICON_ASSET_NAME), faviconBuf);
   fs.writeFileSync(path.join(OUT, 'assets', 'favicon.png'), faviconBuf);
+  fs.writeFileSync(path.join(OUT, 'favicon.png'), faviconBuf);
+  console.log('Wrote', path.relative(REPO_ROOT, path.join(OUT, 'favicon.png')), '(same bytes as assets favicon)');
   await generateRootFavicons();
 
   console.log(
