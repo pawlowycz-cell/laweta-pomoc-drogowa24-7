@@ -42,6 +42,8 @@ const OG_IMAGE_HEIGHT = '811';
  * Корінь: favicon.ico з того ж PNG.
  */
 let FAVICON_ASSET_NAME = 'favicon.png';
+/** Маленький PNG для вкладки — Safari гірше малює великий favicon і дає «подвійний»/обрізаний трикутник. */
+let FAVICON_TAB_ASSET_NAME = '';
 
 function resolveFaviconSourcePng() {
   for (const name of ['favicon.png', 'favicon-emergency-triangle.png', 'favicon-triangle-alert.png']) {
@@ -66,11 +68,23 @@ function faviconPngHref() {
   return `/assets/${FAVICON_ASSET_NAME}${faviconCacheQuery()}`;
 }
 
+function faviconTabPngHref() {
+  const name = FAVICON_TAB_ASSET_NAME || FAVICON_ASSET_NAME;
+  return `/assets/${name}${faviconCacheQuery()}`;
+}
+
+/** Той самий файл, що й writeAppleTouchIconPng у корені dist — один URL для <link> і для автозапиту Safari. */
+function appleTouchIconHref() {
+  return `/apple-touch-icon.png${faviconCacheQuery()}`;
+}
+
 function faviconHeadBlock() {
-  const href = faviconPngHref();
-  return `<link rel="icon" type="image/png" href="${href}" sizes="any">
-<link rel="shortcut icon" type="image/png" href="${href}">
-<link rel="apple-touch-icon" href="${href}" sizes="180x180">`;
+  const tab = faviconTabPngHref();
+  const full = faviconPngHref();
+  const apple = appleTouchIconHref();
+  return `<link rel="icon" type="image/png" href="${tab}" sizes="32x32">
+<link rel="icon" type="image/png" href="${full}" sizes="64x64">
+<link rel="apple-touch-icon" href="${apple}" sizes="180x180">`;
 }
 
 const LOCALES = {
@@ -576,15 +590,21 @@ function writeVercelProjectJson(html) {
     headers: [
       {
         source: '/favicon.ico',
-        headers: [{ key: 'Cache-Control', value: 'public, max-age=0, must-revalidate' }],
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=604800' },
+        ],
       },
       {
         source: '/favicon.png',
-        headers: [{ key: 'Cache-Control', value: 'public, max-age=0, must-revalidate' }],
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=604800' },
+        ],
       },
       {
         source: '/apple-touch-icon.png',
-        headers: [{ key: 'Cache-Control', value: 'public, max-age=0, must-revalidate' }],
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=604800' },
+        ],
       },
     ],
   };
@@ -667,6 +687,26 @@ async function generateRootFavicons() {
   }
 }
 
+/** 32×32 для rel=icon sizes=32x32 — краще для смуги вкладок Safari/Chrome. */
+async function writeFaviconTabPng(pngBuffer) {
+  const name = FAVICON_TAB_ASSET_NAME;
+  if (!name) return;
+  const outPath = path.join(OUT, 'assets', name);
+  try {
+    const requireInnser = createRequire(INNSER_PKG_JSON);
+    const sharp = requireInnser('sharp');
+    await sharp(pngBuffer)
+      .resize(32, 32, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+      .png()
+      .toFile(outPath);
+    console.log('Wrote', path.relative(REPO_ROOT, outPath), '(32×32 tab)');
+  } catch (e) {
+    console.warn('favicon-tab 32×32 (sharp) failed:', e.message);
+    fs.writeFileSync(outPath, pngBuffer);
+    console.log('Wrote', path.relative(REPO_ROOT, outPath), '(fallback: raw favicon)');
+  }
+}
+
 /** 180×180 з того ж PNG, що й favicon — щоб Safari (який часто бере /apple-touch-icon.png) не показував іншу картинку. */
 async function writeAppleTouchIconPng(pngBuffer) {
   const outPath = path.join(OUT, 'apple-touch-icon.png');
@@ -704,6 +744,8 @@ async function main() {
   const faviconBuf = fs.readFileSync(faviconSrc);
   FAVICON_ASSET_NAME =
     'favicon-' + crypto.createHash('sha256').update(faviconBuf).digest('hex').slice(0, 10) + '.png';
+  FAVICON_TAB_ASSET_NAME =
+    'favicon-tab-' + crypto.createHash('sha256').update(faviconBuf).update(':32').digest('hex').slice(0, 10) + '.png';
 
   fs.mkdirSync(OUT, { recursive: true });
 
@@ -738,6 +780,7 @@ async function main() {
   fs.writeFileSync(path.join(OUT, 'assets', 'favicon.png'), faviconBuf);
   fs.writeFileSync(path.join(OUT, 'favicon.png'), faviconBuf);
   console.log('Wrote', path.relative(REPO_ROOT, path.join(OUT, 'favicon.png')), '(same bytes as assets favicon)');
+  await writeFaviconTabPng(faviconBuf);
   await generateRootFavicons();
   await writeAppleTouchIconPng(faviconBuf);
 
