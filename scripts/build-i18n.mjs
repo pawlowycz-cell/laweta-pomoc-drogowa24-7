@@ -110,11 +110,14 @@ const LOCALES = {
 
 const AUTO_DETECT_SNIPPET = `  // Auto-detect browser language (URL path wins for /{lang}/blog/…, /{lang}/svcN/)
 var route0 = parsePathToPage();
-var userLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+var list = (typeof navigator.languages !== 'undefined' && navigator.languages && navigator.languages.length) ? Array.prototype.slice.call(navigator.languages) : [navigator.language || navigator.userLanguage || 'en'];
 var detectedLang = 'en';
-if(userLang.startsWith('ru')) detectedLang = 'ru';
-else if(userLang.startsWith('uk') || userLang.startsWith('ua')) detectedLang = 'ua';
-else if(userLang.startsWith('pl')) detectedLang = 'pl';
+for (var ri = 0; ri < list.length; ri++) {
+  var userLang = String(list[ri] || '').toLowerCase();
+  if (userLang.startsWith('ru')) { detectedLang = 'ru'; break; }
+  if (userLang.startsWith('uk') || userLang.startsWith('ua')) { detectedLang = 'ua'; break; }
+  if (userLang.startsWith('pl')) { detectedLang = 'pl'; break; }
+}
 var startLang = route0 ? (route0.langSeg === 'uk' ? 'ua' : route0.langSeg) : detectedLang;
 SL(startLang);
 renderAreas(startLang);`;
@@ -301,16 +304,19 @@ function writeRootRedirect() {
   try{
     var saved = localStorage.getItem('innser_lang');
     if(saved === 'ua') saved = 'uk';
-    if(saved && /^pl|en|ru|uk$/.test(saved)){
+    if(saved && /^(pl|en|ru|uk)$/.test(saved)){
       location.replace('/' + saved + '/');
       return;
     }
   }catch(e){}
-  var nav = (navigator.language || navigator.userLanguage || 'pl').toLowerCase();
+  var langs = (typeof navigator.languages !== 'undefined' && navigator.languages && navigator.languages.length) ? Array.prototype.slice.call(navigator.languages) : [navigator.language || navigator.userLanguage || 'pl'];
   var code = 'en';
-  if(nav.indexOf('ru') === 0) code = 'ru';
-  else if(nav.indexOf('uk') === 0 || nav.indexOf('ua') === 0) code = 'uk';
-  else if(nav.indexOf('pl') === 0) code = 'pl';
+  for (var li = 0; li < langs.length; li++) {
+    var nav = String(langs[li] || '').toLowerCase();
+    if (nav.indexOf('ru') === 0) { code = 'ru'; break; }
+    if (nav.indexOf('uk') === 0 || nav.indexOf('ua') === 0) { code = 'uk'; break; }
+    if (nav.indexOf('pl') === 0) { code = 'pl'; break; }
+  }
   location.replace('/' + code + '/');
 })();
 </script>

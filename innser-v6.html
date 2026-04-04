@@ -2465,11 +2465,14 @@ document.addEventListener('DOMContentLoaded',()=>{
     initReveals();
   // Auto-detect browser language (URL path wins for /{lang}/blog/…, /{lang}/svcN/)
 var route0 = parsePathToPage();
-var userLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+var list = (typeof navigator.languages !== 'undefined' && navigator.languages && navigator.languages.length) ? Array.prototype.slice.call(navigator.languages) : [navigator.language || navigator.userLanguage || 'en'];
 var detectedLang = 'en';
-if(userLang.startsWith('ru')) detectedLang = 'ru';
-else if(userLang.startsWith('uk') || userLang.startsWith('ua')) detectedLang = 'ua';
-else if(userLang.startsWith('pl')) detectedLang = 'pl';
+for (var ri = 0; ri < list.length; ri++) {
+  var userLang = String(list[ri] || '').toLowerCase();
+  if (userLang.startsWith('ru')) { detectedLang = 'ru'; break; }
+  if (userLang.startsWith('uk') || userLang.startsWith('ua')) { detectedLang = 'ua'; break; }
+  if (userLang.startsWith('pl')) { detectedLang = 'pl'; break; }
+}
 var startLang = route0 ? (route0.langSeg === 'uk' ? 'ua' : route0.langSeg) : detectedLang;
 SL(startLang);
 renderAreas(startLang);
