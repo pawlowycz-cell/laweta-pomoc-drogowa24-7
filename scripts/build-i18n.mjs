@@ -46,7 +46,13 @@ let FAVICON_ASSET_NAME = 'favicon.png';
 let FAVICON_TAB_ASSET_NAME = '';
 
 function resolveFaviconSourcePng() {
-  for (const name of ['favicon.png', 'favicon-emergency-triangle.png', 'favicon-triangle-alert.png']) {
+  // Порядок: спочатку яскравий «дорожній» трикутник (без чорного центру як у старому favicon.png) —
+  // краще в Google / у маленькій іконці; далі fallback.
+  for (const name of [
+    'favicon-triangle-alert.png',
+    'favicon.png',
+    'favicon-emergency-triangle.png',
+  ]) {
     const p = path.join(ASSETS_SRC, name);
     if (fs.existsSync(p)) return p;
   }
