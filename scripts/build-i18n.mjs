@@ -487,11 +487,18 @@ function writeNetlifyRedirects(html) {
 function writeVercelProjectJson(html) {
   const svcIds = discoverSvcPageIds(html);
   // Внешний destination: Vercel не подставляет :path* в абсолютный URL — только $1 из группы в source.
+  const legacyFaviconToCanonical = LEGACY_SITE_HOSTS.map((host) => ({
+    source: '/favicon.ico',
+    has: [{ type: 'host', value: host }],
+    destination: `${SITE}/favicon.ico`,
+    permanent: false,
+  }));
   const legacyRedirects = LEGACY_SITE_HOSTS.flatMap((host) => [
     { source: '/', has: [{ type: 'host', value: host }], destination: `${SITE}/`, permanent: true },
     { source: '/(.*)', has: [{ type: 'host', value: host }], destination: `${SITE}/$1`, permanent: true },
   ]);
   const redirects = [
+    ...legacyFaviconToCanonical,
     ...legacyRedirects,
     { source: '/ua/:path*', destination: '/uk/:path*', permanent: true },
     { source: '/ua/', destination: '/uk/', permanent: true },

@@ -5,6 +5,28 @@
   "outputDirectory": "dist",
   "redirects": [
     {
+      "source": "/favicon.ico",
+      "has": [
+        {
+          "type": "host",
+          "value": "laweta-pomoc-drogowa24-7.com"
+        }
+      ],
+      "destination": "https://www.warszawa-laweta.com/favicon.ico",
+      "permanent": false
+    },
+    {
+      "source": "/favicon.ico",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.laweta-pomoc-drogowa24-7.com"
+        }
+      ],
+      "destination": "https://www.warszawa-laweta.com/favicon.ico",
+      "permanent": false
+    },
+    {
       "source": "/",
       "has": [
         {
