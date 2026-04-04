@@ -34,7 +34,7 @@ const OG_IMAGE_WIDTH = '1024';
 const OG_IMAGE_HEIGHT = '811';
 /** Вкладка браузера та іконка в Google — PNG трикутника. ?v= ламає кеш після заміни файлу. */
 const FAVICON_PATH = '/assets/favicon-triangle-alert.png';
-const FAVICON_CACHE_BUST = '11';
+const FAVICON_CACHE_BUST = '12';
 const FAVICON_MIME = 'image/png';
 const faviconHref = () => `${FAVICON_PATH}?v=${FAVICON_CACHE_BUST}`;
 const appleTouchHref = () => faviconHref();
@@ -442,14 +442,13 @@ function writeNetlifyRedirects(html) {
     '# SPA: блог и карточки услуг (история + прямые ссылки); svc* из разметки innser-v6.html',
     '# Мост: старые домены → www.warszawa-laweta.com (тот же :splat); laweta-warszawa.net отдельный проект',
   ];
-  // Favicon на legacy-хості: той самий PNG без 301 на warszawa-laweta — інакше Google SERP для laweta-pomoc-* тримає стару іконку.
   for (const host of LEGACY_SITE_HOSTS) {
-    lines.push(`https://${host}/favicon.ico  ${faviconHref()}  302!`);
+    lines.push(`https://${host}/favicon.ico  /favicon.ico  200!`);
   }
   for (const host of LEGACY_SITE_HOSTS) {
     lines.push(`https://${host}/*  ${SITE}/:splat  301!`);
   }
-  lines.push(`/favicon.ico  ${faviconHref()}  302`);
+  // Кореневий /favicon.ico у dist (copyRootFaviconIco); для Netlify — рядки 200! вище.
   // Legacy /ua → canonical /uk/ (hreflang uk). Absolute URL + trailing slash = один 301 (без /ua/→/uk→/uk/).
   // Порядок: сначала /ua/* и /ua/, потом /ua — иначе Netlify может сопоставить /ua/ с правилом /ua и отдать Location: /uk (второй хоп).
   lines.push(`/ua/*  ${SITE}/uk/:splat  301`);
@@ -488,21 +487,12 @@ function writeNetlifyRedirects(html) {
 function writeVercelProjectJson(html) {
   const svcIds = discoverSvcPageIds(html);
   // Внешний destination: Vercel не подставляет :path* в абсолютный URL — только $1 из группы в source.
-  const faviconDest = faviconHref();
-  const legacyFaviconFirst = LEGACY_SITE_HOSTS.map((host) => ({
-    source: '/favicon.ico',
-    has: [{ type: 'host', value: host }],
-    destination: faviconDest,
-    permanent: false,
-  }));
   const legacyRedirects = LEGACY_SITE_HOSTS.flatMap((host) => [
     { source: '/', has: [{ type: 'host', value: host }], destination: `${SITE}/`, permanent: true },
     { source: '/(.*)', has: [{ type: 'host', value: host }], destination: `${SITE}/$1`, permanent: true },
   ]);
   const redirects = [
-    ...legacyFaviconFirst,
     ...legacyRedirects,
-    { source: '/favicon.ico', destination: faviconDest, permanent: false },
     { source: '/ua/:path*', destination: '/uk/:path*', permanent: true },
     { source: '/ua/', destination: '/uk/', permanent: true },
     { source: '/ua', destination: '/uk/', permanent: true },
@@ -584,6 +574,19 @@ function copyPublicRootFiles() {
   }
 }
 
+/** Кореневий /favicon.ico (копія PNG): Vercel/Netlify віддають статику раніше за redirects — legacy-домени не роблять другий запит на /assets/* під 301 на warszawa-laweta. */
+function copyRootFaviconIco() {
+  const fromDistAsset = path.join(OUT, 'assets', 'favicon-triangle-alert.png');
+  const fromRepo = path.join(ASSETS_SRC, 'favicon-triangle-alert.png');
+  const from = fs.existsSync(fromDistAsset) ? fromDistAsset : fromRepo;
+  if (!fs.existsSync(from)) {
+    console.warn('favicon-triangle-alert.png not found; skip root favicon.ico');
+    return;
+  }
+  fs.copyFileSync(from, path.join(OUT, 'favicon.ico'));
+  console.log('Wrote', path.relative(REPO_ROOT, path.join(OUT, 'favicon.ico')), '(same PNG; root favicon for all hosts)');
+}
+
 function main() {
   if (!fs.existsSync(SRC)) {
     console.error('Missing source:', SRC);
@@ -624,6 +627,7 @@ function main() {
   copyAssetsIntoDist();
   copyServiceImagesIntoDist();
   copyPublicRootFiles();
+  copyRootFaviconIco();
 
   console.log(
     '\nNetlify: перетащи на Deploy ОДНУ папку — ВСЁ СОДЕРЖИМОЕ папки dist/ (index.html, pl, en, ru, uk, assets, images, robots.txt, sitemap.xml, _redirects, файлы из public/).'

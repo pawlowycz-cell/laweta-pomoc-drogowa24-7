@@ -5,28 +5,6 @@
   "outputDirectory": "dist",
   "redirects": [
     {
-      "source": "/favicon.ico",
-      "has": [
-        {
-          "type": "host",
-          "value": "laweta-pomoc-drogowa24-7.com"
-        }
-      ],
-      "destination": "/assets/favicon-triangle-alert.png?v=11",
-      "permanent": false
-    },
-    {
-      "source": "/favicon.ico",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.laweta-pomoc-drogowa24-7.com"
-        }
-      ],
-      "destination": "/assets/favicon-triangle-alert.png?v=11",
-      "permanent": false
-    },
-    {
       "source": "/",
       "has": [
         {
@@ -69,11 +47,6 @@
       ],
       "destination": "https://www.warszawa-laweta.com/$1",
       "permanent": true
-    },
-    {
-      "source": "/favicon.ico",
-      "destination": "/assets/favicon-triangle-alert.png?v=11",
-      "permanent": false
     },
     {
       "source": "/ua/:path*",
