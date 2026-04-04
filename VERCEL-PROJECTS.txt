@@ -19,27 +19,22 @@
   Домены: www.warszawa-laweta.com, warszawa-laweta.com, laweta-pomoc-* → мост на warszawa-laweta.com
 
 
-2) Визитка laweta-warszawa.net — копия в репо: mini-site/
----------------------------------------------------------
-  Исходники в Git:  INNSER COD/mini-site/  (то же содержимое, что на Desktop/MINI COD)
+2) Визитка https://www.laweta-warszawa.net — папка mini-site/ + корневой vercel.json
+-----------------------------------------------------------------------------------
+  Исходники в Git:  mini-site/
 
-  Если правили на рабочем столе, перед commit:
-    npm run sync:mini-in
-    (копирует ~/Desktop/MINI COD → mini-site/)
+  Деплой с корня репо (рекомендуется, если в Vercel не трогали Root Directory):
+    В корне лежит vercel.json: build копирует mini-site → .vercel-mini-out
+    Vercel: Root Directory ПУСТОЙ, Output Directory ПУСТОЙ (берётся из vercel.json)
+    Build: подставится из vercel.json (node scripts/vercel-laweta-build.mjs)
 
-  Удобно править прямо в Cursor: папка mini-site/ в этом же репозитории.
+  Альтернатива: Root Directory = mini-site, тогда корневой vercel.json не используется;
+    Build: npm run build, Output: пусто, конфиг mini-site/vercel.json
 
+  sync с рабочего стола:  npm run sync:mini-in
   Локально:  npm run preview:mini
 
-  Импорт pomoc HTML:
-    node mini-site/scripts/import-pomoc-html.mjs "<файл>"
-    (из корня репо: cwd любой, путь к скрипту полный)
-
-  Vercel (визитка):
-    Root Directory:  mini-site
-    Build Command:   npm run build   (в package.json — проверка index.html)
-    Output Directory: оставить ПУСТЫМ (не dist и не «.»). Иначе будет 404.
-    Конфиг:          mini-site/vercel.json (без outputDirectory — раздача из корня mini-site)
+  Импорт pomoc:  node mini-site/scripts/import-pomoc-html.mjs "<файл>"
 
   Домены только здесь: www.laweta-warszawa.net, laweta-warszawa.net
 
