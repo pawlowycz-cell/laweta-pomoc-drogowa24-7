@@ -4,7 +4,8 @@
  * Сборка в sites/innser/dist/ (Vercel: Root Directory = sites/innser).
  * sites/innser/vercel.json в git: мост laweta-pomoc-* → warszawa-laweta.com (без laweta-warszawa.net).
  */
-import { spawnSync } from 'child_process';
+import crypto from 'crypto';
+import { createRequire } from 'module';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -13,6 +14,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.join(__dirname, '..');
 /** Куда кладём готовый сайт INNSER (не смешивать с laweta-warszawa.net). */
 const INNSER_DIST_ROOT = path.join(REPO_ROOT, 'sites', 'innser');
+const INNSER_PKG_JSON = path.join(INNSER_DIST_ROOT, 'package.json');
 const SRC = path.join(REPO_ROOT, 'innser-v6.html');
 const OUT = path.join(INNSER_DIST_ROOT, 'dist');
 const ASSETS_SRC = path.join(REPO_ROOT, 'assets');
@@ -34,24 +36,29 @@ const OG_IMAGE_PATH = '/assets/innser-logo.png';
 const OG_IMAGE_WIDTH = '1024';
 const OG_IMAGE_HEIGHT = '811';
 /**
- * Вкладка: окремий шлях innser-tab-icon.ico (копія кореневого ICO) — Chrome часто не скидає кеш для /favicon.ico навіть з ?v=.
- * /favicon.ico лишається для краулерів і автозапитів без HTML.
+ * Одна картинка: assets/favicon.png (заміни файл — і все). Якщо немає — беремо favicon-emergency-triangle.png, потім favicon-triangle-alert.png.
+ * У HTML — ?h=<хеш файла>: після зміни PNG кеш браузера зламається без ручного v=.
  */
-const FAVICON_PATH = '/assets/favicon-triangle-alert.png';
-const FAVICON_48_PATH = '/assets/favicon-48.png';
-const FAVICON_TAB_ICO_PATH = '/assets/innser-tab-icon.ico';
-const FAVICON_CACHE_BUST = '15';
-const FAVICON_MIME = 'image/png';
-const faviconHref = () => `${FAVICON_PATH}?v=${FAVICON_CACHE_BUST}`;
-const faviconTabIcoHref = () => `${FAVICON_TAB_ICO_PATH}?v=${FAVICON_CACHE_BUST}`;
-const favicon48Href = () => `${FAVICON_48_PATH}?v=${FAVICON_CACHE_BUST}`;
-const appleTouchHref = () => faviconHref();
+const FAVICON_PUBLIC_PNG = '/assets/favicon.png';
+let FAVICON_QS = 'h=0';
+
+function resolveFaviconSourcePng() {
+  for (const name of ['favicon.png', 'favicon-emergency-triangle.png', 'favicon-triangle-alert.png']) {
+    const p = path.join(ASSETS_SRC, name);
+    if (fs.existsSync(p)) return p;
+  }
+  return null;
+}
+
+function faviconPngHref() {
+  return `${FAVICON_PUBLIC_PNG}?${FAVICON_QS}`;
+}
 
 function faviconHeadBlock() {
-  return `<link rel="icon" href="${faviconTabIcoHref()}" sizes="any">
-<link rel="icon" href="${favicon48Href()}" type="${FAVICON_MIME}" sizes="48x48">
-<link rel="shortcut icon" href="${faviconTabIcoHref()}">
-<link rel="apple-touch-icon" href="${appleTouchHref()}" sizes="180x180">`;
+  const href = faviconPngHref();
+  return `<link rel="icon" type="image/png" href="${href}" sizes="any">
+<link rel="shortcut icon" type="image/png" href="${href}">
+<link rel="apple-touch-icon" href="${href}" sizes="180x180">`;
 }
 
 const LOCALES = {
@@ -212,7 +219,7 @@ function buildLocaleHtml(raw, key) {
   let html = raw;
 
   html = html.replace(
-    /<link rel="icon"[^>]*>\s*\n(?:<link rel="icon"[^>]*>\s*\n)?<link rel="shortcut icon"[^>]*>\s*\n<link rel="apple-touch-icon"[^>]*>/,
+    /(?:<link rel="icon"[^>]*>\s*\n)+<link rel="shortcut icon"[^>]*>\s*\n<link rel="apple-touch-icon"[^>]*>/,
     faviconHeadBlock()
   );
 
@@ -599,46 +606,38 @@ function copyPublicRootFiles() {
   }
 }
 
-/**
- * Кореневий /favicon.ico — справжній ICO (не PNG під ім'ям .ico: Chrome погано оновлює кеш).
- * У репо: assets/favicon-root.ico + assets/favicon-48.png (для Vercel без Python).
- * Якщо favicon-root.ico немає — generate-favicons.py з favicon-triangle-alert.png (локально, потрібен Pillow).
- */
-function generateRootFavicons() {
+/** Кореневий /favicon.ico з того ж PNG (квадрат 256 через sharp → png-to-ico). Fallback: assets/favicon-root.ico. */
+async function generateRootFavicons() {
+  const outRoot = path.join(OUT, 'favicon.ico');
+  const pngPath = path.join(OUT, 'assets', 'favicon.png');
+  const sqPath = path.join(OUT, '.favicon-256-square.png');
   const bundledIco = path.join(OUT, 'assets', 'favicon-root.ico');
-  if (fs.existsSync(bundledIco)) {
-    const rootIco = path.join(OUT, 'favicon.ico');
-    fs.copyFileSync(bundledIco, rootIco);
-    fs.copyFileSync(rootIco, path.join(OUT, 'assets', 'innser-tab-icon.ico'));
-    console.log(
-      'Wrote',
-      path.relative(REPO_ROOT, rootIco),
-      '+ assets/innser-tab-icon.ico (from assets/favicon-root.ico)'
-    );
+  if (!fs.existsSync(pngPath)) {
+    console.warn('dist/assets/favicon.png missing; skip favicon.ico');
     return;
   }
-  const fromDistAsset = path.join(OUT, 'assets', 'favicon-triangle-alert.png');
-  const fromRepo = path.join(ASSETS_SRC, 'favicon-triangle-alert.png');
-  const from = fs.existsSync(fromDistAsset) ? fromDistAsset : fromRepo;
-  if (!fs.existsSync(from)) {
-    console.warn('favicon-triangle-alert.png not found; skip favicon.ico');
-    return;
+  try {
+    const requireInnser = createRequire(INNSER_PKG_JSON);
+    const sharp = requireInnser('sharp');
+    const pngToIco = requireInnser('png-to-ico');
+    await sharp(pngPath)
+      .resize(256, 256, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+      .png()
+      .toFile(sqPath);
+    const icoBuf = await pngToIco(sqPath);
+    fs.writeFileSync(outRoot, icoBuf);
+    fs.rmSync(sqPath, { force: true });
+    console.log('Wrote', path.relative(REPO_ROOT, outRoot), '(sharp + png-to-ico)');
+  } catch (e) {
+    console.warn('favicon.ico generation failed:', e.message);
+    if (fs.existsSync(bundledIco)) {
+      fs.copyFileSync(bundledIco, outRoot);
+      console.log('Fallback:', path.relative(REPO_ROOT, bundledIco), '→ favicon.ico');
+    }
   }
-  const py = path.join(REPO_ROOT, 'scripts', 'generate-favicons.py');
-  const r = spawnSync('python3', [py, from, OUT], { encoding: 'utf8' });
-  if (r.status !== 0) {
-    console.error(r.stderr || r.stdout || 'generate-favicons.py failed');
-    console.warn('Fallback: копіюємо PNG як favicon.ico (може кешуватись некоректно в Chrome)');
-    const rootIco = path.join(OUT, 'favicon.ico');
-    fs.copyFileSync(from, rootIco);
-    fs.copyFileSync(rootIco, path.join(OUT, 'assets', 'innser-tab-icon.ico'));
-    return;
-  }
-  if (r.stdout) process.stdout.write(r.stdout);
-  fs.copyFileSync(path.join(OUT, 'favicon.ico'), path.join(OUT, 'assets', 'innser-tab-icon.ico'));
 }
 
-function main() {
+async function main() {
   if (!fs.existsSync(SRC)) {
     console.error('Missing source:', SRC);
     process.exit(1);
@@ -648,6 +647,15 @@ function main() {
     console.error('Source HTML: auto-detect block not found (file changed?)');
     process.exit(1);
   }
+
+  const faviconSrc = resolveFaviconSourcePng();
+  if (!faviconSrc) {
+    console.error('Немає PNG для favicon: додай assets/favicon.png');
+    process.exit(1);
+  }
+  const faviconBuf = fs.readFileSync(faviconSrc);
+  FAVICON_QS =
+    'h=' + crypto.createHash('sha256').update(faviconBuf).digest('hex').slice(0, 12);
 
   fs.mkdirSync(OUT, { recursive: true });
 
@@ -678,7 +686,8 @@ function main() {
   copyAssetsIntoDist();
   copyServiceImagesIntoDist();
   copyPublicRootFiles();
-  generateRootFavicons();
+  fs.writeFileSync(path.join(OUT, 'assets', 'favicon.png'), faviconBuf);
+  await generateRootFavicons();
 
   console.log(
     '\nNetlify: перетащи на Deploy ОДНУ папку — ВСЁ СОДЕРЖИМОЕ папки dist/ (index.html, pl, en, ru, uk, assets, images, robots.txt, sitemap.xml, _redirects, файлы из public/).'
@@ -689,4 +698,7 @@ function main() {
   );
 }
 
-main();
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});
