@@ -127,9 +127,14 @@ body{font-family:'Open Sans',sans-serif;background:var(--k);color:var(--w);overf
 /* HAZARD */
 .hazard{background:repeating-linear-gradient(-45deg,var(--y) 0,var(--y) 20px,var(--k) 20px,var(--k) 40px);height:16px}
 
-/* TOPBAR */
-.topbar{background:var(--r);padding:7px 16px;text-align:center;font-family:'Oswald',sans-serif;font-size:.85rem;letter-spacing:.05em;animation:pulse 2.5s ease infinite;width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-.topbar a{color:#fff;text-decoration:none;font-weight:700}
+/* TOPBAR — layout (TOPBAR-STRIP) */
+.topbar{background:var(--r);padding:0;font-family:'Oswald',sans-serif;animation:pulse 2.5s ease infinite;width:100%}
+.topbar-inner{max-width:1100px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px 24px;flex-wrap:wrap}
+.topbar-msg{color:#fff;font-size:.82rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;line-height:1.35;flex:1 1 auto;min-width:min(100%,220px)}
+.topbar-dial{display:inline-flex;align-items:center;gap:8px;flex-shrink:0;color:#fff!important;text-decoration:none;font-weight:700;font-size:.88rem;letter-spacing:.04em;white-space:nowrap;padding:7px 16px;border-radius:999px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.38);transition:background .2s,border-color .2s,transform .15s}
+.topbar-dial:hover{background:rgba(0,0,0,.38);border-color:rgba(255,255,255,.6);transform:translateY(-1px)}
+.topbar-dial-ico{line-height:1}
+.topbar-dial-num{letter-spacing:.03em}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.82}}
 
 /* NAV */
@@ -166,7 +171,8 @@ nav{background:var(--k);border-bottom:3px solid var(--y);position:sticky;top:0;z
 .btn-wa:hover{transform:translateY(-2px)}
 .big-phone-pill{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:500;background:var(--y);color:var(--k);font-family:'Oswald',sans-serif;font-size:1.5rem;font-weight:700;padding:15px 40px;border-radius:60px;text-decoration:none;letter-spacing:.06em;white-space:nowrap;box-shadow:0 6px 32px rgba(255,215,0,.5),0 2px 8px rgba(0,0,0,.4);animation:bounce-pill 2s ease-in-out infinite}
 @keyframes bounce-pill{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-10px)}}
-.hero-truck{font-size:clamp(5rem,12vw,10rem);animation:fl 3s ease-in-out infinite;line-height:1}
+.hero-truck{animation:fl 3s ease-in-out infinite;line-height:0;display:flex;align-items:center;justify-content:center}
+.hero-truck-img{width:min(100%,420px);max-width:100%;height:auto;object-fit:contain;filter:drop-shadow(0 14px 32px rgba(0,0,0,.5))}
 @keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
 
 /* SECTIONS */
@@ -237,6 +243,8 @@ footer{background:#0a0a0a;border-top:3px solid var(--y);padding:24px 16px;text-a
 @media(max-width:760px){
   .nav-menu{ display:none !important; }
   .hamburger{ display:flex; }
+  .topbar-inner{justify-content:center;text-align:center}
+  .topbar-msg{text-align:center;flex:1 1 100%}
   .hero-truck{ display:none; }
   .ph-num{ display:none; }
   .sgrid{ grid-template-columns:1fr; }
@@ -268,12 +276,8 @@ footer{background:#0a0a0a;border-top:3px solid var(--y);padding:24px 16px;text-a
   .hero-copy{ flex:1; min-width:0; max-width:640px; }
   .hero-sub{ margin-left:0; margin-right:0; max-width:none; }
   .badges, .cta{ justify-content:flex-start; }
-  .hero-truck{
-    flex-shrink:0;
-    align-self:center;
-    font-size:clamp(4.5rem,9vw,7.5rem);
-    line-height:1;
-  }
+  .hero-truck{ flex-shrink:0; align-self:center; }
+  .hero-truck-img{ width:min(100%,min(520px,42vw)); }
   .hero-bg{ font-size:min(18vw,240px); }
 }
 
@@ -341,7 +345,7 @@ footer{background:#0a0a0a;border-top:3px solid var(--y);padding:24px 16px;text-a
 <body>
 
 <!-- TOPBAR -->
-<div class="topbar"><span id="tb">🚨 Pracujemy 24/7 — Warszawa i cała Polska 🚨 &nbsp;|&nbsp; <a href="tel:+48506001057">📞 +48 506 001 057</a></span></div>
+<div class="topbar"><div class="topbar-inner" id="tb"><span class="topbar-msg">🚨 Pracujemy 24/7 — Warszawa i cała Polska 🚨</span><a class="topbar-dial" href="tel:+48506001057"><span class="topbar-dial-ico">📞</span><span class="topbar-dial-num">+48 506 001 057</span></a></div></div>
 
 <!-- HAZARD -->
 <div class="hazard"></div>
@@ -389,7 +393,7 @@ footer{background:#0a0a0a;border-top:3px solid var(--y);padding:24px 16px;text-a
         <a href="https://wa.me/48506001057" class="btn-wa" target="_blank">💬 WhatsApp</a>
       </div>
     </div>
-    <div class="hero-truck">🚛</div>
+    <div class="hero-truck"><img class="hero-truck-img" src="/images/hero-tow-truck.png" width="640" height="360" alt="Laweta Warszawa — pomoc drogowa 24/7" decoding="async" fetchpriority="high"></div>
   </div>
 </section>
 
@@ -521,7 +525,7 @@ function detectLang() {
 // ---- TRANSLATIONS ----
 var T = {
   pl:{
-    tb:'🚨 Pracujemy 24/7 — Warszawa i cała Polska 🚨 &nbsp;|&nbsp; <a href="tel:+48506001057">📞 +48 506 001 057</a>',
+    tb:'<span class="topbar-msg">🚨 Pracujemy 24/7 — Warszawa i cała Polska 🚨</span><a class="topbar-dial" href="tel:+48506001057"><span class="topbar-dial-ico">📞</span><span class="topbar-dial-num">+48 506 001 057</span></a>',
     ms:'Usługi',mp:'Cennik',mw:'Dlaczego my',mr:'Partnerzy',mc:'Kontakt',
     hh:'Pomoc Drogowa<br><span>Warszawa</span>',
     hs:'Laweta, holowanie, uruchamianie akumulatora, zmiana koła. Działamy 24/7 — w Warszawie i w całej Polsce.',
@@ -547,7 +551,7 @@ var T = {
     ft:'© 2025 Pomoc Drogowa Warszawa · <a href="tel:+48506001057">506-001-057</a> · Partner: <a href="https://www.warszawa-laweta.com" target="_blank">warszawa-laweta.com</a>'
   },
   en:{
-    tb:'🚨 Working 24/7 — Warsaw & all Poland 🚨 &nbsp;|&nbsp; <a href="tel:+48506001057">📞 +48 506 001 057</a>',
+    tb:'<span class="topbar-msg">🚨 Working 24/7 — Warsaw &amp; all Poland 🚨</span><a class="topbar-dial" href="tel:+48506001057"><span class="topbar-dial-ico">📞</span><span class="topbar-dial-num">+48 506 001 057</span></a>',
     ms:'Services',mp:'Prices',mw:'Why us',mr:'Partners',mc:'Contact',
     hh:'Towing Service<br><span>Warsaw</span>',
     hs:'Tow truck, roadside assistance, jump start, tire change. Available 24/7 in Warsaw and all Poland.',
@@ -573,7 +577,7 @@ var T = {
     ft:'© 2025 Pomoc Drogowa Warsaw · <a href="tel:+48506001057">506-001-057</a> · Partner: <a href="https://www.warszawa-laweta.com" target="_blank">warszawa-laweta.com</a>'
   },
   ru:{
-    tb:'🚨 Работаем 24/7 — Варшава и вся Польша 🚨 &nbsp;|&nbsp; <a href="tel:+48506001057">📞 +48 506 001 057</a>',
+    tb:'<span class="topbar-msg">🚨 Работаем 24/7 — Варшава и вся Польша 🚨</span><a class="topbar-dial" href="tel:+48506001057"><span class="topbar-dial-ico">📞</span><span class="topbar-dial-num">+48 506 001 057</span></a>',
     ms:'Услуги',mp:'Цены',mw:'Почему мы',mr:'Партнёры',mc:'Контакт',
     hh:'Эвакуатор<br><span>Варшава</span>',
     hs:'Эвакуатор, лавета, прикурка аккумулятора, замена колеса. Работаем 24/7 — в Варшаве и по всей Польше.',
