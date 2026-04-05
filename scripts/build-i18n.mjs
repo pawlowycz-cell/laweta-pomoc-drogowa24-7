@@ -30,7 +30,8 @@ const SITE = 'https://www.warszawa-laweta.com';
  * Залиш '' — тоді береться ланцюжок favicon-triangle-alert → favicon.png → … нижче.
  * Перебити без правки файлу: змінна середовища INNSER_FAVICON (наприклад у Vercel).
  */
-const FAVICON_SOURCE_FILE = 'favicon.png';
+/** Яскравий дорожній трикутник для вкладки / Google; favicon.png у репо = той самий «темний» центр — не плутати. */
+const FAVICON_SOURCE_FILE = 'favicon-triangle-alert.png';
 /**
  * Мост SEO: laweta-pomoc-drogowa24-7 → канонический INNSER (www.warszawa-laweta.com), путь сохраняется.
  * laweta-warszawa.net — окремий сайт (папка ~/Desktop/MINI COD, не цей репозиторій).
