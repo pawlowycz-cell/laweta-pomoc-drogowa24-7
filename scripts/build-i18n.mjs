@@ -558,15 +558,16 @@ function writeNetlifyRedirects(html) {
 function writeVercelProjectJson(html) {
   const svcIds = discoverSvcPageIds(html);
   // Внешний destination: Vercel не подставляет :path* в абсолютный URL — только $1 из группы в source.
+  // Google «Смена адреса» проверяет именно 301 с главной; permanent:true в Vercel даёт 308.
   const legacyFaviconToCanonical = LEGACY_SITE_HOSTS.map((host) => ({
     source: '/favicon.ico',
     has: [{ type: 'host', value: host }],
     destination: `${SITE}/favicon.ico`,
-    permanent: false,
+    statusCode: 301,
   }));
   const legacyRedirects = LEGACY_SITE_HOSTS.flatMap((host) => [
-    { source: '/', has: [{ type: 'host', value: host }], destination: `${SITE}/`, permanent: true },
-    { source: '/(.*)', has: [{ type: 'host', value: host }], destination: `${SITE}/$1`, permanent: true },
+    { source: '/', has: [{ type: 'host', value: host }], destination: `${SITE}/`, statusCode: 301 },
+    { source: '/(.*)', has: [{ type: 'host', value: host }], destination: `${SITE}/$1`, statusCode: 301 },
   ]);
   const redirects = [
     ...legacyFaviconToCanonical,

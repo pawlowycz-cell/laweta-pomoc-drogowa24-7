@@ -13,7 +13,7 @@
         }
       ],
       "destination": "https://www.warszawa-laweta.com/favicon.ico",
-      "permanent": false
+      "statusCode": 301
     },
     {
       "source": "/favicon.ico",
@@ -24,7 +24,7 @@
         }
       ],
       "destination": "https://www.warszawa-laweta.com/favicon.ico",
-      "permanent": false
+      "statusCode": 301
     },
     {
       "source": "/",
@@ -35,7 +35,7 @@
         }
       ],
       "destination": "https://www.warszawa-laweta.com/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/(.*)",
@@ -46,7 +46,7 @@
         }
       ],
       "destination": "https://www.warszawa-laweta.com/$1",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/",
@@ -57,7 +57,7 @@
         }
       ],
       "destination": "https://www.warszawa-laweta.com/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/(.*)",
@@ -68,7 +68,7 @@
         }
       ],
       "destination": "https://www.warszawa-laweta.com/$1",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/ua/:path*",
