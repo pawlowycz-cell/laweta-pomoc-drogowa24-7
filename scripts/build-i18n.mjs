@@ -27,11 +27,11 @@ const SITE = 'https://www.warszawa-laweta.com';
 /**
  * Своя іконка (вкладка, Google, apple-touch з цього ж PNG):
  * ім’я файлу в assets/, наприклад 'innser-logo.png' або 'my-favicon.png'.
- * Залиш '' — тоді береться ланцюжок favicon-triangle-alert → favicon.png → … нижче.
+ * Залиш '' — тоді береться ланцюжок: SVG emergency → PNG triangle-alert → favicon.png → …
  * Перебити без правки файлу: змінна середовища INNSER_FAVICON (наприклад у Vercel).
  */
-/** Яскравий дорожній трикутник для вкладки / Google; favicon.png у репо = той самий «темний» центр — не плутати. */
-const FAVICON_SOURCE_FILE = 'favicon-triangle-alert.png';
+/** Світлий дорожній трикутник (без чорного квадрата в центрі, на відміну від innser-mark). */
+const FAVICON_SOURCE_FILE = 'favicon-emergency-triangle.svg';
 /**
  * Мост SEO: laweta-pomoc-drogowa24-7 → канонический INNSER (www.warszawa-laweta.com), путь сохраняется.
  * laweta-warszawa.net — окремий сайт (папка ~/Desktop/MINI COD, не цей репозиторій).
@@ -45,7 +45,7 @@ const OG_IMAGE_PATH = '/assets/innser-logo.png';
 const OG_IMAGE_WIDTH = '1024';
 const OG_IMAGE_HEIGHT = '811';
 /**
- * Джерело: assets/favicon.png (або emergency / triangle-alert).
+ * Джерело: assets/favicon-emergency-triangle.svg (або PNG у ланцюжку resolveFaviconSource).
  * Вкладка + Apple: один URL /assets/favicon-<hash>.png (без data-URI) — те саме зображення на всіх мовах;
  * інакше частина браузерів тягне /favicon.ico або інший розмір і іконка виглядає «іншою».
  * Корінь: favicon.ico з того ж PNG.
@@ -54,15 +54,18 @@ let FAVICON_ASSET_NAME = 'favicon.png';
 /** Маленький PNG для вкладки — Safari гірше малює великий favicon і дає «подвійний»/обрізаний трикутник. */
 let FAVICON_TAB_ASSET_NAME = '';
 
-function resolveFaviconSourcePng() {
+/** Білий фон при ресайзі: прозорість у .ico / частини клієнтів дає «чорний квадрат». */
+const FAVICON_RESIZE_BG = { r: 255, g: 255, b: 255, alpha: 1 };
+
+function resolveFaviconSource() {
   const override = (process.env.INNSER_FAVICON || FAVICON_SOURCE_FILE || '').trim();
   if (override) {
     const p = path.join(ASSETS_SRC, override);
     if (fs.existsSync(p)) return p;
     console.warn('Favicon: файл не знайдено (INNSER_FAVICON / FAVICON_SOURCE_FILE):', p);
   }
-  // Порядок за замовчуванням: яскравий дорожній знак → старий favicon.png → emergency.
   for (const name of [
+    'favicon-emergency-triangle.svg',
     'favicon-triangle-alert.png',
     'favicon.png',
     'favicon-emergency-triangle.png',
@@ -71,6 +74,19 @@ function resolveFaviconSourcePng() {
     if (fs.existsSync(p)) return p;
   }
   return null;
+}
+
+async function loadFaviconRasterBuffer(sourcePath) {
+  const lower = sourcePath.toLowerCase();
+  if (lower.endsWith('.svg')) {
+    const requireInnser = createRequire(INNSER_PKG_JSON);
+    const sharp = requireInnser('sharp');
+    return sharp(sourcePath)
+      .resize(512, 512, { fit: 'contain', background: FAVICON_RESIZE_BG })
+      .png()
+      .toBuffer();
+  }
+  return fs.readFileSync(sourcePath);
 }
 
 /** Підвантаження іконки вкладки дуже агресивно кешує Chrome; новий query після кожного деплою змушує підтягнути той самий PNG знову. */
@@ -692,7 +708,7 @@ async function generateRootFavicons() {
     const sharp = requireInnser('sharp');
     const pngToIco = requireInnser('png-to-ico');
     await sharp(pngPath)
-      .resize(256, 256, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+      .resize(256, 256, { fit: 'contain', background: FAVICON_RESIZE_BG })
       .png()
       .toFile(sqPath);
     const icoBuf = await pngToIco(sqPath);
@@ -717,7 +733,7 @@ async function writeFaviconTabPng(pngBuffer) {
     const requireInnser = createRequire(INNSER_PKG_JSON);
     const sharp = requireInnser('sharp');
     await sharp(pngBuffer)
-      .resize(32, 32, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+      .resize(32, 32, { fit: 'contain', background: FAVICON_RESIZE_BG })
       .png()
       .toFile(outPath);
     console.log('Wrote', path.relative(REPO_ROOT, outPath), '(32×32 tab)');
@@ -735,7 +751,7 @@ async function writeAppleTouchIconPng(pngBuffer) {
     const requireInnser = createRequire(INNSER_PKG_JSON);
     const sharp = requireInnser('sharp');
     await sharp(pngBuffer)
-      .resize(180, 180, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+      .resize(180, 180, { fit: 'contain', background: FAVICON_RESIZE_BG })
       .png()
       .toFile(outPath);
     console.log('Wrote', path.relative(REPO_ROOT, outPath), '(180×180 from favicon)');
@@ -757,12 +773,12 @@ async function main() {
     process.exit(1);
   }
 
-  const faviconSrc = resolveFaviconSourcePng();
+  const faviconSrc = resolveFaviconSource();
   if (!faviconSrc) {
-    console.error('Немає PNG для favicon: додай assets/favicon.png');
+    console.error('Немає джерела favicon: додай assets/favicon-emergency-triangle.svg або assets/favicon.png');
     process.exit(1);
   }
-  const faviconBuf = fs.readFileSync(faviconSrc);
+  const faviconBuf = await loadFaviconRasterBuffer(faviconSrc);
   FAVICON_ASSET_NAME =
     'favicon-' + crypto.createHash('sha256').update(faviconBuf).digest('hex').slice(0, 10) + '.png';
   FAVICON_TAB_ASSET_NAME =
