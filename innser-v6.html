@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <link rel="icon" type="image/png" href="/assets/favicon.png" sizes="any">
 <link rel="apple-touch-icon" href="/assets/favicon.png" sizes="180x180">
-<!-- Google tag (gtag.js): GA4 + Google Ads — po zgodzie cookie -->
+<!-- Google tag (gtag.js) + GTM — po zgodzie cookie -->
 <script>
 window.dataLayer=window.dataLayer||[];
 function gtag(){dataLayer.push(arguments);}
@@ -18,9 +18,23 @@ gtag('consent','default',{
 });
 (function(){
   var K='innser-cookie-consent';
+  var GTM_ID='GTM-N4B7GVCV';
+  function innserLoadGtm(){
+    if(window._innserGtmLoaded)return;
+    window._innserGtmLoaded=true;
+    (function(w,d,s,l,i){
+      w[l]=w[l]||[];
+      w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+      var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!=='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer',GTM_ID);
+  }
   window.innserLoadGtag=function(){
     if(window._innserGtagLoaded)return;
     window._innserGtagLoaded=true;
+    innserLoadGtm();
     var s=document.createElement('script');
     s.async=true;
     s.src='https://www.googletagmanager.com/gtag/js?id=G-8PY9XHHV33';
@@ -42,6 +56,8 @@ gtag('consent','default',{
 document.addEventListener('click',function(e){
   var el=e.target&&e.target.closest&&e.target.closest('a[href^="tel:+48506001057"]');
   if(!el)return;
+  window.dataLayer=window.dataLayer||[];
+  dataLayer.push({event:'phone_call_click',phone_number:'+48506001057'});
   if(typeof gtag==='function')gtag('event','conversion',{send_to:'AW-11471366950/F7yECNHTrbYaEKbW_N0q'});
 },true);
 </script>
@@ -429,6 +445,9 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
 </script>
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N4B7GVCV" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 <a href="tel:+48506001057" class="pf" aria-label="Zadzwoń">📞</a>
 <a href="tel:+48506001057" class="mobile-call-bar" data-t-aria="sticky_call_aria" aria-label="Zadzwoń po pomoc drogową — 506-001-057"><span class="mobile-call-bar__inner"><span class="mobile-call-bar__label" data-t="sticky_call_lbl">Zadzwoń teraz</span><span class="mobile-call-bar__num">506-001-057</span></span></a>
 <div class="lightbox" id="lightbox" onclick="this.classList.remove('show')">
