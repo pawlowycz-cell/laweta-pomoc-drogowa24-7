@@ -146,18 +146,18 @@ const LOCALES = {
     pathSeg: 'en',
     htmlLang: 'en',
     cl: 'en',
-    title: 'Cheap Tow Truck Warsaw 24/7 | ~30 min | 506-001-057',
+    title: 'Affordable Tow Truck Warsaw 24/7 | ~30 min | 506-001-057',
     description:
-      'Cheap flatbed & towing Warsaw 24/7. ~30 min arrival, fair quote by phone. Jump start, tire change, lockout. Call 506-001-057.',
+      'Affordable tow truck & towing Warsaw 24/7. ~30 min arrival, fair quote by phone. Jump start, tire change, lockout. Call 506-001-057.',
     keywords:
-      'tow truck warsaw, flatbed warsaw 24h, roadside assistance warsaw, cheap towing warsaw, car recovery warsaw, INNSER',
-    ogTitle: 'Cheap Tow Truck Warsaw 24/7 — INNSER',
+      'tow truck warsaw, towing warsaw 24h, affordable tow truck warsaw, roadside assistance warsaw, car recovery warsaw, INNSER',
+    ogTitle: 'Affordable Tow Truck Warsaw 24/7 — INNSER',
     ogDescription:
-      'Affordable flatbed & towing Warsaw 24/7: jump start, tire change, lockout. ~30 min ETA. Call 506-001-057.',
+      'Affordable tow truck & towing Warsaw 24/7: jump start, tire change, lockout. ~30 min ETA. Call 506-001-057.',
     ogLocale: 'en_US',
-    twitterTitle: 'Cheap Tow Truck Warsaw 24/7 | 506-001-057',
+    twitterTitle: 'Affordable Tow Truck Warsaw 24/7 | 506-001-057',
     twitterDescription:
-      'Cheap flatbed & towing Warsaw 24/7. Fast arrival, fair quote. 506-001-057.',
+      'Affordable tow truck & towing Warsaw 24/7. Fast arrival, fair quote. 506-001-057.',
     ogImageAlt: 'INNSER — roadside assistance Warsaw logo',
   },
   ru: {
