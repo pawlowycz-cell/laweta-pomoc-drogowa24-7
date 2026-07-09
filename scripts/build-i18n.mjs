@@ -229,8 +229,94 @@ function hreflangBlock(canonicalUrl) {
   return lines.join('\n');
 }
 
+const LANG_BLOCK_START = { pl: 'pl:{', en: 'en:{', ru: 'ru:{', ua: 'ua:{' };
+
+function langClFromPathSeg(seg) {
+  return seg === 'uk' ? 'ua' : seg;
+}
+
+function extractTranslationField(raw, langCl, field) {
+  const startMark = LANG_BLOCK_START[langCl];
+  if (!startMark) return null;
+  const start = raw.indexOf(startMark);
+  if (start < 0) return null;
+  let end = raw.length;
+  for (const mark of Object.values(LANG_BLOCK_START)) {
+    if (mark === startMark) continue;
+    const i = raw.indexOf(mark, start + startMark.length);
+    if (i > start && i < end) end = i;
+  }
+  const chunk = raw.slice(start, end);
+  const esc = field.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const re = new RegExp(`${esc}:"((?:\\\\.|[^"\\\\])*)"`);
+  const m = chunk.match(re);
+  if (!m) return null;
+  return m[1]
+    .replace(/\\n/g, '\n')
+    .replace(/\\"/g, '"')
+    .replace(/\\\\/g, '\\');
+}
+
+function stripHtmlForSeo(s) {
+  if (!s) return '';
+  return String(s)
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function truncSeoDesc(s, n = 158) {
+  if (!s || s.length <= n) return s || '';
+  return s.slice(0, n - 1).replace(/\s+\S*$/, '') + '…';
+}
+
+function seoMetaForTail(raw, localePathSeg, tail) {
+  const langCl = langClFromPathSeg(localePathSeg);
+  const trimmed = String(tail).replace(/^\/+|\/+$/g, '');
+  if (!trimmed) return null;
+
+  if (/^svc\d+$/.test(trimmed)) {
+    const id = trimmed;
+    const title =
+      extractTranslationField(raw, langCl, `${id}_seo_title`) ||
+      stripHtmlForSeo(extractTranslationField(raw, langCl, `${id}_t`));
+    const desc =
+      extractTranslationField(raw, langCl, `${id}_seo_desc`) ||
+      stripHtmlForSeo(extractTranslationField(raw, langCl, `${id}_d`));
+    const kw = extractTranslationField(raw, langCl, `${id}_keywords`);
+    if (!title) return null;
+    return {
+      title: title.includes('INNSER') ? title : `${title} | INNSER`,
+      desc: truncSeoDesc(desc),
+      kw,
+    };
+  }
+
+  const blogM = /^blog\/(b\d+)$/.exec(trimmed);
+  if (blogM) {
+    const bid = blogM[1];
+    const title = stripHtmlForSeo(extractTranslationField(raw, langCl, `${bid}_t`));
+    const desc = stripHtmlForSeo(extractTranslationField(raw, langCl, `bp_${bid}_p1`));
+    if (!title) return null;
+    return { title: `${title} | INNSER`, desc: truncSeoDesc(desc), kw: null };
+  }
+
+  if (trimmed === 'blog') {
+    const title = stripHtmlForSeo(extractTranslationField(raw, langCl, 'blog_title'));
+    const desc = stripHtmlForSeo(extractTranslationField(raw, langCl, 'blog_desc'));
+    if (!title) return null;
+    return { title: `${title} | INNSER`, desc: truncSeoDesc(desc), kw: null };
+  }
+
+  return null;
+}
+
+function escHtmlAttr(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+}
+
 /** Один и тот же SPA-файл отдаётся на все пути; без этого в сыром HTML каноникал = только главная локали → GSC «каноникал от пользователя отсутствует». */
-function patchHtmlSeoForTail(html, localePathSeg, tail) {
+function patchHtmlSeoForTail(html, localePathSeg, tail, raw) {
   const trimmed = String(tail).replace(/^\/+|\/+$/g, '');
   function loc(langSeg) {
     return `${SITE}/${langSeg}/${trimmed}/`;
@@ -247,10 +333,46 @@ function patchHtmlSeoForTail(html, localePathSeg, tail) {
     /<!--innser-seo-links-->[\s\S]*?<!--\/innser-seo-links-->/,
     `<!--innser-seo-links-->\n${block}\n<!--/innser-seo-links-->`
   );
+  const pageUrl = loc(localePathSeg);
   out = out.replace(
     /<meta property="og:url" id="innser-og-url" content="[^"]*">/,
-    `<meta property="og:url" id="innser-og-url" content="${loc(localePathSeg)}">`
+    `<meta property="og:url" id="innser-og-url" content="${pageUrl}">`
   );
+
+  const meta = raw ? seoMetaForTail(raw, localePathSeg, tail) : null;
+  if (meta?.title) {
+    const t = escHtmlAttr(meta.title);
+    out = out.replace(/<title>[^<]*<\/title>/, `<title>${t}</title>`);
+    out = out.replace(
+      /<meta property="og:title" content="[^"]*">/,
+      `<meta property="og:title" content="${t}">`
+    );
+    out = out.replace(
+      /<meta name="twitter:title" content="[^"]*">/,
+      `<meta name="twitter:title" content="${t}">`
+    );
+  }
+  if (meta?.desc) {
+    const d = escHtmlAttr(meta.desc);
+    out = out.replace(
+      /<meta name="description" content="[^"]*">/,
+      `<meta name="description" content="${d}">`
+    );
+    out = out.replace(
+      /<meta property="og:description" content="[^"]*">/,
+      `<meta property="og:description" content="${d}">`
+    );
+    out = out.replace(
+      /<meta name="twitter:description" content="[^"]*">/,
+      `<meta name="twitter:description" content="${d}">`
+    );
+  }
+  if (meta?.kw) {
+    out = out.replace(
+      /<meta name="keywords" content="[^"]*">/,
+      `<meta name="keywords" content="${escHtmlAttr(meta.kw)}">`
+    );
+  }
   return out;
 }
 
@@ -268,7 +390,7 @@ function writeDeepRouteHtmlCopies(raw) {
       const parts = tail.split('/');
       const dir = path.join(OUT, seg, ...parts);
       fs.mkdirSync(dir, { recursive: true });
-      const html = patchHtmlSeoForTail(baseHtml, seg, tail);
+      const html = patchHtmlSeoForTail(baseHtml, seg, tail, raw);
       fs.writeFileSync(path.join(dir, 'index.html'), html, 'utf8');
       n++;
     }
@@ -452,6 +574,42 @@ function discoverSvcPageIds(html) {
   );
 }
 
+/** Один канонический URL со слэшем — Google не видит /ru и /ru/ как две страницы. */
+function appendTrailingSlashRedirects(redirects, html) {
+  const svcIds = discoverSvcPageIds(html);
+  const blogSlugs = discoverBlogPostSlugs(html);
+  for (const seg of ['pl', 'en', 'ru', 'uk']) {
+    redirects.push({ source: `/${seg}`, destination: `/${seg}/`, permanent: true });
+    redirects.push({ source: `/${seg}/blog`, destination: `/${seg}/blog/`, permanent: true });
+    for (const svc of svcIds) {
+      redirects.push({ source: `/${seg}/${svc}`, destination: `/${seg}/${svc}/`, permanent: true });
+    }
+    for (const slug of blogSlugs) {
+      redirects.push({
+        source: `/${seg}/blog/${slug}`,
+        destination: `/${seg}/blog/${slug}/`,
+        permanent: true,
+      });
+    }
+  }
+}
+
+function appendTrailingSlashNetlify(lines, html) {
+  const svcIds = discoverSvcPageIds(html);
+  const blogSlugs = discoverBlogPostSlugs(html);
+  lines.push('# canonical trailing slash — один URL на страницу для Google');
+  for (const seg of ['pl', 'en', 'ru', 'uk']) {
+    lines.push(`/${seg}  /${seg}/  301`);
+    lines.push(`/${seg}/blog  /${seg}/blog/  301`);
+    for (const svc of svcIds) {
+      lines.push(`/${seg}/${svc}  /${seg}/${svc}/  301`);
+    }
+    for (const slug of blogSlugs) {
+      lines.push(`/${seg}/blog/${slug}  /${seg}/blog/${slug}/  301`);
+    }
+  }
+}
+
 /** Google sitemap: главные URL, блог, посты и услуги из innser-v6.html × 4 языка; в каждом url — hreflang */
 function writeSitemapAndRobots(html) {
   const lastmod = new Date().toISOString().split('T')[0];
@@ -564,15 +722,14 @@ function writeNetlifyRedirects(html) {
   lines.push(`# старый мусорный путь из индекса`);
   lines.push(`/uk/blog/evo1  ${SITE}/uk/blog/  301`);
   lines.push(`/uk/blog/evo1/  ${SITE}/uk/blog/  301`);
+  appendTrailingSlashNetlify(lines, html);
+  lines.push('# SPA: отдельный HTML на каждый URL (каноникал + title для Google)');
   for (const seg of ['pl', 'en', 'ru', 'uk']) {
-    lines.push(`/${seg}  /${seg}/index.html  200`);
     lines.push(`/${seg}/  /${seg}/index.html  200`);
-    lines.push(`/${seg}/blog  /${seg}/index.html  200`);
-    lines.push(`/${seg}/blog/  /${seg}/index.html  200`);
-    lines.push(`/${seg}/blog/*  /${seg}/index.html  200`);
+    lines.push(`/${seg}/blog/  /${seg}/blog/index.html  200`);
+    lines.push(`/${seg}/blog/*/  /${seg}/blog/:splat/index.html  200`);
     for (const svc of svcIds) {
-      lines.push(`/${seg}/${svc}  /${seg}/index.html  200`);
-      lines.push(`/${seg}/${svc}/  /${seg}/index.html  200`);
+      lines.push(`/${seg}/${svc}/  /${seg}/${svc}/index.html  200`);
     }
   }
   fs.writeFileSync(path.join(OUT, '_redirects'), lines.join('\n') + '\n', 'utf8');
@@ -584,6 +741,7 @@ function writeNetlifyRedirects(html) {
  */
 function writeVercelProjectJson(html) {
   const svcIds = discoverSvcPageIds(html);
+  const blogSlugs = discoverBlogPostSlugs(html);
   // Внешний destination: Vercel не подставляет :path* в абсолютный URL — только $1 из группы в source.
   // Google «Смена адреса» проверяет именно 301 с главной; permanent:true в Vercel даёт 308.
   const legacyFaviconToCanonical = LEGACY_SITE_HOSTS.map((host) => ({
@@ -616,16 +774,19 @@ function writeVercelProjectJson(html) {
     { source: '/uk/blog/evo1', destination: '/uk/blog/', permanent: true },
     { source: '/uk/blog/evo1/', destination: '/uk/blog/', permanent: true }
   );
+  appendTrailingSlashRedirects(redirects, html);
   const rewrites = [];
   for (const seg of ['pl', 'en', 'ru', 'uk']) {
-    rewrites.push({ source: `/${seg}`, destination: `/${seg}/index.html` });
     rewrites.push({ source: `/${seg}/`, destination: `/${seg}/index.html` });
-    rewrites.push({ source: `/${seg}/blog`, destination: `/${seg}/index.html` });
-    rewrites.push({ source: `/${seg}/blog/`, destination: `/${seg}/index.html` });
-    rewrites.push({ source: `/${seg}/blog/:path*`, destination: `/${seg}/index.html` });
+    rewrites.push({ source: `/${seg}/blog/`, destination: `/${seg}/blog/index.html` });
+    for (const slug of blogSlugs) {
+      rewrites.push({
+        source: `/${seg}/blog/${slug}/`,
+        destination: `/${seg}/blog/${slug}/index.html`,
+      });
+    }
     for (const svc of svcIds) {
-      rewrites.push({ source: `/${seg}/${svc}`, destination: `/${seg}/index.html` });
-      rewrites.push({ source: `/${seg}/${svc}/`, destination: `/${seg}/index.html` });
+      rewrites.push({ source: `/${seg}/${svc}/`, destination: `/${seg}/${svc}/index.html` });
     }
   }
   const cfg = {
