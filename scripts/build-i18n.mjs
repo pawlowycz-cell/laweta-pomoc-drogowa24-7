@@ -128,70 +128,72 @@ const LOCALES = {
     pathSeg: 'pl',
     htmlLang: 'pl',
     cl: 'pl',
-    title: 'INNSER — Pomoc Drogowa Warszawa 24h | Holowanie | Awaryjne Odpalanie | Wymiana Koła',
+    title: 'Laweta Warszawa 24/7 | Pomoc drogowa ~30 min | 506-001-057',
     description:
-      'Pomoc drogowa Warszawa 24/7 + laweta i holowanie. TANIO I RZETELNIE: szybki dojazd (~30 min), uczciwa wycena. 506-001-057.',
-    ogTitle: 'INNSER — Pomoc Drogowa Warszawa 24h | Holowanie | Odpalanie',
+      'Tania laweta i holowanie Warszawa 24/7. Dojazd ok. 30 min, uczciwa wycena telefonem. Odpalanie, wymiana koła, otwieranie aut. Zadzwoń: 506-001-057.',
+    keywords:
+      'laweta warszawa, pomoc drogowa warszawa 24h, tania laweta warszawa, holowanie warszawa, ewakuator warszawa, autolaweta warszawa, INNSER',
+    ogTitle: 'Laweta Warszawa 24/7 — INNSER Pomoc Drogowa',
     ogDescription:
-      'Profesjonalna pomoc drogowa Warszawa 24/7 — tania laweta, tanie holowanie, autolaweta HDS, holowanie powypadkowe, skup aut, złomowanie pojazdów. Odpalanie, wymiana koła, otwieranie aut. Zadzwoń: 506-001-057',
+      'Pomoc drogowa Warszawa 24/7: laweta, holowanie, odpalanie, wymiana koła, otwieranie aut. Dojazd ~30 min. Wycena: 506-001-057.',
     ogLocale: 'pl_PL',
-    twitterTitle: 'INNSER — Pomoc Drogowa Warszawa 24h',
+    twitterTitle: 'Laweta Warszawa 24/7 | ~30 min | 506-001-057',
     twitterDescription:
-      'Tania pomoc drogowa i tania laweta Warszawa — holowanie, autolaweta HDS, skup aut, złomowanie, odpalanie, wymiana koła 24/7. Zadzwoń: 506-001-057',
+      'Tania laweta i holowanie Warszawa 24/7. Szybki dojazd, uczciwa wycena. Odpalanie, koło, otwieranie aut. 506-001-057.',
     ogImageAlt: 'INNSER — logo pomocy drogowej Warszawa 24/7',
   },
   en: {
     pathSeg: 'en',
     htmlLang: 'en',
     cl: 'en',
-    title: 'INNSER — Roadside Assistance Warsaw 24h | Towing | Jump Start | Tire Change',
+    title: 'Tow Truck Warsaw 24/7 | Flatbed ~30 min | 506-001-057',
     description:
-      'Roadside assistance Warsaw 24/7 + towing & flatbed. CHEAP & RELIABLE: fast arrival (~30 min), fair quote. Call 506-001-057.',
-    ogTitle: 'INNSER — Roadside Assistance Warsaw 24h | Towing',
+      'Roadside assistance & flatbed Warsaw 24/7. ~30 min arrival, fair quote by phone. Jump start, tire change, lockout. Call 506-001-057.',
+    keywords:
+      'tow truck warsaw, flatbed warsaw 24h, roadside assistance warsaw, cheap towing warsaw, car recovery warsaw, INNSER',
+    ogTitle: 'Tow Truck Warsaw 24/7 — INNSER Roadside Assistance',
     ogDescription:
-      'Professional roadside assistance Warsaw 24/7 — cheap tow truck, flatbed HDS, accident recovery, cash for cars, vehicle scrapping. Jump start, tire change, lockout. Call: 506-001-057',
+      'Flatbed & towing Warsaw 24/7: jump start, tire change, lockout, accident recovery. ~30 min ETA. Call 506-001-057.',
     ogLocale: 'en_US',
-    twitterTitle: 'INNSER — Roadside Assistance Warsaw 24h',
+    twitterTitle: 'Tow Truck Warsaw 24/7 | ~30 min | 506-001-057',
     twitterDescription:
-      'Affordable tow truck and flatbed Warsaw — towing, HDS flatbed, car purchase, scrapping, jump start, tire change 24/7. Call: 506-001-057',
+      'Affordable flatbed & towing Warsaw 24/7. Fast arrival, fair quote. Jump start, tire change, lockout. 506-001-057.',
     ogImageAlt: 'INNSER — roadside assistance Warsaw logo',
   },
   ru: {
     pathSeg: 'ru',
     htmlLang: 'ru',
     cl: 'ru',
-    title:
-      'Эвакуатор Варшава 24/7 | Заказать эвакуатор — INNSER',
+    title: 'Эвакуатор Варшава 24/7 — приезд ~30 мин | 506-001-057',
     description:
-      'Эвакуатор Варшава 24/7 — заказать эвакуатор в Варшаве: 506-001-057. Лафета, эвакуация, помощь на дороге. Приезд ~30 мин, фиксированная цена.',
+      'Заказать эвакуатор в Варшаве: лафета, прикур, эвакуация. Фиксированная цена, без скрытых доплат. Круглосуточно — 506-001-057.',
     keywords:
       'эвакуатор варшава, эвакуатор варшава 24/7, заказать эвакуатор в варшаве, вызвать эвакуатор варшава, евакуатор варшава, лафета варшава, помощь на дороге варшава, эвакуация авто варшава, INNSER',
-    ogTitle: 'INNSER — Эвакуатор Варшава 24/7 | Заказать эвакуатор',
+    ogTitle: 'Эвакуатор Варшава 24/7 — INNSER',
     ogDescription:
-      'Эвакуатор и помощь на дороге Варшава 24/7: заказать эвакуатор, лафета, эвакуация, прикурить машину, прикур бустером. Звоните: 506-001-057',
+      'Эвакуатор и помощь на дороге Варшава 24/7: лафета, прикур кабелями и бустером, эвакуация. Приезд ~30 мин. 506-001-057.',
     ogLocale: 'ru_RU',
-    twitterTitle: 'INNSER — Эвакуатор Варшава 24/7 | Прикур',
+    twitterTitle: 'Эвакуатор Варшава 24/7 | ~30 мин | 506-001-057',
     twitterDescription:
-      'Варшава: прикур кабелями, прикур бустером, эвакуатор HDS, эвакуация, скупка авто, утилизация, замена колеса 24/7. 506-001-057',
+      'Заказать эвакуатор в Варшаве: лафета, прикур, эвакуация. Фиксированная цена. Круглосуточно — 506-001-057.',
     ogImageAlt: 'INNSER — логотип помощи на дороге Варшава 24/7',
   },
   uk: {
     pathSeg: 'uk',
     htmlLang: 'uk',
     cl: 'ua',
-    title:
-      'Євакуатор Варшава 24/7 | Евакуатор Варшава — INNSER',
+    title: 'Євакуатор Варшава 24/7 — приїзд ~30 хв | 506-001-057',
     description:
-      'Євакуатор та евакуатор Варшава 24/7 — замовити евакуатор у Варшаві: 506-001-057. Лафета, евакуація, допомога на дорозі. Приїзд ~30 хв.',
+      'Замовити евакуатор у Варшаві: лафета, прикурити авто, евакуація. Фіксована ціна, без прихованих доплат. Цілодобово — 506-001-057.',
     keywords:
       'євакуатор варшава, евакуатор варшава, евакуатор варшава 24/7, замовити евакуатор варшава, заказати евакуатор варшава, лафета варшава, допомога на дорозі варшава, INNSER',
-    ogTitle: 'INNSER — Євакуатор Варшава 24/7 | Доступні ціни',
+    ogTitle: 'Євакуатор Варшава 24/7 — INNSER',
     ogDescription:
-      'Цілодобовий євакуатор та евакуатор у Варшаві. Замовити евакуатор, лафета HDS, евакуація, прикурити авто. 506-001-057, 24/7, виїзд до 500 км.',
+      'Євакуатор і допомога на дорозі Варшава 24/7: лафета, прикурити кабелями та бустером, евакуація. Приїзд ~30 хв. 506-001-057.',
     ogLocale: 'uk_UA',
-    twitterTitle: 'INNSER — Евакуатор Варшава цілодобово | Доступні ціни',
+    twitterTitle: 'Євакуатор Варшава 24/7 | ~30 хв | 506-001-057',
     twitterDescription:
-      'Варшава: цілодобовий евакуатор, доступні ціни на послуги евакуатора й допомогу на дорозі — 24/7. 506-001-057',
+      'Замовити евакуатор у Варшаві: лафета, прикур, евакуація. Фіксована ціна. Цілодобово — 506-001-057.',
     ogImageAlt: 'INNSER — логотип допомоги на дорозі Варшава 24/7',
   },
 };
