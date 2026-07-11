@@ -30,6 +30,8 @@ const IMAGES_SRC = path.join(REPO_ROOT, 'images');
 const PUBLIC_SRC = path.join(REPO_ROOT, 'public');
 
 const SITE = 'https://www.warszawa-laweta.com';
+/** SPA-вкладки меню с отдельным URL (как gallery/blog) — синхрон с INNSER_NAV_PAGES в innser-v6.html */
+const NAV_PAGE_TAILS = ['services', 'about', 'map', 'contact', 'partners'];
 
 /**
  * Своя іконка (вкладка, Google, apple-touch з цього ж PNG):
@@ -333,6 +335,26 @@ function seoMetaForTail(raw, localePathSeg, tail) {
     };
   }
 
+  const NAV_SEO = {
+    services: { title: 'svc_title', desc: 'svc_desc' },
+    about: { title: 'abt_title', desc: 'abt_desc' },
+    map: { title: 'map_title', desc: 'map_desc' },
+    contact: { title: 'cnt_title', desc: 'cnt_desc' },
+    partners: { title: 'coop_seo_title', desc: 'coop_seo_desc', kw: 'coop_keywords' },
+  };
+  if (NAV_SEO[trimmed]) {
+    const cfg = NAV_SEO[trimmed];
+    const title = stripHtmlForSeo(extractTranslationField(raw, langCl, cfg.title));
+    const desc = stripHtmlForSeo(extractTranslationField(raw, langCl, cfg.desc));
+    const kw = cfg.kw ? extractTranslationField(raw, langCl, cfg.kw) : null;
+    if (!title) return null;
+    return {
+      title: title.includes('INNSER') ? title : `${title} | INNSER`,
+      desc: truncSeoDesc(desc),
+      kw,
+    };
+  }
+
   return null;
 }
 
@@ -405,7 +427,7 @@ function writeDeepRouteHtmlCopies(raw) {
   const blogSlugs = discoverBlogPostSlugs(raw);
   const svcIds = discoverSvcPageIds(raw);
   const galleryItems = collectGalleryItems(raw);
-  const tails = ['blog', 'gallery', ...blogSlugs.map((b) => `blog/${b}`), ...svcIds];
+  const tails = ['blog', 'gallery', ...NAV_PAGE_TAILS, ...blogSlugs.map((b) => `blog/${b}`), ...svcIds];
   let n = 0;
   for (const key of Object.keys(LOCALES)) {
     const L = LOCALES[key];
@@ -616,6 +638,9 @@ function appendTrailingSlashRedirects(redirects, html) {
     redirects.push({ source: `/${seg}`, destination: `/${seg}/`, permanent: true });
     redirects.push({ source: `/${seg}/blog`, destination: `/${seg}/blog/`, permanent: true });
     redirects.push({ source: `/${seg}/gallery`, destination: `/${seg}/gallery/`, permanent: true });
+    for (const nav of NAV_PAGE_TAILS) {
+      redirects.push({ source: `/${seg}/${nav}`, destination: `/${seg}/${nav}/`, permanent: true });
+    }
     for (const svc of svcIds) {
       redirects.push({ source: `/${seg}/${svc}`, destination: `/${seg}/${svc}/`, permanent: true });
     }
@@ -637,6 +662,9 @@ function appendTrailingSlashNetlify(lines, html) {
     lines.push(`/${seg}  /${seg}/  301`);
     lines.push(`/${seg}/blog  /${seg}/blog/  301`);
     lines.push(`/${seg}/gallery  /${seg}/gallery/  301`);
+    for (const nav of NAV_PAGE_TAILS) {
+      lines.push(`/${seg}/${nav}  /${seg}/${nav}/  301`);
+    }
     for (const svc of svcIds) {
       lines.push(`/${seg}/${svc}  /${seg}/${svc}/  301`);
     }
@@ -653,7 +681,7 @@ function writeSitemapAndRobots(html) {
   const blogSlugs = discoverBlogPostSlugs(html);
   const svcIds = discoverSvcPageIds(html);
   /** @type {(string|null)[]} null = корень локали */
-  const tails = [null, 'blog', 'gallery', ...blogSlugs.map((b) => `blog/${b}`), ...svcIds];
+  const tails = [null, 'blog', 'gallery', ...NAV_PAGE_TAILS, ...blogSlugs.map((b) => `blog/${b}`), ...svcIds];
   console.log(
     'Sitemap: blog posts',
     blogSlugs.join(', ') || '(none)',
@@ -678,14 +706,15 @@ function writeSitemapAndRobots(html) {
   }
 
   function changefreqFor(tail) {
-    if (tail == null || tail === 'blog' || tail === 'gallery') return 'weekly';
+    if (tail == null || tail === 'blog' || tail === 'gallery' || NAV_PAGE_TAILS.includes(tail))
+      return 'weekly';
     return 'monthly';
   }
 
   function priorityFor(tail) {
     if (tail == null) return '1.0';
-    if (tail === 'blog') return '0.85';
-    if (tail === 'gallery') return '0.82';
+    if (tail === 'blog' || tail === 'services' || tail === 'contact') return '0.85';
+    if (tail === 'gallery' || tail === 'about' || tail === 'map' || tail === 'partners') return '0.82';
     if (String(tail).startsWith('blog/')) return '0.75';
     return '0.8';
   }
@@ -778,6 +807,9 @@ function writeNetlifyRedirects(html) {
     lines.push(`/${seg}/  /${seg}/index.html  200`);
     lines.push(`/${seg}/blog/  /${seg}/blog/index.html  200`);
     lines.push(`/${seg}/gallery/  /${seg}/gallery/index.html  200`);
+    for (const nav of NAV_PAGE_TAILS) {
+      lines.push(`/${seg}/${nav}/  /${seg}/${nav}/index.html  200`);
+    }
     lines.push(`/${seg}/blog/*/  /${seg}/blog/:splat/index.html  200`);
     for (const svc of svcIds) {
       lines.push(`/${seg}/${svc}/  /${seg}/${svc}/index.html  200`);
@@ -831,6 +863,9 @@ function writeVercelProjectJson(html) {
     rewrites.push({ source: `/${seg}/`, destination: `/${seg}/index.html` });
     rewrites.push({ source: `/${seg}/blog/`, destination: `/${seg}/blog/index.html` });
     rewrites.push({ source: `/${seg}/gallery/`, destination: `/${seg}/gallery/index.html` });
+    for (const nav of NAV_PAGE_TAILS) {
+      rewrites.push({ source: `/${seg}/${nav}/`, destination: `/${seg}/${nav}/index.html` });
+    }
     for (const slug of blogSlugs) {
       rewrites.push({
         source: `/${seg}/blog/${slug}/`,

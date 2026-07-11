@@ -211,6 +211,31 @@
       "permanent": true
     },
     {
+      "source": "/pl/services",
+      "destination": "/pl/services/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/about",
+      "destination": "/pl/about/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/map",
+      "destination": "/pl/map/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/contact",
+      "destination": "/pl/contact/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/partners",
+      "destination": "/pl/partners/",
+      "permanent": true
+    },
+    {
       "source": "/pl/svc1",
       "destination": "/pl/svc1/",
       "permanent": true
@@ -318,6 +343,31 @@
     {
       "source": "/en/gallery",
       "destination": "/en/gallery/",
+      "permanent": true
+    },
+    {
+      "source": "/en/services",
+      "destination": "/en/services/",
+      "permanent": true
+    },
+    {
+      "source": "/en/about",
+      "destination": "/en/about/",
+      "permanent": true
+    },
+    {
+      "source": "/en/map",
+      "destination": "/en/map/",
+      "permanent": true
+    },
+    {
+      "source": "/en/contact",
+      "destination": "/en/contact/",
+      "permanent": true
+    },
+    {
+      "source": "/en/partners",
+      "destination": "/en/partners/",
       "permanent": true
     },
     {
@@ -431,6 +481,31 @@
       "permanent": true
     },
     {
+      "source": "/ru/services",
+      "destination": "/ru/services/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/about",
+      "destination": "/ru/about/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/map",
+      "destination": "/ru/map/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/contact",
+      "destination": "/ru/contact/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/partners",
+      "destination": "/ru/partners/",
+      "permanent": true
+    },
+    {
       "source": "/ru/svc1",
       "destination": "/ru/svc1/",
       "permanent": true
@@ -538,6 +613,31 @@
     {
       "source": "/uk/gallery",
       "destination": "/uk/gallery/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/services",
+      "destination": "/uk/services/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/about",
+      "destination": "/uk/about/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/map",
+      "destination": "/uk/map/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/contact",
+      "destination": "/uk/contact/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/partners",
+      "destination": "/uk/partners/",
       "permanent": true
     },
     {
@@ -650,6 +750,26 @@
       "destination": "/pl/gallery/index.html"
     },
     {
+      "source": "/pl/services/",
+      "destination": "/pl/services/index.html"
+    },
+    {
+      "source": "/pl/about/",
+      "destination": "/pl/about/index.html"
+    },
+    {
+      "source": "/pl/map/",
+      "destination": "/pl/map/index.html"
+    },
+    {
+      "source": "/pl/contact/",
+      "destination": "/pl/contact/index.html"
+    },
+    {
+      "source": "/pl/partners/",
+      "destination": "/pl/partners/index.html"
+    },
+    {
       "source": "/pl/blog/b1/",
       "destination": "/pl/blog/b1/index.html"
     },
@@ -736,6 +856,26 @@
     {
       "source": "/en/gallery/",
       "destination": "/en/gallery/index.html"
+    },
+    {
+      "source": "/en/services/",
+      "destination": "/en/services/index.html"
+    },
+    {
+      "source": "/en/about/",
+      "destination": "/en/about/index.html"
+    },
+    {
+      "source": "/en/map/",
+      "destination": "/en/map/index.html"
+    },
+    {
+      "source": "/en/contact/",
+      "destination": "/en/contact/index.html"
+    },
+    {
+      "source": "/en/partners/",
+      "destination": "/en/partners/index.html"
     },
     {
       "source": "/en/blog/b1/",
@@ -826,6 +966,26 @@
       "destination": "/ru/gallery/index.html"
     },
     {
+      "source": "/ru/services/",
+      "destination": "/ru/services/index.html"
+    },
+    {
+      "source": "/ru/about/",
+      "destination": "/ru/about/index.html"
+    },
+    {
+      "source": "/ru/map/",
+      "destination": "/ru/map/index.html"
+    },
+    {
+      "source": "/ru/contact/",
+      "destination": "/ru/contact/index.html"
+    },
+    {
+      "source": "/ru/partners/",
+      "destination": "/ru/partners/index.html"
+    },
+    {
       "source": "/ru/blog/b1/",
       "destination": "/ru/blog/b1/index.html"
     },
@@ -912,6 +1072,26 @@
     {
       "source": "/uk/gallery/",
       "destination": "/uk/gallery/index.html"
+    },
+    {
+      "source": "/uk/services/",
+      "destination": "/uk/services/index.html"
+    },
+    {
+      "source": "/uk/about/",
+      "destination": "/uk/about/index.html"
+    },
+    {
+      "source": "/uk/map/",
+      "destination": "/uk/map/index.html"
+    },
+    {
+      "source": "/uk/contact/",
+      "destination": "/uk/contact/index.html"
+    },
+    {
+      "source": "/uk/partners/",
+      "destination": "/uk/partners/index.html"
     },
     {
       "source": "/uk/blog/b1/",
