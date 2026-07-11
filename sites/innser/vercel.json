@@ -206,6 +206,11 @@
       "permanent": true
     },
     {
+      "source": "/pl/gallery",
+      "destination": "/pl/gallery/",
+      "permanent": true
+    },
+    {
       "source": "/pl/svc1",
       "destination": "/pl/svc1/",
       "permanent": true
@@ -308,6 +313,11 @@
     {
       "source": "/en/blog",
       "destination": "/en/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/gallery",
+      "destination": "/en/gallery/",
       "permanent": true
     },
     {
@@ -416,6 +426,11 @@
       "permanent": true
     },
     {
+      "source": "/ru/gallery",
+      "destination": "/ru/gallery/",
+      "permanent": true
+    },
+    {
       "source": "/ru/svc1",
       "destination": "/ru/svc1/",
       "permanent": true
@@ -518,6 +533,11 @@
     {
       "source": "/uk/blog",
       "destination": "/uk/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/gallery",
+      "destination": "/uk/gallery/",
       "permanent": true
     },
     {
@@ -626,6 +646,10 @@
       "destination": "/pl/blog/index.html"
     },
     {
+      "source": "/pl/gallery/",
+      "destination": "/pl/gallery/index.html"
+    },
+    {
       "source": "/pl/blog/b1/",
       "destination": "/pl/blog/b1/index.html"
     },
@@ -708,6 +732,10 @@
     {
       "source": "/en/blog/",
       "destination": "/en/blog/index.html"
+    },
+    {
+      "source": "/en/gallery/",
+      "destination": "/en/gallery/index.html"
     },
     {
       "source": "/en/blog/b1/",
@@ -794,6 +822,10 @@
       "destination": "/ru/blog/index.html"
     },
     {
+      "source": "/ru/gallery/",
+      "destination": "/ru/gallery/index.html"
+    },
+    {
       "source": "/ru/blog/b1/",
       "destination": "/ru/blog/b1/index.html"
     },
@@ -876,6 +908,10 @@
     {
       "source": "/uk/blog/",
       "destination": "/uk/blog/index.html"
+    },
+    {
+      "source": "/uk/gallery/",
+      "destination": "/uk/gallery/index.html"
     },
     {
       "source": "/uk/blog/b1/",

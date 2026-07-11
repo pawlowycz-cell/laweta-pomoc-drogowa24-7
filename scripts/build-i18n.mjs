@@ -9,6 +9,13 @@ import { createRequire } from 'module';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import {
+  buildGalleryJsonLd,
+  buildImageSitemapXml,
+  collectGalleryItems,
+  injectGalleryJsonLd,
+  injectGalleryStaticHtml,
+} from './gallery-seo.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.join(__dirname, '..');
@@ -310,6 +317,22 @@ function seoMetaForTail(raw, localePathSeg, tail) {
     return { title: `${title} | INNSER`, desc: truncSeoDesc(desc), kw: null };
   }
 
+  if (trimmed === 'gallery') {
+    const title =
+      extractTranslationField(raw, langCl, 'gal_seo_title') ||
+      stripHtmlForSeo(extractTranslationField(raw, langCl, 'gal_title'));
+    const desc =
+      extractTranslationField(raw, langCl, 'gal_seo_desc') ||
+      stripHtmlForSeo(extractTranslationField(raw, langCl, 'gal_desc'));
+    const kw = extractTranslationField(raw, langCl, 'gal_keywords');
+    if (!title) return null;
+    return {
+      title: title.includes('INNSER') ? title : `${title} | INNSER`,
+      desc: truncSeoDesc(desc),
+      kw,
+    };
+  }
+
   return null;
 }
 
@@ -381,7 +404,8 @@ function patchHtmlSeoForTail(html, localePathSeg, tail, raw) {
 function writeDeepRouteHtmlCopies(raw) {
   const blogSlugs = discoverBlogPostSlugs(raw);
   const svcIds = discoverSvcPageIds(raw);
-  const tails = ['blog', ...blogSlugs.map((b) => `blog/${b}`), ...svcIds];
+  const galleryItems = collectGalleryItems(raw);
+  const tails = ['blog', 'gallery', ...blogSlugs.map((b) => `blog/${b}`), ...svcIds];
   let n = 0;
   for (const key of Object.keys(LOCALES)) {
     const L = LOCALES[key];
@@ -392,7 +416,15 @@ function writeDeepRouteHtmlCopies(raw) {
       const parts = tail.split('/');
       const dir = path.join(OUT, seg, ...parts);
       fs.mkdirSync(dir, { recursive: true });
-      const html = patchHtmlSeoForTail(baseHtml, seg, tail, raw);
+      let html = patchHtmlSeoForTail(baseHtml, seg, tail, raw);
+      if (tail === 'gallery' && galleryItems.length) {
+        const pageUrl = `${SITE}/${seg}/gallery/`;
+        html = injectGalleryStaticHtml(html, galleryItems, seg);
+        html = injectGalleryJsonLd(
+          html,
+          buildGalleryJsonLd(galleryItems, pageUrl, seg, SITE)
+        );
+      }
       fs.writeFileSync(path.join(dir, 'index.html'), html, 'utf8');
       n++;
     }
@@ -583,6 +615,7 @@ function appendTrailingSlashRedirects(redirects, html) {
   for (const seg of ['pl', 'en', 'ru', 'uk']) {
     redirects.push({ source: `/${seg}`, destination: `/${seg}/`, permanent: true });
     redirects.push({ source: `/${seg}/blog`, destination: `/${seg}/blog/`, permanent: true });
+    redirects.push({ source: `/${seg}/gallery`, destination: `/${seg}/gallery/`, permanent: true });
     for (const svc of svcIds) {
       redirects.push({ source: `/${seg}/${svc}`, destination: `/${seg}/${svc}/`, permanent: true });
     }
@@ -603,6 +636,7 @@ function appendTrailingSlashNetlify(lines, html) {
   for (const seg of ['pl', 'en', 'ru', 'uk']) {
     lines.push(`/${seg}  /${seg}/  301`);
     lines.push(`/${seg}/blog  /${seg}/blog/  301`);
+    lines.push(`/${seg}/gallery  /${seg}/gallery/  301`);
     for (const svc of svcIds) {
       lines.push(`/${seg}/${svc}  /${seg}/${svc}/  301`);
     }
@@ -619,7 +653,7 @@ function writeSitemapAndRobots(html) {
   const blogSlugs = discoverBlogPostSlugs(html);
   const svcIds = discoverSvcPageIds(html);
   /** @type {(string|null)[]} null = корень локали */
-  const tails = [null, 'blog', ...blogSlugs.map((b) => `blog/${b}`), ...svcIds];
+  const tails = [null, 'blog', 'gallery', ...blogSlugs.map((b) => `blog/${b}`), ...svcIds];
   console.log(
     'Sitemap: blog posts',
     blogSlugs.join(', ') || '(none)',
@@ -644,13 +678,14 @@ function writeSitemapAndRobots(html) {
   }
 
   function changefreqFor(tail) {
-    if (tail == null || tail === 'blog') return 'weekly';
+    if (tail == null || tail === 'blog' || tail === 'gallery') return 'weekly';
     return 'monthly';
   }
 
   function priorityFor(tail) {
     if (tail == null) return '1.0';
     if (tail === 'blog') return '0.85';
+    if (tail === 'gallery') return '0.82';
     if (String(tail).startsWith('blog/')) return '0.75';
     return '0.8';
   }
@@ -683,8 +718,21 @@ ${urlChunks.join('\n')}
 Allow: /
 
 Sitemap: ${SITE}/sitemap.xml
+Sitemap: ${SITE}/sitemap-images.xml
 `;
   fs.writeFileSync(path.join(OUT, 'robots.txt'), robots, 'utf8');
+}
+
+function writeImageSitemap(raw) {
+  const items = collectGalleryItems(raw);
+  if (!items.length) {
+    console.warn('Image sitemap: no gallery items found in innser-v6.html');
+    return;
+  }
+  const galleryPageUrls = ['pl', 'en', 'ru', 'uk'].map((seg) => `${SITE}/${seg}/gallery/`);
+  const xml = buildImageSitemapXml(items, SITE, galleryPageUrls);
+  fs.writeFileSync(path.join(OUT, 'sitemap-images.xml'), xml, 'utf8');
+  console.log(`Wrote image sitemap (${items.length} images × ${galleryPageUrls.length} gallery pages)`);
 }
 
 /**
@@ -729,6 +777,7 @@ function writeNetlifyRedirects(html) {
   for (const seg of ['pl', 'en', 'ru', 'uk']) {
     lines.push(`/${seg}/  /${seg}/index.html  200`);
     lines.push(`/${seg}/blog/  /${seg}/blog/index.html  200`);
+    lines.push(`/${seg}/gallery/  /${seg}/gallery/index.html  200`);
     lines.push(`/${seg}/blog/*/  /${seg}/blog/:splat/index.html  200`);
     for (const svc of svcIds) {
       lines.push(`/${seg}/${svc}/  /${seg}/${svc}/index.html  200`);
@@ -781,6 +830,7 @@ function writeVercelProjectJson(html) {
   for (const seg of ['pl', 'en', 'ru', 'uk']) {
     rewrites.push({ source: `/${seg}/`, destination: `/${seg}/index.html` });
     rewrites.push({ source: `/${seg}/blog/`, destination: `/${seg}/blog/index.html` });
+    rewrites.push({ source: `/${seg}/gallery/`, destination: `/${seg}/gallery/index.html` });
     for (const slug of blogSlugs) {
       rewrites.push({
         source: `/${seg}/blog/${slug}/`,
@@ -975,7 +1025,9 @@ async function main() {
   console.log('Wrote', path.relative(REPO_ROOT, path.join(OUT, 'index.html')));
 
   writeSitemapAndRobots(raw);
+  writeImageSitemap(raw);
   console.log('Wrote', path.relative(REPO_ROOT, path.join(OUT, 'sitemap.xml')));
+  console.log('Wrote', path.relative(REPO_ROOT, path.join(OUT, 'sitemap-images.xml')));
   console.log('Wrote', path.relative(REPO_ROOT, path.join(OUT, 'robots.txt')));
 
   writeNetlifyRedirects(raw);
