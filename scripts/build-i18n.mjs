@@ -281,6 +281,30 @@ function truncSeoDesc(s, n = 158) {
   return s.slice(0, n - 1).replace(/\s+\S*$/, '') + '…';
 }
 
+/** Подпись вкладки: ALL CAPS → первая буква заглавная, остальные строчные (как у галереи/главной). */
+function tabTitleCase(s) {
+  if (!s) return '';
+  s = String(s).trim();
+  const m = s.match(/^(.*?)(\s*\|\s*INNSER\s*)$/i);
+  let main = (m ? m[1] : s).trim();
+  const suffix = m ? m[2] : '';
+  const letters = main.match(/\p{L}/gu);
+  if (!letters?.length) return s;
+  const upper = letters.filter((c) => /\p{Lu}/u.test(c)).length;
+  if (upper / letters.length < 0.65) return s;
+  main = main.toLocaleLowerCase('pl-PL');
+  const fi = main.search(/\p{L}/u);
+  if (fi >= 0) {
+    main = main.slice(0, fi) + main.charAt(fi).toLocaleUpperCase('pl-PL') + main.slice(fi + 1);
+  }
+  return main + (suffix || '');
+}
+
+function seoPageTitle(title) {
+  const raw = title.includes('INNSER') ? title : `${title} | INNSER`;
+  return tabTitleCase(raw);
+}
+
 function seoMetaForTail(raw, localePathSeg, tail) {
   const langCl = langClFromPathSeg(localePathSeg);
   const trimmed = String(tail).replace(/^\/+|\/+$/g, '');
@@ -297,7 +321,7 @@ function seoMetaForTail(raw, localePathSeg, tail) {
     const kw = extractTranslationField(raw, langCl, `${id}_keywords`);
     if (!title) return null;
     return {
-      title: title.includes('INNSER') ? title : `${title} | INNSER`,
+      title: seoPageTitle(title),
       desc: truncSeoDesc(desc),
       kw,
     };
@@ -309,14 +333,14 @@ function seoMetaForTail(raw, localePathSeg, tail) {
     const title = stripHtmlForSeo(extractTranslationField(raw, langCl, `${bid}_t`));
     const desc = stripHtmlForSeo(extractTranslationField(raw, langCl, `bp_${bid}_p1`));
     if (!title) return null;
-    return { title: `${title} | INNSER`, desc: truncSeoDesc(desc), kw: null };
+    return { title: seoPageTitle(title), desc: truncSeoDesc(desc), kw: null };
   }
 
   if (trimmed === 'blog') {
     const title = stripHtmlForSeo(extractTranslationField(raw, langCl, 'blog_title'));
     const desc = stripHtmlForSeo(extractTranslationField(raw, langCl, 'blog_desc'));
     if (!title) return null;
-    return { title: `${title} | INNSER`, desc: truncSeoDesc(desc), kw: null };
+    return { title: seoPageTitle(title), desc: truncSeoDesc(desc), kw: null };
   }
 
   if (trimmed === 'gallery') {
@@ -329,7 +353,7 @@ function seoMetaForTail(raw, localePathSeg, tail) {
     const kw = extractTranslationField(raw, langCl, 'gal_keywords');
     if (!title) return null;
     return {
-      title: title.includes('INNSER') ? title : `${title} | INNSER`,
+      title: seoPageTitle(title),
       desc: truncSeoDesc(desc),
       kw,
     };
@@ -349,7 +373,7 @@ function seoMetaForTail(raw, localePathSeg, tail) {
     const kw = cfg.kw ? extractTranslationField(raw, langCl, cfg.kw) : null;
     if (!title) return null;
     return {
-      title: title.includes('INNSER') ? title : `${title} | INNSER`,
+      title: seoPageTitle(title),
       desc: truncSeoDesc(desc),
       kw,
     };

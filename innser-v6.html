@@ -2379,10 +2379,32 @@ function setMeta(sel,attr,val){
   var el=document.querySelector(sel);
   if(el&&val!=null&&val!=='') el.setAttribute(attr,val);
 }
+/** Подпись вкладки браузера: ALL CAPS → первая буква заглавная, остальные строчные. */
+function tabTitleCase(s){
+  if(!s) return '';
+  s=String(s).trim();
+  var m=s.match(/^(.*?)(\s*\|\s*INNSER\s*)$/i);
+  var main=(m?m[1]:s).trim();
+  var suffix=m?m[2]:'';
+  var letters=main.match(/\p{L}/gu);
+  if(!letters||!letters.length) return s;
+  var upper=0;
+  for(var i=0;i<letters.length;i++){ if(/\p{Lu}/u.test(letters[i])) upper++; }
+  if(upper/letters.length<0.65) return s;
+  main=main.toLocaleLowerCase('pl-PL');
+  var fi=main.search(/\p{L}/u);
+  if(fi>=0){
+    main=main.slice(0,fi)+main.charAt(fi).toLocaleUpperCase('pl-PL')+main.slice(fi+1);
+  }
+  return main+(suffix||'');
+}
+function setDocumentTitle(title){
+  document.title=tabTitleCase(title);
+}
 function restoreSeoHome(){
   var h=getHomeSeo();
   if(!h) return;
-  document.title=h.title;
+  setDocumentTitle(h.title);
   setMeta('meta[name="description"]','content',h.desc);
   setMeta('meta[property="og:title"]','content',h.ogT);
   setMeta('meta[property="og:description"]','content',h.ogD);
@@ -2406,7 +2428,7 @@ function applySeoFromStrings(titleRaw,descRaw){
   var cleanT=stripHtmlSeo(titleRaw||'');
   var cleanD=truncSeo(stripHtmlSeo(descRaw||''));
   if(!cleanT) return false;
-  document.title=cleanT+' | INNSER';
+  setDocumentTitle(cleanT+' | INNSER');
   setMeta('meta[name="description"]','content',cleanD||home.desc);
   setMeta('meta[property="og:title"]','content',cleanT);
   setMeta('meta[property="og:description"]','content',cleanD||home.ogD);
@@ -2425,7 +2447,7 @@ function applyRouteSeo(pageSlug){
   var home=getHomeSeo();
   if(!t||!home) return;
   if(pageSlug==='partners'&&t.coop_seo_title){
-    document.title=t.coop_seo_title;
+    setDocumentTitle(t.coop_seo_title);
     setMeta('meta[name="description"]','content',t.coop_seo_desc||'');
     setMeta('meta[property="og:title"]','content',t.coop_seo_title);
     setMeta('meta[property="og:description"]','content',t.coop_seo_desc||'');
@@ -2433,7 +2455,7 @@ function applyRouteSeo(pageSlug){
     setMeta('meta[name="twitter:description"]','content',t.coop_seo_desc||'');
     if(t.coop_keywords) setMeta('meta[name="keywords"]','content',t.coop_keywords);
   } else if(pageSlug==='svc2'&&t.svc2_seo_title){
-    document.title=t.svc2_seo_title;
+    setDocumentTitle(t.svc2_seo_title);
     setMeta('meta[name="description"]','content',t.svc2_seo_desc||'');
     setMeta('meta[property="og:title"]','content',t.svc2_seo_title);
     setMeta('meta[property="og:description"]','content',t.svc2_seo_desc||'');
@@ -2441,7 +2463,7 @@ function applyRouteSeo(pageSlug){
     setMeta('meta[name="twitter:description"]','content',t.svc2_seo_desc||'');
     if(t.svc2_keywords) setMeta('meta[name="keywords"]','content',t.svc2_keywords);
   } else if(pageSlug==='svc7'&&t.svc7_seo_title){
-    document.title=t.svc7_seo_title;
+    setDocumentTitle(t.svc7_seo_title);
     setMeta('meta[name="description"]','content',t.svc7_seo_desc||'');
     setMeta('meta[property="og:title"]','content',t.svc7_seo_title);
     setMeta('meta[property="og:description"]','content',t.svc7_seo_desc||'');
@@ -2449,7 +2471,7 @@ function applyRouteSeo(pageSlug){
     setMeta('meta[name="twitter:description"]','content',t.svc7_seo_desc||'');
     if(t.svc7_keywords) setMeta('meta[name="keywords"]','content',t.svc7_keywords);
   } else if(pageSlug==='svc8'&&t.svc8_seo_title){
-    document.title=t.svc8_seo_title;
+    setDocumentTitle(t.svc8_seo_title);
     setMeta('meta[name="description"]','content',t.svc8_seo_desc||'');
     setMeta('meta[property="og:title"]','content',t.svc8_seo_title);
     setMeta('meta[property="og:description"]','content',t.svc8_seo_desc||'');
@@ -2457,7 +2479,7 @@ function applyRouteSeo(pageSlug){
     setMeta('meta[name="twitter:description"]','content',t.svc8_seo_desc||'');
     if(t.svc8_keywords) setMeta('meta[name="keywords"]','content',t.svc8_keywords);
   } else if(pageSlug==='svc9'&&t.svc9_seo_title){
-    document.title=t.svc9_seo_title;
+    setDocumentTitle(t.svc9_seo_title);
     setMeta('meta[name="description"]','content',t.svc9_seo_desc||'');
     setMeta('meta[property="og:title"]','content',t.svc9_seo_title);
     setMeta('meta[property="og:description"]','content',t.svc9_seo_desc||'');
@@ -2470,7 +2492,7 @@ function applyRouteSeo(pageSlug){
     var descRaw=t['bp_'+bid+'_p1']||'';
     var cleanT=stripHtmlSeo(titleRaw);
     var cleanD=truncSeo(stripHtmlSeo(descRaw));
-    document.title=cleanT?cleanT+' | INNSER':home.title;
+    setDocumentTitle(cleanT?cleanT+' | INNSER':home.title);
     setMeta('meta[name="description"]','content',cleanD||home.desc);
     setMeta('meta[property="og:title"]','content',cleanT||home.ogT);
     setMeta('meta[property="og:description"]','content',cleanD||home.ogD);
@@ -2487,7 +2509,7 @@ function applyRouteSeo(pageSlug){
     if(!applySeoFromStrings(t.abt_title,t.abt_desc)) restoreSeoHome();
   } else if(pageSlug==='gallery'){
     if(t.gal_seo_title){
-      document.title=t.gal_seo_title;
+      setDocumentTitle(t.gal_seo_title);
       setMeta('meta[name="description"]','content',t.gal_seo_desc||'');
       setMeta('meta[property="og:title"]','content',t.gal_seo_title);
       setMeta('meta[property="og:description"]','content',t.gal_seo_desc||'');
