@@ -132,7 +132,7 @@ const LOCALES = {
     description:
       'Tania laweta i tanie holowanie Warszawa 24/7. Dojazd ok. 30 min, uczciwa wycena telefonem. Odpalanie, wymiana koła, otwieranie aut. 506-001-057.',
     keywords:
-      'laweta warszawa, pomoc drogowa warszawa 24h, tania laweta warszawa, holowanie warszawa, ewakuator warszawa, autolaweta warszawa, INNSER',
+      'laweta warszawa, pomoc drogowa warszawa 24h, tania laweta warszawa, holowanie warszawa, ewakuator warszawa, autolaweta warszawa, evakuator warszawa, tow truck warszawa, INNSER',
     ogTitle: 'Tania laweta Warszawa 24/7 — INNSER',
     ogDescription:
       'Tanio: pomoc drogowa Warszawa 24/7 — laweta, holowanie, odpalanie, wymiana koła. Dojazd ~30 min. 506-001-057.',
@@ -150,7 +150,7 @@ const LOCALES = {
     description:
       'Affordable tow truck & towing Warsaw 24/7. ~30 min arrival, fair quote by phone. Jump start, tire change, lockout. Call 506-001-057.',
     keywords:
-      'tow truck warsaw, towing warsaw 24h, affordable tow truck warsaw, roadside assistance warsaw, car recovery warsaw, INNSER',
+      'tow truck warsaw, towing warsaw 24h, affordable tow truck warsaw, roadside assistance warsaw, car recovery warsaw, tow truck, evakuator warszawa, ewakuator warszawa, INNSER',
     ogTitle: 'Affordable Tow Truck Warsaw 24/7 — INNSER',
     ogDescription:
       'Affordable tow truck & towing Warsaw 24/7: jump start, tire change, lockout. ~30 min ETA. Call 506-001-057.',
@@ -168,7 +168,7 @@ const LOCALES = {
     description:
       'Дешевый эвакуатор Варшава 24/7: лафета, прикур, эвакуация. Фиксированная цена, без скрытых доплат. 506-001-057.',
     keywords:
-      'дешевый эвакуатор варшава, эвакуатор варшава, прикурить машину в варшаве, прикурить автомобиль варшава, разряжен аккумулятор варшава, разряженный аккумулятор варшава, сел аккумулятор варшава, прикурить разряженный аккумулятор варшава, услуга прикурить машину в варшаве, эвакуатор варшава 24/7, лафета варшава, помощь на дороге варшава, INNSER',
+      'дешевый эвакуатор варшава, эвакуатор варшава, прикурить машину в варшаве, прикурить автомобиль варшава, разряжен аккумулятор варшава, разряженный аккумулятор варшава, сел аккумулятор варшава, прикурить разряженный аккумулятор варшава, услуга прикурить машину в варшаве, эвакуатор варшава 24/7, лафета варшава, помощь на дороге варшава, как вызвать эвакуатор в польше, услуги лафета, автоэвакуатор, эвакуатор варшава 24 7, эвакуатор цена, эвакуатор в варшаве, услуги эвакуатора, автолавета, эвакуатор для легковой машины, эвакуация автомобиля варшава, evakuator warszawa, ewakuator warszawa, tow truck warszawa, INNSER',
     ogTitle: 'Дешевый Эвакуатор Варшава 24/7 | ~30 мин | 506-001-057',
     ogDescription:
       'Дешевый эвакуатор и помощь на дороге Варшава 24/7: лафета, прикур, эвакуация. Приезд ~30 мин. 506-001-057.',
@@ -186,7 +186,7 @@ const LOCALES = {
     description:
       'Дешевий евакуатор Варшава 24/7: лафета, прикурити авто, евакуація. Фіксована ціна, без прихованих доплат. 506-001-057.',
     keywords:
-      'дешевий евакуатор варшава, евакуатор варшава, евакуатор варшава 24/7, замовити евакуатор варшава, недорогий евакуатор варшава, лафета варшава, допомога на дорозі варшава, INNSER',
+      'дешевий евакуатор варшава, евакуатор варшава, евакуатор варшава 24/7, замовити евакуатор варшава, недорогий евакуатор варшава, лафета варшава, допомога на дорозі варшава, евакуатор варшава ціна, евакуатор варшава 24 7, евакуатор в варшаве, евакуатор цена, евакуация автомобиля варшава, автолавета, услуги евакуатора, как вызвать эвакуатор в польше, evakuator warszawa, ewakuator warszawa, tow truck warszawa, INNSER',
     ogTitle: 'Дешевий евакуатор Варшава 24/7 — INNSER',
     ogDescription:
       'Дешевий евакуатор і допомога на дорозі Варшава 24/7: лафета, прикур, евакуація. Приїзд ~30 хв. 506-001-057.',
