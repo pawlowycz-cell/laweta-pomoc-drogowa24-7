@@ -450,9 +450,12 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
 <!-- End Google Tag Manager (noscript) -->
 <a href="tel:+48506001057" class="pf" aria-label="Zadzwoń">📞</a>
 <a href="tel:+48506001057" class="mobile-call-bar" data-t-aria="sticky_call_aria" aria-label="Zadzwoń po pomoc drogową — 506-001-057"><span class="mobile-call-bar__inner"><span class="mobile-call-bar__label" data-t="sticky_call_lbl">Zadzwoń teraz</span><span class="mobile-call-bar__num">506-001-057</span></span></a>
-<div class="lightbox" id="lightbox" onclick="this.classList.remove('show')">
-  <button class="lb-close" onclick="document.getElementById('lightbox').classList.remove('show')">✕</button>
-  <img id="lb-img" src="" alt="">
+<div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:99999;align-items:center;justify-content:center;cursor:pointer;" onclick="closeLightbox()" role="dialog" aria-modal="true" aria-label="Gallery">
+  <button type="button" onclick="prevPhoto(event)" aria-label="Previous" style="position:absolute;left:20px;top:50%;transform:translateY(-50%);background:rgba(255,209,0,.15);border:2px solid var(--y);color:var(--y);width:50px;height:50px;border-radius:50%;font-size:1.8rem;cursor:pointer;">‹</button>
+  <img id="lightbox-img" src="" alt="" width="800" height="600" onclick="event.stopPropagation()" style="max-width:90vw;max-height:85vh;object-fit:contain;border-radius:8px;box-shadow:0 0 60px rgba(0,0,0,.8);cursor:default;">
+  <button type="button" onclick="nextPhoto(event)" aria-label="Next" style="position:absolute;right:20px;top:50%;transform:translateY(-50%);background:rgba(255,209,0,.15);border:2px solid var(--y);color:var(--y);width:50px;height:50px;border-radius:50%;font-size:1.8rem;cursor:pointer;">›</button>
+  <button type="button" onclick="closeLightbox(event)" aria-label="Close" style="position:absolute;top:20px;right:20px;background:rgba(255,209,0,.15);border:2px solid var(--y);color:var(--y);width:44px;height:44px;border-radius:50%;font-size:1.5rem;cursor:pointer;z-index:1;">✕</button>
+  <div id="lightbox-counter" style="position:absolute;bottom:20px;color:var(--g);font-size:.9rem;pointer-events:none;"></div>
 </div>
 <header class="site-header">
 <div class="topbar"><div class="mx"><div class="tb-flags">
@@ -653,17 +656,6 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
   </div>
 </div>
 </section>
-</div>
-
-  <!-- Lightbox -->
-  <div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:99999;align-items:center;justify-content:center;" onclick="closeLightbox()">
-    <button onclick="prevPhoto(event)" style="position:absolute;left:20px;top:50%;transform:translateY(-50%);background:rgba(255,209,0,.15);border:2px solid var(--y);color:var(--y);width:50px;height:50px;border-radius:50%;font-size:1.8rem;cursor:pointer;">‹</button>
-    <img id="lightbox-img" src="" alt="" width="800" height="600" style="max-width:90vw;max-height:85vh;object-fit:contain;border-radius:8px;box-shadow:0 0 60px rgba(0,0,0,.8);">
-    <button onclick="nextPhoto(event)" style="position:absolute;right:20px;top:50%;transform:translateY(-50%);background:rgba(255,209,0,.15);border:2px solid var(--y);color:var(--y);width:50px;height:50px;border-radius:50%;font-size:1.8rem;cursor:pointer;">›</button>
-    <button onclick="closeLightbox()" style="position:absolute;top:20px;right:20px;background:rgba(255,209,0,.15);border:2px solid var(--y);color:var(--y);width:44px;height:44px;border-radius:50%;font-size:1.5rem;cursor:pointer;">✕</button>
-    <div id="lightbox-counter" style="position:absolute;bottom:20px;color:var(--g);font-size:.9rem;"></div>
-  </div>
-</div></section>
 </div>
 
 <div class="page" id="p-gallery">
@@ -2541,11 +2533,6 @@ function buildBlogCard(b){
 }
 
 
-function openLB(src){
-  document.getElementById('lb-img').src=src;
-  document.getElementById('lightbox').classList.add('show');
-}
-
 function initReveals(){
   const obs=new IntersectionObserver((entries)=>{
     entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target);}}); 
@@ -3124,11 +3111,14 @@ function openLightbox(i){initGalPhotos();
   lb.style.display='flex';
   document.body.style.overflow='hidden';
 }
-function closeLightbox(){
-  document.getElementById('lightbox').style.display='none';
+function closeLightbox(e){
+  if(e) e.stopPropagation();
+  var lb=document.getElementById('lightbox');
+  if(!lb) return;
+  lb.style.display='none';
   document.body.style.overflow='';
   var lbImg=document.getElementById('lightbox-img');
-  if(lbImg) lbImg.setAttribute('alt','');
+  if(lbImg){ lbImg.src=''; lbImg.setAttribute('alt',''); }
 }
 function nextPhoto(e){e&&e.stopPropagation();initGalPhotos();galIdx=(galIdx+1)%galPhotos.length;openLightbox(galIdx);}
 function prevPhoto(e){e&&e.stopPropagation();initGalPhotos();galIdx=(galIdx-1+galPhotos.length)%galPhotos.length;openLightbox(galIdx);}
