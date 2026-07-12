@@ -1069,11 +1069,16 @@ async function main() {
 
   fs.mkdirSync(OUT, { recursive: true });
 
+  const galleryItems = collectGalleryItems(raw);
+
   for (const key of Object.keys(LOCALES)) {
     const L = LOCALES[key];
     const dir = path.join(OUT, L.pathSeg);
     fs.mkdirSync(dir, { recursive: true });
-    const html = buildLocaleHtml(raw, key);
+    let html = buildLocaleHtml(raw, key);
+    if (galleryItems.length) {
+      html = injectGalleryStaticHtml(html, galleryItems, L.pathSeg);
+    }
     fs.writeFileSync(path.join(dir, 'index.html'), html, 'utf8');
     console.log('Wrote', path.relative(REPO_ROOT, path.join(dir, 'index.html')));
   }
