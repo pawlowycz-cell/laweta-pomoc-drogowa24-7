@@ -111,7 +111,7 @@ export function buildStaticGalleryGrid(items, langSeg) {
       const cap = escHtmlAttr(captionForLang(item, langSeg));
       return `<figure class="gal-seo-cell" style="width:calc(33% - 8px);min-width:140px;max-width:260px;margin:0;flex:1 1 140px;">
   <img src="${src}" alt="${alt}" title="${alt}" width="260" height="220" loading="lazy" decoding="async" style="width:100%;height:220px;object-fit:cover;border-radius:10px;display:block;">
-  <figcaption class="gal-seo-cap" style="font-size:.72rem;line-height:1.35;color:#aaa;margin-top:6px;padding:0 4px;">${cap}</figcaption>
+  <figcaption class="gal-seo-cap" style="font-size:.8rem;line-height:1.4;color:#ccc;margin-top:8px;padding:0 4px;">${cap}</figcaption>
 </figure>`;
     })
     .join('\n');

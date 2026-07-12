@@ -454,7 +454,8 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
 <a href="tel:+48506001057" class="mobile-call-bar" data-t-aria="sticky_call_aria" aria-label="Zadzwoń po pomoc drogową — 506-001-057"><span class="mobile-call-bar__inner"><span class="mobile-call-bar__label" data-t="sticky_call_lbl">Zadzwoń teraz</span><span class="mobile-call-bar__num">506-001-057</span></span></a>
 <div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:99999;align-items:center;justify-content:center;cursor:pointer;" onclick="closeLightbox()" role="dialog" aria-modal="true" aria-label="Gallery">
   <button type="button" onclick="prevPhoto(event)" aria-label="Previous" style="position:absolute;left:20px;top:50%;transform:translateY(-50%);background:rgba(255,209,0,.15);border:2px solid var(--y);color:var(--y);width:50px;height:50px;border-radius:50%;font-size:1.8rem;cursor:pointer;">‹</button>
-  <img id="lightbox-img" src="" alt="" width="800" height="600" onclick="event.stopPropagation()" style="max-width:90vw;max-height:85vh;object-fit:contain;border-radius:8px;box-shadow:0 0 60px rgba(0,0,0,.8);cursor:default;">
+  <img id="lightbox-img" src="" alt="" width="800" height="600" onclick="event.stopPropagation()" style="max-width:90vw;max-height:70vh;object-fit:contain;border-radius:8px;box-shadow:0 0 60px rgba(0,0,0,.8);cursor:default;">
+  <p id="lightbox-caption" style="position:absolute;bottom:52px;left:50%;transform:translateX(-50%);max-width:min(90vw,720px);margin:0;padding:0 12px;color:#e8e8e8;font-size:.85rem;line-height:1.45;text-align:center;pointer-events:none;text-shadow:0 1px 8px rgba(0,0,0,.9);"></p>
   <button type="button" onclick="nextPhoto(event)" aria-label="Next" style="position:absolute;right:20px;top:50%;transform:translateY(-50%);background:rgba(255,209,0,.15);border:2px solid var(--y);color:var(--y);width:50px;height:50px;border-radius:50%;font-size:1.8rem;cursor:pointer;">›</button>
   <button type="button" onclick="closeLightbox(event)" aria-label="Close" style="position:absolute;top:20px;right:20px;background:rgba(255,209,0,.15);border:2px solid var(--y);color:var(--y);width:44px;height:44px;border-radius:50%;font-size:1.5rem;cursor:pointer;z-index:1;">✕</button>
   <div id="lightbox-counter" style="position:absolute;bottom:20px;color:var(--g);font-size:.9rem;pointer-events:none;"></div>
@@ -3358,6 +3359,8 @@ function openLightbox(i,mode){
     alt=(thumb&&(thumb.getAttribute('data-alt-'+suf)||thumb.getAttribute('data-alt-pl')))||(thumb&&thumb.getAttribute('alt'))||'';
   }
   lbImg.setAttribute('alt',alt);
+  var lbCap=document.getElementById('lightbox-caption');
+  if(lbCap) lbCap.textContent=alt;
   document.getElementById('lightbox-counter').textContent=(i+1)+' / '+photos.length;
   lb.style.display='flex';
   document.body.style.overflow='hidden';
@@ -3370,6 +3373,8 @@ function closeLightbox(e){
   document.body.style.overflow='';
   var lbImg=document.getElementById('lightbox-img');
   if(lbImg){ lbImg.src=''; lbImg.setAttribute('alt',''); }
+  var lbCap=document.getElementById('lightbox-caption');
+  if(lbCap) lbCap.textContent='';
 }
 function nextPhoto(e){e&&e.stopPropagation();var photos=getActiveGalPhotos();galIdx=(galIdx+1)%photos.length;openLightbox(galIdx,galLightboxMode);}
 function prevPhoto(e){e&&e.stopPropagation();var photos=getActiveGalPhotos();galIdx=(galIdx-1+photos.length)%photos.length;openLightbox(galIdx,galLightboxMode);}
@@ -3444,7 +3449,7 @@ function renderGalleryPage(){
     newImg.style.cssText = 'width:100%;height:220px;object-fit:cover;border-radius:10px;display:block;';
     var cap = document.createElement('figcaption');
     cap.className = 'gal-seo-cap';
-    cap.style.cssText = 'font-size:.72rem;line-height:1.35;color:#aaa;margin-top:6px;padding:0 4px;';
+    cap.style.cssText = 'font-size:.8rem;line-height:1.4;color:#ccc;margin-top:8px;padding:0 4px;';
     cap.textContent = item.cap||item.alt;
     fig.appendChild(newImg);
     fig.appendChild(cap);
