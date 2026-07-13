@@ -173,37 +173,37 @@ const LOCALES = {
     pathSeg: 'ru',
     htmlLang: 'ru',
     cl: 'ru',
-    title: 'Дешевый Эвакуатор Варшава 24/7 | Прикурить Авто',
+    title: 'Эвакуатор и лавета Варшава 24/7 | ~30 мин | 506-001-057',
     description:
-      'Дешевый эвакуатор Варшава 24/7: лафета, прикур, эвакуация. Фиксированная цена, без скрытых доплат. 506-001-057.',
+      'Эвакуатор и лавета Варшава 24/7: дешевый эвакуатор, прикур, эвакуация. Фиксированная цена, без скрытых доплат. 506-001-057.',
     keywords:
-      'дешевый эвакуатор варшава, эвакуатор варшава, прикурить машину в варшаве, прикурить автомобиль варшава, разряжен аккумулятор варшава, разряженный аккумулятор варшава, сел аккумулятор варшава, прикурить разряженный аккумулятор варшава, услуга прикурить машину в варшаве, эвакуатор варшава 24/7, лафета варшава, помощь на дороге варшава, как вызвать эвакуатор в польше, услуги лафета, автоэвакуатор, эвакуатор варшава 24 7, эвакуатор цена, эвакуатор в варшаве, услуги эвакуатора, автолавета, эвакуатор для легковой машины, эвакуация автомобиля варшава, evakuator warszawa, ewakuator warszawa, tow truck warszawa, INNSER',
-    ogTitle: 'Дешевый Эвакуатор Варшава 24/7 | ~30 мин | 506-001-057',
+      'эвакуатор варшава, дешевый эвакуатор варшава, эвакуатор варшава 24/7, лавета варшава, лафета варшава, прикурить машину в варшаве, прикурить автомобиль варшава, разряжен аккумулятор варшава, разряженный аккумулятор варшава, сел аккумулятор варшава, прикурить разряженный аккумулятор варшава, услуга прикурить машину в варшаве, помощь на дороге варшава, как вызвать эвакуатор в польше, автоэвакуатор, эвакуатор варшава 24 7, эвакуатор цена, эвакуатор в варшаве, услуги эвакуатора, эвакуация автомобиля варшава, evakuator warszawa, ewakuator warszawa, tow truck warszawa, INNSER',
+    ogTitle: 'Эвакуатор и лавета Варшава 24/7 | ~30 мин | 506-001-057',
     ogDescription:
-      'Дешевый эвакуатор и помощь на дороге Варшава 24/7: лафета, прикур, эвакуация. Приезд ~30 мин. 506-001-057.',
+      'Эвакуатор и лавета Варшава 24/7: помощь на дороге, прикур, эвакуация. Приезд ~30 мин. 506-001-057.',
     ogLocale: 'ru_RU',
-    twitterTitle: 'Русскоязычный Эвакуатор 24/7 | ~30 мин | 506-001-057',
+    twitterTitle: 'Эвакуатор и лавета Варшава 24/7 | ~30 мин | 506-001-057',
     twitterDescription:
-      'Дешевый эвакуатор Варшава: лафета, прикур, эвакуация. Фиксированная цена. 506-001-057.',
-    ogImageAlt: 'INNSER — логотип помощи на дороге Варшава 24/7',
+      'Эвакуатор и лавета Варшава: прикур, эвакуация. Фиксированная цена. 506-001-057.',
+    ogImageAlt: 'INNSER — эвакуатор и лавета Варшава 24/7',
   },
   uk: {
     pathSeg: 'uk',
     htmlLang: 'uk',
     cl: 'ua',
-    title: 'Дешевий евакуатор Варшава 24/7 | ~30 хв | 506-001-057',
+    title: 'Евакуатор і лавета Варшава 24/7 | ~30 хв | 506-001-057',
     description:
-      'Дешевий евакуатор Варшава 24/7: лафета, прикурити авто, евакуація. Фіксована ціна, без прихованих доплат. 506-001-057.',
+      'Евакуатор і лавета Варшава 24/7: дешевий евакуатор, прикурити авто, евакуація. Фіксована ціна, без прихованих доплат. 506-001-057.',
     keywords:
-      'дешевий евакуатор варшава, евакуатор варшава, евакуатор варшава 24/7, замовити евакуатор варшава, недорогий евакуатор варшава, лафета варшава, допомога на дорозі варшава, евакуатор варшава ціна, евакуатор варшава 24 7, евакуатор в варшаве, евакуатор цена, евакуация автомобиля варшава, автолавета, услуги евакуатора, как вызвать эвакуатор в польше, evakuator warszawa, ewakuator warszawa, tow truck warszawa, INNSER',
-    ogTitle: 'Дешевий евакуатор Варшава 24/7 — INNSER',
+      'евакуатор варшава, дешевий евакуатор варшава, евакуатор варшава 24/7, лавета варшава, лафета варшава, замовити евакуатор варшава, недорогий евакуатор варшава, допомога на дорозі варшава, евакуатор варшава ціна, евакуатор варшава 24 7, евакуатор в варшаве, евакуация автомобиля варшава, evakuator warszawa, ewakuator warszawa, tow truck warszawa, INNSER',
+    ogTitle: 'Евакуатор і лавета Варшава 24/7 — INNSER',
     ogDescription:
-      'Дешевий евакуатор і допомога на дорозі Варшава 24/7: лафета, прикур, евакуація. Приїзд ~30 хв. 506-001-057.',
+      'Евакуатор і лавета Варшава 24/7: допомога на дорозі, прикур, евакуація. Приїзд ~30 хв. 506-001-057.',
     ogLocale: 'uk_UA',
-    twitterTitle: 'Дешевий евакуатор Варшава 24/7 | 506-001-057',
+    twitterTitle: 'Евакуатор і лавета Варшава 24/7 | 506-001-057',
     twitterDescription:
-      'Дешевий евакуатор Варшава: лафета, прикур, евакуація. Фіксована ціна. 506-001-057.',
-    ogImageAlt: 'INNSER — логотип допомоги на дорозі Варшава 24/7',
+      'Евакуатор і лавета Варшава: прикур, евакуація. Фіксована ціна. 506-001-057.',
+    ogImageAlt: 'INNSER — евакуатор і лавета Варшава 24/7',
   },
 };
 
@@ -279,6 +279,96 @@ function stripHtmlForSeo(s) {
 function truncSeoDesc(s, n = 158) {
   if (!s || s.length <= n) return s || '';
   return s.slice(0, n - 1).replace(/\s+\S*$/, '') + '…';
+}
+
+/** Декодирует значение из JS-строки T{} в innser-v6.html */
+function decodeJsTranslation(s) {
+  if (!s) return '';
+  return String(s)
+    .replace(/\\n/g, '\n')
+    .replace(/\\"/g, '"')
+    .replace(/\\\\/g, '\\');
+}
+
+function discoverDataTKeys(html) {
+  const set = new Set();
+  const re = /\sdata-t="([^"]+)"/g;
+  let m;
+  while ((m = re.exec(html)) !== null) set.add(m[1]);
+  return [...set];
+}
+
+/** Подставляет переводы data-t в статический HTML (Google видит H1/тексты без ожидания JS). */
+function replaceDataTContent(html, field, value) {
+  const esc = field.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const re = new RegExp(
+    `(<([a-zA-Z][a-zA-Z0-9]*)[^>]*data-t="${esc}"[^>]*>)([\\s\\S]*?)(<\\/\\2>)`,
+    'g'
+  );
+  return html.replace(re, `$1${value}$4`);
+}
+
+function bakeDataTTranslations(html, raw, langCl) {
+  let out = html;
+  for (const key of discoverDataTKeys(html)) {
+    const val = extractTranslationField(raw, langCl, key);
+    if (val == null) continue;
+    out = replaceDataTContent(out, key, decodeJsTranslation(val));
+  }
+  return out;
+}
+
+const LOCAL_BUSINESS_SCHEMA = {
+  ru: {
+    name: 'INNSER — Эвакуатор и лавета Варшава',
+    alternateName: [
+      'Эвакуатор Варшава',
+      'Лавета Варшава',
+      'Лафета Варшава',
+      'Evakuator Warszawa',
+      'Laweta Warszawa 24h',
+    ],
+    description:
+      'Эвакуатор и лавета Варшава 24/7. Дешевый эвакуатор, помощь на дороге: прикурить машину, эвакуация авто, замена колеса. Приезд ~30 мин. 506-001-057.',
+  },
+  ua: {
+    name: 'INNSER — Евакуатор і лавета Варшава',
+    alternateName: [
+      'Евакуатор Варшава',
+      'Лавета Варшава',
+      'Лафета Варшава',
+      'Evakuator Warszawa',
+      'Laweta Warszawa 24h',
+    ],
+    description:
+      'Евакуатор і лавета Варшава 24/7. Дешевий евакуатор, допомога на дорозі: прикурити авто, евакуація, заміна колеса. Приїзд ~30 хв. 506-001-057.',
+  },
+};
+
+function patchLocalBusinessSchema(html, langCl) {
+  const patch = LOCAL_BUSINESS_SCHEMA[langCl];
+  if (!patch) return html;
+  const marker = '<script type="application/ld+json">';
+  const idx = html.indexOf(marker);
+  if (idx < 0) return html;
+  const endIdx = html.indexOf('</script>', idx);
+  if (endIdx < 0) return html;
+  const block = html.slice(idx, endIdx + 9);
+  const jsonStart = block.indexOf('{');
+  const jsonEnd = block.lastIndexOf('}');
+  if (jsonStart < 0 || jsonEnd < 0) return html;
+  try {
+    const obj = JSON.parse(block.slice(jsonStart, jsonEnd + 1));
+    if (obj['@type'] !== 'LocalBusiness') return html;
+    obj.name = patch.name;
+    obj.alternateName = patch.alternateName;
+    obj.description = patch.description;
+    const newBlock =
+      block.slice(0, jsonStart) + JSON.stringify(obj) + block.slice(jsonEnd + 1);
+    return html.slice(0, idx) + newBlock + html.slice(endIdx + 9);
+  } catch {
+    return html;
+  }
 }
 
 /** Подпись вкладки: ALL CAPS → первая буква заглавная, остальные строчные (как у галереи/главной). */
@@ -569,6 +659,10 @@ function buildLocaleHtml(raw, key) {
   );
 
   html = html.replace(AUTO_DETECT_SNIPPET, fixedLangSnippet(L.cl));
+
+  const langCl = L.cl;
+  html = bakeDataTTranslations(html, raw, langCl);
+  html = patchLocalBusinessSchema(html, langCl);
 
   return html;
 }
