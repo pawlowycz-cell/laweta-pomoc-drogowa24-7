@@ -371,6 +371,38 @@ function patchLocalBusinessSchema(html, langCl) {
   }
 }
 
+/** FAQPage JSON-LD из faq_q и faq_a переводов; ставим только на главную локали. */
+function buildFaqJsonLd(raw, langCl) {
+  const items = [];
+  for (let i = 1; i <= 12; i++) {
+    const q = extractTranslationField(raw, langCl, `faq_q${i}`);
+    const a = extractTranslationField(raw, langCl, `faq_a${i}`);
+    if (!q || !a) continue;
+    items.push({
+      '@type': 'Question',
+      name: stripHtmlForSeo(decodeJsTranslation(q)),
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: stripHtmlForSeo(decodeJsTranslation(a)),
+      },
+    });
+  }
+  if (!items.length) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items,
+  };
+}
+
+function injectFaqJsonLd(html, raw, langCl) {
+  const faq = buildFaqJsonLd(raw, langCl);
+  if (!faq) return html;
+  const tag = `<script type="application/ld+json">${JSON.stringify(faq)}</script>\n`;
+  if (html.includes('"@type":"FAQPage"')) return html;
+  return html.replace('</head>', `${tag}</head>`);
+}
+
 /** Подпись вкладки: ALL CAPS → первая буква заглавная, остальные строчные (как у галереи/главной). */
 function tabTitleCase(s) {
   if (!s) return '';
@@ -458,7 +490,9 @@ function seoMetaForTail(raw, localePathSeg, tail) {
   };
   if (NAV_SEO[trimmed]) {
     const cfg = NAV_SEO[trimmed];
-    const title = stripHtmlForSeo(extractTranslationField(raw, langCl, cfg.title));
+    const override = NAV_TITLE_OVERRIDE[langCl]?.[trimmed];
+    const title =
+      override || stripHtmlForSeo(extractTranslationField(raw, langCl, cfg.title));
     const desc = stripHtmlForSeo(extractTranslationField(raw, langCl, cfg.desc));
     const kw = cfg.kw ? extractTranslationField(raw, langCl, cfg.kw) : null;
     if (!title) return null;
@@ -471,6 +505,34 @@ function seoMetaForTail(raw, localePathSeg, tail) {
 
   return null;
 }
+
+/** Keyword-rich <title> для nav-страниц (H1/data-t не меняем — только SEO title). */
+const NAV_TITLE_OVERRIDE = {
+  pl: {
+    services: 'Laweta i pomoc drogowa Warszawa 24/7 — usługi | 506-001-057',
+    about: 'O nas — laweta i pomoc drogowa Warszawa 24/7 | INNSER',
+    map: 'Laweta Warszawa — obszar działania i dojazd 24/7 | INNSER',
+    contact: 'Kontakt — laweta i pomoc drogowa Warszawa 24/7 | 506-001-057',
+  },
+  ru: {
+    services: 'Эвакуатор и лавета Варшава 24/7 — услуги | 506-001-057',
+    about: 'О нас — эвакуатор и лавета Варшава 24/7 | INNSER',
+    map: 'Эвакуатор Варшава — зона обслуживания и приезд 24/7 | INNSER',
+    contact: 'Контакт — эвакуатор и лавета Варшава 24/7 | 506-001-057',
+  },
+  ua: {
+    services: 'Евакуатор і лавета Варшава 24/7 — послуги | 506-001-057',
+    about: 'Про нас — евакуатор і лавета Варшава 24/7 | INNSER',
+    map: 'Евакуатор Варшава — зона обслуговування та приїзд 24/7 | INNSER',
+    contact: 'Контакт — евакуатор і лавета Варшава 24/7 | 506-001-057',
+  },
+  en: {
+    services: 'Tow truck & roadside assistance Warsaw 24/7 — services | 506-001-057',
+    about: 'About us — tow truck & roadside assistance Warsaw 24/7 | INNSER',
+    map: 'Tow truck Warsaw — service area & arrival 24/7 | INNSER',
+    contact: 'Contact — tow truck & roadside assistance Warsaw 24/7 | 506-001-057',
+  },
+};
 
 function escHtmlAttr(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
@@ -663,6 +725,7 @@ function buildLocaleHtml(raw, key) {
   const langCl = L.cl;
   html = bakeDataTTranslations(html, raw, langCl);
   html = patchLocalBusinessSchema(html, langCl);
+  html = injectFaqJsonLd(html, raw, langCl);
 
   return html;
 }
