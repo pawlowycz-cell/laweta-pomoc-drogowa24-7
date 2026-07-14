@@ -276,17 +276,19 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
 .tow-calc-maps-hint{font-size:.8rem;color:var(--g);margin:12px 0 0;line-height:1.45;text-align:center;}
 #tow-dist-wrap{display:none!important;}
 .pac-container{z-index:2000!important;}
-.tow-calc-more{border:1px solid var(--b4);border-radius:12px;background:rgba(0,0,0,.12);overflow:hidden;}
-.tow-calc-more summary{padding:12px 14px;font-size:.88rem;font-weight:600;color:var(--gl);cursor:pointer;list-style:none;}
-.tow-calc-more summary::-webkit-details-marker{display:none;}
-.tow-calc-more summary::after{content:'+';float:right;color:var(--y);font-weight:700;}
-.tow-calc-more[open] summary::after{content:'−';}
-.tow-calc-more-body{padding:0 14px 14px;display:grid;grid-template-columns:1fr 1fr;gap:10px 12px;}
-.tow-calc-check{grid-column:1/-1;margin:0;font-size:.86rem;color:var(--gl);}
-.tow-calc-check label{display:flex;align-items:flex-start;gap:8px;cursor:pointer;line-height:1.4;}
-.tow-calc-check input{margin-top:3px;accent-color:var(--y);flex-shrink:0;}
-.tow-calc-parking-level{grid-column:1/-1;}
-.tow-calc-row{margin:0;}
+.tow-calc-extras{margin-top:14px;border:1px solid var(--b4);border-radius:12px;background:rgba(0,0,0,.12);padding:14px;}
+.tow-calc-extras-title{margin:0 0 12px;font-size:.88rem;font-weight:600;color:var(--gl);}
+.tow-calc-extras-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;}
+.tow-calc-extras-grid .tow-calc-check{margin:0;font-size:.86rem;color:var(--gl);}
+.tow-calc-extras-grid .tow-calc-check label{display:flex;align-items:flex-start;gap:8px;cursor:pointer;line-height:1.4;}
+.tow-calc-extras-grid .tow-calc-check input{margin-top:3px;accent-color:var(--y);flex-shrink:0;}
+.tow-calc-wheels-row{align-items:center;}
+.tow-calc-wheels-row>label{flex:1;min-width:0;}
+.tow-calc-wheels-wrap{display:flex;flex-wrap:wrap;align-items:center;gap:8px;width:100%;}
+.tow-calc-wheels-step{display:inline-flex;align-items:center;border:1px solid var(--b4);border-radius:8px;overflow:hidden;flex-shrink:0;}
+.tow-calc-wheels-step button{background:var(--b3);border:none;color:var(--w);width:28px;height:28px;cursor:pointer;font-size:1rem;line-height:1;padding:0;font-family:inherit;}
+.tow-calc-wheels-step button:hover{background:var(--b4);color:var(--y);}
+.tow-calc-wheels-step span{min-width:22px;text-align:center;font-size:.85rem;color:var(--gl);padding:0 2px;}
 .tow-calc-body.map-mode .tow-calc-result{margin:0;border:none;border-radius:0;border-top:1px solid var(--b4);}
 .tow-calc-result{margin-top:20px;padding:20px 18px;background:var(--b3);border:1px solid rgba(255,209,0,.25);border-radius:var(--r);text-align:center;}
 .tow-calc-result-label{display:block;font-size:.82rem;color:var(--g);margin-bottom:6px;}
@@ -297,7 +299,7 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
 .tow-calc-individual .tow-calc-phone{color:var(--y);font-weight:700;}
 .tow-calc-call{width:100%;max-width:320px;justify-content:center;margin:0 auto;}
 .tow-calc-footnote{margin:14px 0 0;font-size:.78rem;color:var(--g);line-height:1.5;text-align:center;}
-@media(max-width:640px){.tow-calc-grid,.tow-calc-more-body{grid-template-columns:1fr;}}
+@media(max-width:640px){.tow-calc-grid,.tow-calc-extras-grid{grid-template-columns:1fr;}}
 
 .rev-card{background:var(--b3);border:1px solid var(--b4);border-radius:14px;padding:24px;position:relative;transition:.3s;}
 .rev-card:hover{border-color:rgba(255,209,0,.3);transform:translateY(-3px);}
@@ -752,46 +754,26 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
               </div>
               <span class="tow-calc-status" id="tow-route-status" aria-live="polite"></span>
             </div>
-            <details class="tow-calc-more">
-              <summary data-t="tow_calc_extras">Dodatkowe opcje</summary>
-              <div class="tow-calc-more-body">
-                <div class="tow-calc-row">
-                  <label for="tow-wheels" data-t="tow_calc_wheels">Zablokowane koła</label>
-                  <select id="tow-wheels" class="tow-calc-select">
-                    <option value="0" data-t="tow_calc_wheels0">Brak</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                  </select>
-                </div>
-                <div class="tow-calc-row">
-                  <label for="tow-vtype" data-t="tow_calc_vtype">Typ pojazdu</label>
-                  <select id="tow-vtype" class="tow-calc-select">
-                    <option value="" data-t="tow_calc_vtype_std">Osobowy</option>
-                    <option value="shortbus" data-t="tow_calc_vtype_short">Bus krótki (+50 zł)</option>
-                    <option value="longbus" data-t="tow_calc_vtype_long">Bus długi (+150 zł)</option>
-                  </select>
-                </div>
-                <div class="tow-calc-check">
-                  <label><input type="checkbox" id="tow-parking"> <span data-t="tow_calc_parking">Parking podziemny (punkt A)</span></label>
-                </div>
-                <div class="tow-calc-row tow-calc-parking-level" id="tow-parking-level-wrap" hidden>
-                  <label for="tow-parking-level" data-t="tow_calc_level">Poziom</label>
-                  <select id="tow-parking-level" class="tow-calc-select">
-                    <option value="-1" data-t="tow_calc_level_m1">−1 (+200 zł)</option>
-                    <option value="-2" data-t="tow_calc_level_m2">−2 — wycena indywidualna</option>
-                    <option value="-3" data-t="tow_calc_level_m3">−3 i niżej — wycena indywidualna</option>
-                  </select>
-                </div>
-                <div class="tow-calc-check">
-                  <label><input type="checkbox" id="tow-lowered"> <span data-t="tow_calc_lowered">Obniżone auto (+50 zł)</span></label>
-                </div>
-                <div class="tow-calc-check">
-                  <label><input type="checkbox" id="tow-jeep"> <span data-t="tow_calc_jeep">SUV / Jeep (+50 zł)</span></label>
+            <div class="tow-calc-extras">
+              <p class="tow-calc-extras-title" data-t="tow_calc_extras">Dodatkowe opcje</p>
+              <div class="tow-calc-extras-grid">
+                <label class="tow-calc-check"><input type="checkbox" id="tow-lowered"> <span data-t="tow_calc_lowered">Niskie auto (+50 zł)</span></label>
+                <label class="tow-calc-check"><input type="checkbox" id="tow-bus-short"> <span data-t="tow_calc_bus_short">Bus (+50)</span></label>
+                <label class="tow-calc-check"><input type="checkbox" id="tow-jeep"> <span data-t="tow_calc_jeep">SUV (+50 zł)</span></label>
+                <label class="tow-calc-check"><input type="checkbox" id="tow-bus-long"> <span data-t="tow_calc_bus_long">Długi Bus maxi (+150)</span></label>
+                <label class="tow-calc-check"><input type="checkbox" id="tow-parking"> <span data-t="tow_calc_parking">Z parkingu podziemnego −1 (+200 zł)</span></label>
+                <div class="tow-calc-check tow-calc-wheels-row">
+                  <div class="tow-calc-wheels-wrap">
+                    <label><input type="checkbox" id="tow-wheels-on"> <span id="tow-wheels-label">Zablokowane koło (+50)</span></label>
+                    <div class="tow-calc-wheels-step" id="tow-wheels-step" hidden>
+                      <button type="button" id="tow-wheels-minus" aria-label="−">−</button>
+                      <span id="tow-wheels-count">1</span>
+                      <button type="button" id="tow-wheels-plus" aria-label="+">+</button>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </details>
+            </div>
           </div>
           <div class="tow-calc-body" id="tow-calc-body">
             <div class="tow-calc-map-wrap" id="tow-map-wrap" hidden>
@@ -1614,29 +1596,25 @@ pl:{
   tow_calc_route_err:"Nie udało się obliczyć — wpisz km ręcznie.",
   tow_calc_no_key:"Mapa Google niedostępna — wpisz dystans ręcznie, cena nadal działa.",
   tow_calc_extras:"Dodatkowe opcje",
-  tow_calc_wheels:"Zablokowane koła",
-  tow_calc_wheels0:"Brak",
-  tow_calc_parking:"Parking podziemny (punkt A)",
-  tow_calc_level:"Poziom",
-  tow_calc_level_m1:"−1 (+200 zł)",
-  tow_calc_level_m2:"−2 — wycena indywidualna",
-  tow_calc_level_m3:"−3 i niżej — wycena indywidualna",
-  tow_calc_lowered:"Obniżone auto (+50 zł)",
-  tow_calc_jeep:"SUV / Jeep (+50 zł)",
-  tow_calc_vtype:"Typ pojazdu",
-  tow_calc_vtype_std:"Osobowy",
-  tow_calc_vtype_short:"Bus krótki (+50 zł)",
-  tow_calc_vtype_long:"Bus długi (+150 zł)",
+  tow_calc_lowered:"Niskie auto (+50 zł)",
+  tow_calc_jeep:"SUV (+50 zł)",
+  tow_calc_parking:"Z parkingu podziemnego −1 (+200 zł)",
+  tow_calc_bus_short:"Bus (+50)",
+  tow_calc_bus_long:"Długi Bus maxi (+150)",
+  tow_calc_wheels1:"Zablokowane koło (+50)",
+  tow_calc_wheels2:"Zablokowane koła (+100)",
+  tow_calc_wheels3:"Zablokowane koła (+150)",
+  tow_calc_wheels4:"Zablokowane koła (+200)",
   tow_calc_est:"Szacunkowa cena",
   tow_calc_individual:"Indywidualna wycena — zadzwoń:",
   tow_calc_enter_route:"Wpisz skąd i dokąd — trasa policzy się automatycznie.",
   tow_calc_base:"Trasa",
-  tow_calc_wheels_line:"Zablokowane koła",
-  tow_calc_parking_line:"Parking podziemny (−1)",
-  tow_calc_lowered_line:"Obniżone auto",
-  tow_calc_jeep_line:"Jeep / SUV",
-  tow_calc_vtype_short_line:"Bus krótki",
-  tow_calc_vtype_long_line:"Bus długi"
+  tow_calc_parking_line:"Parking podziemny −1",
+  tow_calc_lowered_line:"Niskie auto",
+  tow_calc_jeep_line:"SUV",
+  tow_calc_bus_short_line:"Bus",
+  tow_calc_bus_long_line:"Długi Bus maxi",
+  tow_calc_wheels_line:"Zablokowane koła"
 },
 en:{
   nav_home:"Home",nav_svc:"Services",nav_prices:"Prices",nav_about:"About us",nav_gal:"Photos",nav_map:"Map",nav_blog:"Blog",nav_partners:"Partnership",nav_cnt:"Contact",
@@ -1943,29 +1921,25 @@ en:{
   tow_calc_route_err:"Could not calculate — enter km manually.",
   tow_calc_no_key:"Google map unavailable — enter distance manually; price still works.",
   tow_calc_extras:"Extra options",
-  tow_calc_wheels:"Locked wheels",
-  tow_calc_wheels0:"None",
-  tow_calc_parking:"Underground car park (point A)",
-  tow_calc_level:"Level",
-  tow_calc_level_m1:"−1 (+200 zł)",
-  tow_calc_level_m2:"−2 — individual quote",
-  tow_calc_level_m3:"−3 and below — individual quote",
   tow_calc_lowered:"Lowered car (+50 zł)",
-  tow_calc_jeep:"SUV / Jeep (+50 zł)",
-  tow_calc_vtype:"Vehicle type",
-  tow_calc_vtype_std:"Standard car",
-  tow_calc_vtype_short:"Short bus (+50 zł)",
-  tow_calc_vtype_long:"Long bus (+150 zł)",
+  tow_calc_jeep:"SUV (+50 zł)",
+  tow_calc_parking:"From underground car park −1 (+200 zł)",
+  tow_calc_bus_short:"Bus (+50)",
+  tow_calc_bus_long:"Long maxi bus (+150)",
+  tow_calc_wheels1:"Locked wheel (+50)",
+  tow_calc_wheels2:"Locked wheels (+100)",
+  tow_calc_wheels3:"Locked wheels (+150)",
+  tow_calc_wheels4:"Locked wheels (+200)",
   tow_calc_est:"Estimated price",
   tow_calc_individual:"Individual quote — call:",
   tow_calc_enter_route:"Enter from and to — the route calculates automatically.",
   tow_calc_base:"Route",
-  tow_calc_wheels_line:"Locked wheels",
-  tow_calc_parking_line:"Underground car park (−1)",
+  tow_calc_parking_line:"Underground car park −1",
   tow_calc_lowered_line:"Lowered car",
-  tow_calc_jeep_line:"Jeep / SUV",
-  tow_calc_vtype_short_line:"Short bus",
-  tow_calc_vtype_long_line:"Long bus"
+  tow_calc_jeep_line:"SUV",
+  tow_calc_bus_short_line:"Bus",
+  tow_calc_bus_long_line:"Long maxi bus",
+  tow_calc_wheels_line:"Locked wheels"
 },
 ru:{
   nav_home:"Главная",nav_svc:"Услуги",nav_prices:"Цены",nav_about:"О нас",nav_gal:"Фото",nav_map:"Карта",nav_blog:"Блог",nav_partners:"Сотрудничество",nav_cnt:"Контакт",
@@ -2218,29 +2192,25 @@ ru:{
   tow_calc_route_err:"Не удалось рассчитать — введите км вручную.",
   tow_calc_no_key:"Карта Google недоступна — введите км вручную, цена всё равно считается.",
   tow_calc_extras:"Дополнительно",
-  tow_calc_wheels:"Заблокированные колёса",
-  tow_calc_wheels0:"Нет",
-  tow_calc_parking:"Подземный паркинг (точка A)",
-  tow_calc_level:"Уровень",
-  tow_calc_level_m1:"−1 (+200 zł)",
-  tow_calc_level_m2:"−2 — индивидуальный расчёт",
-  tow_calc_level_m3:"−3 и ниже — индивидуальный расчёт",
-  tow_calc_lowered:"Заниженный авто (+50 zł)",
-  tow_calc_jeep:"SUV / Jeep (+50 zł)",
-  tow_calc_vtype:"Тип транспорта",
-  tow_calc_vtype_std:"Легковой",
-  tow_calc_vtype_short:"Короткий автобус (+50 zł)",
-  tow_calc_vtype_long:"Длинный автобус (+150 zł)",
+  tow_calc_lowered:"Низкий авто (+50 zł)",
+  tow_calc_jeep:"SUV (+50 zł)",
+  tow_calc_parking:"С подземного паркинга −1 (+200 zł)",
+  tow_calc_bus_short:"Автобус (+50)",
+  tow_calc_bus_long:"Длинный Bus maxi (+150)",
+  tow_calc_wheels1:"Заблокированное колесо (+50)",
+  tow_calc_wheels2:"Заблокированных колеса (+100)",
+  tow_calc_wheels3:"Заблокированных колеса (+150)",
+  tow_calc_wheels4:"Заблокированных колеса (+200)",
   tow_calc_est:"Ориентировочная цена",
   tow_calc_individual:"Индивидуальный расчёт — звоните:",
   tow_calc_enter_route:"Укажите откуда и куда — маршрут посчитается автоматически.",
   tow_calc_base:"Маршрут",
+  tow_calc_parking_line:"Подземный паркинг −1",
+  tow_calc_lowered_line:"Низкий авто",
+  tow_calc_jeep_line:"SUV",
+  tow_calc_bus_short_line:"Автобус",
+  tow_calc_bus_long_line:"Длинный Bus maxi",
   tow_calc_wheels_line:"Заблокированные колёса",
-  tow_calc_parking_line:"Подземный паркинг (−1)",
-  tow_calc_lowered_line:"Заниженный автомобиль",
-  tow_calc_jeep_line:"Jeep / SUV",
-  tow_calc_vtype_short_line:"Короткий автобус",
-  tow_calc_vtype_long_line:"Длинный автобус",
   svc2_h2:"Прикурить машину (кабелями) в <strong class=\"xb\">Варшаве</strong> — аварийно",
   svc2_p1:"<strong class=\"xb\">Разряженный аккумулятор</strong> — одна из самых частых причин поломки на дороге. <strong class=\"xb\">INNSER</strong> предлагает быструю помощь — приедем к вам и заведём авто на месте с помощью профессиональных пусковых кабелей.",
   svc2_h3:"Когда разряжается <strong class=\"xb\">аккумулятор</strong>?",
@@ -2594,29 +2564,25 @@ ua:{
   tow_calc_route_err:"Не вдалося порахувати — введіть км вручну.",
   tow_calc_no_key:"Карта Google недоступна — введіть км вручну, ціна все одно рахується.",
   tow_calc_extras:"Додатково",
-  tow_calc_wheels:"Заблоковані колеса",
-  tow_calc_wheels0:"Немає",
-  tow_calc_parking:"Підземний паркінг (точка A)",
-  tow_calc_level:"Рівень",
-  tow_calc_level_m1:"−1 (+200 zł)",
-  tow_calc_level_m2:"−2 — індивідуальний розрахунок",
-  tow_calc_level_m3:"−3 і нижче — індивідуальний розрахунок",
-  tow_calc_lowered:"Занижений авто (+50 zł)",
-  tow_calc_jeep:"SUV / Jeep (+50 zł)",
-  tow_calc_vtype:"Тип транспорту",
-  tow_calc_vtype_std:"Легковий",
-  tow_calc_vtype_short:"Короткий автобус (+50 zł)",
-  tow_calc_vtype_long:"Довгий автобус (+150 zł)",
+  tow_calc_lowered:"Низький авто (+50 zł)",
+  tow_calc_jeep:"SUV (+50 zł)",
+  tow_calc_parking:"З підземного паркінгу −1 (+200 zł)",
+  tow_calc_bus_short:"Автобус (+50)",
+  tow_calc_bus_long:"Довгий Bus maxi (+150)",
+  tow_calc_wheels1:"Заблоковане колесо (+50)",
+  tow_calc_wheels2:"Заблокованих колеса (+100)",
+  tow_calc_wheels3:"Заблокованих колеса (+150)",
+  tow_calc_wheels4:"Заблокованих колеса (+200)",
   tow_calc_est:"Орієнтовна ціна",
   tow_calc_individual:"Індивідуальний розрахунок — телефонуйте:",
   tow_calc_enter_route:"Вкажіть звідки і куди — маршрут порахується автоматично.",
   tow_calc_base:"Маршрут",
+  tow_calc_parking_line:"Підземний паркінг −1",
+  tow_calc_lowered_line:"Низький авто",
+  tow_calc_jeep_line:"SUV",
+  tow_calc_bus_short_line:"Автобус",
+  tow_calc_bus_long_line:"Довгий Bus maxi",
   tow_calc_wheels_line:"Заблоковані колеса",
-  tow_calc_parking_line:"Підземний паркінг (−1)",
-  tow_calc_lowered_line:"Занижений автомобіль",
-  tow_calc_jeep_line:"Jeep / SUV",
-  tow_calc_vtype_short_line:"Короткий автобус",
-  tow_calc_vtype_long_line:"Довгий автобус",
   svc7_t:"Терміновий викуп авто за готівку",svc7_d:"Викуп авто Варшава + 50 км — оцінка за 10 хв, готівка в день звернення. Лафета, SMS/WhatsApp. 506-001-057.",svc7_seo_title:"Терміновий викуп авто за готівку | Варшава +50 км | 506-001-057",svc7_seo_desc:"Швидкий викуп авто у Варшаві та до ~50 км: лафета, оцінка телефоном, SMS і WhatsApp, готівка при вивозі. На ходу, після ДТП, без OC. 506-001-057 цілодобово.",svc7_keywords:"викуп авто Варшава, скупка авто Варшава, викуп автомобілів Мазовія, оцінка авто 10 хвилин, продати авто за готівку, викуп після ДТП, авто без страховки, евакуатор лафета Варшава, INNSER",svc7_h2:"Скупка авто <strong class=\"xb\">Варшава</strong> + <strong class=\"xb\">50 км</strong> — <strong class=\"xb\">оцінка</strong>, <strong class=\"xb\">лафета</strong>, <strong class=\"xb\">готівка</strong>",svc7_p1:"Втомилися від оголошень і зривів? <strong class=\"xb\">INNSER</strong> викуповує авто у <strong class=\"xb\">Варшаві</strong> та в радіусі близько <strong class=\"xb\">50 км</strong> — Пясечно, Прушкув, Легіоново, Отвоцк, Маркі, Ґродзіськ-Мазовецький тощо. Беремо справні, після ДТП, з несправностями, без чинного <strong class=\"xb\">OC</strong> і на утилізацію. <strong class=\"xb\">Попередню ціну</strong> називаємо дзвінком або за фото й описом — <strong class=\"xb\">без зобов’язань</strong>. <strong class=\"xb\">24/7</strong>; польська, англійська, російська й українська.",svc7_p2:"Перевіряємо документи, узгоджуємо час і точну адресу — біля під’їзду, на парковці, у гаражі. При передачі авто виплачуємо домовлену суму <strong class=\"xb\">готівкою</strong>. Якщо не на ходу — під’їжджаємо <strong class=\"xb\">лафетою</strong> з нашої <strong class=\"xb\">допомоги на дорозі</strong>; умови залежать від локації в межах 50 км.",svc7_h3:"Як відбувається <strong class=\"xb\">оцінка і зв’язок</strong>?",svc7_p3:"Надайте марку, рік, пробіг, технічний і зовнішній стан або надішліть фото в SMS чи <strong class=\"xb\">WhatsApp</strong> на <strong class=\"xb\">506-001-057</strong>. Спочатку орієнтир у розмові, остаточно — після огляду на місці або за надісланими матеріалами. Зручніше, ніж десятки повідомлень з майданчиків оголошень.",svc7_h4:"Куди <strong class=\"xb\">виїжджаємо за авто</strong>?",svc7_p4:"<strong class=\"xb\">Скупка</strong> діє по всій Варшаві та населених пунктах приблизно в 50 км від агломерації — Зомбки, Зелёнка, Воломін, Новий-Двур-Мазовецький, Пястув, Ожарув-Мазовецький тощо. <strong class=\"xb\">Підсумкову зону і час</strong> підтверджуємо при першому контакті. Поза цією зоною викуп не пропонуємо. Телефон і WhatsApp: <strong class=\"xb\">506-001-057</strong>.",svc7_h5:"<strong class=\"xb\">Викуп автомобілів у Варшаві</strong> — <strong class=\"xb\">оцінка за 10 хвилин</strong>, <strong class=\"xb\">оплата в день звернення</strong>",svc7_p5:"Хочете <strong class=\"xb\">швидко й вигідно продати автомобіль</strong>? Звернулися сьогодні — продали сьогодні. Без тижнів очікування, без нав’язливих покупців і без торгів на парковці. Приїжджаємо з <strong class=\"xb\">готівкою</strong> і забираємо авто <strong class=\"xb\">в той самий день</strong>.",svc7_h6:"Як це <strong class=\"xb\">працює</strong>?",svc7_p6:"Усе дуже просто. Напишіть у <strong class=\"xb\">WhatsApp</strong>, <strong class=\"xb\">Telegram</strong> або SMS і надішліть фото авто разом із даними. Ми <strong class=\"xb\">оцінимо авто за 10 хвилин</strong> і назвемо ціну. Якщо влаштовує — приїжджаємо, перевіряємо авто, передаємо <strong class=\"xb\">готівку</strong> і забираємо машину. Швидко, чесно й без зайвих клопотів.",svc7_h7:"Що надіслати для <strong class=\"xb\">швидкої оцінки</strong>?",svc7_p7:"Рік випуску й <strong class=\"xb\">пробіг</strong>, тип і об’єм двигуна, тип КПП (механіка, автомат, робот, варіатор), що треба зробити й що вже зроблено, стан кузова (подряпини, вм’ятини, іржа), термін страховки й техогляду, фото ззовні й зсередини.",svc7_h8:"Чому це <strong class=\"xb\">краще, ніж продавати самостійно</strong>?",svc7_p8:"На <strong class=\"xb\">OLX</strong>, <strong class=\"xb\">Otomoto</strong> та інших майданчиках ви платите за просування й чекаєте тижнями чи місяцями покупця. Потім приїжджають люди, торгуються, шукають недоліки, забирають час і йдуть ні з чим. З нами інакше: <strong class=\"xb\">набрали, надіслали фото, отримали оцінку, продали</strong>. Усе часто займає кілька годин.",svc7_h9:"Які автомобілі <strong class=\"xb\">викуповуємо</strong>?",svc7_p9:"Купуємо <strong class=\"xb\">будь-які авто</strong> — на ходу й не на ходу, після ДТП, з пошкодженнями кузова, з механічними проблемами, з простроченою страховкою чи техоглядом. Незалежно від стану зробимо <strong class=\"xb\">чесну пропозицію</strong>.",svc7_p10:"Дзвоніть або пишіть зараз — <strong class=\"xb\">506-001-057</strong>. <strong class=\"xb\">WhatsApp</strong> і Telegram — <strong class=\"xb\">506-001-057</strong>. <strong class=\"xb\">Оцінка за 10 хвилин</strong>. <strong class=\"xb\">Гроші в той самий день</strong>. Усе просто — <strong class=\"xb\">набрали й продали</strong>.",svc7_faq1q:"Чи викуповуєте <strong class=\"xb\">несправні авто</strong>?",svc7_faq1a:"Так — зокрема <strong class=\"xb\">після зіткнень</strong> чи з поломками. Після <strong class=\"xb\">короткого опису або фото</strong> скажемо, чи можемо <strong class=\"xb\">зробити пропозицію</strong>.",svc7_faq2q:"<strong class=\"xb\">Як відбувається оцінка</strong>?",svc7_faq2a:"Спочатку телефоном або <strong class=\"xb\">за фото</strong>: марка, рік, пробіг, стан. Остаточно після огляду на місці.",svc7_faq3q:"Чи заберете авто <strong class=\"xb\">з двору</strong> чи з <strong class=\"xb\">передмістя</strong>?",svc7_faq3a:"Так — уточнюємо адресу у <strong class=\"xb\">Варшаві</strong> або до ~50 км від міста. Якщо не на ходу, можливий вивіз лафетою з наших послуг.",
   svc8_t:"Утилізація авто",svc8_d:"Утилізація та демонтаж у Варшаві та до 50 км. Вивіз авто, документи для зняття з обліку, zaświadczenie o demontażu pojazdu. 24/7 — 506-001-057.",svc8_seo_title:"Утилізація авто | Варшава +50 км | 506-001-057",svc8_seo_desc:"Здати авто на запчастини та утилізацію у Варшаві +50 км: вивіз лафетою, довідка про демонтаж, зняття з обліку. 506-001-057 цілодобово.",svc8_keywords:"утилізація авто варшава, авторазборка варшава, здати авто на запчастини, довідка про демонтаж, зняття авто з обліку, вивіз авто на утилізацію, INNSER",
   svc8_h2:"<strong class=\"xb\">Утилізація авто</strong> — Варшава + 50 км",svc8_p1:"Потрібно зняти авто з обліку й отримати підтвердження з ліцензованої станції? Організовуємо утилізацію за польськими правилами: демонтаж на уповноваженому пункті, zaświadczenie o demontażu pojazdu та пояснення для візиту до органу. Одна лінія <strong class=\"xb\">INNSER</strong> — як і дорожня допомога — без окремого пошуку <strong class=\"xb\">евакуатор</strong>а й майданчика. Цілодобово.",svc8_p2:"Авто не їде? Організовуємо виїзд і перевезення лафетою чи <strong class=\"xb\">евакуатор</strong>ом у межах нашої <strong class=\"xb\">допомоги на дорозі</strong>, той самий номер <strong class=\"xb\">506-001-057</strong>; умови залежать від локації в зоні Варшава + близько 50 км.",svc8_h3:"Zaświadczenie o demontażu та зняття з обліку",svc8_p3:"Обговорюємо правову ситуацію: власник, лізинг, спадок, іноземні папери тощо. Підкажемо, які <strong class=\"xb\">документи</strong> підготувати для зняття з обліку й як використати zaświadczenie o demontażu в процедурі.",svc8_h4:"Зона: <strong class=\"xb\">утилізація авто</strong>",svc8_p4:"Вивіз на утилізацію і супровід оформлення — по Варшаві та <strong class=\"xb\">в радіусі близько 50 км</strong>: Прушкув, Пясечно, Легіоново, Отвоцк, Маркі, Воломін. Поза зоною послугу не надаємо; адреса й термін — індивідуально. Контакт: <strong class=\"xb\">506-001-057</strong>.",
@@ -3049,6 +3015,7 @@ function SL(l){
   renderAreas(l);
   renderReviews();
   updateGalleryImgAlts(l);
+  if(typeof towSyncWheelsUi==='function')towSyncWheelsUi();
   document.querySelectorAll('[id^="p-svc"] .svc-detail-hero-img img:not([data-alt-pl])').forEach(function(img){
     var pg=img.closest('[id^="p-svc"]');
     if(pg)img.alt=svcDetailAltFromPage(pg);
@@ -4273,6 +4240,7 @@ var towCalcLeafletRouteLayer=null;
 var towCalcLeafletMarkers=[];
 var towCalcLeafletLoadPromise=null;
 var towCalcRouteTimer=null;
+var towCalcWheelsCount=1;
 
 var towGmSoftDarkStyles=[
   {elementType:'geometry',stylers:[{color:'#323232'}]},
@@ -4436,12 +4404,24 @@ function towSetRouteKm(km){
   updateTowCalcPrice();
 }
 
+function towSyncWheelsUi(){
+  var wheelsOn=document.getElementById('tow-wheels-on');
+  var wheelsStep=document.getElementById('tow-wheels-step');
+  var wheelsCountEl=document.getElementById('tow-wheels-count');
+  var wheelsLabel=document.getElementById('tow-wheels-label');
+  if(wheelsStep)wheelsStep.hidden=!(wheelsOn&&wheelsOn.checked);
+  if(wheelsCountEl)wheelsCountEl.textContent=String(towCalcWheelsCount);
+  if(wheelsLabel){
+    var keys=['','tow_calc_wheels1','tow_calc_wheels2','tow_calc_wheels3','tow_calc_wheels4'];
+    wheelsLabel.textContent=towT(keys[towCalcWheelsCount],wheelsLabel.textContent);
+  }
+}
+
 function calcTowExtras(){
-  var individual=false;
   var extras=0;
   var lines=[];
-  var wheelsEl=document.getElementById('tow-wheels');
-  var wheels=parseInt(wheelsEl?wheelsEl.value:'0',10)||0;
+  var wheelsOn=document.getElementById('tow-wheels-on');
+  var wheels=(wheelsOn&&wheelsOn.checked)?towCalcWheelsCount:0;
   if(wheels>0){
     var wCost=wheels*50;
     extras+=wCost;
@@ -4449,34 +4429,30 @@ function calcTowExtras(){
   }
   var parkingEl=document.getElementById('tow-parking');
   if(parkingEl&&parkingEl.checked){
-    var levelEl=document.getElementById('tow-parking-level');
-    var level=parseInt(levelEl?levelEl.value:'-1',10);
-    if(level<=-2)individual=true;
-    else{
-      extras+=200;
-      lines.push(towT('tow_calc_parking_line','Parking podziemny (−1)')+': +200 zł');
-    }
+    extras+=200;
+    lines.push(towT('tow_calc_parking_line','Parking podziemny −1')+': +200 zł');
   }
   var loweredEl=document.getElementById('tow-lowered');
   if(loweredEl&&loweredEl.checked){
     extras+=50;
-    lines.push(towT('tow_calc_lowered_line','Obniżone auto')+': +50 zł');
+    lines.push(towT('tow_calc_lowered_line','Niskie auto')+': +50 zł');
   }
   var jeepEl=document.getElementById('tow-jeep');
   if(jeepEl&&jeepEl.checked){
     extras+=50;
-    lines.push(towT('tow_calc_jeep_line','Jeep / SUV')+': +50 zł');
+    lines.push(towT('tow_calc_jeep_line','SUV')+': +50 zł');
   }
-  var vtypeEl=document.getElementById('tow-vtype');
-  var vtype=vtypeEl?vtypeEl.value:'';
-  if(vtype==='shortbus'){
+  var busShortEl=document.getElementById('tow-bus-short');
+  if(busShortEl&&busShortEl.checked){
     extras+=50;
-    lines.push(towT('tow_calc_vtype_short_line','Bus krótki')+': +50 zł');
-  } else if(vtype==='longbus'){
-    extras+=150;
-    lines.push(towT('tow_calc_vtype_long_line','Bus długi')+': +150 zł');
+    lines.push(towT('tow_calc_bus_short_line','Bus')+': +50 zł');
   }
-  return {extras:extras,lines:lines,individual:individual};
+  var busLongEl=document.getElementById('tow-bus-long');
+  if(busLongEl&&busLongEl.checked){
+    extras+=150;
+    lines.push(towT('tow_calc_bus_long_line','Długi Bus maxi')+': +150 zł');
+  }
+  return {extras:extras,lines:lines,individual:false};
 }
 
 function updateTowCalcPrice(){
@@ -4948,19 +4924,50 @@ function initTowCalc(){
   var root=document.getElementById('tow-calc');
   if(!root||root.dataset.bound==='1')return;
   root.dataset.bound='1';
-  var parkingEl=document.getElementById('tow-parking');
-  var parkingWrap=document.getElementById('tow-parking-level-wrap');
-  function syncParkingLevel(){
-    if(parkingWrap)parkingWrap.hidden=!(parkingEl&&parkingEl.checked);
-  }
-  ['tow-wheels','tow-parking','tow-parking-level','tow-lowered','tow-jeep','tow-vtype'].forEach(function(id){
+  ['tow-lowered','tow-jeep','tow-parking','tow-wheels-on'].forEach(function(id){
     var el=document.getElementById(id);
     if(!el)return;
     el.addEventListener('change',function(){
-      if(id==='tow-parking')syncParkingLevel();
+      if(id==='tow-wheels-on'&&el.checked){
+        towCalcWheelsCount=1;
+        towSyncWheelsUi();
+      }
       updateTowCalcPrice();
     });
   });
+  var busShort=document.getElementById('tow-bus-short');
+  var busLong=document.getElementById('tow-bus-long');
+  if(busShort&&busLong){
+    busShort.addEventListener('change',function(){
+      if(busShort.checked)busLong.checked=false;
+      updateTowCalcPrice();
+    });
+    busLong.addEventListener('change',function(){
+      if(busLong.checked)busShort.checked=false;
+      updateTowCalcPrice();
+    });
+  }
+  var wheelsMinus=document.getElementById('tow-wheels-minus');
+  var wheelsPlus=document.getElementById('tow-wheels-plus');
+  if(wheelsMinus){
+    wheelsMinus.addEventListener('click',function(){
+      if(towCalcWheelsCount>1){
+        towCalcWheelsCount--;
+        towSyncWheelsUi();
+        updateTowCalcPrice();
+      }
+    });
+  }
+  if(wheelsPlus){
+    wheelsPlus.addEventListener('click',function(){
+      if(towCalcWheelsCount<4){
+        towCalcWheelsCount++;
+        towSyncWheelsUi();
+        updateTowCalcPrice();
+      }
+    });
+  }
+  towSyncWheelsUi();
   var manual=document.getElementById('tow-km-manual');
   if(manual){
     manual.addEventListener('input',function(){
@@ -4979,7 +4986,6 @@ function initTowCalc(){
   document.addEventListener('click',function(e){
     if(!e.target.closest('.tow-ac-wrap'))towHideAllAcLists();
   });
-  syncParkingLevel();
   towBindRouteAutoCompute();
   var meta=document.querySelector('meta[name="google-maps-api-key"]');
   var key=meta?meta.getAttribute('content')||'':'';
