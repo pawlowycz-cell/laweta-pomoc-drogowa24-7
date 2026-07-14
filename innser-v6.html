@@ -246,42 +246,44 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
 .svc-detail-mid-tel{width:100%;max-width:440px;justify-content:center;box-shadow:0 4px 24px rgba(255,209,0,.22);}
 @media(min-width:769px){.svc-detail-tel-wrap{text-align:left;}}
 @media(max-width:768px){.svc-detail-body{grid-template-columns:1fr;}.svc-detail-hero{flex-direction:column;text-align:center;}.svc-detail-hero-img{width:100%;max-width:360px;height:200px;margin:0 auto 4px;}}
-.tow-calc{margin:28px 0 32px;padding:22px 20px 24px;background:var(--b3);border:1px solid rgba(255,209,0,.22);border-radius:var(--r);}
-.tow-calc-title{font-family:var(--ff-d);font-size:1.35rem;letter-spacing:1.5px;color:var(--y);margin:0 0 8px;}
-.tow-calc-note{font-size:.85rem;color:var(--g);margin-bottom:18px;line-height:1.55;}
-.tow-calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
-.tow-calc-field label,.tow-calc-row label{display:block;font-size:.78rem;font-weight:600;color:var(--gl);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px;}
+.tow-calc{margin:24px 0 0;padding:0;background:transparent;border:none;border-radius:0;}
+.tow-calc-form{display:flex;flex-direction:column;gap:16px;}
+.tow-calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.tow-calc-field label,.tow-calc-row label{display:block;font-size:.84rem;font-weight:500;color:var(--gl);margin-bottom:6px;}
 .tow-ac-wrap{position:relative;}
 .tow-ac-list{position:absolute;left:0;right:0;top:calc(100% - 2px);z-index:1200;margin:0;padding:4px 0;list-style:none;background:var(--b2);border:1px solid rgba(255,209,0,.35);border-radius:0 0 10px 10px;max-height:220px;overflow-y:auto;box-shadow:0 12px 32px rgba(0,0,0,.55);}
 .tow-ac-item{padding:10px 14px;font-size:.88rem;color:var(--gl);cursor:pointer;line-height:1.35;border-bottom:1px solid var(--b4);}
 .tow-ac-item:last-child{border-bottom:none;}
 .tow-ac-item:hover,.tow-ac-item.on{background:rgba(255,209,0,.12);color:var(--w);}
-.tow-calc-route-row{margin:12px 0 14px;display:flex;flex-wrap:wrap;align-items:center;gap:12px;}
-.tow-calc-route-btn{padding:11px 22px;font-size:.9rem;}
-.tow-calc-route-status{font-size:.82rem;color:var(--g);min-height:1.2em;}
+.tow-calc-km-row{display:grid;grid-template-columns:1fr auto;gap:10px 12px;align-items:end;}
+.tow-calc-km-field{grid-column:1/-1;}
+.tow-calc-route-btn{padding:10px 16px;font-size:.85rem;white-space:nowrap;}
+.tow-calc-status{grid-column:1/-1;font-size:.8rem;color:var(--g);min-height:0;line-height:1.4;}
+.tow-calc-status:empty{display:none;}
 .tow-calc-input,.tow-calc-select{width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--b4);background:var(--b2);color:var(--w);font-family:var(--ff-b);font-size:.95rem;}
 .tow-calc-input:focus,.tow-calc-select:focus{outline:none;border-color:rgba(255,209,0,.45);}
-.tow-calc-manual{margin-bottom:14px;}
-.tow-calc-map-wrap{margin:14px 0;}
-.tow-calc-map{width:100%;height:240px;border-radius:12px;border:1px solid var(--b4);background:var(--b2);}
-.tow-calc-dist{font-size:.88rem;color:var(--gl);margin-top:8px;}
-.tow-calc-dist strong{color:var(--y);}
-.tow-calc-maps-hint{font-size:.82rem;color:var(--g);margin:10px 0 14px;padding:10px 12px;background:rgba(255,209,0,.06);border-radius:10px;border:1px solid rgba(255,209,0,.15);line-height:1.55;}
-.tow-calc-extras{border:1px solid var(--b4);border-radius:12px;padding:14px 16px 6px;margin:16px 0;background:rgba(0,0,0,.15);}
-.tow-calc-extras legend{font-size:.78rem;font-weight:700;color:var(--y);text-transform:uppercase;letter-spacing:.5px;padding:0 6px;}
-.tow-calc-row{margin-bottom:12px;}
-.tow-calc-check{margin-bottom:10px;font-size:.9rem;color:var(--gl);}
-.tow-calc-check label{display:flex;align-items:flex-start;gap:8px;cursor:pointer;line-height:1.45;}
-.tow-calc-check input{margin-top:3px;accent-color:var(--y);}
-.tow-calc-parking-level{margin-top:-4px;padding-left:24px;}
-.tow-calc-result{margin-top:18px;padding-top:18px;border-top:1px solid var(--b4);}
-.tow-calc-result-label{font-size:.82rem;color:var(--g);margin-bottom:4px;}
-.tow-calc-price{font-family:var(--ff-d);font-size:2.4rem;color:var(--y);letter-spacing:2px;margin-bottom:8px;line-height:1;}
-.tow-calc-breakdown{font-size:.82rem;color:var(--g);line-height:1.55;margin-bottom:12px;}
-.tow-calc-individual{font-size:.92rem;color:var(--gl);margin-bottom:14px;line-height:1.55;}
-.tow-calc-individual .tow-calc-phone{color:var(--y);font-weight:700;font-size:1.05rem;}
-.tow-calc-call{width:100%;max-width:440px;justify-content:center;margin-top:6px;}
-@media(max-width:640px){.tow-calc-grid{grid-template-columns:1fr;}.tow-calc-map{height:200px;}}
+.tow-calc-map-wrap,.tow-calc-maps-hint,#tow-dist-wrap{display:none!important;}
+.tow-calc-more{border:1px solid var(--b4);border-radius:12px;background:rgba(0,0,0,.12);overflow:hidden;}
+.tow-calc-more summary{padding:12px 14px;font-size:.88rem;font-weight:600;color:var(--gl);cursor:pointer;list-style:none;}
+.tow-calc-more summary::-webkit-details-marker{display:none;}
+.tow-calc-more summary::after{content:'+';float:right;color:var(--y);font-weight:700;}
+.tow-calc-more[open] summary::after{content:'−';}
+.tow-calc-more-body{padding:0 14px 14px;display:grid;grid-template-columns:1fr 1fr;gap:10px 12px;}
+.tow-calc-check{grid-column:1/-1;margin:0;font-size:.86rem;color:var(--gl);}
+.tow-calc-check label{display:flex;align-items:flex-start;gap:8px;cursor:pointer;line-height:1.4;}
+.tow-calc-check input{margin-top:3px;accent-color:var(--y);flex-shrink:0;}
+.tow-calc-parking-level{grid-column:1/-1;}
+.tow-calc-row{margin:0;}
+.tow-calc-result{margin-top:20px;padding:20px 18px;background:var(--b3);border:1px solid rgba(255,209,0,.25);border-radius:var(--r);text-align:center;}
+.tow-calc-result-label{display:block;font-size:.82rem;color:var(--g);margin-bottom:6px;}
+.tow-calc-price{font-family:var(--ff-d);font-size:2.2rem;color:var(--y);letter-spacing:1px;margin:0 0 8px;line-height:1;}
+.tow-calc-breakdown{font-size:.8rem;color:var(--g);line-height:1.45;margin:0 0 14px;min-height:0;}
+.tow-calc-breakdown:empty{display:none;}
+.tow-calc-individual{font-size:.88rem;color:var(--gl);margin:0 0 14px;line-height:1.45;}
+.tow-calc-individual .tow-calc-phone{color:var(--y);font-weight:700;}
+.tow-calc-call{width:100%;max-width:320px;justify-content:center;margin:0 auto;}
+.tow-calc-footnote{margin:14px 0 0;font-size:.78rem;color:var(--g);line-height:1.5;text-align:center;}
+@media(max-width:640px){.tow-calc-grid,.tow-calc-more-body{grid-template-columns:1fr;}.tow-calc-km-row{grid-template-columns:1fr;}.tow-calc-route-btn{width:100%;}}
 
 .rev-card{background:var(--b3);border:1px solid var(--b4);border-radius:14px;padding:24px;position:relative;transition:.3s;}
 .rev-card:hover{border-color:rgba(255,209,0,.3);transform:translateY(-3px);}
@@ -714,83 +716,86 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
 
 <div class="page" id="p-prices">
 <section class="sec svc-bg"><div class="mx" style="max-width:860px;">
-  <div class="sc"><span class="stag" data-t="prices_tag">Cennik</span><h1 class="sh" data-t="prices_title">CENY I KALKULATOR HOLOWANIA</h1><p class="sd" data-t="prices_desc">Orientacyjna wycena holowania A→B w Warszawie i okolicach. Ostateczną cenę podajemy przez telefon — 506-001-057.</p></div>
+  <div class="sc"><span class="stag" data-t="prices_tag">Cennik</span><h1 class="sh" data-t="prices_title">CENY I KALKULATOR HOLOWANIA</h1><p class="sd" data-t="prices_desc">Wpisz skąd–dokąd lub dystans w km — zobaczysz orientacyjną cenę. Dokładna wycena: 506-001-057.</p></div>
         <div class="tow-calc" id="tow-calc">
-          <h3 class="tow-calc-title" data-t="tow_calc_title">Kalkulator wyceny holowania</h3>
-          <p class="tow-calc-note" data-t="tow_calc_note">Orientacyjna cena trasy drogowej A→B. Odbiór z parkingu podziemnego na poziomie −2 i niżej — tylko indywidualna wycena telefoniczna.</p>
-          <div class="tow-calc-grid">
-            <div class="tow-calc-field tow-ac-wrap">
-              <label for="tow-from" data-t="tow_calc_from">Skąd (punkt A)</label>
-              <input type="text" id="tow-from" class="tow-calc-input" autocomplete="off" spellcheck="false">
-              <ul class="tow-ac-list" id="tow-from-list" hidden role="listbox"></ul>
+          <div class="tow-calc-form">
+            <div class="tow-calc-grid">
+              <div class="tow-calc-field tow-ac-wrap">
+                <label for="tow-from" data-t="tow_calc_from">Skąd</label>
+                <input type="text" id="tow-from" class="tow-calc-input" autocomplete="off" spellcheck="false" placeholder="Warszawa, adres…">
+                <ul class="tow-ac-list" id="tow-from-list" hidden role="listbox"></ul>
+              </div>
+              <div class="tow-calc-field tow-ac-wrap">
+                <label for="tow-to" data-t="tow_calc_to">Dokąd</label>
+                <input type="text" id="tow-to" class="tow-calc-input" autocomplete="off" spellcheck="false" placeholder="Warszawa, adres…">
+                <ul class="tow-ac-list" id="tow-to-list" hidden role="listbox"></ul>
+              </div>
             </div>
-            <div class="tow-calc-field tow-ac-wrap">
-              <label for="tow-to" data-t="tow_calc_to">Dokąd (punkt B)</label>
-              <input type="text" id="tow-to" class="tow-calc-input" autocomplete="off" spellcheck="false">
-              <ul class="tow-ac-list" id="tow-to-list" hidden role="listbox"></ul>
+            <div class="tow-calc-km-row">
+              <div class="tow-calc-km-field">
+                <label for="tow-km-manual" data-t="tow_calc_km">Dystans (km)</label>
+                <input type="number" id="tow-km-manual" class="tow-calc-input" min="0" step="0.1" inputmode="decimal" placeholder="—">
+              </div>
+              <button type="button" class="btn btn-o tow-calc-route-btn" id="tow-route-btn" data-t="tow_calc_btn">Oblicz</button>
+              <span class="tow-calc-status" id="tow-route-status" aria-live="polite"></span>
             </div>
+            <details class="tow-calc-more">
+              <summary data-t="tow_calc_extras">Dodatkowe opcje</summary>
+              <div class="tow-calc-more-body">
+                <div class="tow-calc-row">
+                  <label for="tow-wheels" data-t="tow_calc_wheels">Zablokowane koła</label>
+                  <select id="tow-wheels" class="tow-calc-select">
+                    <option value="0" data-t="tow_calc_wheels0">Brak</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
+                <div class="tow-calc-row">
+                  <label for="tow-vtype" data-t="tow_calc_vtype">Typ pojazdu</label>
+                  <select id="tow-vtype" class="tow-calc-select">
+                    <option value="" data-t="tow_calc_vtype_std">Osobowy</option>
+                    <option value="shortbus" data-t="tow_calc_vtype_short">Bus krótki (+50 zł)</option>
+                    <option value="longbus" data-t="tow_calc_vtype_long">Bus długi (+150 zł)</option>
+                  </select>
+                </div>
+                <div class="tow-calc-check">
+                  <label><input type="checkbox" id="tow-parking"> <span data-t="tow_calc_parking">Parking podziemny (punkt A)</span></label>
+                </div>
+                <div class="tow-calc-row tow-calc-parking-level" id="tow-parking-level-wrap" hidden>
+                  <label for="tow-parking-level" data-t="tow_calc_level">Poziom</label>
+                  <select id="tow-parking-level" class="tow-calc-select">
+                    <option value="-1" data-t="tow_calc_level_m1">−1 (+200 zł)</option>
+                    <option value="-2" data-t="tow_calc_level_m2">−2 — wycena indywidualna</option>
+                    <option value="-3" data-t="tow_calc_level_m3">−3 i niżej — wycena indywidualna</option>
+                  </select>
+                </div>
+                <div class="tow-calc-check">
+                  <label><input type="checkbox" id="tow-lowered"> <span data-t="tow_calc_lowered">Obniżone auto (+50 zł)</span></label>
+                </div>
+                <div class="tow-calc-check">
+                  <label><input type="checkbox" id="tow-jeep"> <span data-t="tow_calc_jeep">SUV / Jeep (+50 zł)</span></label>
+                </div>
+              </div>
+            </details>
           </div>
-          <div class="tow-calc-route-row">
-            <button type="button" class="btn btn-o tow-calc-route-btn" id="tow-route-btn" data-t="tow_calc_btn">Oblicz trasę</button>
-            <span class="tow-calc-route-status" id="tow-route-status" aria-live="polite"></span>
-          </div>
-          <p class="tow-calc-dist" id="tow-dist-wrap"><span data-t="tow_calc_dist">Dystans trasy:</span> <strong id="tow-dist-km">—</strong></p>
-          <div class="tow-calc-manual">
-            <label for="tow-km-manual" data-t="tow_calc_km">Odległość ręcznie (km) — jeśli bez adresów</label>
-            <input type="number" id="tow-km-manual" class="tow-calc-input" min="0" step="0.1" inputmode="decimal">
-          </div>
-          <p class="tow-calc-maps-hint" id="tow-maps-hint" hidden data-t="tow_calc_no_key"></p>
-          <div class="tow-calc-map-wrap" id="tow-map-wrap" hidden>
-            <div id="tow-map" class="tow-calc-map" aria-hidden="true"></div>
-          </div>
-          <fieldset class="tow-calc-extras">
-            <legend data-t="tow_calc_extras">Dodatki</legend>
-            <div class="tow-calc-row">
-              <label for="tow-wheels" data-t="tow_calc_wheels">Zablokowane koła</label>
-              <select id="tow-wheels" class="tow-calc-select">
-                <option value="0" data-t="tow_calc_wheels0">Brak</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
-            </div>
-            <div class="tow-calc-check">
-              <label><input type="checkbox" id="tow-parking"> <span data-t="tow_calc_parking">Odbiór z parkingu podziemnego (punkt A)</span></label>
-            </div>
-            <div class="tow-calc-row tow-calc-parking-level" id="tow-parking-level-wrap" hidden>
-              <label for="tow-parking-level" data-t="tow_calc_level">Poziom parkingu</label>
-              <select id="tow-parking-level" class="tow-calc-select">
-                <option value="-1" data-t="tow_calc_level_m1">Poziom −1 (+200 zł)</option>
-                <option value="-2" data-t="tow_calc_level_m2">Poziom −2 — wycena indywidualna</option>
-                <option value="-3" data-t="tow_calc_level_m3">Poziom −3 i niżej — wycena indywidualna</option>
-              </select>
-            </div>
-            <div class="tow-calc-check">
-              <label><input type="checkbox" id="tow-lowered"> <span data-t="tow_calc_lowered">Obniżone auto (+50 zł)</span></label>
-            </div>
-            <div class="tow-calc-check">
-              <label><input type="checkbox" id="tow-jeep"> <span data-t="tow_calc_jeep">Jeep / SUV (+50 zł)</span></label>
-            </div>
-            <div class="tow-calc-row">
-              <label for="tow-vtype" data-t="tow_calc_vtype">Typ pojazdu</label>
-              <select id="tow-vtype" class="tow-calc-select">
-                <option value="" data-t="tow_calc_vtype_std">Osobowy / standard</option>
-                <option value="shortbus" data-t="tow_calc_vtype_short">Bus krótki (+50 zł)</option>
-                <option value="longbus" data-t="tow_calc_vtype_long">Bus długi (+150 zł)</option>
-              </select>
-            </div>
-          </fieldset>
           <div class="tow-calc-result">
-            <p class="tow-calc-result-label" data-t="tow_calc_est">Szacunkowa cena:</p>
+            <span class="tow-calc-result-label" data-t="tow_calc_est">Szacunkowa cena</span>
             <p class="tow-calc-price" id="tow-price">—</p>
             <p class="tow-calc-breakdown" id="tow-breakdown"></p>
             <p class="tow-calc-individual" id="tow-individual" hidden>
-              <span data-t="tow_calc_individual">Potrzebna indywidualna wycena — zadzwoń:</span>
+              <span data-t="tow_calc_individual">Indywidualna wycena — zadzwoń:</span>
               <a href="tel:+48506001057" class="tow-calc-phone">506-001-057</a>
             </p>
             <a href="tel:+48506001057" class="btn btn-y tow-calc-call">📞 <span data-t="cta_btn">Zadzwoń: 506-001-057</span></a>
           </div>
+          <p class="tow-calc-footnote" data-t="tow_calc_note">Cena orientacyjna. Parking −2 i niżej — tylko po telefonie.</p>
+          <p class="tow-calc-maps-hint" id="tow-maps-hint" hidden data-t="tow_calc_no_key"></p>
+          <div class="tow-calc-map-wrap" id="tow-map-wrap" hidden>
+            <div id="tow-map" class="tow-calc-map" aria-hidden="true"></div>
+          </div>
+          <span id="tow-dist-km" hidden aria-hidden="true">—</span>
         </div>
 </div></section>
 </div>
@@ -1336,7 +1341,7 @@ pl:{
   abt_vis_sub:"Pomoc Drogowa Warszawa 24h",abt_badge:"Zaufaj profesjonalistom",
   gal_tag:"Galeria",gal_title:"ZDJĘCIA Z NASZYCH AKCJI",gal_desc:"Profesjonalna pomoc drogowa w Warszawie.",gal_seo_title:"Galeria zdjęć — laweta Warszawa, holowanie 24/7 | INNSER",gal_seo_desc:"Zdjęcia z akcji INNSER: laweta Warszawa, holowanie aut, ewakuator 24/7, transport SUV i luksusowych aut, pomoc po wypadku, skup aut. Tel. 506-001-057.",gal_keywords:"laweta warszawa, holowanie warszawa, ewakuator warszawa, pomoc drogowa warszawa, autolaweta warszawa, holowanie powypadkowe, skup aut warszawa, zdjęcia lawety",gal_more:"Więcej zdjęć wkrótce...",
   map_tag:"Lokalizacja",map_title:"NASZA LOKALIZACJA",map_desc:"Baza INNSER w Warszawie. Zasięg do 500 km.",
-  prices_tag:"Cennik",prices_title:"CENY I KALKULATOR HOLOWANIA",prices_desc:"Orientacyjna wycena holowania A→B w Warszawie i okolicach. Ostateczną cenę podajemy przez telefon — 506-001-057.",prices_calc_link:"Kalkulator wyceny holowania →",
+  prices_tag:"Cennik",prices_title:"CENY I KALKULATOR HOLOWANIA",prices_desc:"Wpisz skąd–dokąd lub dystans w km — zobaczysz orientacyjną cenę. Dokładna wycena: 506-001-057.",prices_calc_link:"Kalkulator wyceny holowania →",
   blog_tag:"Blog",blog_title:"PORADY I AKTUALNOŚCI",blog_desc:"Porady o <strong>awarii aut</strong>, <strong>lawecie</strong>, <strong>holowaniu</strong> i <strong>pomocy drogowej Warszawa</strong>.",
   b1_t:"Co robić gdy <strong>auto nie odpala zimą</strong>?",b1_d:"Poradnik: <strong>odpalanie</strong>, akumulator, <strong>pomoc drogowa</strong> w mroźne dni.",
   b2_t:"Jak bezpiecznie czekać na <strong>pomoc drogową</strong>?",b2_d:"Bezpieczeństwo na drodze przy awarii — pas, trójkąt, <strong>holowanie</strong>.",
@@ -1585,32 +1590,32 @@ pl:{
   svc1_faq3q:"Czy obsługujecie <strong class=\"xb\">motocykle</strong>?",
   svc1_faq3a:"Tak, holujemy samochody i <strong class=\"xb\">motocykle</strong>.",
   tow_calc_title:"Kalkulator wyceny holowania",
-  tow_calc_note:"Orientacyjna cena trasy drogowej A→B. Odbiór z parkingu podziemnego na poziomie <strong class=\"xb\">−2 i niżej</strong> — tylko indywidualna wycena telefoniczna.",
-  tow_calc_from:"Skąd (punkt A)",
-  tow_calc_to:"Dokąd (punkt B)",
-  tow_calc_km:"Odległość ręcznie (km) — jeśli bez adresów",
-  tow_calc_dist:"Dystans trasy:",
-  tow_calc_btn:"Oblicz trasę",
-  tow_calc_loading:"Liczenie trasy…",
-  tow_calc_route_err:"Nie udało się policzyć trasy — sprawdź adresy lub wpisz km ręcznie.",
+  tow_calc_note:"Cena orientacyjna. Parking −2 i niżej — tylko po telefonie.",
+  tow_calc_from:"Skąd",
+  tow_calc_to:"Dokąd",
+  tow_calc_km:"Dystans (km)",
+  tow_calc_dist:"Dystans:",
+  tow_calc_btn:"Oblicz",
+  tow_calc_loading:"Liczenie…",
+  tow_calc_route_err:"Nie udało się obliczyć — wpisz km ręcznie.",
   tow_calc_no_key:"",
-  tow_calc_extras:"Dodatki",
+  tow_calc_extras:"Dodatkowe opcje",
   tow_calc_wheels:"Zablokowane koła",
   tow_calc_wheels0:"Brak",
-  tow_calc_parking:"Odbiór z parkingu podziemnego (punkt A)",
-  tow_calc_level:"Poziom parkingu",
-  tow_calc_level_m1:"Poziom −1 (+200 zł)",
-  tow_calc_level_m2:"Poziom −2 — wycena indywidualna",
-  tow_calc_level_m3:"Poziom −3 i niżej — wycena indywidualna",
+  tow_calc_parking:"Parking podziemny (punkt A)",
+  tow_calc_level:"Poziom",
+  tow_calc_level_m1:"−1 (+200 zł)",
+  tow_calc_level_m2:"−2 — wycena indywidualna",
+  tow_calc_level_m3:"−3 i niżej — wycena indywidualna",
   tow_calc_lowered:"Obniżone auto (+50 zł)",
-  tow_calc_jeep:"Jeep / SUV (+50 zł)",
+  tow_calc_jeep:"SUV / Jeep (+50 zł)",
   tow_calc_vtype:"Typ pojazdu",
-  tow_calc_vtype_std:"Osobowy / standard",
+  tow_calc_vtype_std:"Osobowy",
   tow_calc_vtype_short:"Bus krótki (+50 zł)",
   tow_calc_vtype_long:"Bus długi (+150 zł)",
-  tow_calc_est:"Szacunkowa cena:",
-  tow_calc_individual:"Potrzebna indywidualna wycena — zadzwoń:",
-  tow_calc_enter_route:"Wpisz oba adresy i wybierz z listy, potem kliknij «Oblicz trasę».",
+  tow_calc_est:"Szacunkowa cena",
+  tow_calc_individual:"Indywidualna wycena — zadzwoń:",
+  tow_calc_enter_route:"Wpisz km lub wybierz adresy i kliknij Oblicz.",
   tow_calc_base:"Trasa",
   tow_calc_wheels_line:"Zablokowane koła",
   tow_calc_parking_line:"Parking podziemny (−1)",
@@ -1666,7 +1671,7 @@ en:{
   abt_vis_sub:"Roadside Assistance Warsaw 24h",abt_badge:"Trust the professionals",
   gal_tag:"Gallery",gal_title:"PHOTOS FROM OUR WORK",gal_desc:"Professional roadside assistance in Warsaw.",gal_seo_title:"Photo gallery — tow truck Warsaw, flatbed towing 24/7 | INNSER",gal_seo_desc:"Real INNSER jobs: flatbed towing Warsaw, roadside assistance 24/7, luxury car transport, accident recovery, cash for cars. Call 506-001-057.",gal_keywords:"tow truck warsaw, flatbed towing warsaw, roadside assistance warsaw, car towing warsaw, accident recovery warsaw, cash for cars warsaw, tow truck photos",gal_more:"More photos coming soon...",
   map_tag:"Location",map_title:"OUR LOCATION",map_desc:"INNSER base in Warsaw. Coverage up to 500 km.",
-  prices_tag:"Pricing",prices_title:"PRICES & TOW CALCULATOR",prices_desc:"Estimated tow price A→B in Warsaw and surroundings. Final quote by phone — 506-001-057.",prices_calc_link:"Tow price calculator →",
+  prices_tag:"Pricing",prices_title:"PRICES & TOW CALCULATOR",prices_desc:"Enter from–to or distance in km for an estimated price. Exact quote: 506-001-057.",prices_calc_link:"Tow price calculator →",
   blog_tag:"Blog",blog_title:"TIPS AND NEWS",blog_desc:"Tips on <strong>breakdowns</strong>, <strong>flatbed towing</strong>, <strong>towing</strong> and <strong>roadside assistance Warsaw</strong>.",
   b1_t:"When your <strong>car won't start in winter</strong>",b1_d:"<strong>Jump start</strong>, battery & <strong>roadside help</strong> in cold weather.",
   b2_t:"Waiting safely for <strong>roadside assistance</strong>",b2_d:"Hard shoulder, triangle, <strong>towing</strong> — safety rules.",
@@ -1915,32 +1920,32 @@ en:{
   svc1_faq3q:"Do you service <strong class=\"xb\">motorcycles</strong>?",
   svc1_faq3a:"Yes, we tow cars and <strong class=\"xb\">motorcycles</strong>.",
   tow_calc_title:"Tow price calculator",
-  tow_calc_note:"Estimated road route price A→B. Pickup from underground car park at level <strong class=\"xb\">−2 or below</strong> requires an individual phone quote.",
-  tow_calc_from:"From (point A)",
-  tow_calc_to:"To (point B)",
-  tow_calc_km:"Distance manually (km) — if not using addresses",
-  tow_calc_dist:"Route distance:",
-  tow_calc_btn:"Calculate route",
-  tow_calc_loading:"Calculating route…",
-  tow_calc_route_err:"Could not calculate route — check addresses or enter km manually.",
+  tow_calc_note:"Estimated price only. Level −2 and below — call for a quote.",
+  tow_calc_from:"From",
+  tow_calc_to:"To",
+  tow_calc_km:"Distance (km)",
+  tow_calc_dist:"Distance:",
+  tow_calc_btn:"Calculate",
+  tow_calc_loading:"Calculating…",
+  tow_calc_route_err:"Could not calculate — enter km manually.",
   tow_calc_no_key:"",
-  tow_calc_extras:"Extras",
+  tow_calc_extras:"Extra options",
   tow_calc_wheels:"Locked wheels",
   tow_calc_wheels0:"None",
-  tow_calc_parking:"Pickup from underground car park (point A)",
-  tow_calc_level:"Car park level",
-  tow_calc_level_m1:"Level −1 (+200 zł)",
-  tow_calc_level_m2:"Level −2 — individual quote",
-  tow_calc_level_m3:"Level −3 and below — individual quote",
+  tow_calc_parking:"Underground car park (point A)",
+  tow_calc_level:"Level",
+  tow_calc_level_m1:"−1 (+200 zł)",
+  tow_calc_level_m2:"−2 — individual quote",
+  tow_calc_level_m3:"−3 and below — individual quote",
   tow_calc_lowered:"Lowered car (+50 zł)",
-  tow_calc_jeep:"Jeep / SUV (+50 zł)",
+  tow_calc_jeep:"SUV / Jeep (+50 zł)",
   tow_calc_vtype:"Vehicle type",
   tow_calc_vtype_std:"Standard car",
   tow_calc_vtype_short:"Short bus (+50 zł)",
   tow_calc_vtype_long:"Long bus (+150 zł)",
-  tow_calc_est:"Estimated price:",
-  tow_calc_individual:"Individual quote required — call:",
-  tow_calc_enter_route:"Enter both addresses, pick from the list, then click «Calculate route».",
+  tow_calc_est:"Estimated price",
+  tow_calc_individual:"Individual quote — call:",
+  tow_calc_enter_route:"Enter km or pick addresses and click Calculate.",
   tow_calc_base:"Route",
   tow_calc_wheels_line:"Locked wheels",
   tow_calc_parking_line:"Underground car park (−1)",
@@ -1990,7 +1995,7 @@ ru:{
   abt_vis_sub:"Эвакуатор Круглосуточный Варшава",abt_badge:"Доверьтесь профессионалам",
   gal_tag:"Галерея",gal_title:"ФОТО НАШИХ РАБОТ",gal_desc:"Круглосуточный эвакуатор Варшава.",gal_seo_title:"Галерея фото — эвакуатор Варшава 24/7 | INNSER",gal_seo_desc:"Фото реальных выездов INNSER: эвакуатор Варшава, эвакуация авто 24/7, перевозка премиум авто, эвакуация после ДТП, скуп авто. Тел. 506-001-057.",gal_keywords:"эвакуатор варшава, евакуатор варшава, evakuator warszawa, эвакуация автомобиля варшава, помощь на дороге варшава, эвакуация после дтп, скуп авто варшава, фото эвакуатора",gal_more:"Больше фото скоро...",
   map_tag:"Местоположение",map_title:"НАШ АДРЕС",map_desc:"База в Варшаве. Радиус 500 км.",
-  prices_tag:"Цены",prices_title:"ЦЕНЫ И КАЛЬКУЛЯТОР ЭВАКУАЦИИ",prices_desc:"Ориентировочная стоимость эвакуации A→B в Варшаве и окрестностях. Точную цену назовём по телефону — 506-001-057.",prices_calc_link:"Калькулятор стоимости эвакуации →",
+  prices_tag:"Цены",prices_title:"ЦЕНЫ И КАЛЬКУЛЯТОР ЭВАКУАЦИИ",prices_desc:"Укажите откуда–куда или км — увидите ориентировочную цену. Точный расчёт: 506-001-057.",prices_calc_link:"Калькулятор стоимости эвакуации →",
   blog_tag:"Блог",blog_title:"СОВЕТЫ И НОВОСТИ",blog_desc:"Советы по поломкам и эвакуации.",
   b1_t:"Что делать если авто не заводится зимой?",b1_d:"Инструкция в мороз.",
   b2_t:"Как безопасно ждать помощь?",b2_d:"Правила безопасности.",
@@ -2191,32 +2196,32 @@ ru:{
   svc1_faq3q:"Обслуживаете <strong class=\"xb\">мотоциклы</strong>?",
   svc1_faq3a:"Да, эвакуируем авто и <strong class=\"xb\">мотоциклы</strong>.",
   tow_calc_title:"Калькулятор стоимости эвакуации",
-  tow_calc_note:"Ориентировочная цена маршрута A→B. Забор с подземного паркинга на уровне <strong class=\"xb\">−2 и ниже</strong> — только индивидуальный расчёт по телефону.",
-  tow_calc_from:"Откуда (точка A)",
-  tow_calc_to:"Куда (точка B)",
-  tow_calc_km:"Расстояние вручную (км) — если без адресов",
-  tow_calc_dist:"Дистанция маршрута:",
-  tow_calc_btn:"Рассчитать маршрут",
-  tow_calc_loading:"Считаем маршрут…",
-  tow_calc_route_err:"Не удалось рассчитать маршрут — проверьте адреса или введите км вручную.",
+  tow_calc_note:"Ориентировочная цена. Паркинг −2 и ниже — только по телефону.",
+  tow_calc_from:"Откуда",
+  tow_calc_to:"Куда",
+  tow_calc_km:"Расстояние (км)",
+  tow_calc_dist:"Дистанция:",
+  tow_calc_btn:"Рассчитать",
+  tow_calc_loading:"Считаем…",
+  tow_calc_route_err:"Не удалось рассчитать — введите км вручную.",
   tow_calc_no_key:"",
-  tow_calc_extras:"Доплаты",
+  tow_calc_extras:"Дополнительно",
   tow_calc_wheels:"Заблокированные колёса",
   tow_calc_wheels0:"Нет",
-  tow_calc_parking:"Забор с подземного паркинга (точка A)",
-  tow_calc_level:"Уровень паркинга",
-  tow_calc_level_m1:"Уровень −1 (+200 zł)",
-  tow_calc_level_m2:"Уровень −2 — индивидуальный расчёт",
-  tow_calc_level_m3:"Уровень −3 и ниже — индивидуальный расчёт",
-  tow_calc_lowered:"Заниженный автомобиль (+50 zł)",
-  tow_calc_jeep:"Jeep / SUV (+50 zł)",
+  tow_calc_parking:"Подземный паркинг (точка A)",
+  tow_calc_level:"Уровень",
+  tow_calc_level_m1:"−1 (+200 zł)",
+  tow_calc_level_m2:"−2 — индивидуальный расчёт",
+  tow_calc_level_m3:"−3 и ниже — индивидуальный расчёт",
+  tow_calc_lowered:"Заниженный авто (+50 zł)",
+  tow_calc_jeep:"SUV / Jeep (+50 zł)",
   tow_calc_vtype:"Тип транспорта",
-  tow_calc_vtype_std:"Легковой / стандарт",
+  tow_calc_vtype_std:"Легковой",
   tow_calc_vtype_short:"Короткий автобус (+50 zł)",
   tow_calc_vtype_long:"Длинный автобус (+150 zł)",
-  tow_calc_est:"Ориентировочная цена:",
-  tow_calc_individual:"Нужен индивидуальный расчёт — звоните:",
-  tow_calc_enter_route:"Введите оба адреса, выберите из списка и нажмите «Рассчитать маршрут».",
+  tow_calc_est:"Ориентировочная цена",
+  tow_calc_individual:"Индивидуальный расчёт — звоните:",
+  tow_calc_enter_route:"Введите км или выберите адреса и нажмите Рассчитать.",
   tow_calc_base:"Маршрут",
   tow_calc_wheels_line:"Заблокированные колёса",
   tow_calc_parking_line:"Подземный паркинг (−1)",
@@ -2319,7 +2324,7 @@ ua:{
   abt_vis_sub:"Евакуатор Варшава Цілодобовий",abt_badge:"Довіртесь професіоналам",
   gal_tag:"Галерея",gal_title:"ФОТО НАШИХ РОБІТ",gal_desc:"Евакуатор та допомога на дорозі у Варшаві.",gal_seo_title:"Галерея фото — евакуатор Варшава 24/7 | INNSER",gal_seo_desc:"Фото реальних виїздів INNSER: евакуатор Варшава, евакуація авто 24/7, перевезення преміум авто, евакуація після ДТП, викуп авто. Тел. 506-001-057.",gal_keywords:"евакуатор варшава, євакуатор варшава, эвакуатор варшава, evakuator warszawa, евакуація авто варшава, допомога на дорозі варшава, евакуація після дтп, викуп авто варшава, фото евакуатора",gal_more:"Більше фото незабаром...",
   map_tag:"Розташування",map_title:"НАША АДРЕСА",map_desc:"База у Варшаві. Радіус 500 км.",
-  prices_tag:"Ціни",prices_title:"ЦІНИ ТА КАЛЬКУЛЯТОР ЕВАКУАЦІЇ",prices_desc:"Орієнтовна вартість евакуації A→B у Варшаві та околицях. Точну ціну називаємо телефоном — 506-001-057.",prices_calc_link:"Калькулятор вартості евакуації →",
+  prices_tag:"Ціни",prices_title:"ЦІНИ ТА КАЛЬКУЛЯТОР ЕВАКУАЦІЇ",prices_desc:"Вкажіть звідки–куди або км — побачите орієнтовну ціну. Точний розрахунок: 506-001-057.",prices_calc_link:"Калькулятор вартості евакуації →",
   blog_tag:"Блог",blog_title:"ПОРАДИ ТА НОВИНИ",blog_desc:"Поради щодо поломок.",
   b1_t:"Що робити якщо авто не заводиться взимку?",b1_d:"Інструкція в мороз.",
   b2_t:"Як безпечно чекати допомогу?",b2_d:"Правила безпеки.",
@@ -2568,32 +2573,32 @@ ua:{
   svc1_faq3q:"Обслуговуєте <strong class=\"xb\">мотоцикли</strong>?",
   svc1_faq3a:"Так, евакуюємо авто і <strong class=\"xb\">мотоцикли</strong>.",
   tow_calc_title:"Калькулятор вартості евакуації",
-  tow_calc_note:"Орієнтовна ціна маршруту A→B. Забір з підземного паркінгу на рівні <strong class=\"xb\">−2 і нижче</strong> — лише індивідуальний розрахунок телефоном.",
-  tow_calc_from:"Звідки (точка A)",
-  tow_calc_to:"Куди (точка B)",
-  tow_calc_km:"Відстань вручну (км) — якщо без адрес",
-  tow_calc_dist:"Дистанція маршруту:",
-  tow_calc_btn:"Розрахувати маршрут",
-  tow_calc_loading:"Рахуємо маршрут…",
-  tow_calc_route_err:"Не вдалося порахувати маршрут — перевірте адреси або введіть км вручну.",
+  tow_calc_note:"Орієнтовна ціна. Паркінг −2 і нижче — лише телефоном.",
+  tow_calc_from:"Звідки",
+  tow_calc_to:"Куди",
+  tow_calc_km:"Відстань (км)",
+  tow_calc_dist:"Дистанція:",
+  tow_calc_btn:"Розрахувати",
+  tow_calc_loading:"Рахуємо…",
+  tow_calc_route_err:"Не вдалося порахувати — введіть км вручну.",
   tow_calc_no_key:"",
-  tow_calc_extras:"Доплати",
+  tow_calc_extras:"Додатково",
   tow_calc_wheels:"Заблоковані колеса",
   tow_calc_wheels0:"Немає",
-  tow_calc_parking:"Забір з підземного паркінгу (точка A)",
-  tow_calc_level:"Рівень паркінгу",
-  tow_calc_level_m1:"Рівень −1 (+200 zł)",
-  tow_calc_level_m2:"Рівень −2 — індивідуальний розрахунок",
-  tow_calc_level_m3:"Рівень −3 і нижче — індивідуальний розрахунок",
-  tow_calc_lowered:"Занижений автомобіль (+50 zł)",
-  tow_calc_jeep:"Jeep / SUV (+50 zł)",
+  tow_calc_parking:"Підземний паркінг (точка A)",
+  tow_calc_level:"Рівень",
+  tow_calc_level_m1:"−1 (+200 zł)",
+  tow_calc_level_m2:"−2 — індивідуальний розрахунок",
+  tow_calc_level_m3:"−3 і нижче — індивідуальний розрахунок",
+  tow_calc_lowered:"Занижений авто (+50 zł)",
+  tow_calc_jeep:"SUV / Jeep (+50 zł)",
   tow_calc_vtype:"Тип транспорту",
-  tow_calc_vtype_std:"Легковий / стандарт",
+  tow_calc_vtype_std:"Легковий",
   tow_calc_vtype_short:"Короткий автобус (+50 zł)",
   tow_calc_vtype_long:"Довгий автобус (+150 zł)",
-  tow_calc_est:"Орієнтовна ціна:",
-  tow_calc_individual:"Потрібен індивідуальний розрахунок — телефонуйте:",
-  tow_calc_enter_route:"Введіть обидві адреси, оберіть зі списку і натисніть «Розрахувати маршрут».",
+  tow_calc_est:"Орієнтовна ціна",
+  tow_calc_individual:"Індивідуальний розрахунок — телефонуйте:",
+  tow_calc_enter_route:"Введіть км або оберіть адреси і натисніть Розрахувати.",
   tow_calc_base:"Маршрут",
   tow_calc_wheels_line:"Заблоковані колеса",
   tow_calc_parking_line:"Підземний паркінг (−1)",
@@ -4350,7 +4355,7 @@ function updateTowCalcPrice(){
   var km=getTowCalcKm();
   if(km==null){
     priceEl.textContent='—';
-    if(breakdownEl)breakdownEl.textContent=towT('tow_calc_enter_route','Podaj trasę (adresy) lub odległość w km.');
+    if(breakdownEl)breakdownEl.textContent='';
     return;
   }
   var base=calcTowBasePrice(km);
@@ -4362,9 +4367,8 @@ function updateTowCalcPrice(){
   var total=base+extraResult.extras;
   priceEl.textContent=total+' zł';
   if(breakdownEl){
-    var parts=[towT('tow_calc_base','Trasa')+': '+km.toFixed(1)+' km — '+base+' zł'];
-    parts=parts.concat(extraResult.lines);
-    breakdownEl.textContent=parts.join(' · ');
+    if(extraResult.lines.length)breakdownEl.textContent=km.toFixed(1)+' km · '+extraResult.lines.join(' · ');
+    else breakdownEl.textContent=km.toFixed(1)+' km';
   }
 }
 
@@ -4694,7 +4698,7 @@ function setupTowCalcMaps(key){
   var mapWrap=document.getElementById('tow-map-wrap');
   var hint=document.getElementById('tow-maps-hint');
   if(hint)hint.hidden=true;
-  if(mapWrap)mapWrap.hidden=false;
+  if(mapWrap)mapWrap.hidden=true;
   if(!window.google||!google.maps)return;
   var mapEl=document.getElementById('tow-map');
   if(mapEl){
