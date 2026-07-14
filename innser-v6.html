@@ -283,12 +283,14 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
 .tow-calc-extras-grid .tow-calc-check label{display:flex;align-items:flex-start;gap:8px;cursor:pointer;line-height:1.4;}
 .tow-calc-extras-grid .tow-calc-check input{margin-top:3px;accent-color:var(--y);flex-shrink:0;}
 .tow-calc-wheels-row{align-items:center;}
-.tow-calc-wheels-row>label{flex:1;min-width:0;}
-.tow-calc-wheels-wrap{display:flex;flex-wrap:wrap;align-items:center;gap:8px;width:100%;}
-.tow-calc-wheels-step{display:inline-flex;align-items:center;border:1px solid var(--b4);border-radius:8px;overflow:hidden;flex-shrink:0;}
+.tow-calc-wheels-wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:10px;width:100%;}
+.tow-calc-wheels-wrap>label{display:flex;align-items:flex-start;gap:8px;min-width:0;margin:0;cursor:pointer;line-height:1.4;}
+.tow-calc-wheels-wrap>label input{margin-top:3px;accent-color:var(--y);flex-shrink:0;}
+#tow-wheels-label{display:inline-block;min-width:11.2em;}
+.tow-calc-wheels-step{display:inline-flex;align-items:center;border:1px solid var(--b4);border-radius:8px;overflow:hidden;flex-shrink:0;justify-self:end;}
 .tow-calc-wheels-step button{background:var(--b3);border:none;color:var(--w);width:28px;height:28px;cursor:pointer;font-size:1rem;line-height:1;padding:0;font-family:inherit;}
 .tow-calc-wheels-step button:hover{background:var(--b4);color:var(--y);}
-.tow-calc-wheels-step span{min-width:22px;text-align:center;font-size:.85rem;color:var(--gl);padding:0 2px;}
+.tow-calc-wheels-step span{width:28px;min-width:28px;text-align:center;font-size:.85rem;color:var(--gl);padding:0;font-variant-numeric:tabular-nums;}
 .tow-calc-body.map-mode .tow-calc-result{margin:0;border:none;border-radius:0;border-top:1px solid var(--b4);}
 .tow-calc-result{margin-top:20px;padding:20px 18px;background:var(--b3);border:1px solid rgba(255,209,0,.25);border-radius:var(--r);text-align:center;}
 .tow-calc-result-label{display:block;font-size:.82rem;color:var(--g);margin-bottom:6px;}
