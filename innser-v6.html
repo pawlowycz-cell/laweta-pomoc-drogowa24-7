@@ -4311,9 +4311,10 @@ function towEnsureLeafletMap(){
     var mapEl=document.getElementById('tow-map');
     if(!mapEl||!window.L)throw new Error('leaflet init fail');
     towCalcLeafletMap=L.map(mapEl,{zoomControl:true,attributionControl:true}).setView([52.2297,21.0122],11);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-      maxZoom:19,
-      attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
+      maxZoom:20,
+      subdomains:'abcd',
+      attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
     }).addTo(towCalcLeafletMap);
     return towCalcLeafletMap;
   });
@@ -4855,6 +4856,8 @@ function setupTowCalcMaps(key){
     towCalcMapInstance=new google.maps.Map(mapEl,{
       center:{lat:52.2297,lng:21.0122},
       zoom:11,
+      mapTypeId:'roadmap',
+      mapTypeControl:false,
       disableDefaultUI:true,
       zoomControl:true,
       gestureHandling:'greedy'
