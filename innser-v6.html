@@ -140,7 +140,7 @@ document.addEventListener('click',function(e){
 *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;overflow-x:hidden;}body{font-family:var(--ff-b);background:var(--b);color:var(--w);overflow-x:hidden;line-height:1.6;}html,body{margin:0;padding:0;}html{background:var(--b);}a{color:inherit;text-decoration:none;}img{max-width:100%;display:block;}.mx{max-width:var(--max);margin:0 auto;padding:0 20px;}
 .site-header{position:sticky;top:0;z-index:1000;background:var(--b);padding-left:env(safe-area-inset-left,0);padding-right:env(safe-area-inset-right,0);}
 .topbar{background:var(--b2);color:var(--gl);padding:0;padding-top:env(safe-area-inset-top,0px);font-size:.8rem;font-weight:500;border-bottom:1px solid var(--b4);}.topbar .mx{display:flex;justify-content:center;align-items:center;height:36px;}.tb-flags{display:flex;gap:0;align-items:center;height:100%;}.lb{background:none;border:none;cursor:pointer;padding:0 14px;height:100%;font-size:.78rem;font-weight:600;transition:.2s;display:flex;align-items:center;gap:5px;color:var(--g);font-family:var(--ff-b);letter-spacing:.3px;position:relative;}.lb+.lb::before{content:'';position:absolute;left:0;top:25%;height:50%;width:1px;background:var(--b4);}.lb:hover{color:var(--y);background:rgba(255,209,0,.04);}.lb.on{color:var(--y);}.lf{font-size:1.05rem;line-height:1;}
-.nav{position:relative;background:#0a0a0a;border-bottom:3px solid var(--y);}.nav .mx{position:relative;}.nav .mx{display:flex;justify-content:space-between;align-items:center;height:68px;}.logo{font-family:var(--ff-d);font-size:2.4rem;color:var(--y);letter-spacing:4px;cursor:pointer;line-height:1;}.logo sub{font-size:.42rem;letter-spacing:3px;color:var(--g);font-family:var(--ff-b);font-weight:400;display:block;margin-top:-4px;}.nav-right{display:flex;align-items:center;gap:16px;}.nav-phone{font-family:var(--ff-d);font-size:1.6rem;color:var(--y);letter-spacing:2px;text-decoration:none;transition:color .2s,opacity .2s,text-shadow .2s;animation:navPhonePulse 3.2s ease-in-out infinite;}.nav-phone:hover{color:var(--yl);animation:none;opacity:1;text-shadow:none;}.nm{display:flex;gap:4px;list-style:none;align-items:center;}.nm a{color:var(--w);padding:8px 16px;border-radius:8px;font-weight:600;font-size:1rem;transition:.2s;white-space:nowrap;letter-spacing:.3px;}.nm a:hover,.nm a.on{color:var(--y);background:rgba(255,209,0,.07);}.nm-phone-item{display:none;}.burger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:8px;z-index:999999;position:relative;}.burger span{display:block;width:26px;height:2px;background:var(--y);transition:.3s;border-radius:1px;}
+.nav{position:relative;background:#0a0a0a;border-bottom:3px solid var(--y);}.nav .mx{position:relative;}.nav .mx{display:flex;justify-content:space-between;align-items:center;height:68px;}.logo{font-family:var(--ff-d);font-size:2.4rem;color:var(--y);letter-spacing:4px;cursor:pointer;line-height:1;text-decoration:none;}.logo sub{font-size:.42rem;letter-spacing:3px;color:var(--g);font-family:var(--ff-b);font-weight:400;display:block;margin-top:-4px;}.svcc-body h3 a,.blogc h3 a{color:inherit;text-decoration:none;}.svcc-body h3 a:hover,.blogc h3 a:hover{color:var(--y);}.nav-right{display:flex;align-items:center;gap:16px;}.nav-phone{font-family:var(--ff-d);font-size:1.6rem;color:var(--y);letter-spacing:2px;text-decoration:none;transition:color .2s,opacity .2s,text-shadow .2s;animation:navPhonePulse 3.2s ease-in-out infinite;}.nav-phone:hover{color:var(--yl);animation:none;opacity:1;text-shadow:none;}.nm{display:flex;gap:4px;list-style:none;align-items:center;}.nm a{color:var(--w);padding:8px 16px;border-radius:8px;font-weight:600;font-size:1rem;transition:.2s;white-space:nowrap;letter-spacing:.3px;}.nm a:hover,.nm a.on{color:var(--y);background:rgba(255,209,0,.07);}.nm-phone-item{display:none;}.burger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:8px;z-index:999999;position:relative;}.burger span{display:block;width:26px;height:2px;background:var(--y);transition:.3s;border-radius:1px;}
 
 
 .nm a{transition:transform .2s ease, color .2s;}
@@ -536,17 +536,17 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
   <button class="lb" onclick="goLang('ua')" id="lb-ua"><span class="lf">🇺🇦</span> UA</button>
 </div></div></div>
 <nav class="nav"><div class="mx">
-  <div class="logo" onclick="SP('home')">INNSER<sub>POMOC DROGOWA 24H</sub></div>
+  <a href="/pl/" class="logo" data-p="home" onclick="SP('home');return false;">INNSER<sub>POMOC DROGOWA 24H</sub></a>
   <!-- Desktop menu - center -->
   <ul class="nm" id="nm">
-    <li><a href="#" class="on" data-p="home" data-t="nav_home" onclick="SP('home');return false;">Strona główna</a></li>
-    <li><a href="#" data-p="services" data-t="nav_svc" onclick="SP('services');return false;">Usługi</a></li>
-    <li><a href="#" data-p="about" data-t="nav_about" onclick="SP('about');return false;">Co robimy</a></li>
-    <li><a href="#" data-p="map" data-t="nav_map" onclick="SP('map');return false;">Mapa</a></li>
-    <li><a href="#" data-p="blog" data-t="nav_blog" onclick="SP('blog');return false;">Blog</a></li>
-    <li><a href="#" data-p="gallery" data-t="nav_gal" onclick="SP('gallery');return false;">Zdjęcia</a></li>
-    <li><a href="#" data-p="partners" data-t="nav_partners" onclick="SP('partners');return false;">Współpraca</a></li>
-    <li><a href="#" data-p="contact" data-t="nav_cnt" onclick="SP('contact');return false;">Kontakt</a></li>
+    <li><a href="/pl/" class="on" data-p="home" data-t="nav_home" onclick="SP('home');return false;">Strona główna</a></li>
+    <li><a href="/pl/services/" data-p="services" data-t="nav_svc" onclick="SP('services');return false;">Usługi</a></li>
+    <li><a href="/pl/about/" data-p="about" data-t="nav_about" onclick="SP('about');return false;">Co robimy</a></li>
+    <li><a href="/pl/map/" data-p="map" data-t="nav_map" onclick="SP('map');return false;">Mapa</a></li>
+    <li><a href="/pl/blog/" data-p="blog" data-t="nav_blog" onclick="SP('blog');return false;">Blog</a></li>
+    <li><a href="/pl/gallery/" data-p="gallery" data-t="nav_gal" onclick="SP('gallery');return false;">Zdjęcia</a></li>
+    <li><a href="/pl/partners/" data-p="partners" data-t="nav_partners" onclick="SP('partners');return false;">Współpracja</a></li>
+    <li><a href="/pl/contact/" data-p="contact" data-t="nav_cnt" onclick="SP('contact');return false;">Kontakt</a></li>
     <li class="nm-phone-item"><a href="tel:+48506001057" onclick="toggleMenu()">📞 506-001-057</a></li>
   </ul>
   <!-- Right side -->
@@ -568,7 +568,7 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
     <p class="hsub" data-t="hero_sub"><strong class="xb">Profesjonalna Pomoc Drogowa</strong>, <strong class="xb">Holowanie</strong> i Awaryjne usługi na terenie Warszawy i w promieniu 500 km. <strong class="xb">Tania Pomoc Drogowa</strong> i <strong class="xb">tania Laweta</strong> przy konkurencyjnych cenach — wycena przez telefon. Szybko, bezpiecznie, <strong class="xb">24/7</strong>.</p>
     <div class="hbtns">
       <a href="tel:+48506001057" class="btn btn-y">📞 <span data-t="hero_call">Zadzwoń: 506-001-057</span></a>
-      <a href="#" class="btn btn-o" onclick="SP('services');return false;"><span data-t="hero_svc">Nasze usługi</span> →</a>
+      <a href="/pl/services/" class="btn btn-o" data-p="services" onclick="SP('services');return false;"><span data-t="hero_svc">Nasze usługi</span> →</a>
     </div>
   </div><div>
     <div class="hcard">
@@ -590,7 +590,7 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
     <p class="sd" data-t="svc_desc">Oferujemy kompleksowe usługi <strong>pomocy drogowej</strong> w <strong>Warszawie</strong> i okolicach — w tym <strong>tanie holowanie</strong> i <strong>taną lawetę</strong> przy uczciwej wycenie. Działamy szybko i profesjonalnie, <strong>24h</strong>.</p>
   </div>
   <div class="svc-g" id="svc-grid-home"></div>
-  <div style="text-align:center;margin-top:36px;"><a href="#" class="btn btn-y" onclick="SP('services');return false;" data-t="svc_all">Zobacz wszystkie usługi →</a></div>
+  <div style="text-align:center;margin-top:36px;"><a href="/pl/services/" class="btn btn-y" data-p="services" onclick="SP('services');return false;" data-t="svc_all">Zobacz wszystkie usługi →</a></div>
 </div></section>
 <!-- ЛИЦО ФИРМЫ -->
 <section class="sec" style="background:var(--b2);padding:40px 0;">
@@ -2796,6 +2796,19 @@ function innserPathTailFromPageId(p){
   if(/^svc\d+$/.test(p)) return p;
   return '';
 }
+function innserPageHref(p,lang){
+  if(location.protocol==='file:') return '#';
+  lang=lang||CL;
+  var seg=lang==='ua'?'uk':lang;
+  var tail=innserPathTailFromPageId(p);
+  return tail?'/'+seg+'/'+tail+'/':'/'+seg+'/';
+}
+function patchInnserLinkHrefs(lang){
+  lang=lang||CL;
+  document.querySelectorAll('a[data-p]').forEach(function(a){
+    a.setAttribute('href',innserPageHref(a.getAttribute('data-p'),lang));
+  });
+}
 function updateCanonicalAndHreflang(pageId){
   var c=document.getElementById('innser-canonical');
   if(!c) return;
@@ -3021,6 +3034,7 @@ function SL(l){
   }
   applyRouteSeo(currentPageSlug());
   updateCanonicalAndHreflang(currentPageSlug());
+  patchInnserLinkHrefs(l);
 }
 
 function syncInactivePages(){
@@ -3098,14 +3112,19 @@ function buildSvcCard(s,from){
     ? '<div class="svcc-img"><img src="'+photo+'" alt="'+T[CL][s.k]+' Warszawa INNSER" width="360" height="220" loading="lazy"></div>'
     : '<div class="svcc-img svcc-img-icon">'+s.icon+'</div>';
   var phone = '<a href="tel:+48506001057" class="svcc-phone" onclick="event.stopPropagation()">📞 <span data-t="cta_btn">'+T[CL]['cta_btn']+'</span></a>';
-  return '<article class="svcc rv svc-clickable" data-page="'+s.id+'" data-svc-from="'+from+'">'+imgHTML+'<div class="svcc-body"><h3 data-t="'+s.k+'">'+T[CL][s.k]+'</h3><p data-t="'+s.dk+'">'+T[CL][s.dk]+'</p>'+phone+'</div></article>';
+  var href = innserPageHref(s.id);
+  return '<article class="svcc rv svc-clickable" data-page="'+s.id+'" data-svc-from="'+from+'">'+imgHTML+'<div class="svcc-body"><h3><a href="'+href+'" data-t="'+s.k+'">'+T[CL][s.k]+'</a></h3><p data-t="'+s.dk+'">'+T[CL][s.dk]+'</p>'+phone+'</div></article>';
 }
 
 function buildBlogCard(b){
+  var postHref = b.post ? innserPageHref('blog-post-'+b.post) : '#';
   var readMore = b.post
-    ? `<a class="blogc-link" href="#" onclick="SP('blog-post-'+b.post);return false;">${T[CL]['blog_read']||'Czytaj więcej'} →</a>`
+    ? `<a class="blogc-link" href="${postHref}" data-p="blog-post-${b.post}" onclick="SP('blog-post-${b.post}');return false;">${T[CL]['blog_read']||'Czytaj więcej'} →</a>`
     : `<a class="blogc-link" href="#" onclick="return false;">→</a>`;
-  return `<article class="blogc rv" style="${b.post?'cursor:pointer;':''}" onclick="${b.post?"SP('blog-post-"+b.post+"')":''}"><div class="blogc-img">${b.icon}</div><div class="blogc-body"><div class="blogc-date">${b.date}</div><h3 data-t="${b.k}">${T[CL][b.k]}</h3><p data-t="${b.dk}">${T[CL][b.dk]}</p>${readMore}</div></article>`;
+  var titleHtml = b.post
+    ? `<h3><a href="${postHref}" data-p="blog-post-${b.post}" data-t="${b.k}">${T[CL][b.k]}</a></h3>`
+    : `<h3 data-t="${b.k}">${T[CL][b.k]}</h3>`;
+  return `<article class="blogc rv" style="${b.post?'cursor:pointer;':''}" onclick="${b.post?"SP('blog-post-"+b.post+"')":''}"><div class="blogc-img">${b.icon}</div><div class="blogc-body"><div class="blogc-date">${b.date}</div>${titleHtml}<p data-t="${b.dk}">${T[CL][b.dk]}</p>${readMore}</div></article>`;
 }
 
 
@@ -3118,10 +3137,6 @@ function initReveals(){
 
 document.addEventListener('DOMContentLoaded',()=>{
   applySvcDetailHeroPhotos();
-  document.getElementById('svc-grid-home').innerHTML=SVCS.map(function(s){return buildSvcCard(s,'home');}).join('');
-  document.getElementById('svc-grid-full').innerHTML=SVCS.map(function(s){return buildSvcCard(s,'services');}).join('');
-  document.getElementById('blog-grid').innerHTML=BLOGS.map(buildBlogCard).join('');
-    initReveals();
   // Auto-detect browser language (URL path wins for /{lang}/blog/…, /{lang}/svcN/)
 var route0 = parsePathToPage();
 var list = (typeof navigator.languages !== 'undefined' && navigator.languages && navigator.languages.length) ? Array.prototype.slice.call(navigator.languages) : [navigator.language || navigator.userLanguage || 'en'];
@@ -3134,6 +3149,10 @@ for (var ri = 0; ri < list.length; ri++) {
 }
 var startLang = route0 ? (route0.langSeg === 'uk' ? 'ua' : route0.langSeg) : detectedLang;
 SL(startLang);
+  document.getElementById('svc-grid-home').innerHTML=SVCS.map(function(s){return buildSvcCard(s,'home');}).join('');
+  document.getElementById('svc-grid-full').innerHTML=SVCS.map(function(s){return buildSvcCard(s,'services');}).join('');
+  document.getElementById('blog-grid').innerHTML=BLOGS.map(buildBlogCard).join('');
+    initReveals();
 renderAreas(startLang);
 document.addEventListener('click', function(e){
   var card = e.target.closest('.svc-clickable');
@@ -3149,7 +3168,7 @@ document.addEventListener('click', function(e){
 <div class="page" id="p-blog-post-b7">
 <section style="padding:60px 0 80px;">
   <div class="mx blog-post-shell" style="max-width:860px;">
-    <a href="#" class="back-btn" onclick="SP('blog');return false;">← <span data-t="back">Wróć do bloga</span></a>
+    <a href="/pl/blog/" class="back-btn" data-p="blog" onclick="SP('blog');return false;">← <span data-t="back">Wróć do bloga</span></a>
 
     <div style="margin-bottom:32px;">
       <span class="stag">Blog • 20 marca 2026</span>
@@ -3230,7 +3249,7 @@ document.addEventListener('click', function(e){
 
 <div class="page" id="p-blog-post-b1">
 <section style="padding:50px 0 80px;"><div class="mx"><div class="blog-post-shell" style="max-width:800px;margin:0 auto;">
-  <a href="#" class="back-btn" onclick="SP('blog');return false;"><span data-t="bp_b1_back">← Wróć do bloga</span></a>
+  <a href="/pl/blog/" class="back-btn" data-p="blog" onclick="SP('blog');return false;"><span data-t="bp_b1_back">← Wróć do bloga</span></a>
   <div style="font-size:4rem;text-align:center;margin:20px 0;">❄️</div>
   <div style="font-size:.8rem;color:var(--y);font-weight:700;margin-bottom:8px;">2026-01-15</div>
   <h1 style="font-family:var(--ff-d);font-size:2rem;letter-spacing:2px;margin-bottom:24px;" data-t="b1_t"></h1>
@@ -3252,7 +3271,7 @@ document.addEventListener('click', function(e){
 
 <div class="page" id="p-blog-post-b2">
 <section style="padding:50px 0 80px;"><div class="mx"><div class="blog-post-shell" style="max-width:800px;margin:0 auto;">
-  <a href="#" class="back-btn" onclick="SP('blog');return false;"><span data-t="bp_b2_back">← Wróć do bloga</span></a>
+  <a href="/pl/blog/" class="back-btn" data-p="blog" onclick="SP('blog');return false;"><span data-t="bp_b2_back">← Wróć do bloga</span></a>
   <div style="font-size:4rem;text-align:center;margin:20px 0;">⚠️</div>
   <div style="font-size:.8rem;color:var(--y);font-weight:700;margin-bottom:8px;">2025-12-20</div>
   <h1 style="font-family:var(--ff-d);font-size:2rem;letter-spacing:2px;margin-bottom:24px;" data-t="b2_t"></h1>
@@ -3274,7 +3293,7 @@ document.addEventListener('click', function(e){
 
 <div class="page" id="p-blog-post-b3">
 <section style="padding:50px 0 80px;"><div class="mx"><div class="blog-post-shell" style="max-width:800px;margin:0 auto;">
-  <a href="#" class="back-btn" onclick="SP('blog');return false;"><span data-t="bp_b3_back">← Wróć do bloga</span></a>
+  <a href="/pl/blog/" class="back-btn" data-p="blog" onclick="SP('blog');return false;"><span data-t="bp_b3_back">← Wróć do bloga</span></a>
   <div style="font-size:4rem;text-align:center;margin:20px 0;">🚛</div>
   <div style="font-size:.8rem;color:var(--y);font-weight:700;margin-bottom:8px;">2025-11-10</div>
   <h1 style="font-family:var(--ff-d);font-size:2rem;letter-spacing:2px;margin-bottom:24px;" data-t="b3_t"></h1>
@@ -3296,7 +3315,7 @@ document.addEventListener('click', function(e){
 
 <div class="page" id="p-blog-post-b4">
 <section style="padding:50px 0 80px;"><div class="mx"><div class="blog-post-shell" style="max-width:800px;margin:0 auto;">
-  <a href="#" class="back-btn" onclick="SP('blog');return false;"><span data-t="bp_b4_back">← Wróć do bloga</span></a>
+  <a href="/pl/blog/" class="back-btn" data-p="blog" onclick="SP('blog');return false;"><span data-t="bp_b4_back">← Wróć do bloga</span></a>
   <div style="font-size:4rem;text-align:center;margin:20px 0;">🏢</div>
   <div style="font-size:.8rem;color:var(--y);font-weight:700;margin-bottom:8px;">2025-10-05</div>
   <h1 style="font-family:var(--ff-d);font-size:2rem;letter-spacing:2px;margin-bottom:24px;" data-t="b4_t"></h1>
@@ -3318,7 +3337,7 @@ document.addEventListener('click', function(e){
 
 <div class="page" id="p-blog-post-b5">
 <section style="padding:50px 0 80px;"><div class="mx"><div class="blog-post-shell" style="max-width:800px;margin:0 auto;">
-  <a href="#" class="back-btn" onclick="SP('blog');return false;"><span data-t="bp_b5_back">← Wróć do bloga</span></a>
+  <a href="/pl/blog/" class="back-btn" data-p="blog" onclick="SP('blog');return false;"><span data-t="bp_b5_back">← Wróć do bloga</span></a>
   <div style="font-size:4rem;text-align:center;margin:20px 0;">🔋</div>
   <div style="font-size:.8rem;color:var(--y);font-weight:700;margin-bottom:8px;">2025-09-18</div>
   <h1 style="font-family:var(--ff-d);font-size:2rem;letter-spacing:2px;margin-bottom:24px;" data-t="b5_t"></h1>
@@ -3340,7 +3359,7 @@ document.addEventListener('click', function(e){
 
 <div class="page" id="p-blog-post-b6">
 <section style="padding:50px 0 80px;"><div class="mx"><div class="blog-post-shell" style="max-width:800px;margin:0 auto;">
-  <a href="#" class="back-btn" onclick="SP('blog');return false;"><span data-t="bp_b6_back">← Wróć do bloga</span></a>
+  <a href="/pl/blog/" class="back-btn" data-p="blog" onclick="SP('blog');return false;"><span data-t="bp_b6_back">← Wróć do bloga</span></a>
   <div style="font-size:4rem;text-align:center;margin:20px 0;">🛣️</div>
   <div style="font-size:.8rem;color:var(--y);font-weight:700;margin-bottom:8px;">2025-08-22</div>
   <h1 style="font-family:var(--ff-d);font-size:2rem;letter-spacing:2px;margin-bottom:24px;" data-t="b6_t"></h1>
@@ -3362,7 +3381,7 @@ document.addEventListener('click', function(e){
 
 <div class="page" id="p-blog-post-b8">
 <section style="padding:50px 0 80px;"><div class="mx"><div class="blog-post-shell" style="max-width:800px;margin:0 auto;">
-  <a href="#" class="back-btn" onclick="SP('blog');return false;"><span data-t="bp_b8_back">← Wróć do bloga</span></a>
+  <a href="/pl/blog/" class="back-btn" data-p="blog" onclick="SP('blog');return false;"><span data-t="bp_b8_back">← Wróć do bloga</span></a>
   <div style="font-size:4rem;text-align:center;margin:20px 0;">🚨</div>
   <div style="font-size:.8rem;color:var(--y);font-weight:700;margin-bottom:8px;">2026-03-01</div>
   <h1 style="font-family:var(--ff-d);font-size:2rem;letter-spacing:2px;margin-bottom:24px;" data-t="b8_t"></h1>
@@ -3384,7 +3403,7 @@ document.addEventListener('click', function(e){
 
 <div class="page" id="p-blog-post-b9">
 <section style="padding:50px 0 80px;"><div class="mx"><div class="blog-post-shell" style="max-width:800px;margin:0 auto;">
-  <a href="#" class="back-btn" onclick="SP('blog');return false;"><span data-t="bp_b9_back">← Wróć do bloga</span></a>
+  <a href="/pl/blog/" class="back-btn" data-p="blog" onclick="SP('blog');return false;"><span data-t="bp_b9_back">← Wróć do bloga</span></a>
   <div style="font-size:4rem;text-align:center;margin:20px 0;">♻️</div>
   <div style="font-size:.8rem;color:var(--y);font-weight:700;margin-bottom:8px;">2026-03-28</div>
   <h1 style="font-family:var(--ff-d);font-size:2rem;letter-spacing:2px;margin-bottom:24px;" data-t="b9_t"></h1>
@@ -3405,7 +3424,7 @@ document.addEventListener('click', function(e){
 
 <div class="page" id="p-blog-post-b10">
 <section style="padding:50px 0 80px;"><div class="mx"><div class="blog-post-shell" style="max-width:800px;margin:0 auto;">
-  <a href="#" class="back-btn" onclick="SP('blog');return false;"><span data-t="bp_b10_back">← Wróć do bloga</span></a>
+  <a href="/pl/blog/" class="back-btn" data-p="blog" onclick="SP('blog');return false;"><span data-t="bp_b10_back">← Wróć do bloga</span></a>
   <div style="font-size:4rem;text-align:center;margin:20px 0;">💵</div>
   <div style="font-size:.8rem;color:var(--y);font-weight:700;margin-bottom:8px;">2026-03-28</div>
   <h1 style="font-family:var(--ff-d);font-size:2rem;letter-spacing:2px;margin-bottom:24px;" data-t="b10_t"></h1>
@@ -4788,8 +4807,8 @@ document.addEventListener('DOMContentLoaded',function(){
 <footer class="foot"><div class="mx">
   <div class="foot-g">
     <div class="foot-brand"><div class="logo" style="cursor:default;">INNSER</div><p data-t="foot_desc"><strong>Pomoc drogowa 24/7</strong>. <strong>Tania laweta</strong>, <strong>tanie holowanie Warszawa</strong> — zadzwoń po wycenę.</p></div>
-    <div><div class="foot-h" data-t="foot_svc">USŁUGI</div><a href="#" onclick="SP('services');return false;" data-t="svc1_t">Pomoc drogowa 24h</a><a href="#" onclick="SP('services');return false;" data-t="svc2_t">Odpalanie na kable</a><a href="#" onclick="SP('services');return false;" data-t="svc3_t">Odpalanie boosterem</a><a href="#" onclick="SP('services');return false;" data-t="svc4_t">Wymiana koła</a><a href="#" onclick="SP('services');return false;" data-t="svc5_t">Otwieranie</a><a href="#" onclick="SP('services');return false;" data-t="svc6_t">Holowanie</a><a href="#" onclick="SP('services');return false;" data-t="svc7_t">Skup samochodów</a><a href="#" onclick="SP('services');return false;" data-t="svc8_t">Złomowanie pojazdów</a><a href="#" onclick="SP('services');return false;" data-t="svc9_t">Laweta Warszawa 24h</a></div>
-    <div><div class="foot-h" data-t="foot_nav">NAWIGACJA</div><a href="#" onclick="SP('home');return false;" data-t="nav_home">Strona główna</a><a href="#" onclick="SP('services');return false;" data-t="nav_svc">Usługi</a><a href="#" onclick="SP('about');return false;" data-t="nav_about">Co robimy</a><a href="#" onclick="SP('blog');return false;" data-t="nav_blog">Blog</a><a href="#" onclick="SP('partners');return false;" data-t="nav_partners">Współpraca</a><a href="#" onclick="SP('contact');return false;" data-t="nav_cnt">Kontakt</a></div>
+    <div><div class="foot-h" data-t="foot_svc">USŁUGI</div><a href="/pl/svc1/" data-p="svc1" onclick="SP('svc1');return false;" data-t="svc1_t">Pomoc drogowa 24h</a><a href="/pl/svc2/" data-p="svc2" onclick="SP('svc2');return false;" data-t="svc2_t">Odpalanie na kable</a><a href="/pl/svc3/" data-p="svc3" onclick="SP('svc3');return false;" data-t="svc3_t">Odpalanie boosterem</a><a href="/pl/svc4/" data-p="svc4" onclick="SP('svc4');return false;" data-t="svc4_t">Wymiana koła</a><a href="/pl/svc5/" data-p="svc5" onclick="SP('svc5');return false;" data-t="svc5_t">Otwieranie</a><a href="/pl/svc6/" data-p="svc6" onclick="SP('svc6');return false;" data-t="svc6_t">Holowanie</a><a href="/pl/svc7/" data-p="svc7" onclick="SP('svc7');return false;" data-t="svc7_t">Skup samochodów</a><a href="/pl/svc8/" data-p="svc8" onclick="SP('svc8');return false;" data-t="svc8_t">Złomowanie pojazdów</a><a href="/pl/svc9/" data-p="svc9" onclick="SP('svc9');return false;" data-t="svc9_t">Laweta Warszawa 24h</a></div>
+    <div><div class="foot-h" data-t="foot_nav">NAWIGACJA</div><a href="/pl/" data-p="home" onclick="SP('home');return false;" data-t="nav_home">Strona główna</a><a href="/pl/services/" data-p="services" onclick="SP('services');return false;" data-t="nav_svc">Usługi</a><a href="/pl/about/" data-p="about" onclick="SP('about');return false;" data-t="nav_about">Co robimy</a><a href="/pl/blog/" data-p="blog" onclick="SP('blog');return false;" data-t="nav_blog">Blog</a><a href="/pl/partners/" data-p="partners" onclick="SP('partners');return false;" data-t="nav_partners">Współpraca</a><a href="/pl/contact/" data-p="contact" onclick="SP('contact');return false;" data-t="nav_cnt">Kontakt</a></div>
     <div><div class="foot-h" data-t="foot_cnt">KONTAKT</div><a href="tel:+48506001057">📞 506-001-057</a><a>⏰ 24/7</a><a>📍 Warszawa</a><a>🗣️ PL/EN/RU/UA</a></div>
   </div>
   <div class="foot-bot"><span><span id="admin-trigger" style="cursor:default;">© 2024-2026 INNSER Pomoc Drogowa Warszawa.</span> <span data-t="foot_rights">Wszelkie prawa zastrzeżone.</span></span><span>Pomoc drogowa Warszawa | Holowanie | Laweta 24h</span></div>

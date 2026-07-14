@@ -219,12 +219,20 @@ for (var ri = 0; ri < list.length; ri++) {
 }
 var startLang = route0 ? (route0.langSeg === 'uk' ? 'ua' : route0.langSeg) : detectedLang;
 SL(startLang);
+  document.getElementById('svc-grid-home').innerHTML=SVCS.map(function(s){return buildSvcCard(s,'home');}).join('');
+  document.getElementById('svc-grid-full').innerHTML=SVCS.map(function(s){return buildSvcCard(s,'services');}).join('');
+  document.getElementById('blog-grid').innerHTML=BLOGS.map(buildBlogCard).join('');
+    initReveals();
 renderAreas(startLang);`;
 
 function fixedLangSnippet(cl) {
   return `  // Locale fixed for this URL (/${cl === 'ua' ? 'uk' : cl}/)
 var PAGE_FIXED_LANG = '${cl}';
 SL(PAGE_FIXED_LANG);
+  document.getElementById('svc-grid-home').innerHTML=SVCS.map(function(s){return buildSvcCard(s,'home');}).join('');
+  document.getElementById('svc-grid-full').innerHTML=SVCS.map(function(s){return buildSvcCard(s,'services');}).join('');
+  document.getElementById('blog-grid').innerHTML=BLOGS.map(buildBlogCard).join('');
+    initReveals();
 renderAreas(PAGE_FIXED_LANG);`;
 }
 
@@ -547,6 +555,27 @@ function tailToPageId(tail) {
   return trimmed;
 }
 
+function pageIdToPathTail(pageId) {
+  if (pageId === 'home') return '';
+  const blogM = /^blog-post-(b\d+)$/.exec(pageId);
+  if (blogM) return `blog/${blogM[1]}`;
+  return pageId;
+}
+
+function innserHrefForPage(pageId, localePathSeg) {
+  const tail = pageIdToPathTail(pageId);
+  return tail ? `/${localePathSeg}/${tail}/` : `/${localePathSeg}/`;
+}
+
+/** Real href on a[data-p] for crawlers (nav, footer, CTAs). */
+function patchHtmlLinkHrefs(html, localePathSeg) {
+  return html.replace(/<a(\s[^>]*?\bdata-p="([^"]+)"[^>]*)>/gi, (match, attrs, pageId) => {
+    const href = innserHrefForPage(pageId, localePathSeg);
+    const cleaned = attrs.replace(/\bhref="[^"]*"/, '').trim();
+    return `<a href="${href}" ${cleaned}>`;
+  });
+}
+
 /** В сыром HTML только .page.on видна (display:block). Без этого GSC видит главную при URL /pl/svc3/ и т.д. */
 function patchHtmlActivePage(html, tail) {
   const pageId = tailToPageId(tail);
@@ -637,6 +666,7 @@ function writeDeepRouteHtmlCopies(raw) {
       fs.mkdirSync(dir, { recursive: true });
       let html = patchHtmlSeoForTail(baseHtml, seg, tail, raw);
       html = patchHtmlActivePage(html, tail);
+      html = patchHtmlLinkHrefs(html, seg);
       if (tail === 'gallery' && galleryItems.length) {
         const pageUrl = `${SITE}/${seg}/gallery/`;
         html = injectGalleryStaticHtml(html, galleryItems, seg);
@@ -748,6 +778,8 @@ function buildLocaleHtml(raw, key) {
   html = bakeDataTTranslations(html, raw, langCl);
   html = patchLocalBusinessSchema(html, langCl);
   html = injectFaqJsonLd(html, raw, langCl);
+
+  html = patchHtmlLinkHrefs(html, L.pathSeg);
 
   return html;
 }
