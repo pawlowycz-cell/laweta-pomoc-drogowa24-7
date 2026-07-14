@@ -4311,15 +4311,56 @@ function towPhotonLang(){
   return 'en';
 }
 
+var TOW_CITY_PL_EN={
+  warszawa:'Warsaw',krakow:'Krakow',kraków:'Krakow',lodz:'Lodz',łódź:'Lodz',
+  wroclaw:'Wroclaw',wrocław:'Wroclaw',poznan:'Poznan',poznań:'Poznan',
+  gdansk:'Gdansk',gdańsk:'Gdansk',gdynia:'Gdynia',szczecin:'Szczecin',
+  lublin:'Lublin',bydgoszcz:'Bydgoszcz',katowice:'Katowice',bialystok:'Bialystok',
+  białystok:'Bialystok',rzeszow:'Rzeszow',rzeszów:'Rzeszow'
+};
+var TOW_CITY_EN_PL={
+  Warsaw:'Warszawa',Krakow:'Kraków',Cracow:'Kraków',Lodz:'Łódź',Wroclaw:'Wrocław',Poznan:'Poznań',
+  Gdansk:'Gdańsk',Gdynia:'Gdynia',Szczecin:'Szczecin',Lublin:'Lublin',
+  Bydgoszcz:'Bydgoszcz',Katowice:'Katowice',Bialystok:'Białystok',Rzeszow:'Rzeszów'
+};
+
+function towNorm(s){
+  return String(s||'').toLowerCase()
+    .replace(/ą/g,'a').replace(/ć/g,'c').replace(/ę/g,'e').replace(/ł/g,'l')
+    .replace(/ń/g,'n').replace(/ó/g,'o').replace(/ś/g,'s').replace(/ź|ż/g,'z')
+    .replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();
+}
+
+function towQueryVariants(q){
+  var trimmed=String(q||'').trim().replace(/\s*,\s*/g,' ').replace(/\s+/g,' ');
+  if(!trimmed)return [];
+  var variants=[trimmed];
+  var en=trimmed.replace(/\b([\wąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+)\b/g,function(w){
+    var k=towNorm(w);
+    return TOW_CITY_PL_EN[k]||w;
+  });
+  if(en!==trimmed)variants.push(en);
+  var parts=trimmed.split(' ').filter(Boolean);
+  if(parts.length>=2){
+    variants.push(parts.slice().reverse().join(' '));
+    if(en!==trimmed){
+      var ep=en.split(' ').filter(Boolean);
+      if(ep.join(' ')!==parts.slice().reverse().join(' '))variants.push(ep.slice().reverse().join(' '));
+    }
+  }
+  var seen={};
+  return variants.filter(function(v){
+    var k=towNorm(v);
+    if(!k||seen[k])return false;
+    seen[k]=1;
+    return true;
+  });
+}
+
 function towLocalCity(name){
   if(!name)return '';
   if(CL==='en')return name;
-  var map={
-    Warsaw:'Warszawa',Krakow:'Kraków',Cracow:'Kraków',Lodz:'Łódź',Wroclaw:'Wrocław',
-    Poznan:'Poznań',Gdansk:'Gdańsk',Gdynia:'Gdynia',Szczecin:'Szczecin',Lublin:'Lublin',
-    Bydgoszcz:'Bydgoszcz',Katowice:'Katowice',Bialystok:'Białystok',Rzeszow:'Rzeszów'
-  };
-  return map[name]||name;
+  return TOW_CITY_EN_PL[name]||name;
 }
 
 function towPhotonLabel(p){
@@ -4347,6 +4388,71 @@ function towPhotonDist(lat,lon){
   return dLat*dLat+dLon*dLon;
 }
 
+function towScoreResult(label,query){
+  var l=towNorm(label),q=towNorm(query);
+  if(!q)return 0;
+  if(l.indexOf(q)>=0)return 120;
+  var tokens=q.split(' ').filter(function(t){return t.length>1;});
+  if(!tokens.length)return 0;
+  var matched=0;
+  tokens.forEach(function(t){if(l.indexOf(t)>=0)matched++;});
+  return matched*25;
+}
+
+function towDedupeResults(items){
+  var seen={},out=[];
+  items.forEach(function(it){
+    if(!it||it.lat==null||it.lon==null||!it.label)return;
+    var key=it.lat.toFixed(4)+','+it.lon.toFixed(4);
+    if(seen[key])return;
+    seen[key]=1;
+    out.push(it);
+  });
+  return out;
+}
+
+function towPhotonFetch(q){
+  var url='https://photon.komoot.io/api/?q='+encodeURIComponent(q)+'&limit=8&lang='+encodeURIComponent(towPhotonLang())+'&lat=52.2297&lon=21.0122';
+  return fetch(url).then(function(r){return r.json();}).then(function(d){
+    return ((d&&d.features)||[]).map(towPhotonMapFeature);
+  }).catch(function(){return [];});
+}
+
+function towNominatimLabel(item){
+  var a=item.address||{};
+  var city=a.city||a.town||a.village||a.municipality||'';
+  if(CL!=='en')city=towLocalCity(city)||city;
+  var line=item.name||a.road||a.pedestrian||a.footway||'';
+  if(a.house_number&&line)line=line+' '+a.house_number;
+  var parts=[];
+  if(line)parts.push(line);
+  if(city&&city!==line)parts.push(city);
+  if(parts.length)return parts.join(', ');
+  if(item.display_name){
+    var bits=item.display_name.split(',').map(function(s){return s.trim();}).filter(Boolean);
+    if(bits.length>=2)return bits[0]+', '+bits[bits.length-2];
+    return bits[0]||'';
+  }
+  return '';
+}
+
+function towNominatimSearch(q){
+  var url='https://nominatim.openstreetmap.org/search?q='+encodeURIComponent(q)+'&format=json&addressdetails=1&limit=6&countrycodes=pl';
+  return fetch(url,{headers:{'Accept':'application/json','Accept-Language':CL==='en'?'en':'pl'}}).then(function(r){return r.json();}).then(function(list){
+    if(!Array.isArray(list))return [];
+    return list.map(function(item){
+      var lat=parseFloat(item.lat),lon=parseFloat(item.lon);
+      return {
+        label:towNominatimLabel(item),
+        lat:lat,
+        lon:lon,
+        dist:towPhotonDist(lat,lon),
+        pl:true
+      };
+    });
+  }).catch(function(){return [];});
+}
+
 function towPhotonMapFeature(f){
   var p=f.properties||{};
   var coords=f.geometry&&f.geometry.coordinates||[];
@@ -4363,17 +4469,19 @@ function towPhotonMapFeature(f){
 function towPhotonSearch(q){
   if(!q||q.trim().length<2)return Promise.resolve([]);
   var trimmed=q.trim();
-  var base='https://photon.komoot.io/api/?q='+encodeURIComponent(trimmed)+'&limit=8&lang='+encodeURIComponent(towPhotonLang())+'&lat=52.2297&lon=21.0122';
-  return fetch(base).then(function(r){return r.json();}).then(function(d){
-    var features=(d&&d.features)||[];
-    if(features.length){
-      return features.map(towPhotonMapFeature).filter(function(x){return x.label&&x.lat!=null&&x.lon!=null;})
-        .sort(function(a,b){if(a.pl!==b.pl)return a.pl?-1:1;return a.dist-b.dist;});
-    }
-    return fetch(base.replace('&lang='+encodeURIComponent(towPhotonLang()),'')).then(function(r2){return r2.json();}).then(function(d2){
-      return ((d2&&d2.features)||[]).map(towPhotonMapFeature).filter(function(x){return x.label&&x.lat!=null&&x.lon!=null;})
-        .sort(function(a,b){if(a.pl!==b.pl)return a.pl?-1:1;return a.dist-b.dist;});
+  var variants=towQueryVariants(trimmed);
+  var jobs=variants.map(towPhotonFetch);
+  jobs.push(towNominatimSearch(trimmed));
+  return Promise.all(jobs).then(function(groups){
+    var all=towDedupeResults([].concat.apply([],groups))
+      .filter(function(x){return x.label&&x.lat!=null&&x.lon!=null;});
+    all.forEach(function(it){it._score=towScoreResult(it.label,trimmed);});
+    all.sort(function(a,b){
+      if(b._score!==a._score)return b._score-a._score;
+      if(a.pl!==b.pl)return a.pl?-1:1;
+      return a.dist-b.dist;
     });
+    return all.slice(0,8);
   }).catch(function(){return [];});
 }
 
