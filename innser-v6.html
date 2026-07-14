@@ -251,6 +251,14 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
 .tow-calc-note{font-size:.85rem;color:var(--g);margin-bottom:18px;line-height:1.55;}
 .tow-calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
 .tow-calc-field label,.tow-calc-row label{display:block;font-size:.78rem;font-weight:600;color:var(--gl);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px;}
+.tow-ac-wrap{position:relative;}
+.tow-ac-list{position:absolute;left:0;right:0;top:calc(100% - 2px);z-index:1200;margin:0;padding:4px 0;list-style:none;background:var(--b2);border:1px solid rgba(255,209,0,.35);border-radius:0 0 10px 10px;max-height:220px;overflow-y:auto;box-shadow:0 12px 32px rgba(0,0,0,.55);}
+.tow-ac-item{padding:10px 14px;font-size:.88rem;color:var(--gl);cursor:pointer;line-height:1.35;border-bottom:1px solid var(--b4);}
+.tow-ac-item:last-child{border-bottom:none;}
+.tow-ac-item:hover,.tow-ac-item.on{background:rgba(255,209,0,.12);color:var(--w);}
+.tow-calc-route-row{margin:12px 0 14px;display:flex;flex-wrap:wrap;align-items:center;gap:12px;}
+.tow-calc-route-btn{padding:11px 22px;font-size:.9rem;}
+.tow-calc-route-status{font-size:.82rem;color:var(--g);min-height:1.2em;}
 .tow-calc-input,.tow-calc-select{width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--b4);background:var(--b2);color:var(--w);font-family:var(--ff-b);font-size:.95rem;}
 .tow-calc-input:focus,.tow-calc-select:focus{outline:none;border-color:rgba(255,209,0,.45);}
 .tow-calc-manual{margin-bottom:14px;}
@@ -874,23 +882,29 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
           <h3 class="tow-calc-title" data-t="tow_calc_title">Kalkulator wyceny holowania</h3>
           <p class="tow-calc-note" data-t="tow_calc_note">Orientacyjna cena trasy drogowej A→B. Odbiór z parkingu podziemnego na poziomie −2 i niżej — tylko indywidualna wycena telefoniczna.</p>
           <div class="tow-calc-grid">
-            <div class="tow-calc-field">
+            <div class="tow-calc-field tow-ac-wrap">
               <label for="tow-from" data-t="tow_calc_from">Skąd (punkt A)</label>
-              <input type="text" id="tow-from" class="tow-calc-input" autocomplete="off">
+              <input type="text" id="tow-from" class="tow-calc-input" autocomplete="off" spellcheck="false">
+              <ul class="tow-ac-list" id="tow-from-list" hidden role="listbox"></ul>
             </div>
-            <div class="tow-calc-field">
+            <div class="tow-calc-field tow-ac-wrap">
               <label for="tow-to" data-t="tow_calc_to">Dokąd (punkt B)</label>
-              <input type="text" id="tow-to" class="tow-calc-input" autocomplete="off">
+              <input type="text" id="tow-to" class="tow-calc-input" autocomplete="off" spellcheck="false">
+              <ul class="tow-ac-list" id="tow-to-list" hidden role="listbox"></ul>
             </div>
           </div>
+          <div class="tow-calc-route-row">
+            <button type="button" class="btn btn-o tow-calc-route-btn" id="tow-route-btn" data-t="tow_calc_btn">Oblicz trasę</button>
+            <span class="tow-calc-route-status" id="tow-route-status" aria-live="polite"></span>
+          </div>
+          <p class="tow-calc-dist" id="tow-dist-wrap"><span data-t="tow_calc_dist">Dystans trasy:</span> <strong id="tow-dist-km">—</strong></p>
           <div class="tow-calc-manual">
-            <label for="tow-km-manual" data-t="tow_calc_km">Odległość drogowa (km)</label>
+            <label for="tow-km-manual" data-t="tow_calc_km">Odległość ręcznie (km) — jeśli bez adresów</label>
             <input type="number" id="tow-km-manual" class="tow-calc-input" min="0" step="0.1" inputmode="decimal">
           </div>
-          <p class="tow-calc-maps-hint" id="tow-maps-hint" hidden data-t="tow_calc_no_key">Bez klucza Google Maps wpisz dystans ręcznie. Klucz API dodaje administrator w ustawieniach serwera (Vercel → GOOGLE_MAPS_API_KEY).</p>
+          <p class="tow-calc-maps-hint" id="tow-maps-hint" hidden data-t="tow_calc_no_key"></p>
           <div class="tow-calc-map-wrap" id="tow-map-wrap" hidden>
             <div id="tow-map" class="tow-calc-map" aria-hidden="true"></div>
-            <p class="tow-calc-dist"><span data-t="tow_calc_dist">Dystans trasy:</span> <strong id="tow-dist-km">—</strong></p>
           </div>
           <fieldset class="tow-calc-extras">
             <legend data-t="tow_calc_extras">Dodatki</legend>
@@ -1565,9 +1579,12 @@ pl:{
   tow_calc_note:"Orientacyjna cena trasy drogowej A→B. Odbiór z parkingu podziemnego na poziomie <strong class=\"xb\">−2 i niżej</strong> — tylko indywidualna wycena telefoniczna.",
   tow_calc_from:"Skąd (punkt A)",
   tow_calc_to:"Dokąd (punkt B)",
-  tow_calc_km:"Odległość drogowa (km)",
+  tow_calc_km:"Odległość ręcznie (km) — jeśli bez adresów",
   tow_calc_dist:"Dystans trasy:",
-  tow_calc_no_key:"Mapa Google: wpisz adresy powyżej albo dystans ręcznie. Klucz API dodaje administrator (Google Cloud → Maps JavaScript API + Places API → zmienna GOOGLE_MAPS_API_KEY w Vercel).",
+  tow_calc_btn:"Oblicz trasę",
+  tow_calc_loading:"Liczenie trasy…",
+  tow_calc_route_err:"Nie udało się policzyć trasy — sprawdź adresy lub wpisz km ręcznie.",
+  tow_calc_no_key:"",
   tow_calc_extras:"Dodatki",
   tow_calc_wheels:"Zablokowane koła",
   tow_calc_wheels0:"Brak",
@@ -1584,7 +1601,7 @@ pl:{
   tow_calc_vtype_long:"Bus długi (+150 zł)",
   tow_calc_est:"Szacunkowa cena:",
   tow_calc_individual:"Potrzebna indywidualna wycena — zadzwoń:",
-  tow_calc_enter_route:"Podaj trasę (adresy) lub odległość w km.",
+  tow_calc_enter_route:"Wpisz oba adresy i wybierz z listy, potem kliknij «Oblicz trasę».",
   tow_calc_base:"Trasa",
   tow_calc_wheels_line:"Zablokowane koła",
   tow_calc_parking_line:"Parking podziemny (−1)",
@@ -1891,9 +1908,12 @@ en:{
   tow_calc_note:"Estimated road route price A→B. Pickup from underground car park at level <strong class=\"xb\">−2 or below</strong> requires an individual phone quote.",
   tow_calc_from:"From (point A)",
   tow_calc_to:"To (point B)",
-  tow_calc_km:"Road distance (km)",
+  tow_calc_km:"Distance manually (km) — if not using addresses",
   tow_calc_dist:"Route distance:",
-  tow_calc_no_key:"Google Maps: enter addresses above or distance manually. Admin adds API key (Google Cloud → Maps JavaScript API + Places API → GOOGLE_MAPS_API_KEY in Vercel).",
+  tow_calc_btn:"Calculate route",
+  tow_calc_loading:"Calculating route…",
+  tow_calc_route_err:"Could not calculate route — check addresses or enter km manually.",
+  tow_calc_no_key:"",
   tow_calc_extras:"Extras",
   tow_calc_wheels:"Locked wheels",
   tow_calc_wheels0:"None",
@@ -1910,7 +1930,7 @@ en:{
   tow_calc_vtype_long:"Long bus (+150 zł)",
   tow_calc_est:"Estimated price:",
   tow_calc_individual:"Individual quote required — call:",
-  tow_calc_enter_route:"Enter route (addresses) or distance in km.",
+  tow_calc_enter_route:"Enter both addresses, pick from the list, then click «Calculate route».",
   tow_calc_base:"Route",
   tow_calc_wheels_line:"Locked wheels",
   tow_calc_parking_line:"Underground car park (−1)",
@@ -2163,9 +2183,12 @@ ru:{
   tow_calc_note:"Ориентировочная цена маршрута A→B. Забор с подземного паркинга на уровне <strong class=\"xb\">−2 и ниже</strong> — только индивидуальный расчёт по телефону.",
   tow_calc_from:"Откуда (точка A)",
   tow_calc_to:"Куда (точка B)",
-  tow_calc_km:"Расстояние по дороге (км)",
+  tow_calc_km:"Расстояние вручную (км) — если без адресов",
   tow_calc_dist:"Дистанция маршрута:",
-  tow_calc_no_key:"Google Maps: введите адреса или расстояние вручную. Ключ API добавляет администратор (Google Cloud → Maps JavaScript API + Places API → GOOGLE_MAPS_API_KEY в Vercel).",
+  tow_calc_btn:"Рассчитать маршрут",
+  tow_calc_loading:"Считаем маршрут…",
+  tow_calc_route_err:"Не удалось рассчитать маршрут — проверьте адреса или введите км вручную.",
+  tow_calc_no_key:"",
   tow_calc_extras:"Доплаты",
   tow_calc_wheels:"Заблокированные колёса",
   tow_calc_wheels0:"Нет",
@@ -2182,7 +2205,7 @@ ru:{
   tow_calc_vtype_long:"Длинный автобус (+150 zł)",
   tow_calc_est:"Ориентировочная цена:",
   tow_calc_individual:"Нужен индивидуальный расчёт — звоните:",
-  tow_calc_enter_route:"Укажите маршрут (адреса) или расстояние в км.",
+  tow_calc_enter_route:"Введите оба адреса, выберите из списка и нажмите «Рассчитать маршрут».",
   tow_calc_base:"Маршрут",
   tow_calc_wheels_line:"Заблокированные колёса",
   tow_calc_parking_line:"Подземный паркинг (−1)",
@@ -2536,9 +2559,12 @@ ua:{
   tow_calc_note:"Орієнтовна ціна маршруту A→B. Забір з підземного паркінгу на рівні <strong class=\"xb\">−2 і нижче</strong> — лише індивідуальний розрахунок телефоном.",
   tow_calc_from:"Звідки (точка A)",
   tow_calc_to:"Куди (точка B)",
-  tow_calc_km:"Відстань дорогою (км)",
+  tow_calc_km:"Відстань вручну (км) — якщо без адрес",
   tow_calc_dist:"Дистанція маршруту:",
-  tow_calc_no_key:"Google Maps: введіть адреси або відстань вручну. Ключ API додає адміністратор (Google Cloud → Maps JavaScript API + Places API → GOOGLE_MAPS_API_KEY у Vercel).",
+  tow_calc_btn:"Розрахувати маршрут",
+  tow_calc_loading:"Рахуємо маршрут…",
+  tow_calc_route_err:"Не вдалося порахувати маршрут — перевірте адреси або введіть км вручну.",
+  tow_calc_no_key:"",
   tow_calc_extras:"Доплати",
   tow_calc_wheels:"Заблоковані колеса",
   tow_calc_wheels0:"Немає",
@@ -2555,7 +2581,7 @@ ua:{
   tow_calc_vtype_long:"Довгий автобус (+150 zł)",
   tow_calc_est:"Орієнтовна ціна:",
   tow_calc_individual:"Потрібен індивідуальний розрахунок — телефонуйте:",
-  tow_calc_enter_route:"Вкажіть маршрут (адреси) або відстань у км.",
+  tow_calc_enter_route:"Введіть обидві адреси, оберіть зі списку і натисніть «Розрахувати маршрут».",
   tow_calc_base:"Маршрут",
   tow_calc_wheels_line:"Заблоковані колеса",
   tow_calc_parking_line:"Підземний паркінг (−1)",
@@ -4161,6 +4187,8 @@ var towCalcMapsLoadPromise=null;
 var towCalcRenderer=null;
 var towCalcDirections=null;
 var towCalcMapInstance=null;
+var towCalcUseGoogle=false;
+var towCalcAcTimers={};
 
 function towT(k,f){return (T[CL]&&T[CL][k])||f||k;}
 
@@ -4187,6 +4215,19 @@ function getTowCalcKm(){
     if(!isNaN(m)&&m>=0)return m;
   }
   return null;
+}
+
+function towSetRouteStatus(msg){
+  var el=document.getElementById('tow-route-status');
+  if(el)el.textContent=msg||'';
+}
+
+function towSetRouteKm(km){
+  var distEl=document.getElementById('tow-dist-km');
+  if(distEl)distEl.textContent=(km==null||isNaN(km)?'—':km.toFixed(1)+' km');
+  var manual=document.getElementById('tow-km-manual');
+  if(manual&&km!=null&&!isNaN(km))manual.value=km.toFixed(1);
+  updateTowCalcPrice();
 }
 
 function calcTowExtras(){
@@ -4248,7 +4289,7 @@ function updateTowCalcPrice(){
   var km=getTowCalcKm();
   if(km==null){
     priceEl.textContent='—';
-    if(breakdownEl)breakdownEl.textContent=towT('tow_calc_enter_route','Podaj trasę lub odległość w km.');
+    if(breakdownEl)breakdownEl.textContent=towT('tow_calc_enter_route','Podaj trasę (adresy) lub odległość w km.');
     return;
   }
   var base=calcTowBasePrice(km);
@@ -4266,11 +4307,112 @@ function updateTowCalcPrice(){
   }
 }
 
+function towPhotonLang(){
+  return CL==='pl'?'pl':CL==='ru'?'ru':CL==='ua'?'uk':'en';
+}
+
+function towPhotonLabel(p){
+  var bits=[p.name,p.housenumber,p.street,p.city,p.state,p.country].filter(Boolean);
+  var out=[];
+  bits.forEach(function(b){if(out.indexOf(b)===-1)out.push(b);});
+  return out.join(', ')||'';
+}
+
+function towPhotonSearch(q){
+  if(!q||q.trim().length<3)return Promise.resolve([]);
+  var lang=towPhotonLang();
+  var url='https://photon.komoot.io/api/?q='+encodeURIComponent(q.trim())+'&limit=7&lang='+encodeURIComponent(lang)+'&lat=52.2297&lon=21.0122';
+  return fetch(url).then(function(r){return r.json();}).then(function(d){
+    return (d.features||[]).map(function(f){
+      var p=f.properties||{};
+      var coords=f.geometry&&f.geometry.coordinates||[];
+      return {label:towPhotonLabel(p),lat:coords[1],lon:coords[0]};
+    }).filter(function(x){return x.label&&x.lat!=null&&x.lon!=null;});
+  }).catch(function(){return [];});
+}
+
+function towHideAcList(listId){
+  var list=document.getElementById(listId);
+  if(list){list.hidden=true;list.innerHTML='';}
+}
+
+function towHideAllAcLists(){
+  towHideAcList('tow-from-list');
+  towHideAcList('tow-to-list');
+}
+
+function towBindOsmAutocomplete(inputId,listId){
+  var input=document.getElementById(inputId);
+  var list=document.getElementById(listId);
+  if(!input||!list)return;
+  input.addEventListener('input',function(){
+    delete input.dataset.lat;
+    delete input.dataset.lon;
+    clearTimeout(towCalcAcTimers[inputId]);
+    var q=input.value.trim();
+    if(q.length<3){towHideAcList(listId);return;}
+    towCalcAcTimers[inputId]=setTimeout(function(){
+      towPhotonSearch(q).then(function(items){
+        if(input.value.trim()!==q)return;
+        list.innerHTML='';
+        if(!items.length){list.hidden=true;return;}
+        items.forEach(function(it){
+          var li=document.createElement('li');
+          li.className='tow-ac-item';
+          li.textContent=it.label;
+          li.addEventListener('mousedown',function(e){
+            e.preventDefault();
+            input.value=it.label;
+            input.dataset.lat=String(it.lat);
+            input.dataset.lon=String(it.lon);
+            towHideAcList(listId);
+            if(document.getElementById('tow-from')&&document.getElementById('tow-to')){
+              var to=document.getElementById('tow-to');
+              if(inputId==='tow-from'&&to&&to.value.trim())towCalcComputeRoute();
+              else if(inputId==='tow-to'&&document.getElementById('tow-from').value.trim())towCalcComputeRoute();
+            }
+          });
+          list.appendChild(li);
+        });
+        list.hidden=false;
+      });
+    },280);
+  });
+  input.addEventListener('blur',function(){setTimeout(function(){towHideAcList(listId);},180);});
+  input.addEventListener('keydown',function(e){
+    if(e.key==='Escape')towHideAcList(listId);
+  });
+}
+
+function towResolvePoint(input){
+  if(!input)return Promise.resolve(null);
+  var lat=input.dataset.lat,lon=input.dataset.lon;
+  if(lat&&lon)return Promise.resolve({lat:parseFloat(lat),lon:parseFloat(lon),label:input.value.trim()});
+  var q=input.value.trim();
+  if(!q)return Promise.resolve(null);
+  return towPhotonSearch(q).then(function(items){
+    if(!items.length)return null;
+    var best=items[0];
+    input.value=best.label;
+    input.dataset.lat=String(best.lat);
+    input.dataset.lon=String(best.lon);
+    return best;
+  });
+}
+
+function towOsmRouteKm(from,to){
+  var url='https://router.project-osrm.org/route/v1/driving/'+from.lon+','+from.lat+';'+to.lon+','+to.lat+'?overview=false';
+  return fetch(url).then(function(r){return r.json();}).then(function(d){
+    if(!d||d.code!=='Ok'||!d.routes||!d.routes[0])throw new Error('route');
+    return d.routes[0].distance/1000;
+  });
+}
+
 function loadGoogleMapsScript(key){
   if(window.google&&window.google.maps)return Promise.resolve();
   if(towCalcMapsLoadPromise)return towCalcMapsLoadPromise;
   towCalcMapsLoadPromise=new Promise(function(resolve,reject){
-    var lang=CL==='pl'?'pl':CL==='ru'?'ru':CL==='ua'?'uk':'en';
+    var lang=towPhotonLang();
     var s=document.createElement('script');
     s.src='https://maps.googleapis.com/maps/api/js?key='+encodeURIComponent(key)+'&libraries=places&language='+encodeURIComponent(lang)+'&callback=innserTowMapsReady';
     s.async=true;
@@ -4282,38 +4424,58 @@ function loadGoogleMapsScript(key){
   return towCalcMapsLoadPromise;
 }
 
-function towCalcRoute(){
+function towCalcGoogleRoute(){
   var fromInput=document.getElementById('tow-from');
   var toInput=document.getElementById('tow-to');
-  if(!fromInput||!toInput||!towCalcDirections||!window.google)return;
+  if(!fromInput||!toInput||!towCalcDirections||!window.google)return Promise.reject();
   var from=fromInput.value.trim();
   var to=toInput.value.trim();
-  if(!from||!to){
-    updateTowCalcPrice();
+  if(!from||!to)return Promise.reject();
+  return new Promise(function(resolve,reject){
+    towCalcDirections.route({
+      origin:from,
+      destination:to,
+      travelMode:google.maps.TravelMode.DRIVING,
+      region:'pl'
+    },function(result,status){
+      if(status!=='OK'||!result.routes[0]||!result.routes[0].legs[0]){reject(new Error(status||'fail'));return;}
+      var km=result.routes[0].legs[0].distance.value/1000;
+      if(towCalcRenderer)towCalcRenderer.setDirections(result);
+      resolve(km);
+    });
+  });
+}
+
+function towCalcComputeRoute(){
+  var fromInput=document.getElementById('tow-from');
+  var toInput=document.getElementById('tow-to');
+  if(!fromInput||!toInput)return;
+  var fromTxt=fromInput.value.trim();
+  var toTxt=toInput.value.trim();
+  if(!fromTxt||!toTxt){
+    towSetRouteStatus(towT('tow_calc_enter_route','Podaj trasę (adresy) lub odległość w km.'));
     return;
   }
-  towCalcDirections.route({
-    origin:from,
-    destination:to,
-    travelMode:google.maps.TravelMode.DRIVING,
-    region:'pl'
-  },function(result,status){
-    if(status!=='OK'||!result.routes[0]||!result.routes[0].legs[0]){
-      updateTowCalcPrice();
-      return;
-    }
-    var leg=result.routes[0].legs[0];
-    var km=leg.distance.value/1000;
-    var distEl=document.getElementById('tow-dist-km');
-    if(distEl)distEl.textContent=km.toFixed(1)+' km';
-    var manual=document.getElementById('tow-km-manual');
-    if(manual)manual.value=km.toFixed(1);
-    if(towCalcRenderer)towCalcRenderer.setDirections(result);
+  towSetRouteStatus(towT('tow_calc_loading','Liczenie trasy…'));
+  towHideAllAcLists();
+  var chain=Promise.all([towResolvePoint(fromInput),towResolvePoint(toInput)]).then(function(pts){
+    if(!pts[0]||!pts[1])throw new Error('geocode');
+    if(towCalcUseGoogle&&towCalcDirections)return towCalcGoogleRoute().catch(function(){
+      return towOsmRouteKm(pts[0],pts[1]);
+    });
+    return towOsmRouteKm(pts[0],pts[1]);
+  });
+  chain.then(function(km){
+    towSetRouteKm(km);
+    towSetRouteStatus('');
+  }).catch(function(){
+    towSetRouteStatus(towT('tow_calc_route_err','Nie udało się policzyć trasy — sprawdź adresy lub wpisz km ręcznie.'));
     updateTowCalcPrice();
   });
 }
 
-function setupTowCalcMaps(){
+function setupTowCalcMaps(key){
+  towCalcUseGoogle=true;
   var mapWrap=document.getElementById('tow-map-wrap');
   var hint=document.getElementById('tow-maps-hint');
   if(hint)hint.hidden=true;
@@ -4334,22 +4496,25 @@ function setupTowCalcMaps(){
     });
   }
   towCalcDirections=new google.maps.DirectionsService();
-  var acOpts={fields:['formatted_address','geometry','name'],componentRestrictions:{country:'pl'}};
+  var acOpts={fields:['formatted_address','geometry','name'],componentRestrictions:{country:['pl','de','cz','sk','lt','ua']}};
   var fromInput=document.getElementById('tow-from');
   var toInput=document.getElementById('tow-to');
   if(fromInput){
     var fromAc=new google.maps.places.Autocomplete(fromInput,acOpts);
-    fromAc.addListener('place_changed',towCalcRoute);
+    fromAc.addListener('place_changed',function(){
+      delete fromInput.dataset.lat;
+      delete fromInput.dataset.lon;
+      towCalcComputeRoute();
+    });
   }
   if(toInput){
     var toAc=new google.maps.places.Autocomplete(toInput,acOpts);
-    toAc.addListener('place_changed',towCalcRoute);
+    toAc.addListener('place_changed',function(){
+      delete toInput.dataset.lat;
+      delete toInput.dataset.lon;
+      towCalcComputeRoute();
+    });
   }
-}
-
-function showTowCalcNoKey(){
-  var hint=document.getElementById('tow-maps-hint');
-  if(hint)hint.hidden=false;
 }
 
 function initTowCalc(){
@@ -4374,17 +4539,22 @@ function initTowCalc(){
     manual.addEventListener('input',updateTowCalcPrice);
     manual.addEventListener('change',updateTowCalcPrice);
   }
-  ['tow-from','tow-to'].forEach(function(id){
-    var el=document.getElementById(id);
-    if(el)el.addEventListener('change',towCalcRoute);
+  function bindOsmAc(){
+    towBindOsmAutocomplete('tow-from','tow-from-list');
+    towBindOsmAutocomplete('tow-to','tow-to-list');
+  }
+  var routeBtn=document.getElementById('tow-route-btn');
+  if(routeBtn)routeBtn.addEventListener('click',towCalcComputeRoute);
+  document.addEventListener('click',function(e){
+    if(!e.target.closest('.tow-ac-wrap'))towHideAllAcLists();
   });
   syncParkingLevel();
   var meta=document.querySelector('meta[name="google-maps-api-key"]');
   var key=meta?meta.getAttribute('content')||'':'';
   if(key){
-    loadGoogleMapsScript(key).then(setupTowCalcMaps).catch(showTowCalcNoKey);
+    loadGoogleMapsScript(key).then(function(){setupTowCalcMaps(key);}).catch(bindOsmAc);
   } else {
-    showTowCalcNoKey();
+    bindOsmAc();
   }
   updateTowCalcPrice();
 }
@@ -4411,6 +4581,7 @@ document.addEventListener('DOMContentLoaded',function(){
   initInnserPathRoute();
   if(typeof syncUrlToPage==='function'&&typeof currentPageSlug==='function') syncUrlToPage(currentPageSlug());
   if(typeof bindHomeGalScroll==='function') bindHomeGalScroll();
+  if(typeof currentPageSlug==='function'&&currentPageSlug()==='svc1') setTimeout(initTowCalc,150);
 });
 // Init b7 interactions when its page opens
 document.addEventListener('DOMContentLoaded',function(){
