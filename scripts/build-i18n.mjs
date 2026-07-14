@@ -1202,12 +1202,24 @@ async function writeAppleTouchIconPng(pngBuffer) {
   }
 }
 
+function escapeHtmlAttr(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;');
+}
+
 async function main() {
   if (!fs.existsSync(SRC)) {
     console.error('Missing source:', SRC);
     process.exit(1);
   }
-  const raw = fs.readFileSync(SRC, 'utf8');
+  let raw = fs.readFileSync(SRC, 'utf8');
+  const mapsKey = (process.env.GOOGLE_MAPS_API_KEY || '').trim();
+  raw = raw.replace(/__GOOGLE_MAPS_API_KEY__/g, escapeHtmlAttr(mapsKey));
+  if (!mapsKey) {
+    console.warn('GOOGLE_MAPS_API_KEY not set — svc1 tow calculator uses manual km input only.');
+  }
   if (!raw.includes(AUTO_DETECT_SNIPPET)) {
     console.error('Source HTML: auto-detect block not found (file changed?)');
     process.exit(1);
