@@ -262,7 +262,14 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
 .tow-calc-status:empty{display:none;}
 .tow-calc-input,.tow-calc-select{width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--b4);background:var(--b2);color:var(--w);font-family:var(--ff-b);font-size:.95rem;}
 .tow-calc-input:focus,.tow-calc-select:focus{outline:none;border-color:rgba(255,209,0,.45);}
-.tow-calc-map-wrap,.tow-calc-maps-hint,#tow-dist-wrap{display:none!important;}
+.tow-calc-body{margin-top:4px;}
+.tow-calc-body.map-mode{margin-top:16px;border-radius:var(--r);overflow:hidden;border:1px solid rgba(255,209,0,.22);background:var(--b3);}
+.tow-calc-map-wrap{display:none;}
+.tow-calc-body.map-mode .tow-calc-map-wrap{display:block;}
+.tow-calc-map{width:100%;height:min(44vh,400px);min-height:260px;background:var(--b2);}
+.tow-calc-maps-hint{font-size:.8rem;color:var(--g);margin:12px 0 0;line-height:1.45;text-align:center;}
+#tow-dist-wrap{display:none!important;}
+.pac-container{z-index:2000!important;}
 .tow-calc-more{border:1px solid var(--b4);border-radius:12px;background:rgba(0,0,0,.12);overflow:hidden;}
 .tow-calc-more summary{padding:12px 14px;font-size:.88rem;font-weight:600;color:var(--gl);cursor:pointer;list-style:none;}
 .tow-calc-more summary::-webkit-details-marker{display:none;}
@@ -274,6 +281,7 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
 .tow-calc-check input{margin-top:3px;accent-color:var(--y);flex-shrink:0;}
 .tow-calc-parking-level{grid-column:1/-1;}
 .tow-calc-row{margin:0;}
+.tow-calc-body.map-mode .tow-calc-result{margin:0;border:none;border-radius:0;border-top:1px solid var(--b4);}
 .tow-calc-result{margin-top:20px;padding:20px 18px;background:var(--b3);border:1px solid rgba(255,209,0,.25);border-radius:var(--r);text-align:center;}
 .tow-calc-result-label{display:block;font-size:.82rem;color:var(--g);margin-bottom:6px;}
 .tow-calc-price{font-family:var(--ff-d);font-size:2.2rem;color:var(--y);letter-spacing:1px;margin:0 0 8px;line-height:1;}
@@ -780,21 +788,23 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
               </div>
             </details>
           </div>
-          <div class="tow-calc-result">
-            <span class="tow-calc-result-label" data-t="tow_calc_est">Szacunkowa cena</span>
-            <p class="tow-calc-price" id="tow-price">—</p>
-            <p class="tow-calc-breakdown" id="tow-breakdown"></p>
-            <p class="tow-calc-individual" id="tow-individual" hidden>
-              <span data-t="tow_calc_individual">Indywidualna wycena — zadzwoń:</span>
-              <a href="tel:+48506001057" class="tow-calc-phone">506-001-057</a>
-            </p>
-            <a href="tel:+48506001057" class="btn btn-y tow-calc-call">📞 <span data-t="cta_btn">Zadzwoń: 506-001-057</span></a>
+          <div class="tow-calc-body" id="tow-calc-body">
+            <div class="tow-calc-map-wrap" id="tow-map-wrap" hidden>
+              <div id="tow-map" class="tow-calc-map" role="img" aria-label="Mapa trasy"></div>
+            </div>
+            <div class="tow-calc-result">
+              <span class="tow-calc-result-label" data-t="tow_calc_est">Szacunkowa cena</span>
+              <p class="tow-calc-price" id="tow-price">—</p>
+              <p class="tow-calc-breakdown" id="tow-breakdown"></p>
+              <p class="tow-calc-individual" id="tow-individual" hidden>
+                <span data-t="tow_calc_individual">Indywidualna wycena — zadzwoń:</span>
+                <a href="tel:+48506001057" class="tow-calc-phone">506-001-057</a>
+              </p>
+              <a href="tel:+48506001057" class="btn btn-y tow-calc-call">📞 <span data-t="cta_btn">Zadzwoń: 506-001-057</span></a>
+            </div>
           </div>
           <p class="tow-calc-footnote" data-t="tow_calc_note">Cena orientacyjna. Parking −2 i niżej — tylko po telefonie.</p>
           <p class="tow-calc-maps-hint" id="tow-maps-hint" hidden data-t="tow_calc_no_key"></p>
-          <div class="tow-calc-map-wrap" id="tow-map-wrap" hidden>
-            <div id="tow-map" class="tow-calc-map" aria-hidden="true"></div>
-          </div>
           <span id="tow-dist-km" hidden aria-hidden="true">—</span>
         </div>
 </div></section>
@@ -1598,7 +1608,7 @@ pl:{
   tow_calc_btn:"Oblicz",
   tow_calc_loading:"Liczenie…",
   tow_calc_route_err:"Nie udało się obliczyć — wpisz km ręcznie.",
-  tow_calc_no_key:"",
+  tow_calc_no_key:"Mapa Google niedostępna — wpisz dystans ręcznie, cena nadal działa.",
   tow_calc_extras:"Dodatkowe opcje",
   tow_calc_wheels:"Zablokowane koła",
   tow_calc_wheels0:"Brak",
@@ -1928,7 +1938,7 @@ en:{
   tow_calc_btn:"Calculate",
   tow_calc_loading:"Calculating…",
   tow_calc_route_err:"Could not calculate — enter km manually.",
-  tow_calc_no_key:"",
+  tow_calc_no_key:"Google map unavailable — enter distance manually; price still works.",
   tow_calc_extras:"Extra options",
   tow_calc_wheels:"Locked wheels",
   tow_calc_wheels0:"None",
@@ -2204,7 +2214,7 @@ ru:{
   tow_calc_btn:"Рассчитать",
   tow_calc_loading:"Считаем…",
   tow_calc_route_err:"Не удалось рассчитать — введите км вручную.",
-  tow_calc_no_key:"",
+  tow_calc_no_key:"Карта Google недоступна — введите км вручную, цена всё равно считается.",
   tow_calc_extras:"Дополнительно",
   tow_calc_wheels:"Заблокированные колёса",
   tow_calc_wheels0:"Нет",
@@ -2581,7 +2591,7 @@ ua:{
   tow_calc_btn:"Розрахувати",
   tow_calc_loading:"Рахуємо…",
   tow_calc_route_err:"Не вдалося порахувати — введіть км вручну.",
-  tow_calc_no_key:"",
+  tow_calc_no_key:"Карта Google недоступна — введіть км вручну, ціна все одно рахується.",
   tow_calc_extras:"Додатково",
   tow_calc_wheels:"Заблоковані колеса",
   tow_calc_wheels0:"Немає",
@@ -4255,6 +4265,43 @@ var towCalcDirections=null;
 var towCalcMapInstance=null;
 var towCalcUseGoogle=false;
 var towCalcAcTimers={};
+var towCalcFallbackPolyline=null;
+var towCalcMarkers=[];
+
+function towClearMapOverlays(){
+  if(towCalcFallbackPolyline){towCalcFallbackPolyline.setMap(null);towCalcFallbackPolyline=null;}
+  towCalcMarkers.forEach(function(m){m.setMap(null);});
+  towCalcMarkers=[];
+}
+
+function towSetMapMode(on){
+  var body=document.getElementById('tow-calc-body');
+  var wrap=document.getElementById('tow-map-wrap');
+  if(body)body.classList.toggle('map-mode',!!on);
+  if(wrap)wrap.hidden=!on;
+  if(on&&towCalcMapInstance&&window.google){
+    setTimeout(function(){
+      google.maps.event.trigger(towCalcMapInstance,'resize');
+    },120);
+  }
+}
+
+function towDrawFallbackRoute(from,to){
+  if(!towCalcMapInstance||!window.google||!from||!to)return;
+  towClearMapOverlays();
+  if(towCalcRenderer)towCalcRenderer.setMap(null);
+  var path=[{lat:from.lat,lng:from.lon},{lat:to.lat,lng:to.lon}];
+  towCalcFallbackPolyline=new google.maps.Polyline({
+    path:path,strokeColor:'#FFD100',strokeWeight:5,map:towCalcMapInstance
+  });
+  towCalcMarkers=[
+    new google.maps.Marker({position:path[0],map:towCalcMapInstance,label:'A'}),
+    new google.maps.Marker({position:path[1],map:towCalcMapInstance,label:'B'})
+  ];
+  var bounds=new google.maps.LatLngBounds();
+  path.forEach(function(p){bounds.extend(p);});
+  towCalcMapInstance.fitBounds(bounds,{top:40,right:40,bottom:40,left:40});
+}
 
 function towT(k,f){return (T[CL]&&T[CL][k])||f||k;}
 
@@ -4650,6 +4697,8 @@ function towCalcGoogleRoute(){
   var from=fromInput.value.trim();
   var to=toInput.value.trim();
   if(!from||!to)return Promise.reject();
+  towClearMapOverlays();
+  if(towCalcRenderer)towCalcRenderer.setMap(towCalcMapInstance);
   return new Promise(function(resolve,reject){
     towCalcDirections.route({
       origin:from,
@@ -4679,15 +4728,28 @@ function towCalcComputeRoute(){
   towHideAllAcLists();
   var chain=Promise.all([towResolvePoint(fromInput),towResolvePoint(toInput)]).then(function(pts){
     if(!pts[0]||!pts[1])throw new Error('geocode');
-    if(towCalcUseGoogle&&towCalcDirections)return towCalcGoogleRoute().catch(function(){
-      return towOsmRouteKm(pts[0],pts[1]);
+    if(towCalcUseGoogle&&towCalcDirections){
+      return towCalcGoogleRoute().then(function(km){
+        return {km:km,googleRoute:true,pts:pts};
+      }).catch(function(){
+        return towOsmRouteKm(pts[0],pts[1]).then(function(km){
+          return {km:km,googleRoute:false,pts:pts};
+        });
+      });
+    }
+    return towOsmRouteKm(pts[0],pts[1]).then(function(km){
+      return {km:km,googleRoute:false,pts:pts};
     });
-    return towOsmRouteKm(pts[0],pts[1]);
   });
-  chain.then(function(km){
-    towSetRouteKm(km);
+  chain.then(function(r){
+    towSetRouteKm(r.km);
     towSetRouteStatus('');
+    if(towCalcMapInstance){
+      towSetMapMode(true);
+      if(!r.googleRoute&&r.pts)towDrawFallbackRoute(r.pts[0],r.pts[1]);
+    }
   }).catch(function(){
+    towSetMapMode(false);
     towSetRouteStatus(towT('tow_calc_route_err','Nie udało się policzyć trasy — sprawdź adresy lub wpisz km ręcznie.'));
     updateTowCalcPrice();
   });
@@ -4695,23 +4757,22 @@ function towCalcComputeRoute(){
 
 function setupTowCalcMaps(key){
   towCalcUseGoogle=true;
-  var mapWrap=document.getElementById('tow-map-wrap');
   var hint=document.getElementById('tow-maps-hint');
   if(hint)hint.hidden=true;
-  if(mapWrap)mapWrap.hidden=true;
   if(!window.google||!google.maps)return;
   var mapEl=document.getElementById('tow-map');
   if(mapEl){
     towCalcMapInstance=new google.maps.Map(mapEl,{
       center:{lat:52.2297,lng:21.0122},
-      zoom:10,
+      zoom:11,
       disableDefaultUI:true,
-      zoomControl:true
+      zoomControl:true,
+      gestureHandling:'greedy'
     });
     towCalcRenderer=new google.maps.DirectionsRenderer({
-      map:towCalcMapInstance,
+      map:null,
       suppressMarkers:false,
-      polylineOptions:{strokeColor:'#FFD100',strokeWeight:4}
+      polylineOptions:{strokeColor:'#FFD100',strokeWeight:5}
     });
   }
   towCalcDirections=new google.maps.DirectionsService();
@@ -4755,8 +4816,14 @@ function initTowCalc(){
   });
   var manual=document.getElementById('tow-km-manual');
   if(manual){
-    manual.addEventListener('input',updateTowCalcPrice);
-    manual.addEventListener('change',updateTowCalcPrice);
+    manual.addEventListener('input',function(){
+      towSetMapMode(false);
+      updateTowCalcPrice();
+    });
+    manual.addEventListener('change',function(){
+      towSetMapMode(false);
+      updateTowCalcPrice();
+    });
   }
   function bindOsmAc(){
     towBindOsmAutocomplete('tow-from','tow-from-list');
@@ -4770,10 +4837,17 @@ function initTowCalc(){
   syncParkingLevel();
   var meta=document.querySelector('meta[name="google-maps-api-key"]');
   var key=meta?meta.getAttribute('content')||'':'';
+  if(key==='__GOOGLE_MAPS_API_KEY__')key='';
   if(key){
-    loadGoogleMapsScript(key).then(function(){setupTowCalcMaps(key);}).catch(bindOsmAc);
+    loadGoogleMapsScript(key).then(function(){setupTowCalcMaps(key);}).catch(function(){
+      bindOsmAc();
+      var hint=document.getElementById('tow-maps-hint');
+      if(hint){hint.hidden=false;hint.textContent=towT('tow_calc_no_key','');}
+    });
   } else {
     bindOsmAc();
+    var hint=document.getElementById('tow-maps-hint');
+    if(hint){hint.hidden=false;hint.textContent=towT('tow_calc_no_key','');}
   }
   updateTowCalcPrice();
 }
