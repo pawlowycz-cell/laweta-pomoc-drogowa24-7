@@ -539,6 +539,27 @@ function escHtmlAttr(s) {
 }
 
 /** Один и тот же SPA-файл отдаётся на все пути; без этого в сыром HTML каноникал = только главная локали → GSC «каноникал от пользователя отсутствует». */
+function tailToPageId(tail) {
+  const trimmed = String(tail).replace(/^\/+|\/+$/g, '');
+  if (!trimmed) return 'home';
+  const blogM = /^blog\/(b\d+)$/.exec(trimmed);
+  if (blogM) return `blog-post-${blogM[1]}`;
+  return trimmed;
+}
+
+/** В сыром HTML только .page.on видна (display:block). Без этого GSC видит главную при URL /pl/svc3/ и т.д. */
+function patchHtmlActivePage(html, tail) {
+  const pageId = tailToPageId(tail);
+  if (pageId === 'home') return html;
+  html = html.replace(/<div class="page on" id="p-/g, '<div class="page" id="p-');
+  const escaped = pageId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  html = html.replace(
+    new RegExp(`<div class="page" id="p-${escaped}">`),
+    `<div class="page on" id="p-${pageId}">`
+  );
+  return html;
+}
+
 function patchHtmlSeoForTail(html, localePathSeg, tail, raw) {
   const trimmed = String(tail).replace(/^\/+|\/+$/g, '');
   function loc(langSeg) {
@@ -615,6 +636,7 @@ function writeDeepRouteHtmlCopies(raw) {
       const dir = path.join(OUT, seg, ...parts);
       fs.mkdirSync(dir, { recursive: true });
       let html = patchHtmlSeoForTail(baseHtml, seg, tail, raw);
+      html = patchHtmlActivePage(html, tail);
       if (tail === 'gallery' && galleryItems.length) {
         const pageUrl = `${SITE}/${seg}/gallery/`;
         html = injectGalleryStaticHtml(html, galleryItems, seg);
