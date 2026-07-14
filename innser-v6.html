@@ -2729,14 +2729,7 @@ function innserSvcBackTarget(){
   return __innserSvcFrom==='services'?'services':'home';
 }
 function innserGoBack(fallback){
-  fallback=fallback||'home';
-  try{
-    if(__innserHistCount>0&&history.state&&history.state.innserRoute){
-      history.back();
-      return;
-    }
-  }catch(e){}
-  SP(fallback);
+  SP(fallback||'home',{replaceHistory:true});
 }
 function parsePathToPage(){
   try{
@@ -3042,6 +3035,7 @@ function SP(p,opts){
   opts=opts||{};
   var skipHistory=!!opts.skipHistory;
   var fromPopstate=!!opts.fromPopstate;
+  var replaceHistory=!!opts.replaceHistory;
   if(!skipHistory&&!fromPopstate) __innserPrevSlug=currentPageSlug();
   document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('on'));
   document.getElementById('p-'+p).classList.add('on');
@@ -3057,7 +3051,10 @@ function SP(p,opts){
   window.scrollTo({top:0,behavior:'smooth'});
   setTimeout(initReveals,100);
   applyRouteSeo(p);
-  if(!skipHistory&&!fromPopstate) syncUrlToPage(p,true);
+  if(!skipHistory&&!fromPopstate){
+    syncUrlToPage(p,!replaceHistory);
+    if(replaceHistory&&p==='home') __innserHistCount=0;
+  }
   updateCanonicalAndHreflang(p);
 }
 
