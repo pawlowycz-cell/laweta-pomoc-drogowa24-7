@@ -764,10 +764,10 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
                 <label class="tow-calc-check"><input type="checkbox" id="tow-parking"> <span data-t="tow_calc_parking">Z parkingu podziemnego −1 (+200 zł)</span></label>
                 <div class="tow-calc-check tow-calc-wheels-row">
                   <div class="tow-calc-wheels-wrap">
-                    <label><input type="checkbox" id="tow-wheels-on"> <span id="tow-wheels-label">Zablokowane koło (+50)</span></label>
+                    <label><input type="checkbox" id="tow-wheels-on"> <span id="tow-wheels-label">Zablokowane koło</span></label>
                     <div class="tow-calc-wheels-step" id="tow-wheels-step" hidden>
                       <button type="button" id="tow-wheels-minus" aria-label="−">−</button>
-                      <span id="tow-wheels-count">1</span>
+                      <span id="tow-wheels-count">0</span>
                       <button type="button" id="tow-wheels-plus" aria-label="+">+</button>
                     </div>
                   </div>
@@ -1601,6 +1601,7 @@ pl:{
   tow_calc_parking:"Z parkingu podziemnego −1 (+200 zł)",
   tow_calc_bus_short:"Bus (+50)",
   tow_calc_bus_long:"Długi Bus maxi (+150)",
+  tow_calc_wheels0:"Zablokowane koło",
   tow_calc_wheels1:"Zablokowane koło (+50)",
   tow_calc_wheels2:"Zablokowane koła (+100)",
   tow_calc_wheels3:"Zablokowane koła (+150)",
@@ -1926,6 +1927,7 @@ en:{
   tow_calc_parking:"From underground car park −1 (+200 zł)",
   tow_calc_bus_short:"Bus (+50)",
   tow_calc_bus_long:"Long maxi bus (+150)",
+  tow_calc_wheels0:"Locked wheel",
   tow_calc_wheels1:"Locked wheel (+50)",
   tow_calc_wheels2:"Locked wheels (+100)",
   tow_calc_wheels3:"Locked wheels (+150)",
@@ -2197,6 +2199,7 @@ ru:{
   tow_calc_parking:"С подземного паркинга −1 (+200 zł)",
   tow_calc_bus_short:"Автобус (+50)",
   tow_calc_bus_long:"Длинный Bus maxi (+150)",
+  tow_calc_wheels0:"Заблокированное колесо",
   tow_calc_wheels1:"Заблокированное колесо (+50)",
   tow_calc_wheels2:"Заблокированных колеса (+100)",
   tow_calc_wheels3:"Заблокированных колеса (+150)",
@@ -2569,6 +2572,7 @@ ua:{
   tow_calc_parking:"З підземного паркінгу −1 (+200 zł)",
   tow_calc_bus_short:"Автобус (+50)",
   tow_calc_bus_long:"Довгий Bus maxi (+150)",
+  tow_calc_wheels0:"Заблоковане колесо",
   tow_calc_wheels1:"Заблоковане колесо (+50)",
   tow_calc_wheels2:"Заблокованих колеса (+100)",
   tow_calc_wheels3:"Заблокованих колеса (+150)",
@@ -4240,7 +4244,7 @@ var towCalcLeafletRouteLayer=null;
 var towCalcLeafletMarkers=[];
 var towCalcLeafletLoadPromise=null;
 var towCalcRouteTimer=null;
-var towCalcWheelsCount=1;
+var towCalcWheelsCount=0;
 
 var towGmSoftDarkStyles=[
   {elementType:'geometry',stylers:[{color:'#323232'}]},
@@ -4412,7 +4416,7 @@ function towSyncWheelsUi(){
   if(wheelsStep)wheelsStep.hidden=!(wheelsOn&&wheelsOn.checked);
   if(wheelsCountEl)wheelsCountEl.textContent=String(towCalcWheelsCount);
   if(wheelsLabel){
-    var keys=['','tow_calc_wheels1','tow_calc_wheels2','tow_calc_wheels3','tow_calc_wheels4'];
+    var keys=['tow_calc_wheels0','tow_calc_wheels1','tow_calc_wheels2','tow_calc_wheels3','tow_calc_wheels4'];
     wheelsLabel.textContent=towT(keys[towCalcWheelsCount],wheelsLabel.textContent);
   }
 }
@@ -4929,7 +4933,7 @@ function initTowCalc(){
     if(!el)return;
     el.addEventListener('change',function(){
       if(id==='tow-wheels-on'&&el.checked){
-        towCalcWheelsCount=1;
+        towCalcWheelsCount=0;
         towSyncWheelsUi();
       }
       updateTowCalcPrice();
@@ -4951,7 +4955,7 @@ function initTowCalc(){
   var wheelsPlus=document.getElementById('tow-wheels-plus');
   if(wheelsMinus){
     wheelsMinus.addEventListener('click',function(){
-      if(towCalcWheelsCount>1){
+      if(towCalcWheelsCount>0){
         towCalcWheelsCount--;
         towSyncWheelsUi();
         updateTowCalcPrice();
