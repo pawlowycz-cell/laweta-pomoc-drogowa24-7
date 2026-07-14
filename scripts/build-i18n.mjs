@@ -31,7 +31,7 @@ const PUBLIC_SRC = path.join(REPO_ROOT, 'public');
 
 const SITE = 'https://www.warszawa-laweta.com';
 /** SPA-вкладки меню с отдельным URL (как gallery/blog) — синхрон с INNSER_NAV_PAGES в innser-v6.html */
-const NAV_PAGE_TAILS = ['services', 'about', 'map', 'contact', 'partners'];
+const NAV_PAGE_TAILS = ['services', 'prices', 'about', 'map', 'contact', 'partners'];
 
 /**
  * Своя іконка (вкладка, Google, apple-touch з цього ж PNG):
@@ -491,6 +491,7 @@ function seoMetaForTail(raw, localePathSeg, tail) {
 
   const NAV_SEO = {
     services: { title: 'svc_title', desc: 'svc_desc' },
+    prices: { title: 'prices_title', desc: 'prices_desc' },
     about: { title: 'abt_title', desc: 'abt_desc' },
     map: { title: 'map_title', desc: 'map_desc' },
     contact: { title: 'cnt_title', desc: 'cnt_desc' },
@@ -518,24 +519,28 @@ function seoMetaForTail(raw, localePathSeg, tail) {
 const NAV_TITLE_OVERRIDE = {
   pl: {
     services: 'Laweta i pomoc drogowa Warszawa 24/7 — usługi | 506-001-057',
+    prices: 'Ceny holowania Warszawa — kalkulator wyceny | INNSER 506-001-057',
     about: 'O nas — laweta i pomoc drogowa Warszawa 24/7 | INNSER',
     map: 'Laweta Warszawa — obszar działania i dojazd 24/7 | INNSER',
     contact: 'Kontakt — laweta i pomoc drogowa Warszawa 24/7 | 506-001-057',
   },
   ru: {
     services: 'Эвакуатор и лавета Варшава 24/7 — услуги | 506-001-057',
+    prices: 'Цены эвакуатора Варшава — калькулятор стоимости | INNSER 506-001-057',
     about: 'О нас — эвакуатор и лавета Варшава 24/7 | INNSER',
     map: 'Эвакуатор Варшава — зона обслуживания и приезд 24/7 | INNSER',
     contact: 'Контакт — эвакуатор и лавета Варшава 24/7 | 506-001-057',
   },
   ua: {
     services: 'Евакуатор і лавета Варшава 24/7 — послуги | 506-001-057',
+    prices: 'Ціни евакуатора Варшава — калькулятор вартості | INNSER 506-001-057',
     about: 'Про нас — евакуатор і лавета Варшава 24/7 | INNSER',
     map: 'Евакуатор Варшава — зона обслуговування та приїзд 24/7 | INNSER',
     contact: 'Контакт — евакуатор і лавета Варшава 24/7 | 506-001-057',
   },
   en: {
     services: 'Tow truck & roadside assistance Warsaw 24/7 — services | 506-001-057',
+    prices: 'Tow truck prices Warsaw — price calculator | INNSER 506-001-057',
     about: 'About us — tow truck & roadside assistance Warsaw 24/7 | INNSER',
     map: 'Tow truck Warsaw — service area & arrival 24/7 | INNSER',
     contact: 'Contact — tow truck & roadside assistance Warsaw 24/7 | 506-001-057',
@@ -948,7 +953,7 @@ function writeSitemapAndRobots(html) {
 
   function priorityFor(tail) {
     if (tail == null) return '1.0';
-    if (tail === 'blog' || tail === 'services' || tail === 'contact') return '0.85';
+    if (tail === 'blog' || tail === 'services' || tail === 'contact' || tail === 'prices') return '0.85';
     if (tail === 'gallery' || tail === 'about' || tail === 'map' || tail === 'partners') return '0.82';
     if (String(tail).startsWith('blog/')) return '0.75';
     return '0.8';
