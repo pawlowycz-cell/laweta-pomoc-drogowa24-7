@@ -2722,6 +2722,22 @@ function goLang(l){
   location.href = u.toString();
 }
 var INNSER_NAV_PAGES={services:1,about:1,map:1,contact:1,partners:1};
+var __innserPrevSlug='home';
+var __innserSvcFrom='home';
+var __innserHistCount=0;
+function innserSvcBackTarget(){
+  return __innserSvcFrom==='services'?'services':'home';
+}
+function innserGoBack(fallback){
+  fallback=fallback||'home';
+  try{
+    if(__innserHistCount>0&&history.state&&history.state.innserRoute){
+      history.back();
+      return;
+    }
+  }catch(e){}
+  SP(fallback);
+}
 function parsePathToPage(){
   try{
     if(location.protocol==='file:') return null;
@@ -2752,9 +2768,9 @@ function initInnserPathRoute(){
   var want=o.langSeg==='uk'?'ua':o.langSeg;
   if(want!==CL) return;
   if(o.pageId==='home') return;
-  SP(o.pageId);
+  SP(o.pageId,{skipHistory:true});
 }
-function syncUrlToPage(p){
+function syncUrlToPage(p,push){
   if(location.protocol==='file:') return;
   try{
     function norm(s){s=(s||'').split('?')[0].split('#')[0]; if(s.length>1&&s.endsWith('/')) s=s.slice(0,-1); return s||'/';}
@@ -2768,8 +2784,13 @@ function syncUrlToPage(p){
     else if(/^svc\d+$/.test(p)) path='/'+seg+'/'+p+'/';
     var locNorm=norm(location.pathname);
     var pathNorm=norm(path);
-    if(locNorm!==pathNorm) history.replaceState({innserRoute:1},'',path);
-    else if(location.hash) history.replaceState({innserRoute:1},'',path);
+    var state={innserRoute:1,page:p};
+    if(locNorm!==pathNorm){
+      if(push){ history.pushState(state,'',path); __innserHistCount++; }
+      else history.replaceState(state,'',path);
+    } else if(location.hash){
+      history.replaceState(state,'',path);
+    }
   }catch(e){}
 }
 var INNSER_SITE_ORIGIN='https://www.warszawa-laweta.com';
@@ -3002,7 +3023,7 @@ function SL(l){
     var o=parsePathToPage();
     if(o){
       var want=o.langSeg==='uk'?'ua':o.langSeg;
-      if(want===l&&o.pageId!=='home'&&(!onp||onp.id!=='p-'+o.pageId)) SP(o.pageId);
+      if(want===l&&o.pageId!=='home'&&(!onp||onp.id!=='p-'+o.pageId)) SP(o.pageId,{skipHistory:true});
     }
   }
   applyRouteSeo(currentPageSlug());
@@ -3017,7 +3038,11 @@ function syncInactivePages(){
     else { pg.setAttribute('inert', ''); }
   });
 }
-function SP(p){
+function SP(p,opts){
+  opts=opts||{};
+  var skipHistory=!!opts.skipHistory;
+  var fromPopstate=!!opts.fromPopstate;
+  if(!skipHistory&&!fromPopstate) __innserPrevSlug=currentPageSlug();
   document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('on'));
   document.getElementById('p-'+p).classList.add('on');
   syncInactivePages();
@@ -3032,7 +3057,7 @@ function SP(p){
   window.scrollTo({top:0,behavior:'smooth'});
   setTimeout(initReveals,100);
   applyRouteSeo(p);
-  syncUrlToPage(p);
+  if(!skipHistory&&!fromPopstate) syncUrlToPage(p,true);
   updateCanonicalAndHreflang(p);
 }
 
@@ -3069,13 +3094,14 @@ function applySvcDetailHeroPhotos(){
     slot.appendChild(img);
   });
 }
-function buildSvcCard(s){
+function buildSvcCard(s,from){
+  from=from||'home';
   var photo = getSvcPhoto(s.id);
   var imgHTML = photo
     ? '<div class="svcc-img"><img src="'+photo+'" alt="'+T[CL][s.k]+' Warszawa INNSER" width="360" height="220" loading="lazy"></div>'
     : '<div class="svcc-img svcc-img-icon">'+s.icon+'</div>';
   var phone = '<a href="tel:+48506001057" class="svcc-phone" onclick="event.stopPropagation()">📞 <span data-t="cta_btn">'+T[CL]['cta_btn']+'</span></a>';
-  return '<article class="svcc rv svc-clickable" data-page="'+s.id+'">'+imgHTML+'<div class="svcc-body"><h3 data-t="'+s.k+'">'+T[CL][s.k]+'</h3><p data-t="'+s.dk+'">'+T[CL][s.dk]+'</p>'+phone+'</div></article>';
+  return '<article class="svcc rv svc-clickable" data-page="'+s.id+'" data-svc-from="'+from+'">'+imgHTML+'<div class="svcc-body"><h3 data-t="'+s.k+'">'+T[CL][s.k]+'</h3><p data-t="'+s.dk+'">'+T[CL][s.dk]+'</p>'+phone+'</div></article>';
 }
 
 function buildBlogCard(b){
@@ -3095,8 +3121,8 @@ function initReveals(){
 
 document.addEventListener('DOMContentLoaded',()=>{
   applySvcDetailHeroPhotos();
-  document.getElementById('svc-grid-home').innerHTML=SVCS.map(buildSvcCard).join('');
-  document.getElementById('svc-grid-full').innerHTML=SVCS.map(buildSvcCard).join('');
+  document.getElementById('svc-grid-home').innerHTML=SVCS.map(function(s){return buildSvcCard(s,'home');}).join('');
+  document.getElementById('svc-grid-full').innerHTML=SVCS.map(function(s){return buildSvcCard(s,'services');}).join('');
   document.getElementById('blog-grid').innerHTML=BLOGS.map(buildBlogCard).join('');
     initReveals();
   // Auto-detect browser language (URL path wins for /{lang}/blog/…, /{lang}/svcN/)
@@ -3114,7 +3140,10 @@ SL(startLang);
 renderAreas(startLang);
 document.addEventListener('click', function(e){
   var card = e.target.closest('.svc-clickable');
-  if(card){ SP(card.getAttribute('data-page')); }
+  if(card){
+    __innserSvcFrom=card.getAttribute('data-svc-from')||'home';
+    SP(card.getAttribute('data-page'));
+  }
 });
   syncInactivePages();
 });
@@ -3820,19 +3849,21 @@ function updateBackBtn(page){
     backBtn.style.display = 'flex';
     var lab = backBtn.querySelector('span[data-t]');
     if(page.startsWith('blog-post')){
-      backBtn.onclick = function(){ SP('blog'); };
+      backBtn.onclick = function(){ innserGoBack('blog'); };
       if(lab){
         lab.setAttribute('data-t','nav_blog');
         if(T[CL] && T[CL].nav_blog) lab.textContent = T[CL].nav_blog;
       }
     } else if(page.startsWith('svc')){
-      backBtn.onclick = function(){ SP('services'); };
+      var backTarget = innserSvcBackTarget();
+      backBtn.onclick = function(){ innserGoBack(backTarget); };
       if(lab){
-        lab.setAttribute('data-t','nav_svc');
-        if(T[CL] && T[CL].nav_svc) lab.textContent = T[CL].nav_svc;
+        var backKey = backTarget === 'services' ? 'nav_svc' : 'nav_home';
+        lab.setAttribute('data-t', backKey);
+        if(T[CL] && T[CL][backKey]) lab.textContent = T[CL][backKey];
       }
     } else {
-      backBtn.onclick = function(){ SP('home'); };
+      backBtn.onclick = function(){ innserGoBack('home'); };
       if(lab){
         lab.setAttribute('data-t','nav_home');
         if(T[CL] && T[CL].nav_home) lab.textContent = T[CL].nav_home;
@@ -4713,11 +4744,19 @@ function initTowCalc(){
   updateTowCalcPrice();
 }
 
+window.addEventListener('popstate',function(){
+  if(location.protocol==='file:') return;
+  if(__innserHistCount>0) __innserHistCount--;
+  var o=parsePathToPage();
+  var pageId=o?(o.pageId||'home'):'home';
+  if(pageId==='home') __innserSvcFrom='home';
+  SP(pageId,{fromPopstate:true});
+});
 document.addEventListener('DOMContentLoaded',function(){
   var _origSP=SP;
-  SP=function(p){
+  SP=function(p,opts){
+    _origSP(p,opts);
     updateBackBtn(p);
-    _origSP(p);
     if(p.startsWith('blog-post-')){
       var pid=p.replace('blog-post-','');
       setTimeout(function(){buildInteractions(pid);},50);
