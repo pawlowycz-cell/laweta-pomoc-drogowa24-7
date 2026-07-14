@@ -4308,7 +4308,7 @@ function updateTowCalcPrice(){
 }
 
 function towPhotonLang(){
-  return CL==='pl'?'pl':CL==='ru'?'ru':CL==='ua'?'uk':'en';
+  return 'en';
 }
 
 function towPhotonLabel(p){
@@ -4318,16 +4318,22 @@ function towPhotonLabel(p){
   return out.join(', ')||'';
 }
 
+function towPhotonMapFeature(f){
+  var p=f.properties||{};
+  var coords=f.geometry&&f.geometry.coordinates||[];
+  return {label:towPhotonLabel(p),lat:coords[1],lon:coords[0]};
+}
+
 function towPhotonSearch(q){
-  if(!q||q.trim().length<3)return Promise.resolve([]);
-  var lang=towPhotonLang();
-  var url='https://photon.komoot.io/api/?q='+encodeURIComponent(q.trim())+'&limit=7&lang='+encodeURIComponent(lang)+'&lat=52.2297&lon=21.0122';
-  return fetch(url).then(function(r){return r.json();}).then(function(d){
-    return (d.features||[]).map(function(f){
-      var p=f.properties||{};
-      var coords=f.geometry&&f.geometry.coordinates||[];
-      return {label:towPhotonLabel(p),lat:coords[1],lon:coords[0]};
-    }).filter(function(x){return x.label&&x.lat!=null&&x.lon!=null;});
+  if(!q||q.trim().length<2)return Promise.resolve([]);
+  var trimmed=q.trim();
+  var base='https://photon.komoot.io/api/?q='+encodeURIComponent(trimmed)+'&limit=8&lang='+encodeURIComponent(towPhotonLang())+'&lat=52.2297&lon=21.0122';
+  return fetch(base).then(function(r){return r.json();}).then(function(d){
+    var features=(d&&d.features)||[];
+    if(features.length)return features.map(towPhotonMapFeature).filter(function(x){return x.label&&x.lat!=null&&x.lon!=null;});
+    return fetch(base.replace('&lang='+encodeURIComponent(towPhotonLang()),'')).then(function(r2){return r2.json();}).then(function(d2){
+      return ((d2&&d2.features)||[]).map(towPhotonMapFeature).filter(function(x){return x.label&&x.lat!=null&&x.lon!=null;});
+    });
   }).catch(function(){return [];});
 }
 
@@ -4350,7 +4356,7 @@ function towBindOsmAutocomplete(inputId,listId){
     delete input.dataset.lon;
     clearTimeout(towCalcAcTimers[inputId]);
     var q=input.value.trim();
-    if(q.length<3){towHideAcList(listId);return;}
+    if(q.length<2){towHideAcList(listId);return;}
     towCalcAcTimers[inputId]=setTimeout(function(){
       towPhotonSearch(q).then(function(items){
         if(input.value.trim()!==q)return;
