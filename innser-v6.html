@@ -266,8 +266,9 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
 .tow-calc-body.map-mode{margin-top:16px;border-radius:var(--r);overflow:hidden;border:1px solid rgba(255,209,0,.22);background:var(--b3);}
 .tow-calc-map-wrap{display:none;}
 .tow-calc-body.map-mode .tow-calc-map-wrap{display:block;}
-.tow-calc-map{width:100%;height:min(44vh,400px);min-height:260px;background:#1a1a1a;}
-.tow-calc-map .leaflet-container{background:#1a1a1a;font-family:var(--ff-b);}
+.tow-calc-map{width:100%;height:min(44vh,400px);min-height:260px;background:#2e2e2e;}
+.tow-calc-map .leaflet-container{background:#2e2e2e;font-family:var(--ff-b);}
+.tow-calc-map .leaflet-tile-pane{filter:brightness(0.86) contrast(1.08) saturate(0.92);}
 .tow-calc-map .leaflet-control-attribution{font-size:10px!important;background:rgba(0,0,0,.72)!important;color:var(--g)!important;}
 .tow-calc-map .leaflet-control-attribution a{color:var(--gl)!important;}
 .tow-calc-map .leaflet-control-zoom a{background:var(--b3)!important;color:var(--w)!important;border-color:var(--b4)!important;}
@@ -4279,6 +4280,19 @@ var towCalcLeafletRouteLayer=null;
 var towCalcLeafletMarkers=[];
 var towCalcLeafletLoadPromise=null;
 
+var towGmSoftDarkStyles=[
+  {elementType:'geometry',stylers:[{color:'#323232'}]},
+  {elementType:'labels.text.fill',stylers:[{color:'#c4c4c4'}]},
+  {elementType:'labels.text.stroke',stylers:[{color:'#323232'}]},
+  {featureType:'road',elementType:'geometry',stylers:[{color:'#4f4f4f'}]},
+  {featureType:'road',elementType:'geometry.stroke',stylers:[{color:'#696969'}]},
+  {featureType:'road.highway',elementType:'geometry',stylers:[{color:'#5a5a5a'}]},
+  {featureType:'road.highway',elementType:'geometry.stroke',stylers:[{color:'#7a7a7a'}]},
+  {featureType:'water',elementType:'geometry',stylers:[{color:'#2a3548'}]},
+  {featureType:'poi',elementType:'geometry',stylers:[{color:'#3a3a3a'}]},
+  {featureType:'poi.park',elementType:'geometry',stylers:[{color:'#354035'}]}
+];
+
 function loadLeafletAssets(){
   if(window.L)return Promise.resolve();
   if(towCalcLeafletLoadPromise)return towCalcLeafletLoadPromise;
@@ -4316,7 +4330,7 @@ function towEnsureLeafletMap(){
     var mapEl=document.getElementById('tow-map');
     if(!mapEl||!window.L)throw new Error('leaflet init fail');
     towCalcLeafletMap=L.map(mapEl,{zoomControl:true,attributionControl:true}).setView([52.2297,21.0122],11);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
       maxZoom:20,
       subdomains:'abcd',
       attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
@@ -4865,9 +4879,9 @@ function setupTowCalcMaps(key){
       mapTypeControl:false,
       disableDefaultUI:true,
       zoomControl:true,
-      gestureHandling:'greedy'
+      gestureHandling:'greedy',
+      styles:towGmSoftDarkStyles
     };
-    if(google.maps.ColorScheme)gmOpts.colorScheme=google.maps.ColorScheme.DARK;
     towCalcMapInstance=new google.maps.Map(mapEl,gmOpts);
     towCalcRenderer=new google.maps.DirectionsRenderer({
       map:null,
