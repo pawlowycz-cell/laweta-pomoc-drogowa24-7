@@ -184,6 +184,9 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
   body.show-back .page.on > .svc-detail:first-child > .mx{padding-top:64px;}
 }
 @media(max-width:640px){.blog-post-shell{padding:22px 16px 32px;}}
+.bimg{margin:26px 0;text-align:center;}
+.bimg img{width:100%;max-width:560px;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:14px;border:1px solid rgba(255,209,0,.28);box-shadow:0 10px 34px rgba(0,0,0,.45);display:block;margin:0 auto;}
+.bimg figcaption{margin-top:9px;font-size:.82rem;color:var(--g);font-style:italic;}
 
 
 .svc-detail{padding:50px 0 80px;}
@@ -1326,6 +1329,13 @@ pl:{
   mail_subject:"Zapytanie ze strony INNSER — pomoc drogowa",
   wa_template:"🚗 *Zapytanie ze strony INNSER*\n\n👤 Imię: {name}\n📞 Telefon: {phone}\n\n💬 Wiadomość:\n{msg}\n\n_Wysłano ze strony www.warszawa-laweta.com_",
   bp_b1_back:"← Wróć do bloga",
+  bp_b1_cap:"Odpalanie auta boosterem NOCO — pomoc drogowa Warszawa 24h",
+  bp_b2_cap:"Laweta INNSER na trasie — pomoc drogowa Warszawa 24/7",
+  bp_b3_cap:"Laweta Warszawa — transport SUV na lawecie, 506-001-057",
+  bp_b4_cap:"Transport auta lawetą nocą — holowanie z parkingu Warszawa",
+  bp_b5_cap:"Odpalenie auta po rozładowanym akumulatorze — Warszawa 24h",
+  bp_b6_cap:"Holowanie po awarii na trasie — laweta Warszawa 24h",
+  bp_b8_cap:"Odbiór powypadkowego auta lawetą nocą — Warszawa 24/7",
   bp_b1_p1:"Zimowy poranek, wsiadasz do auta, przekręcasz kluczyk i... nic. Silnik nie odpala. To jeden z najczęstszych problemów zimą — mróz nie oszczędza żadnej marki. Poniżej podpowiadamy, co zrobić krok po kroku i kiedy warto wezwać <strong>pomoc drogową</strong>.",
   bp_b1_h2:"1. Sprawdź akumulator",
   bp_b1_p2:"Przy -20°C akumulator traci nawet 50% pojemności. Jeśli rozrusznik kręci wolno albo słyszysz tylko ciche „kliknięcia”, to niemal na pewno <strong>rozładowany akumulator</strong>. Osłabiona bateria starsza niż 4-5 lat najczęściej pada właśnie w pierwsze mrozy.",
@@ -1605,6 +1615,13 @@ en:{
   mail_subject:"INNSER website inquiry — roadside assistance",
   wa_template:"🚗 *Inquiry from INNSER website*\n\n👤 Name: {name}\n📞 Phone: {phone}\n\n💬 Message:\n{msg}\n\n_Sent from www.warszawa-laweta.com_",
   bp_b1_back:"← Back to blog",
+  bp_b1_cap:"Jump-starting a car with a NOCO booster — roadside assistance Warsaw 24h",
+  bp_b2_cap:"INNSER flatbed on the road — roadside assistance Warsaw 24/7",
+  bp_b3_cap:"Flatbed Warsaw — SUV transport, 506-001-057",
+  bp_b4_cap:"Car transport by flatbed at night — towing from a parking, Warsaw",
+  bp_b5_cap:"Jump-starting a car after a dead battery — Warsaw 24h",
+  bp_b6_cap:"Towing after a breakdown on the road — flatbed Warsaw 24h",
+  bp_b8_cap:"Night accident car recovery by flatbed — Warsaw 24/7",
   bp_b1_p1:"Winter morning, you get in the car, turn the key and... nothing. The engine won't start. It's one of the most common winter problems — frost spares no brand. Here's what to do step by step and when it's worth calling <strong>roadside assistance</strong>.",
   bp_b1_h2:"1. Check the battery",
   bp_b1_p2:"At -20°C a battery can lose up to 50% of its capacity. If the starter cranks slowly or you only hear faint clicks, it's almost certainly a <strong>dead battery</strong>. A weak battery older than 4-5 years usually dies during the first frosts.",
@@ -1830,6 +1847,13 @@ ru:{
   mail_subject:"Запрос с сайта INNSER — эвакуатор",
   wa_template:"🚗 *Запрос с сайта INNSER*\n\n👤 Имя: {name}\n📞 Телефон: {phone}\n\n💬 Сообщение:\n{msg}\n\n_Отправлено с www.warszawa-laweta.com_",
   bp_b1_back:"← Назад к блогу",
+  bp_b1_cap:"Прикурить машину бустером NOCO — помощь на дороге Варшава 24ч",
+  bp_b2_cap:"Эвакуатор INNSER на трассе — помощь на дороге Варшава 24/7",
+  bp_b3_cap:"Эвакуатор Варшава — перевозка внедорожника на лавете, 506-001-057",
+  bp_b4_cap:"Перевозка авто эвакуатором ночью — эвакуация с паркинга Варшава",
+  bp_b5_cap:"Прикурить авто при разряженном аккумуляторе — Варшава 24ч",
+  bp_b6_cap:"Эвакуация после поломки на трассе — эвакуатор Варшава 24ч",
+  bp_b8_cap:"Вывоз аварийного авто эвакуатором ночью — Варшава 24/7",
   bp_b1_p1:"Зимнее утро, садитесь в машину, поворачиваете ключ и... тишина. Двигатель не заводится. Одна из самых частых проблем зимой — мороз не щадит ни одну марку. Ниже разберём по шагам, что делать и когда стоит вызвать <strong>помощь на дороге</strong>.",
   bp_b1_h2:"1. Проверьте аккумулятор",
   bp_b1_p2:"При -20°C аккумулятор теряет до 50% ёмкости. Если стартер крутит медленно или слышны только тихие «щелчки» — это почти наверняка <strong>разряженный аккумулятор</strong>. Ослабленная батарея старше 4-5 лет чаще всего умирает именно в первые морозы.",
@@ -2156,6 +2180,13 @@ ua:{
   mail_subject:"Запит з сайту INNSER — евакуатор",
   wa_template:"🚗 *Запит з сайту INNSER*\n\n👤 Ім'я: {name}\n📞 Телефон: {phone}\n\n💬 Повідомлення:\n{msg}\n\n_Надіслано з www.warszawa-laweta.com_",
   bp_b1_back:"← Назад до блогу",
+  bp_b1_cap:"Прикурити авто бустером NOCO — допомога на дорозі Варшава 24г",
+  bp_b2_cap:"Евакуатор INNSER на трасі — допомога на дорозі Варшава 24/7",
+  bp_b3_cap:"Евакуатор Варшава — перевезення позашляховика на лаветі, 506-001-057",
+  bp_b4_cap:"Перевезення авто евакуатором вночі — евакуація з паркінгу Варшава",
+  bp_b5_cap:"Прикурити авто при розрядженому акумуляторі — Варшава 24г",
+  bp_b6_cap:"Евакуація після поломки на трасі — евакуатор Варшава 24г",
+  bp_b8_cap:"Вивіз аварійного авто евакуатором вночі — Варшава 24/7",
   bp_b1_p1:"Зимовий ранок, сідаєте в машину, повертаєте ключ і... тиша. Двигун не заводиться. Одна з найчастіших проблем взимку — мороз не щадить жодну марку. Нижче розберемо покроково, що робити і коли варто викликати <strong>допомогу на дорозі</strong>.",
   bp_b1_h2:"1. Перевірте акумулятор",
   bp_b1_p2:"При -20°C акумулятор втрачає до 50% ємності. Якщо стартер крутить повільно або чути лише тихі «клацання» — це майже напевно <strong>розряджений акумулятор</strong>. Ослаблена батарея старша за 4-5 років найчастіше вмирає саме в перші морози.",
@@ -2860,6 +2891,7 @@ document.addEventListener('click', function(e){
     <p style="margin-bottom:14px;" data-t="bp_b1_p1"></p>
     <h2 style="font-family:var(--ff-d);color:var(--y);font-size:1.3rem;margin:20px 0 10px;" data-t="bp_b1_h2"></h2>
     <p style="margin-bottom:14px;" data-t="bp_b1_p2"></p>
+    <figure class="bimg"><img src="/assets/gallery/odpalanie-auta-boosterem-noco-pomoc-drogowa-warszawa-innser.jpg" alt="Odpalanie auta boosterem NOCO — pomoc drogowa Warszawa 24h" loading="lazy" decoding="async" width="560" height="420"><figcaption data-t="bp_b1_cap"></figcaption></figure>
     <h2 style="font-family:var(--ff-d);color:var(--y);font-size:1.3rem;margin:20px 0 10px;" data-t="bp_b1_h3"></h2>
     <p style="margin-bottom:14px;" data-t="bp_b1_p3"></p>
     <h2 style="font-family:var(--ff-d);color:var(--y);font-size:1.3rem;margin:20px 0 10px;" data-t="bp_b1_h4"></h2>
@@ -2881,6 +2913,7 @@ document.addEventListener('click', function(e){
     <p style="margin-bottom:14px;" data-t="bp_b2_p1"></p>
     <h2 style="font-family:var(--ff-d);color:var(--y);font-size:1.3rem;margin:20px 0 10px;" data-t="bp_b2_h2"></h2>
     <p style="margin-bottom:14px;" data-t="bp_b2_p2"></p>
+    <figure class="bimg"><img src="/assets/gallery/laweta-innser-na-trasie-holowanie-24-7-warszawa-innser.jpg" alt="Laweta INNSER na trasie — pomoc drogowa Warszawa 24/7" loading="lazy" decoding="async" width="560" height="420"><figcaption data-t="bp_b2_cap"></figcaption></figure>
     <h2 style="font-family:var(--ff-d);color:var(--y);font-size:1.3rem;margin:20px 0 10px;" data-t="bp_b2_h3"></h2>
     <p style="margin-bottom:14px;" data-t="bp_b2_p3"></p>
     <h2 style="font-family:var(--ff-d);color:var(--y);font-size:1.3rem;margin:20px 0 10px;" data-t="bp_b2_h4"></h2>
@@ -2902,6 +2935,7 @@ document.addEventListener('click', function(e){
     <p style="margin-bottom:14px;" data-t="bp_b3_p1"></p>
     <h2 style="font-family:var(--ff-d);color:var(--y);font-size:1.3rem;margin:20px 0 10px;" data-t="bp_b3_h2"></h2>
     <p style="margin-bottom:14px;" data-t="bp_b3_p2"></p>
+    <figure class="bimg"><img src="/assets/gallery/laweta-warszawa-transport-suv-na-lawecie-pomoc-drogo-innser.jpg" alt="Laweta Warszawa — transport SUV na lawecie, 506-001-057" loading="lazy" decoding="async" width="560" height="420"><figcaption data-t="bp_b3_cap"></figcaption></figure>
     <h2 style="font-family:var(--ff-d);color:var(--y);font-size:1.3rem;margin:20px 0 10px;" data-t="bp_b3_h3"></h2>
     <p style="margin-bottom:14px;" data-t="bp_b3_p3"></p>
     <h2 style="font-family:var(--ff-d);color:var(--y);font-size:1.3rem;margin:20px 0 10px;" data-t="bp_b3_h4"></h2>
@@ -2923,6 +2957,7 @@ document.addEventListener('click', function(e){
     <p style="margin-bottom:14px;" data-t="bp_b4_p1"></p>
     <h2 style="font-family:var(--ff-d);color:var(--y);font-size:1.3rem;margin:20px 0 10px;" data-t="bp_b4_h2"></h2>
     <p style="margin-bottom:14px;" data-t="bp_b4_p2"></p>
+    <figure class="bimg"><img src="/assets/gallery/transport-auta-laweta-noca-pomoc-drogowa-innser-wars-innser.jpg" alt="Transport auta lawetą nocą — holowanie z parkingu Warszawa" loading="lazy" decoding="async" width="560" height="420"><figcaption data-t="bp_b4_cap"></figcaption></figure>
     <h2 style="font-family:var(--ff-d);color:var(--y);font-size:1.3rem;margin:20px 0 10px;" data-t="bp_b4_h3"></h2>
     <p style="margin-bottom:14px;" data-t="bp_b4_p3"></p>
     <h2 style="font-family:var(--ff-d);color:var(--y);font-size:1.3rem;margin:20px 0 10px;" data-t="bp_b4_h4"></h2>
@@ -2944,6 +2979,7 @@ document.addEventListener('click', function(e){
     <p style="margin-bottom:14px;" data-t="bp_b5_p1"></p>
     <h2 style="font-family:var(--ff-d);color:var(--y);font-size:1.3rem;margin:20px 0 10px;" data-t="bp_b5_h2"></h2>
     <p style="margin-bottom:14px;" data-t="bp_b5_p2"></p>
+    <figure class="bimg"><img src="/assets/gallery/holowanie-powypadkowego-auta-na-lawecie-pomoc-drogow-innser.jpg" alt="Odpalenie auta po rozładowanym akumulatorze — Warszawa 24h" loading="lazy" decoding="async" width="560" height="420"><figcaption data-t="bp_b5_cap"></figcaption></figure>
     <h2 style="font-family:var(--ff-d);color:var(--y);font-size:1.3rem;margin:20px 0 10px;" data-t="bp_b5_h3"></h2>
     <p style="margin-bottom:14px;" data-t="bp_b5_p3"></p>
     <h2 style="font-family:var(--ff-d);color:var(--y);font-size:1.3rem;margin:20px 0 10px;" data-t="bp_b5_h4"></h2>
@@ -2965,6 +3001,7 @@ document.addEventListener('click', function(e){
     <p style="margin-bottom:14px;" data-t="bp_b6_p1"></p>
     <h2 style="font-family:var(--ff-d);color:var(--y);font-size:1.3rem;margin:20px 0 10px;" data-t="bp_b6_h2"></h2>
     <p style="margin-bottom:14px;" data-t="bp_b6_p2"></p>
+    <figure class="bimg"><img src="/assets/gallery/holowanie-powypadkowego-tesla-model-x-pomoc-drogowa-innser.jpg" alt="Holowanie po awarii na trasie — laweta Warszawa 24h" loading="lazy" decoding="async" width="560" height="420"><figcaption data-t="bp_b6_cap"></figcaption></figure>
     <h2 style="font-family:var(--ff-d);color:var(--y);font-size:1.3rem;margin:20px 0 10px;" data-t="bp_b6_h3"></h2>
     <p style="margin-bottom:14px;" data-t="bp_b6_p3"></p>
     <h2 style="font-family:var(--ff-d);color:var(--y);font-size:1.3rem;margin:20px 0 10px;" data-t="bp_b6_h4"></h2>
@@ -2986,6 +3023,7 @@ document.addEventListener('click', function(e){
     <p style="margin-bottom:14px;" data-t="bp_b8_p1"></p>
     <h2 style="font-family:var(--ff-d);color:var(--y);font-size:1.3rem;margin:20px 0 10px;" data-t="bp_b8_h2"></h2>
     <p style="margin-bottom:14px;" data-t="bp_b8_p2"></p>
+    <figure class="bimg"><img src="/assets/gallery/odbior-powypadkowego-auta-laweta-noca-innser-warszaw-innser.jpg" alt="Odbiór powypadkowego auta lawetą nocą — Warszawa 24/7" loading="lazy" decoding="async" width="560" height="420"><figcaption data-t="bp_b8_cap"></figcaption></figure>
     <h2 style="font-family:var(--ff-d);color:var(--y);font-size:1.3rem;margin:20px 0 10px;" data-t="bp_b8_h3"></h2>
     <p style="margin-bottom:14px;" data-t="bp_b8_p3"></p>
     <h2 style="font-family:var(--ff-d);color:var(--y);font-size:1.3rem;margin:20px 0 10px;" data-t="bp_b8_h4"></h2>
