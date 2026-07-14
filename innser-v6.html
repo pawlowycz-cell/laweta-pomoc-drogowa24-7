@@ -267,6 +267,8 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
 .tow-calc-map-wrap{display:none;}
 .tow-calc-body.map-mode .tow-calc-map-wrap{display:block;}
 .tow-calc-map{width:100%;height:min(44vh,400px);min-height:260px;background:var(--b2);}
+.tow-calc-map .leaflet-container{background:var(--b2);font-family:var(--ff-b);}
+.tow-calc-map .leaflet-control-attribution{font-size:10px!important;background:rgba(0,0,0,.55)!important;color:var(--g)!important;}
 .tow-calc-maps-hint{font-size:.8rem;color:var(--g);margin:12px 0 0;line-height:1.45;text-align:center;}
 #tow-dist-wrap{display:none!important;}
 .pac-container{z-index:2000!important;}
@@ -4267,11 +4269,83 @@ var towCalcUseGoogle=false;
 var towCalcAcTimers={};
 var towCalcFallbackPolyline=null;
 var towCalcMarkers=[];
+var towCalcLeafletMap=null;
+var towCalcLeafletRouteLayer=null;
+var towCalcLeafletMarkers=[];
+var towCalcLeafletLoadPromise=null;
+
+function loadLeafletAssets(){
+  if(window.L)return Promise.resolve();
+  if(towCalcLeafletLoadPromise)return towCalcLeafletLoadPromise;
+  towCalcLeafletLoadPromise=new Promise(function(resolve,reject){
+    if(!document.querySelector('link[data-innser-leaflet]')){
+      var link=document.createElement('link');
+      link.rel='stylesheet';
+      link.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+      link.setAttribute('data-innser-leaflet','1');
+      document.head.appendChild(link);
+    }
+    var s=document.createElement('script');
+    s.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    s.async=true;
+    s.onload=function(){resolve();};
+    s.onerror=function(){reject(new Error('leaflet load fail'));};
+    document.head.appendChild(s);
+  });
+  return towCalcLeafletLoadPromise;
+}
+
+function towClearLeafletOverlays(){
+  if(!towCalcLeafletMap||!window.L)return;
+  if(towCalcLeafletRouteLayer){
+    towCalcLeafletMap.removeLayer(towCalcLeafletRouteLayer);
+    towCalcLeafletRouteLayer=null;
+  }
+  towCalcLeafletMarkers.forEach(function(m){towCalcLeafletMap.removeLayer(m);});
+  towCalcLeafletMarkers=[];
+}
+
+function towEnsureLeafletMap(){
+  return loadLeafletAssets().then(function(){
+    if(towCalcLeafletMap)return towCalcLeafletMap;
+    var mapEl=document.getElementById('tow-map');
+    if(!mapEl||!window.L)throw new Error('leaflet init fail');
+    towCalcLeafletMap=L.map(mapEl,{zoomControl:true,attributionControl:true}).setView([52.2297,21.0122],11);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+      maxZoom:19,
+      attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(towCalcLeafletMap);
+    return towCalcLeafletMap;
+  });
+}
+
+function towDrawLeafletRoute(from,to,geometry){
+  if(!from||!to)return Promise.resolve();
+  return towEnsureLeafletMap().then(function(map){
+    towClearLeafletOverlays();
+    var coords=[];
+    if(geometry&&geometry.coordinates&&geometry.coordinates.length){
+      coords=geometry.coordinates.map(function(c){return [c[1],c[0]];});
+    }else{
+      coords=[[from.lat,from.lon],[to.lat,to.lon]];
+    }
+    towCalcLeafletRouteLayer=L.polyline(coords,{color:'#FFD100',weight:5,opacity:0.95}).addTo(map);
+    var pinOpts={radius:7,color:'#FFD100',fillColor:'#FFD100',fillOpacity:1,weight:2};
+    towCalcLeafletMarkers=[
+      L.circleMarker([from.lat,from.lon],pinOpts).addTo(map).bindTooltip('A',{permanent:true,direction:'top',className:'tow-leaflet-tip'}),
+      L.circleMarker([to.lat,to.lon],pinOpts).addTo(map).bindTooltip('B',{permanent:true,direction:'top',className:'tow-leaflet-tip'})
+    ];
+    var bounds=towCalcLeafletRouteLayer.getBounds();
+    if(bounds.isValid())map.fitBounds(bounds,{padding:[40,40]});
+    setTimeout(function(){map.invalidateSize();},120);
+  });
+}
 
 function towClearMapOverlays(){
   if(towCalcFallbackPolyline){towCalcFallbackPolyline.setMap(null);towCalcFallbackPolyline=null;}
   towCalcMarkers.forEach(function(m){m.setMap(null);});
   towCalcMarkers=[];
+  towClearLeafletOverlays();
 }
 
 function towSetMapMode(on){
@@ -4279,9 +4353,14 @@ function towSetMapMode(on){
   var wrap=document.getElementById('tow-map-wrap');
   if(body)body.classList.toggle('map-mode',!!on);
   if(wrap)wrap.hidden=!on;
-  if(on&&towCalcMapInstance&&window.google){
+  if(on){
     setTimeout(function(){
-      google.maps.event.trigger(towCalcMapInstance,'resize');
+      if(towCalcMapInstance&&window.google){
+        google.maps.event.trigger(towCalcMapInstance,'resize');
+      }
+      if(towCalcLeafletMap&&towCalcLeafletMap.invalidateSize){
+        towCalcLeafletMap.invalidateSize();
+      }
     },120);
   }
 }
@@ -4666,12 +4745,17 @@ function towResolvePoint(input){
   });
 }
 
-function towOsmRouteKm(from,to){
-  var url='https://router.project-osrm.org/route/v1/driving/'+from.lon+','+from.lat+';'+to.lon+','+to.lat+'?overview=false';
+function towOsmRouteFetch(from,to){
+  var url='https://router.project-osrm.org/route/v1/driving/'+from.lon+','+from.lat+';'+to.lon+','+to.lat+'?overview=full&geometries=geojson';
   return fetch(url).then(function(r){return r.json();}).then(function(d){
     if(!d||d.code!=='Ok'||!d.routes||!d.routes[0])throw new Error('route');
-    return d.routes[0].distance/1000;
+    var route=d.routes[0];
+    return {km:route.distance/1000,geometry:route.geometry||null};
   });
+}
+
+function towOsmRouteKm(from,to){
+  return towOsmRouteFetch(from,to).then(function(r){return r.km;});
 }
 
 function loadGoogleMapsScript(key){
@@ -4732,21 +4816,27 @@ function towCalcComputeRoute(){
       return towCalcGoogleRoute().then(function(km){
         return {km:km,googleRoute:true,pts:pts};
       }).catch(function(){
-        return towOsmRouteKm(pts[0],pts[1]).then(function(km){
-          return {km:km,googleRoute:false,pts:pts};
+        return towOsmRouteFetch(pts[0],pts[1]).then(function(route){
+          return {km:route.km,googleRoute:false,pts:pts,routeGeometry:route.geometry};
         });
       });
     }
-    return towOsmRouteKm(pts[0],pts[1]).then(function(km){
-      return {km:km,googleRoute:false,pts:pts};
+    return towOsmRouteFetch(pts[0],pts[1]).then(function(route){
+      return {km:route.km,googleRoute:false,pts:pts,routeGeometry:route.geometry};
     });
   });
   chain.then(function(r){
     towSetRouteKm(r.km);
     towSetRouteStatus('');
-    if(towCalcMapInstance){
+    if(r.googleRoute&&towCalcMapInstance){
       towSetMapMode(true);
-      if(!r.googleRoute&&r.pts)towDrawFallbackRoute(r.pts[0],r.pts[1]);
+    }else if(r.pts){
+      towSetMapMode(true);
+      if(towCalcMapInstance){
+        towDrawFallbackRoute(r.pts[0],r.pts[1]);
+      }else{
+        towDrawLeafletRoute(r.pts[0],r.pts[1],r.routeGeometry);
+      }
     }
   }).catch(function(){
     towSetMapMode(false);
@@ -4841,13 +4931,15 @@ function initTowCalc(){
   if(key){
     loadGoogleMapsScript(key).then(function(){setupTowCalcMaps(key);}).catch(function(){
       bindOsmAc();
+      loadLeafletAssets().catch(function(){});
       var hint=document.getElementById('tow-maps-hint');
-      if(hint){hint.hidden=false;hint.textContent=towT('tow_calc_no_key','');}
+      if(hint)hint.hidden=true;
     });
   } else {
     bindOsmAc();
+    loadLeafletAssets().catch(function(){});
     var hint=document.getElementById('tow-maps-hint');
-    if(hint){hint.hidden=false;hint.textContent=towT('tow_calc_no_key','');}
+    if(hint)hint.hidden=true;
   }
   updateTowCalcPrice();
 }

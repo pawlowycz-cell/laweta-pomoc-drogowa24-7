@@ -216,6 +216,11 @@
       "permanent": true
     },
     {
+      "source": "/pl/prices",
+      "destination": "/pl/prices/",
+      "permanent": true
+    },
+    {
       "source": "/pl/about",
       "destination": "/pl/about/",
       "permanent": true
@@ -348,6 +353,11 @@
     {
       "source": "/en/services",
       "destination": "/en/services/",
+      "permanent": true
+    },
+    {
+      "source": "/en/prices",
+      "destination": "/en/prices/",
       "permanent": true
     },
     {
@@ -486,6 +496,11 @@
       "permanent": true
     },
     {
+      "source": "/ru/prices",
+      "destination": "/ru/prices/",
+      "permanent": true
+    },
+    {
       "source": "/ru/about",
       "destination": "/ru/about/",
       "permanent": true
@@ -618,6 +633,11 @@
     {
       "source": "/uk/services",
       "destination": "/uk/services/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/prices",
+      "destination": "/uk/prices/",
       "permanent": true
     },
     {
@@ -754,6 +774,10 @@
       "destination": "/pl/services/index.html"
     },
     {
+      "source": "/pl/prices/",
+      "destination": "/pl/prices/index.html"
+    },
+    {
       "source": "/pl/about/",
       "destination": "/pl/about/index.html"
     },
@@ -860,6 +884,10 @@
     {
       "source": "/en/services/",
       "destination": "/en/services/index.html"
+    },
+    {
+      "source": "/en/prices/",
+      "destination": "/en/prices/index.html"
     },
     {
       "source": "/en/about/",
@@ -970,6 +998,10 @@
       "destination": "/ru/services/index.html"
     },
     {
+      "source": "/ru/prices/",
+      "destination": "/ru/prices/index.html"
+    },
+    {
       "source": "/ru/about/",
       "destination": "/ru/about/index.html"
     },
@@ -1076,6 +1108,10 @@
     {
       "source": "/uk/services/",
       "destination": "/uk/services/index.html"
+    },
+    {
+      "source": "/uk/prices/",
+      "destination": "/uk/prices/index.html"
     },
     {
       "source": "/uk/about/",
