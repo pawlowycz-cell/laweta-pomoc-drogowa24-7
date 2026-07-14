@@ -4311,17 +4311,53 @@ function towPhotonLang(){
   return 'en';
 }
 
+function towLocalCity(name){
+  if(!name)return '';
+  if(CL==='en')return name;
+  var map={
+    Warsaw:'Warszawa',Krakow:'Kraków',Cracow:'Kraków',Lodz:'Łódź',Wroclaw:'Wrocław',
+    Poznan:'Poznań',Gdansk:'Gdańsk',Gdynia:'Gdynia',Szczecin:'Szczecin',Lublin:'Lublin',
+    Bydgoszcz:'Bydgoszcz',Katowice:'Katowice',Bialystok:'Białystok',Rzeszow:'Rzeszów'
+  };
+  return map[name]||name;
+}
+
 function towPhotonLabel(p){
-  var bits=[p.name,p.housenumber,p.street,p.city,p.state,p.country].filter(Boolean);
-  var out=[];
-  bits.forEach(function(b){if(out.indexOf(b)===-1)out.push(b);});
-  return out.join(', ')||'';
+  if(!p)return '';
+  var city=towLocalCity(p.city||'');
+  var line='';
+  if(p.housenumber&&(p.street||p.name)){
+    line=(p.street||p.name)+' '+p.housenumber;
+  } else if(p.street&&p.name&&p.street!==p.name){
+    line=p.street+' '+p.name;
+  } else if(p.name){
+    line=p.name;
+  } else if(p.street){
+    line=p.street;
+  }
+  var parts=[];
+  if(line)parts.push(line);
+  if(p.locality&&p.locality!==city&&p.locality!==line&&!city)parts.push(p.locality);
+  if(city)parts.push(city);
+  return parts.join(', ')||'';
+}
+
+function towPhotonDist(lat,lon){
+  var dLat=lat-52.2297,dLon=lon-21.0122;
+  return dLat*dLat+dLon*dLon;
 }
 
 function towPhotonMapFeature(f){
   var p=f.properties||{};
   var coords=f.geometry&&f.geometry.coordinates||[];
-  return {label:towPhotonLabel(p),lat:coords[1],lon:coords[0]};
+  var lat=coords[1],lon=coords[0];
+  return {
+    label:towPhotonLabel(p),
+    lat:lat,
+    lon:lon,
+    dist:towPhotonDist(lat,lon),
+    pl:(p.countrycode||'').toUpperCase()==='PL'
+  };
 }
 
 function towPhotonSearch(q){
@@ -4330,9 +4366,13 @@ function towPhotonSearch(q){
   var base='https://photon.komoot.io/api/?q='+encodeURIComponent(trimmed)+'&limit=8&lang='+encodeURIComponent(towPhotonLang())+'&lat=52.2297&lon=21.0122';
   return fetch(base).then(function(r){return r.json();}).then(function(d){
     var features=(d&&d.features)||[];
-    if(features.length)return features.map(towPhotonMapFeature).filter(function(x){return x.label&&x.lat!=null&&x.lon!=null;});
+    if(features.length){
+      return features.map(towPhotonMapFeature).filter(function(x){return x.label&&x.lat!=null&&x.lon!=null;})
+        .sort(function(a,b){if(a.pl!==b.pl)return a.pl?-1:1;return a.dist-b.dist;});
+    }
     return fetch(base.replace('&lang='+encodeURIComponent(towPhotonLang()),'')).then(function(r2){return r2.json();}).then(function(d2){
-      return ((d2&&d2.features)||[]).map(towPhotonMapFeature).filter(function(x){return x.label&&x.lat!=null&&x.lon!=null;});
+      return ((d2&&d2.features)||[]).map(towPhotonMapFeature).filter(function(x){return x.label&&x.lat!=null&&x.lon!=null;})
+        .sort(function(a,b){if(a.pl!==b.pl)return a.pl?-1:1;return a.dist-b.dist;});
     });
   }).catch(function(){return [];});
 }
