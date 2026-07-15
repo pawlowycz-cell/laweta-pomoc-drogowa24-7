@@ -284,22 +284,15 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
 .pac-container{z-index:2000!important;}
 .tow-calc-extras{margin-top:14px;border:1px solid var(--b4);border-radius:12px;background:rgba(0,0,0,.12);padding:14px;}
 .tow-calc-extras-title{margin:0 0 12px;font-size:.88rem;font-weight:600;color:var(--gl);}
-.tow-calc-extras-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:52px 32px auto;column-gap:16px;row-gap:12px;align-items:stretch;}
-.tow-calc-extras-slot{margin:0;font-size:.86rem;color:var(--gl);line-height:1.4;min-width:0;}
-label.tow-calc-extras-slot{display:grid;grid-template-columns:16px minmax(0,1fr);column-gap:8px;align-items:center;cursor:pointer;height:32px;min-height:32px;}
-label.tow-calc-extras-slot input{margin:0;accent-color:var(--y);width:16px;height:16px;}
-label.tow-calc-extras-slot span{line-height:1.25;}
-.tow-calc-wheels-cell{grid-row:1;grid-column:1;display:flex;align-items:flex-start;justify-content:center;height:52px;overflow:hidden;}
-.tow-calc-wheels-stack{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:5px;width:100%;}
-.tow-calc-extra-r1c2{grid-row:1;grid-column:2;align-self:start;}
-.tow-calc-extra-r2c1{grid-row:2;grid-column:1;}
-.tow-calc-extra-r2c2{grid-row:2;grid-column:2;}
-.tow-calc-extra-r3c1{grid-row:3;grid-column:1;align-self:start;height:auto;min-height:32px;}
-.tow-calc-extra-r3c2{grid-row:3;grid-column:2;align-self:start;height:auto;min-height:32px;}
-.tow-wheels-label,#tow-wheels-label{display:block;width:100%;text-align:center;line-height:1.2;font-size:.86rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-html[lang="ru"] .tow-calc-extras-grid,html[lang="uk"] .tow-calc-extras-grid{grid-template-rows:58px 32px auto;}
-html[lang="ru"] .tow-calc-wheels-cell,html[lang="uk"] .tow-calc-wheels-cell{height:58px;}
-html[lang="ru"] .tow-wheels-label,html[lang="uk"] .tow-wheels-label,html[lang="ru"] #tow-wheels-label,html[lang="uk"] #tow-wheels-label{white-space:normal;font-size:.82rem;line-height:1.15;}
+.tow-calc-extras-grid{display:flex;flex-direction:column;gap:12px;}
+.tow-calc-extras-row{display:flex;gap:16px;align-items:center;min-height:32px;}
+.tow-calc-extras-row-head{align-items:flex-start;min-height:0;}
+.tow-calc-extras-cell{flex:1 1 0;min-width:0;}
+.tow-calc-wheels-cell{display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;}
+.tow-wheels-label,#tow-wheels-label{display:block;width:100%;text-align:center;line-height:1.25;font-size:.86rem;}
+label.tow-calc-check{display:flex;align-items:center;gap:8px;margin:0;font-size:.86rem;color:var(--gl);line-height:1.25;cursor:pointer;min-width:0;min-height:32px;}
+label.tow-calc-check input{flex:0 0 16px;width:16px;height:16px;margin:0;accent-color:var(--y);}
+label.tow-calc-check span{line-height:1.25;}
 .tow-calc-wheels-step{display:inline-flex;align-items:center;border:1px solid var(--b4);border-radius:8px;overflow:hidden;flex-shrink:0;height:22px;}
 .tow-calc-wheels-step button{background:var(--b3);border:none;color:var(--w);width:22px;height:22px;cursor:pointer;font-size:.85rem;line-height:1;padding:0;font-family:inherit;}
 .tow-calc-wheels-step button:hover{background:var(--b4);color:var(--y);}
@@ -314,7 +307,7 @@ html[lang="ru"] .tow-wheels-label,html[lang="uk"] .tow-wheels-label,html[lang="r
 .tow-calc-individual .tow-calc-phone{color:var(--y);font-weight:700;}
 .tow-calc-call{width:100%;max-width:320px;justify-content:center;margin:0 auto;}
 .tow-calc-footnote{margin:14px 0 0;font-size:.78rem;color:var(--g);line-height:1.5;text-align:center;}
-@media(max-width:640px){.tow-calc-grid{grid-template-columns:1fr;}.tow-calc-extras-grid{display:flex;flex-direction:column;gap:12px;}.tow-calc-wheels-cell{order:1;height:auto;overflow:visible;}.tow-calc-extra-r1c2{order:2;}.tow-calc-extra-r2c1{order:3;}.tow-calc-extra-r2c2{order:4;}.tow-calc-extra-r3c1{order:5;}.tow-calc-extra-r3c2{order:6;}.tow-calc-extras-slot{min-height:0;height:auto;}.tow-wheels-label{white-space:normal;overflow:visible;text-overflow:clip;}}
+@media(max-width:640px){.tow-calc-grid{grid-template-columns:1fr;}.tow-calc-extras-row{flex-direction:column;align-items:stretch;gap:12px;}}
 
 .rev-card{background:var(--b3);border:1px solid var(--b4);border-radius:14px;padding:24px;position:relative;transition:.3s;}
 .rev-card:hover{border-color:rgba(255,209,0,.3);transform:translateY(-3px);}
@@ -772,8 +765,8 @@ html[lang="ru"] .tow-wheels-label,html[lang="uk"] .tow-wheels-label,html[lang="r
             <div class="tow-calc-extras">
               <p class="tow-calc-extras-title" data-t="tow_calc_extras">Dodatkowe opcje</p>
               <div class="tow-calc-extras-grid">
-                <div class="tow-calc-extras-slot tow-calc-wheels-cell">
-                  <div class="tow-calc-wheels-stack">
+                <div class="tow-calc-extras-row tow-calc-extras-row-head">
+                  <div class="tow-calc-extras-cell tow-calc-wheels-cell">
                     <span id="tow-wheels-label" class="tow-wheels-label">Zablokowane koło</span>
                     <div class="tow-calc-wheels-step" id="tow-wheels-step">
                       <button type="button" id="tow-wheels-minus" aria-label="−">−</button>
@@ -781,12 +774,16 @@ html[lang="ru"] .tow-wheels-label,html[lang="uk"] .tow-wheels-label,html[lang="r
                       <button type="button" id="tow-wheels-plus" aria-label="+">+</button>
                     </div>
                   </div>
+                  <label class="tow-calc-extras-cell tow-calc-check"><input type="checkbox" id="tow-jeep"> <span data-t="tow_calc_jeep">SUV (+50 zł)</span></label>
                 </div>
-                <label class="tow-calc-extras-slot tow-calc-check tow-calc-extra-r1c2"><input type="checkbox" id="tow-jeep"> <span data-t="tow_calc_jeep">SUV (+50 zł)</span></label>
-                <label class="tow-calc-extras-slot tow-calc-check tow-calc-extra-r2c1"><input type="checkbox" id="tow-lowered"> <span data-t="tow_calc_lowered">Niskie auto (+50 zł)</span></label>
-                <label class="tow-calc-extras-slot tow-calc-check tow-calc-extra-r2c2"><input type="checkbox" id="tow-bus-short"> <span data-t="tow_calc_bus_short">Bus (+50)</span></label>
-                <label class="tow-calc-extras-slot tow-calc-check tow-calc-extra-r3c1"><input type="checkbox" id="tow-parking"> <span data-t="tow_calc_parking">Z parkingu podziemnego −1 (+200 zł)</span></label>
-                <label class="tow-calc-extras-slot tow-calc-check tow-calc-extra-r3c2"><input type="checkbox" id="tow-bus-long"> <span data-t="tow_calc_bus_long">Długi Bus maxi (+150)</span></label>
+                <div class="tow-calc-extras-row">
+                  <label class="tow-calc-extras-cell tow-calc-check"><input type="checkbox" id="tow-lowered"> <span data-t="tow_calc_lowered">Niskie auto (+50 zł)</span></label>
+                  <label class="tow-calc-extras-cell tow-calc-check"><input type="checkbox" id="tow-bus-short"> <span data-t="tow_calc_bus_short">Bus (+50)</span></label>
+                </div>
+                <div class="tow-calc-extras-row">
+                  <label class="tow-calc-extras-cell tow-calc-check"><input type="checkbox" id="tow-parking"> <span data-t="tow_calc_parking">Z parkingu podziemnego −1 (+200 zł)</span></label>
+                  <label class="tow-calc-extras-cell tow-calc-check"><input type="checkbox" id="tow-bus-long"> <span data-t="tow_calc_bus_long">Długi Bus maxi (+150)</span></label>
+                </div>
               </div>
             </div>
           </div>
