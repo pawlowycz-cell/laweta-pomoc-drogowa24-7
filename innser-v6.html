@@ -4499,7 +4499,7 @@ function updateTowCalcPrice(){
     return;
   }
   var total=base+extraResult.extras;
-  priceEl.textContent=total+' zł';
+  priceEl.textContent=total+' netto';
   if(breakdownEl){
     if(extraResult.lines.length)breakdownEl.textContent=km.toFixed(1)+' km · '+extraResult.lines.join(' · ');
     else breakdownEl.textContent=km.toFixed(1)+' km';
