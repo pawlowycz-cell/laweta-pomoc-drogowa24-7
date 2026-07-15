@@ -284,13 +284,19 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
 .pac-container{z-index:2000!important;}
 .tow-calc-extras{margin-top:14px;border:1px solid var(--b4);border-radius:12px;background:rgba(0,0,0,.12);padding:14px;}
 .tow-calc-extras-title{margin:0 0 12px;font-size:.88rem;font-weight:600;color:var(--gl);}
-.tow-calc-extras-tbl{width:100%;border-collapse:separate;border-spacing:0 10px;table-layout:fixed;}
-.tow-calc-extras-tbl td{width:50%;padding:0 8px 0 0;vertical-align:middle;}
-.tow-calc-extras-tbl td+td{padding:0 0 0 8px;}
-.tow-calc-extras-tbl tr:first-child td{vertical-align:top;}
-.tow-calc-wheels-cell{display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;}
-.tow-wheels-label,#tow-wheels-label{display:block;width:100%;text-align:center;line-height:1.25;font-size:.86rem;}
+.tow-calc-extras-tbl{width:100%;border-collapse:collapse;table-layout:fixed;}
+.tow-calc-extras-tbl col{width:50%;}
+.tow-calc-extras-tbl td{padding:0;vertical-align:middle;}
+.tow-calc-extras-tbl td:first-child{padding-right:8px;}
+.tow-calc-extras-tbl td:last-child{padding-left:8px;}
+.tow-calc-extras-tbl tr+tr td{padding-top:10px;}
+.tow-calc-extras-tbl tr:nth-child(2) td{height:32px;padding-top:10px;}
+.tow-calc-extras-tbl tr:nth-child(3) td{vertical-align:top;padding-top:10px;}
+.tow-calc-wheels-cell{display:block;line-height:0;}
+.tow-calc-wheels-stack{display:inline-flex;flex-direction:column;align-items:center;gap:6px;line-height:1.25;}
+.tow-wheels-label,#tow-wheels-label{display:block;text-align:center;line-height:1.25;font-size:.86rem;white-space:nowrap;}
 label.tow-calc-check{display:flex;align-items:center;gap:8px;margin:0;font-size:.86rem;color:var(--gl);line-height:1.25;cursor:pointer;min-width:0;min-height:32px;}
+.tow-calc-extras-tbl tr:nth-child(2) label.tow-calc-check{height:32px;}
 label.tow-calc-check input{flex:0 0 16px;width:16px;height:16px;margin:0;accent-color:var(--y);}
 label.tow-calc-check span{line-height:1.25;}
 .tow-calc-wheels-step{display:inline-flex;align-items:center;border:1px solid var(--b4);border-radius:8px;overflow:hidden;flex-shrink:0;height:22px;}
@@ -765,15 +771,18 @@ label.tow-calc-check span{line-height:1.25;}
             <div class="tow-calc-extras">
               <p class="tow-calc-extras-title" data-t="tow_calc_extras">Dodatkowe opcje</p>
               <table class="tow-calc-extras-tbl" role="presentation">
+                <colgroup><col><col></colgroup>
                 <tbody>
                   <tr>
                     <td>
                       <div class="tow-calc-wheels-cell">
-                        <span id="tow-wheels-label" class="tow-wheels-label">Zablokowane koło</span>
-                        <div class="tow-calc-wheels-step" id="tow-wheels-step">
-                          <button type="button" id="tow-wheels-minus" aria-label="−">−</button>
-                          <span id="tow-wheels-count">0</span>
-                          <button type="button" id="tow-wheels-plus" aria-label="+">+</button>
+                        <div class="tow-calc-wheels-stack">
+                          <span id="tow-wheels-label" class="tow-wheels-label">Zablokowane koło</span>
+                          <div class="tow-calc-wheels-step" id="tow-wheels-step">
+                            <button type="button" id="tow-wheels-minus" aria-label="−">−</button>
+                            <span id="tow-wheels-count">0</span>
+                            <button type="button" id="tow-wheels-plus" aria-label="+">+</button>
+                          </div>
                         </div>
                       </div>
                     </td>
