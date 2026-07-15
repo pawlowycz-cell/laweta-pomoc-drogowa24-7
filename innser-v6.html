@@ -739,12 +739,12 @@ label.tow-calc-extras-slot input{margin:0;accent-color:var(--y);flex-shrink:0;wi
             <div class="tow-calc-grid">
               <div class="tow-calc-field tow-ac-wrap">
                 <label for="tow-from" data-t="tow_calc_from">Skąd</label>
-                <input type="text" id="tow-from" class="tow-calc-input" autocomplete="off" spellcheck="false" placeholder="Warszawa, adres…">
+                <input type="text" id="tow-from" class="tow-calc-input" autocomplete="off" spellcheck="false" data-t-ph="tow_calc_from_ph" placeholder="Adres, sklep, serwis, pizzeria…">
                 <ul class="tow-ac-list" id="tow-from-list" hidden role="listbox"></ul>
               </div>
               <div class="tow-calc-field tow-ac-wrap">
                 <label for="tow-to" data-t="tow_calc_to">Dokąd</label>
-                <input type="text" id="tow-to" class="tow-calc-input" autocomplete="off" spellcheck="false" placeholder="Warszawa, adres…">
+                <input type="text" id="tow-to" class="tow-calc-input" autocomplete="off" spellcheck="false" data-t-ph="tow_calc_to_ph" placeholder="Adres, sklep, serwis, pizzeria…">
                 <ul class="tow-ac-list" id="tow-to-list" hidden role="listbox"></ul>
               </div>
             </div>
@@ -1591,6 +1591,8 @@ pl:{
   tow_calc_note:"Cena orientacyjna. Parking −2 i niżej — tylko po telefonie.",
   tow_calc_from:"Skąd",
   tow_calc_to:"Dokąd",
+  tow_calc_from_ph:"Adres, sklep, serwis, pizzeria…",
+  tow_calc_to_ph:"Adres, sklep, serwis, pizzeria…",
   tow_calc_km:"Dystans (km)",
   tow_calc_dist:"Dystans:",
   tow_calc_loading:"Liczenie…",
@@ -1917,6 +1919,8 @@ en:{
   tow_calc_note:"Estimated price only. Level −2 and below — call for a quote.",
   tow_calc_from:"From",
   tow_calc_to:"To",
+  tow_calc_from_ph:"Address, shop, service, pizzeria…",
+  tow_calc_to_ph:"Address, shop, service, pizzeria…",
   tow_calc_km:"Distance (km)",
   tow_calc_dist:"Distance:",
   tow_calc_loading:"Calculating…",
@@ -2189,6 +2193,8 @@ ru:{
   tow_calc_note:"Ориентировочная цена. Паркинг −2 и ниже — только по телефону.",
   tow_calc_from:"Откуда",
   tow_calc_to:"Куда",
+  tow_calc_from_ph:"Адрес, магазин, сервис, пиццерия…",
+  tow_calc_to_ph:"Адрес, магазин, сервис, пиццерия…",
   tow_calc_km:"Расстояние (км)",
   tow_calc_dist:"Дистанция:",
   tow_calc_loading:"Считаем…",
@@ -2562,6 +2568,8 @@ ua:{
   tow_calc_note:"Орієнтовна ціна. Паркінг −2 і нижче — лише телефоном.",
   tow_calc_from:"Звідки",
   tow_calc_to:"Куди",
+  tow_calc_from_ph:"Адреса, магазин, сервіс, піцерія…",
+  tow_calc_to_ph:"Адреса, магазин, сервіс, піцерія…",
   tow_calc_km:"Відстань (км)",
   tow_calc_dist:"Дистанція:",
   tow_calc_loading:"Рахуємо…",
@@ -3015,6 +3023,11 @@ function SL(l){
     const ka=el.getAttribute('data-t-aria');
     if(!T[l]||T[l][ka]===undefined)return;
     el.setAttribute('aria-label',T[l][ka]);
+  });
+  document.querySelectorAll('[data-t-ph]').forEach(el=>{
+    const kp=el.getAttribute('data-t-ph');
+    if(!T[l]||T[l][kp]===undefined)return;
+    el.placeholder=T[l][kp];
   });
   document.documentElement.lang=l==='ua'?'uk':l;
   renderAreas(l);
@@ -4544,13 +4557,30 @@ function towLocalCity(name){
   return TOW_CITY_EN_PL[name]||name;
 }
 
+function towPhotonIsPoi(p){
+  if(!p)return false;
+  var k=p.osm_key||'';
+  return k==='amenity'||k==='shop'||k==='tourism'||k==='office'||k==='craft'||k==='leisure'||k==='healthcare'||(k==='building'&&!!p.name);
+}
+
 function towPhotonLabel(p){
   if(!p)return '';
-  var city=towLocalCity(p.city||'');
+  var city=towLocalCity(p.city||p.locality||'');
+  var name=p.name||'';
+  var street=p.street||'';
+  var housenumber=p.housenumber||'';
+  if(towPhotonIsPoi(p)&&name){
+    var poiParts=[name];
+    if(street&&street!==name){
+      poiParts.push(housenumber?street+' '+housenumber:street);
+    }
+    if(city)poiParts.push(city);
+    return poiParts.join(', ');
+  }
   var line='';
-  if(p.housenumber&&(p.street||p.name)){
-    line=(p.street||p.name)+' '+p.housenumber;
-  } else if(p.street&&p.name&&p.street!==p.name){
+  if(housenumber&&(street||name)){
+    line=(street||name)+' '+housenumber;
+  } else if(street&&name&&street!==name){
     line=p.street+' '+p.name;
   } else if(p.name){
     line=p.name;
@@ -4593,16 +4623,28 @@ function towDedupeResults(items){
 }
 
 function towPhotonFetch(q){
-  var url='https://photon.komoot.io/api/?q='+encodeURIComponent(q)+'&limit=8&lang='+encodeURIComponent(towPhotonLang())+'&lat=52.2297&lon=21.0122';
+  var url='https://photon.komoot.io/api/?q='+encodeURIComponent(q)+'&limit=10&lang='+encodeURIComponent(towPhotonLang())+'&lat=52.2297&lon=21.0122';
   return fetch(url).then(function(r){return r.json();}).then(function(d){
     return ((d&&d.features)||[]).map(towPhotonMapFeature);
   }).catch(function(){return [];});
 }
 
+function towNominatimIsPoi(item){
+  var cls=item.class||'';
+  return cls==='amenity'||cls==='shop'||cls==='tourism'||cls==='office'||cls==='craft'||cls==='leisure'||cls==='healthcare';
+}
+
 function towNominatimLabel(item){
   var a=item.address||{};
-  var city=a.city||a.town||a.village||a.municipality||'';
+  var city=a.city||a.town||a.village||a.suburb||a.city_district||a.municipality||'';
   if(CL!=='en')city=towLocalCity(city)||city;
+  if(towNominatimIsPoi(item)&&item.name){
+    var poiParts=[item.name];
+    var road=a.road||a.pedestrian||a.footway||'';
+    if(road)poiParts.push(road+(a.house_number?' '+a.house_number:''));
+    if(city)poiParts.push(city);
+    return poiParts.join(', ');
+  }
   var line=item.name||a.road||a.pedestrian||a.footway||'';
   if(a.house_number&&line)line=line+' '+a.house_number;
   var parts=[];
@@ -4618,7 +4660,7 @@ function towNominatimLabel(item){
 }
 
 function towNominatimSearch(q){
-  var url='https://nominatim.openstreetmap.org/search?q='+encodeURIComponent(q)+'&format=json&addressdetails=1&limit=6&countrycodes=pl';
+  var url='https://nominatim.openstreetmap.org/search?q='+encodeURIComponent(q)+'&format=json&addressdetails=1&limit=8&countrycodes=pl,de,cz,sk,lt,ua';
   return fetch(url,{headers:{'Accept':'application/json','Accept-Language':CL==='en'?'en':'pl'}}).then(function(r){return r.json();}).then(function(list){
     if(!Array.isArray(list))return [];
     return list.map(function(item){
@@ -4628,7 +4670,9 @@ function towNominatimSearch(q){
         lat:lat,
         lon:lon,
         dist:towPhotonDist(lat,lon),
-        pl:true
+        pl:(item.address&&item.address.country_code==='pl')||false,
+        poi:towNominatimIsPoi(item),
+        name:item.name||''
       };
     });
   }).catch(function(){return [];});
@@ -4643,7 +4687,9 @@ function towPhotonMapFeature(f){
     lat:lat,
     lon:lon,
     dist:towPhotonDist(lat,lon),
-    pl:(p.countrycode||'').toUpperCase()==='PL'
+    pl:(p.countrycode||'').toUpperCase()==='PL',
+    poi:towPhotonIsPoi(p),
+    name:p.name||''
   };
 }
 
@@ -4656,7 +4702,14 @@ function towPhotonSearch(q){
   return Promise.all(jobs).then(function(groups){
     var all=towDedupeResults([].concat.apply([],groups))
       .filter(function(x){return x.label&&x.lat!=null&&x.lon!=null;});
-    all.forEach(function(it){it._score=towScoreResult(it.label,trimmed);});
+    all.forEach(function(it){
+      it._score=towScoreResult(it.label,trimmed);
+      if(it.poi&&it.name){
+        var n=towNorm(it.name),q=towNorm(trimmed);
+        if(n.indexOf(q)>=0||q.indexOf(n)>=0)it._score+=55;
+        else if(q.split(' ').some(function(t){return t.length>2&&n.indexOf(t)>=0;}))it._score+=30;
+      }
+    });
     all.sort(function(a,b){
       if(b._score!==a._score)return b._score-a._score;
       if(a.pl!==b.pl)return a.pl?-1:1;
@@ -4872,6 +4925,24 @@ function towCalcComputeRoute(opts){
   });
 }
 
+function towApplyGooglePlace(input,place){
+  if(!input||!place)return;
+  towStorePlaceCoords(input,place);
+  if(place.name){
+    var addr=place.formatted_address||place.vicinity||'';
+    if(addr&&addr.indexOf(place.name)<0){
+      var short=addr.split(',').slice(0,2).join(',').trim();
+      input.value=short?place.name+', '+short:place.name;
+    }else if(addr){
+      input.value=addr;
+    }else{
+      input.value=place.name;
+    }
+  }else if(place.formatted_address){
+    input.value=place.formatted_address;
+  }
+}
+
 function setupTowCalcMaps(key){
   towCalcUseGoogle=true;
   var hint=document.getElementById('tow-maps-hint');
@@ -4897,20 +4968,20 @@ function setupTowCalcMaps(key){
     });
   }
   towCalcDirections=new google.maps.DirectionsService();
-  var acOpts={fields:['formatted_address','geometry','name'],componentRestrictions:{country:['pl','de','cz','sk','lt','ua']}};
+  var acOpts={fields:['formatted_address','geometry','name','vicinity'],componentRestrictions:{country:['pl','de','cz','sk','lt','ua']}};
   var fromInput=document.getElementById('tow-from');
   var toInput=document.getElementById('tow-to');
   if(fromInput){
     var fromAc=new google.maps.places.Autocomplete(fromInput,acOpts);
     fromAc.addListener('place_changed',function(){
-      towStorePlaceCoords(fromInput,fromAc.getPlace());
+      towApplyGooglePlace(fromInput,fromAc.getPlace());
       towTryComputeRoute();
     });
   }
   if(toInput){
     var toAc=new google.maps.places.Autocomplete(toInput,acOpts);
     toAc.addListener('place_changed',function(){
-      towStorePlaceCoords(toInput,toAc.getPlace());
+      towApplyGooglePlace(toInput,toAc.getPlace());
       towTryComputeRoute();
     });
   }
