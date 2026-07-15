@@ -739,12 +739,12 @@ label.tow-calc-extras-slot input{margin:0;accent-color:var(--y);flex-shrink:0;wi
             <div class="tow-calc-grid">
               <div class="tow-calc-field tow-ac-wrap">
                 <label for="tow-from" data-t="tow_calc_from">Skąd</label>
-                <input type="text" id="tow-from" class="tow-calc-input" autocomplete="off" spellcheck="false" data-t-ph="tow_calc_from_ph" placeholder="Adres, sklep, serwis, pizzeria…">
+                <input type="text" id="tow-from" class="tow-calc-input" autocomplete="off" spellcheck="false" data-t-ph="tow_calc_from_ph" placeholder="Adres w Polsce, sklep, serwis, pizzeria…">
                 <ul class="tow-ac-list" id="tow-from-list" hidden role="listbox"></ul>
               </div>
               <div class="tow-calc-field tow-ac-wrap">
                 <label for="tow-to" data-t="tow_calc_to">Dokąd</label>
-                <input type="text" id="tow-to" class="tow-calc-input" autocomplete="off" spellcheck="false" data-t-ph="tow_calc_to_ph" placeholder="Adres, sklep, serwis, pizzeria…">
+                <input type="text" id="tow-to" class="tow-calc-input" autocomplete="off" spellcheck="false" data-t-ph="tow_calc_to_ph" placeholder="Adres w Polsce, sklep, serwis, pizzeria…">
                 <ul class="tow-ac-list" id="tow-to-list" hidden role="listbox"></ul>
               </div>
             </div>
@@ -1591,12 +1591,13 @@ pl:{
   tow_calc_note:"Cena orientacyjna. Parking −2 i niżej — tylko po telefonie.",
   tow_calc_from:"Skąd",
   tow_calc_to:"Dokąd",
-  tow_calc_from_ph:"Adres, sklep, serwis, pizzeria…",
-  tow_calc_to_ph:"Adres, sklep, serwis, pizzeria…",
+  tow_calc_from_ph:"Adres w Polsce, sklep, serwis, pizzeria…",
+  tow_calc_to_ph:"Adres w Polsce, sklep, serwis, pizzeria…",
   tow_calc_km:"Dystans (km)",
   tow_calc_dist:"Dystans:",
   tow_calc_loading:"Liczenie…",
   tow_calc_route_err:"Nie udało się obliczyć — wpisz km ręcznie.",
+  tow_calc_pl_only:"Podaj adresy w granicach Polski.",
   tow_calc_no_key:"Mapa Google niedostępna — wpisz dystans ręcznie, cena nadal działa.",
   tow_calc_extras:"Dodatkowe opcje",
   tow_calc_lowered:"Niskie auto (+50 zł)",
@@ -1919,12 +1920,13 @@ en:{
   tow_calc_note:"Estimated price only. Level −2 and below — call for a quote.",
   tow_calc_from:"From",
   tow_calc_to:"To",
-  tow_calc_from_ph:"Address, shop, service, pizzeria…",
-  tow_calc_to_ph:"Address, shop, service, pizzeria…",
+  tow_calc_from_ph:"Address in Poland, shop, service, pizzeria…",
+  tow_calc_to_ph:"Address in Poland, shop, service, pizzeria…",
   tow_calc_km:"Distance (km)",
   tow_calc_dist:"Distance:",
   tow_calc_loading:"Calculating…",
   tow_calc_route_err:"Could not calculate — enter km manually.",
+  tow_calc_pl_only:"Enter addresses within Poland only.",
   tow_calc_no_key:"Google map unavailable — enter distance manually; price still works.",
   tow_calc_extras:"Extra options",
   tow_calc_lowered:"Lowered car (+50 zł)",
@@ -2193,12 +2195,13 @@ ru:{
   tow_calc_note:"Ориентировочная цена. Паркинг −2 и ниже — только по телефону.",
   tow_calc_from:"Откуда",
   tow_calc_to:"Куда",
-  tow_calc_from_ph:"Адрес, магазин, сервис, пиццерия…",
-  tow_calc_to_ph:"Адрес, магазин, сервис, пиццерия…",
+  tow_calc_from_ph:"Адрес в Польше, магазин, сервис, пиццерия…",
+  tow_calc_to_ph:"Адрес в Польше, магазин, сервис, пиццерия…",
   tow_calc_km:"Расстояние (км)",
   tow_calc_dist:"Дистанция:",
   tow_calc_loading:"Считаем…",
   tow_calc_route_err:"Не удалось рассчитать — введите км вручную.",
+  tow_calc_pl_only:"Укажите адреса только на территории Польши.",
   tow_calc_no_key:"Карта Google недоступна — введите км вручную, цена всё равно считается.",
   tow_calc_extras:"Дополнительно",
   tow_calc_lowered:"Низкий авто (+50 zł)",
@@ -2568,12 +2571,13 @@ ua:{
   tow_calc_note:"Орієнтовна ціна. Паркінг −2 і нижче — лише телефоном.",
   tow_calc_from:"Звідки",
   tow_calc_to:"Куди",
-  tow_calc_from_ph:"Адреса, магазин, сервіс, піцерія…",
-  tow_calc_to_ph:"Адреса, магазин, сервіс, піцерія…",
+  tow_calc_from_ph:"Адреса в Польщі, магазин, сервіс, піцерія…",
+  tow_calc_to_ph:"Адреса в Польщі, магазин, сервіс, піцерія…",
   tow_calc_km:"Відстань (км)",
   tow_calc_dist:"Дистанція:",
   tow_calc_loading:"Рахуємо…",
   tow_calc_route_err:"Не вдалося порахувати — введіть км вручну.",
+  tow_calc_pl_only:"Вкажіть адреси лише на території Польщі.",
   tow_calc_no_key:"Карта Google недоступна — введіть км вручну, ціна все одно рахується.",
   tow_calc_extras:"Додатково",
   tow_calc_lowered:"Низький авто (+50 zł)",
@@ -4505,6 +4509,57 @@ function towPhotonLang(){
   return 'en';
 }
 
+var TOW_PL_BBOX={minLat:49.0,minLon:14.12,maxLat:54.91,maxLon:24.15};
+
+function towIsInPoland(lat,lon){
+  var la=parseFloat(lat),lo=parseFloat(lon);
+  if(isNaN(la)||isNaN(lo))return false;
+  return la>=TOW_PL_BBOX.minLat&&la<=TOW_PL_BBOX.maxLat&&lo>=TOW_PL_BBOX.minLon&&lo<=TOW_PL_BBOX.maxLon;
+}
+
+function towFilterPolandOnly(items){
+  return (items||[]).filter(function(it){
+    if(!it||it.lat==null||it.lon==null)return false;
+    if(it.pl===true)return true;
+    if(it.pl===false)return false;
+    return towIsInPoland(it.lat,it.lon);
+  });
+}
+
+function towHaversineKm(a,b){
+  var R=6371,dLat=(b.lat-a.lat)*Math.PI/180,dLon=(b.lon-a.lon)*Math.PI/180;
+  var x=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(a.lat*Math.PI/180)*Math.cos(b.lat*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);
+  return R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x));
+}
+
+function towRouteKmInsidePoland(coords){
+  if(!coords||coords.length<2)return 0;
+  var km=0;
+  for(var i=1;i<coords.length;i++){
+    var p0=coords[i-1],p1=coords[i];
+    if(towIsInPoland(p0.lat,p0.lon)&&towIsInPoland(p1.lat,p1.lon)){
+      km+=towHaversineKm(p0,p1);
+    }
+  }
+  return km;
+}
+
+function towGeojsonToCoords(geometry){
+  if(!geometry||geometry.type!=='LineString'||!geometry.coordinates)return [];
+  return geometry.coordinates.map(function(c){return {lat:c[1],lon:c[0]};});
+}
+
+function towGooglePathToCoords(path){
+  if(!path||!path.length)return [];
+  return path.map(function(p){return {lat:p.lat(),lon:p.lng()};});
+}
+
+function towClipRouteKm(km,coords){
+  if(!coords||coords.length<2)return km;
+  var clipped=towRouteKmInsidePoland(coords);
+  return clipped>0?clipped:km;
+}
+
 var TOW_CITY_PL_EN={
   warszawa:'Warsaw',krakow:'Krakow',kraków:'Krakow',lodz:'Lodz',łódź:'Lodz',
   wroclaw:'Wroclaw',wrocław:'Wroclaw',poznan:'Poznan',poznań:'Poznan',
@@ -4623,9 +4678,10 @@ function towDedupeResults(items){
 }
 
 function towPhotonFetch(q){
-  var url='https://photon.komoot.io/api/?q='+encodeURIComponent(q)+'&limit=10&lang='+encodeURIComponent(towPhotonLang())+'&lat=52.2297&lon=21.0122';
+  var bbox=TOW_PL_BBOX.minLon+','+TOW_PL_BBOX.minLat+','+TOW_PL_BBOX.maxLon+','+TOW_PL_BBOX.maxLat;
+  var url='https://photon.komoot.io/api/?q='+encodeURIComponent(q)+'&limit=10&lang='+encodeURIComponent(towPhotonLang())+'&lat=52.2297&lon=21.0122&bbox='+bbox;
   return fetch(url).then(function(r){return r.json();}).then(function(d){
-    return ((d&&d.features)||[]).map(towPhotonMapFeature);
+    return towFilterPolandOnly(((d&&d.features)||[]).map(towPhotonMapFeature));
   }).catch(function(){return [];});
 }
 
@@ -4660,10 +4716,10 @@ function towNominatimLabel(item){
 }
 
 function towNominatimSearch(q){
-  var url='https://nominatim.openstreetmap.org/search?q='+encodeURIComponent(q)+'&format=json&addressdetails=1&limit=8&countrycodes=pl,de,cz,sk,lt,ua';
+  var url='https://nominatim.openstreetmap.org/search?q='+encodeURIComponent(q)+'&format=json&addressdetails=1&limit=8&countrycodes=pl';
   return fetch(url,{headers:{'Accept':'application/json','Accept-Language':CL==='en'?'en':'pl'}}).then(function(r){return r.json();}).then(function(list){
     if(!Array.isArray(list))return [];
-    return list.map(function(item){
+    return towFilterPolandOnly(list.map(function(item){
       var lat=parseFloat(item.lat),lon=parseFloat(item.lon);
       return {
         label:towNominatimLabel(item),
@@ -4674,7 +4730,7 @@ function towNominatimSearch(q){
         poi:towNominatimIsPoi(item),
         name:item.name||''
       };
-    });
+    }));
   }).catch(function(){return [];});
 }
 
@@ -4700,8 +4756,8 @@ function towPhotonSearch(q){
   var jobs=variants.map(towPhotonFetch);
   jobs.push(towNominatimSearch(trimmed));
   return Promise.all(jobs).then(function(groups){
-    var all=towDedupeResults([].concat.apply([],groups))
-      .filter(function(x){return x.label&&x.lat!=null&&x.lon!=null;});
+    var all=towFilterPolandOnly(towDedupeResults([].concat.apply([],groups))
+      .filter(function(x){return x.label&&x.lat!=null&&x.lon!=null;}));
     all.forEach(function(it){
       it._score=towScoreResult(it.label,trimmed);
       if(it.poi&&it.name){
@@ -4772,13 +4828,21 @@ function towResolvePoint(input,opts){
   opts=opts||{};
   if(!input)return Promise.resolve(null);
   var lat=input.dataset.lat,lon=input.dataset.lon;
-  if(lat&&lon)return Promise.resolve({lat:parseFloat(lat),lon:parseFloat(lon),label:input.value.trim()});
+  if(lat&&lon){
+    if(!towIsInPoland(lat,lon)){
+      delete input.dataset.lat;
+      delete input.dataset.lon;
+      return Promise.resolve(null);
+    }
+    return Promise.resolve({lat:parseFloat(lat),lon:parseFloat(lon),label:input.value.trim()});
+  }
   if(!opts.geocode)return Promise.resolve(null);
   var q=input.value.trim();
   if(!q)return Promise.resolve(null);
   return towPhotonSearch(q).then(function(items){
     if(!items.length)return null;
     var best=items[0];
+    if(!towIsInPoland(best.lat,best.lon))return null;
     input.value=best.label;
     input.dataset.lat=String(best.lat);
     input.dataset.lon=String(best.lon);
@@ -4852,9 +4916,12 @@ function towCalcGoogleRoute(){
       region:'pl'
     },function(result,status){
       if(status!=='OK'||!result.routes[0]||!result.routes[0].legs[0]){reject(new Error(status||'fail'));return;}
-      var km=result.routes[0].legs[0].distance.value/1000;
+      var route=result.routes[0];
+      var km=route.legs[0].distance.value/1000;
+      var path=route.overview_path||null;
+      if(path)km=towClipRouteKm(km,towGooglePathToCoords(path));
       if(towCalcRenderer)towCalcRenderer.setDirections(result);
-      resolve(km);
+      resolve({km:km,path:path});
     });
   });
 }
@@ -4892,17 +4959,20 @@ function towCalcComputeRoute(opts){
   towHideAllAcLists();
   var chain=Promise.all([towResolvePoint(fromInput,{geocode:geocode}),towResolvePoint(toInput,{geocode:geocode})]).then(function(pts){
     if(!pts[0]||!pts[1])throw new Error('geocode');
+    if(!towIsInPoland(pts[0].lat,pts[0].lon)||!towIsInPoland(pts[1].lat,pts[1].lon))throw new Error('pl_only');
     if(towCalcUseGoogle&&towCalcDirections){
-      return towCalcGoogleRoute().then(function(km){
-        return {km:km,googleRoute:true,pts:pts};
+      return towCalcGoogleRoute().then(function(route){
+        return {km:route.km,googleRoute:true,pts:pts};
       }).catch(function(){
         return towOsmRouteFetch(pts[0],pts[1]).then(function(route){
-          return {km:route.km,googleRoute:false,pts:pts,routeGeometry:route.geometry};
+          var km=towClipRouteKm(route.km,towGeojsonToCoords(route.geometry));
+          return {km:km,googleRoute:false,pts:pts,routeGeometry:route.geometry};
         });
       });
     }
     return towOsmRouteFetch(pts[0],pts[1]).then(function(route){
-      return {km:route.km,googleRoute:false,pts:pts,routeGeometry:route.geometry};
+      var km=towClipRouteKm(route.km,towGeojsonToCoords(route.geometry));
+      return {km:km,googleRoute:false,pts:pts,routeGeometry:route.geometry};
     });
   });
   chain.then(function(r){
@@ -4918,9 +4988,12 @@ function towCalcComputeRoute(opts){
         towDrawLeafletRoute(r.pts[0],r.pts[1],r.routeGeometry);
       }
     }
-  }).catch(function(){
+  }).catch(function(err){
     towSetMapMode(false);
-    towSetRouteStatus(towT('tow_calc_route_err','Nie udało się policzyć trasy — sprawdź adresy lub wpisz km ręcznie.'));
+    var msg=(err&&err.message==='pl_only')
+      ?towT('tow_calc_pl_only','Podaj adresy w granicach Polski.')
+      :towT('tow_calc_route_err','Nie udało się policzyć trasy — sprawdź adresy lub wpisz km ręcznie.');
+    towSetRouteStatus(msg);
     updateTowCalcPrice();
   });
 }
@@ -4968,22 +5041,41 @@ function setupTowCalcMaps(key){
     });
   }
   towCalcDirections=new google.maps.DirectionsService();
-  var acOpts={fields:['formatted_address','geometry','name','vicinity'],componentRestrictions:{country:['pl','de','cz','sk','lt','ua']}};
+  var plBounds=new google.maps.LatLngBounds(
+    new google.maps.LatLng(TOW_PL_BBOX.minLat,TOW_PL_BBOX.minLon),
+    new google.maps.LatLng(TOW_PL_BBOX.maxLat,TOW_PL_BBOX.maxLon)
+  );
+  var acOpts={
+    fields:['formatted_address','geometry','name','vicinity','address_components'],
+    componentRestrictions:{country:'pl'},
+    bounds:plBounds,
+    strictBounds:true
+  };
   var fromInput=document.getElementById('tow-from');
   var toInput=document.getElementById('tow-to');
+  function towOnGooglePlace(input,ac){
+    var place=ac.getPlace();
+    if(!place||!place.geometry||!place.geometry.location){
+      towStorePlaceCoords(input,null);
+      return;
+    }
+    var lat=place.geometry.location.lat(),lon=place.geometry.location.lng();
+    if(!towIsInPoland(lat,lon)){
+      towStorePlaceCoords(input,null);
+      input.value='';
+      towSetRouteStatus(towT('tow_calc_pl_only','Podaj adresy w granicach Polski.'));
+      return;
+    }
+    towApplyGooglePlace(input,place);
+    towTryComputeRoute();
+  }
   if(fromInput){
     var fromAc=new google.maps.places.Autocomplete(fromInput,acOpts);
-    fromAc.addListener('place_changed',function(){
-      towApplyGooglePlace(fromInput,fromAc.getPlace());
-      towTryComputeRoute();
-    });
+    fromAc.addListener('place_changed',function(){towOnGooglePlace(fromInput,fromAc);});
   }
   if(toInput){
     var toAc=new google.maps.places.Autocomplete(toInput,acOpts);
-    toAc.addListener('place_changed',function(){
-      towApplyGooglePlace(toInput,toAc.getPlace());
-      towTryComputeRoute();
-    });
+    toAc.addListener('place_changed',function(){towOnGooglePlace(toInput,toAc);});
   }
 }
 
