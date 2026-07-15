@@ -278,17 +278,13 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
 .pac-container{z-index:2000!important;}
 .tow-calc-extras{margin-top:14px;border:1px solid var(--b4);border-radius:12px;background:rgba(0,0,0,.12);padding:14px;}
 .tow-calc-extras-title{margin:0 0 12px;font-size:.88rem;font-weight:600;color:var(--gl);}
-.tow-calc-extras-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:16px;align-items:start;}
-.tow-calc-extras-col{display:flex;flex-direction:column;gap:10px;min-width:0;}
-.tow-calc-extras-col>.tow-calc-check,.tow-calc-extras-col>.tow-calc-wheels-row{min-height:36px;display:flex;align-items:center;margin:0;}
-.tow-calc-extras-col .tow-calc-check label{display:flex;align-items:flex-start;gap:8px;cursor:pointer;line-height:1.4;}
-.tow-calc-extras-col .tow-calc-check{font-size:.86rem;color:var(--gl);}
-.tow-calc-extras-col .tow-calc-check input{margin-top:3px;accent-color:var(--y);flex-shrink:0;}
-.tow-calc-extras-col>.tow-calc-check:last-child{align-items:flex-start;min-height:36px;}
-.tow-calc-extras-col .tow-calc-wheels-row{width:100%;}
-.tow-calc-wheels-row{align-items:center;}
-.tow-calc-wheels-wrap{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;width:100%;}
-.tow-calc-wheels-row .tow-calc-wheels-wrap{padding-left:24px;box-sizing:border-box;}
+.tow-calc-extras-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:36px 36px minmax(36px,auto);gap:12px 16px;align-items:center;}
+.tow-calc-extras-slot{display:flex;align-items:center;min-height:36px;min-width:0;margin:0;font-size:.86rem;color:var(--gl);}
+.tow-calc-extras-slot.tow-extras-row3{align-items:flex-start;}
+.tow-calc-extras-slot.tow-calc-check label{display:flex;align-items:flex-start;gap:8px;cursor:pointer;line-height:1.4;width:100%;}
+.tow-calc-extras-slot.tow-calc-check input{margin-top:3px;accent-color:var(--y);flex-shrink:0;}
+.tow-calc-wheels-row{width:100%;}
+.tow-calc-wheels-wrap{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;width:100%;padding-left:24px;box-sizing:border-box;}
 .tow-wheels-label{font-size:.86rem;color:var(--gl);line-height:1.4;display:inline-block;width:10.6em;white-space:nowrap;}
 #tow-wheels-label{display:inline-block;width:10.6em;white-space:nowrap;}
 .tow-calc-wheels-step{display:inline-flex;align-items:center;border:1px solid var(--b4);border-radius:8px;overflow:hidden;flex-shrink:0;}
@@ -305,7 +301,7 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
 .tow-calc-individual .tow-calc-phone{color:var(--y);font-weight:700;}
 .tow-calc-call{width:100%;max-width:320px;justify-content:center;margin:0 auto;}
 .tow-calc-footnote{margin:14px 0 0;font-size:.78rem;color:var(--g);line-height:1.5;text-align:center;}
-@media(max-width:640px){.tow-calc-grid,.tow-calc-extras-grid{grid-template-columns:1fr;}}
+@media(max-width:640px){.tow-calc-grid,.tow-calc-extras-grid{grid-template-columns:1fr;grid-template-rows:none;grid-auto-rows:auto;}}
 
 .rev-card{background:var(--b3);border:1px solid var(--b4);border-radius:14px;padding:24px;position:relative;transition:.3s;}
 .rev-card:hover{border-color:rgba(255,209,0,.3);transform:translateY(-3px);}
@@ -763,25 +759,21 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
             <div class="tow-calc-extras">
               <p class="tow-calc-extras-title" data-t="tow_calc_extras">Dodatkowe opcje</p>
               <div class="tow-calc-extras-grid">
-                <div class="tow-calc-extras-col">
-                  <div class="tow-calc-check tow-calc-wheels-row">
-                    <div class="tow-calc-wheels-wrap">
-                      <span id="tow-wheels-label" class="tow-wheels-label">Zablokowane koło</span>
-                      <div class="tow-calc-wheels-step" id="tow-wheels-step">
-                        <button type="button" id="tow-wheels-minus" aria-label="−">−</button>
-                        <span id="tow-wheels-count">0</span>
-                        <button type="button" id="tow-wheels-plus" aria-label="+">+</button>
-                      </div>
+                <div class="tow-calc-extras-slot tow-calc-wheels-row">
+                  <div class="tow-calc-wheels-wrap">
+                    <span id="tow-wheels-label" class="tow-wheels-label">Zablokowane koło</span>
+                    <div class="tow-calc-wheels-step" id="tow-wheels-step">
+                      <button type="button" id="tow-wheels-minus" aria-label="−">−</button>
+                      <span id="tow-wheels-count">0</span>
+                      <button type="button" id="tow-wheels-plus" aria-label="+">+</button>
                     </div>
                   </div>
-                  <label class="tow-calc-check"><input type="checkbox" id="tow-lowered"> <span data-t="tow_calc_lowered">Niskie auto (+50 zł)</span></label>
-                  <label class="tow-calc-check"><input type="checkbox" id="tow-parking"> <span data-t="tow_calc_parking">Z parkingu podziemnego −1 (+200 zł)</span></label>
                 </div>
-                <div class="tow-calc-extras-col">
-                  <label class="tow-calc-check"><input type="checkbox" id="tow-jeep"> <span data-t="tow_calc_jeep">SUV (+50 zł)</span></label>
-                  <label class="tow-calc-check"><input type="checkbox" id="tow-bus-short"> <span data-t="tow_calc_bus_short">Bus (+50)</span></label>
-                  <label class="tow-calc-check"><input type="checkbox" id="tow-bus-long"> <span data-t="tow_calc_bus_long">Długi Bus maxi (+150)</span></label>
-                </div>
+                <label class="tow-calc-extras-slot tow-calc-check"><input type="checkbox" id="tow-jeep"> <span data-t="tow_calc_jeep">SUV (+50 zł)</span></label>
+                <label class="tow-calc-extras-slot tow-calc-check"><input type="checkbox" id="tow-lowered"> <span data-t="tow_calc_lowered">Niskie auto (+50 zł)</span></label>
+                <label class="tow-calc-extras-slot tow-calc-check"><input type="checkbox" id="tow-bus-short"> <span data-t="tow_calc_bus_short">Bus (+50)</span></label>
+                <label class="tow-calc-extras-slot tow-extras-row3 tow-calc-check"><input type="checkbox" id="tow-parking"> <span data-t="tow_calc_parking">Z parkingu podziemnego −1 (+200 zł)</span></label>
+                <label class="tow-calc-extras-slot tow-extras-row3 tow-calc-check"><input type="checkbox" id="tow-bus-long"> <span data-t="tow_calc_bus_long">Długi Bus maxi (+150)</span></label>
               </div>
             </div>
           </div>
