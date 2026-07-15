@@ -284,20 +284,15 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
 .pac-container{z-index:2000!important;}
 .tow-calc-extras{margin-top:14px;border:1px solid var(--b4);border-radius:12px;background:rgba(0,0,0,.12);padding:14px;}
 .tow-calc-extras-title{margin:0 0 12px;font-size:.88rem;font-weight:600;color:var(--gl);}
-.tow-calc-extras-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:16px;row-gap:12px;grid-template-rows:auto 32px auto;}
-.tow-calc-extra-r1c1{grid-row:1;grid-column:1;align-self:start;}
-.tow-calc-extra-r1c2{grid-row:1;grid-column:2;align-self:end;}
-.tow-calc-extra-r2c1{grid-row:2;grid-column:1;height:32px;}
-.tow-calc-extra-r2c2{grid-row:2;grid-column:2;height:32px;}
-.tow-calc-extra-r3c1{grid-row:3;grid-column:1;align-self:start;}
-.tow-calc-extra-r3c2{grid-row:3;grid-column:2;align-self:start;}
-.tow-calc-wheels-cell{display:block;line-height:0;}
-.tow-calc-wheels-stack{display:inline-flex;flex-direction:column;align-items:center;gap:6px;line-height:1.25;}
-.tow-wheels-label,#tow-wheels-label{display:block;text-align:center;line-height:1.25;font-size:.86rem;white-space:nowrap;}
-label.tow-calc-check{display:flex;align-items:center;gap:8px;margin:0;font-size:.86rem;color:var(--gl);line-height:1.25;cursor:pointer;min-width:0;min-height:32px;}
-label.tow-calc-check.tow-calc-extra-r2c1,label.tow-calc-check.tow-calc-extra-r2c2{height:32px;}
+.tow-calc-extras-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:16px;row-gap:12px;grid-auto-rows:36px;align-items:center;}
+.tow-calc-wheels-cell{display:flex;align-items:center;gap:8px;height:36px;min-width:0;}
+.tow-calc-wheels-gap{flex:0 0 16px;width:16px;height:16px;}
+.tow-wheels-label,#tow-wheels-label{flex:1 1 auto;text-align:left;line-height:1.25;font-size:.86rem;color:var(--gl);min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tow-wheels-price{flex:0 0 auto;font-size:.86rem;font-weight:600;color:#2fe07a;white-space:nowrap;}
+.tow-wheels-price:empty{display:none;}
+label.tow-calc-check{display:flex;align-items:center;gap:8px;margin:0;font-size:.86rem;color:var(--gl);line-height:1.25;cursor:pointer;min-width:0;height:36px;}
 label.tow-calc-check input{flex:0 0 16px;width:16px;height:16px;margin:0;accent-color:var(--y);}
-label.tow-calc-check span{line-height:1.25;}
+label.tow-calc-check span{line-height:1.25;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .tow-calc-wheels-step{display:inline-flex;align-items:center;border:1px solid var(--b4);border-radius:8px;overflow:hidden;flex-shrink:0;height:22px;}
 .tow-calc-wheels-step button{background:var(--b3);border:none;color:var(--w);width:22px;height:22px;cursor:pointer;font-size:.85rem;line-height:1;padding:0;font-family:inherit;}
 .tow-calc-wheels-step button:hover{background:var(--b4);color:var(--y);}
@@ -305,14 +300,14 @@ label.tow-calc-check span{line-height:1.25;}
 .tow-calc-body.map-mode .tow-calc-result{margin:0;border:none;border-radius:0;border-top:1px solid var(--b4);}
 .tow-calc-result{margin-top:20px;padding:20px 18px;background:var(--b3);border:1px solid rgba(255,209,0,.25);border-radius:var(--r);text-align:center;}
 .tow-calc-result-label{display:block;font-size:.82rem;color:var(--g);margin-bottom:6px;}
-.tow-calc-price{font-family:var(--ff-d);font-size:2.2rem;color:var(--y);letter-spacing:1px;margin:0 0 8px;line-height:1;}
-.tow-calc-breakdown{font-size:.8rem;color:var(--g);line-height:1.45;margin:0 0 14px;min-height:0;}
+.tow-calc-price{font-family:var(--ff-d);font-size:2.2rem;color:#2fe07a;letter-spacing:1px;margin:0 0 8px;line-height:1;}
+.tow-calc-breakdown{font-size:.8rem;color:#2fe07a;line-height:1.45;margin:0 0 14px;min-height:0;}
 .tow-calc-breakdown:empty{display:none;}
 .tow-calc-individual{font-size:.88rem;color:var(--gl);margin:0 0 14px;line-height:1.45;}
 .tow-calc-individual .tow-calc-phone{color:var(--y);font-weight:700;}
 .tow-calc-call{width:100%;max-width:320px;justify-content:center;margin:0 auto;}
 .tow-calc-footnote{margin:14px 0 0;font-size:.78rem;color:var(--g);line-height:1.5;text-align:center;}
-@media(max-width:640px){.tow-calc-grid{grid-template-columns:1fr;}.tow-calc-extras-grid{display:flex;flex-direction:column;gap:12px;}.tow-calc-extra-r1c1,.tow-calc-extra-r1c2,.tow-calc-extra-r2c1,.tow-calc-extra-r2c2,.tow-calc-extra-r3c1,.tow-calc-extra-r3c2{grid-row:auto;grid-column:auto;height:auto;align-self:auto;}}
+@media(max-width:640px){.tow-calc-grid{grid-template-columns:1fr;}.tow-calc-extras-grid{grid-template-columns:1fr;}}
 
 .rev-card{background:var(--b3);border:1px solid var(--b4);border-radius:14px;padding:24px;position:relative;transition:.3s;}
 .rev-card:hover{border-color:rgba(255,209,0,.3);transform:translateY(-3px);}
@@ -770,21 +765,21 @@ label.tow-calc-check span{line-height:1.25;}
             <div class="tow-calc-extras">
               <p class="tow-calc-extras-title" data-t="tow_calc_extras">Dodatkowe opcje</p>
               <div class="tow-calc-extras-grid">
-                <div class="tow-calc-extra-r1c1 tow-calc-wheels-cell">
-                  <div class="tow-calc-wheels-stack">
-                    <span id="tow-wheels-label" class="tow-wheels-label">Zablokowane koło</span>
-                    <div class="tow-calc-wheels-step" id="tow-wheels-step">
-                      <button type="button" id="tow-wheels-minus" aria-label="−">−</button>
-                      <span id="tow-wheels-count">0</span>
-                      <button type="button" id="tow-wheels-plus" aria-label="+">+</button>
-                    </div>
+                <div class="tow-calc-wheels-cell">
+                  <span class="tow-calc-wheels-gap" aria-hidden="true"></span>
+                  <span id="tow-wheels-label" class="tow-wheels-label" data-t="tow_calc_wheels0">Zablokowane koło</span>
+                  <div class="tow-calc-wheels-step" id="tow-wheels-step">
+                    <button type="button" id="tow-wheels-minus" aria-label="−">−</button>
+                    <span id="tow-wheels-count">0</span>
+                    <button type="button" id="tow-wheels-plus" aria-label="+">+</button>
                   </div>
+                  <span id="tow-wheels-price" class="tow-wheels-price" aria-live="polite"></span>
                 </div>
-                <label class="tow-calc-extra-r1c2 tow-calc-check"><input type="checkbox" id="tow-jeep"> <span data-t="tow_calc_jeep">SUV (+50 zł)</span></label>
-                <label class="tow-calc-extra-r2c1 tow-calc-check"><input type="checkbox" id="tow-lowered"> <span data-t="tow_calc_lowered">Niskie auto (+50 zł)</span></label>
-                <label class="tow-calc-extra-r2c2 tow-calc-check"><input type="checkbox" id="tow-bus-short"> <span data-t="tow_calc_bus_short">Bus (+50)</span></label>
-                <label class="tow-calc-extra-r3c1 tow-calc-check"><input type="checkbox" id="tow-parking"> <span data-t="tow_calc_parking">Z parkingu podziemnego −1 (+200 zł)</span></label>
-                <label class="tow-calc-extra-r3c2 tow-calc-check"><input type="checkbox" id="tow-bus-long"> <span data-t="tow_calc_bus_long">Długi Bus maxi (+150)</span></label>
+                <label class="tow-calc-check"><input type="checkbox" id="tow-jeep"> <span data-t="tow_calc_jeep">SUV (+50 zł)</span></label>
+                <label class="tow-calc-check"><input type="checkbox" id="tow-lowered"> <span data-t="tow_calc_lowered">Niskie auto (+50 zł)</span></label>
+                <label class="tow-calc-check"><input type="checkbox" id="tow-bus-short"> <span data-t="tow_calc_bus_short">Bus (+50)</span></label>
+                <label class="tow-calc-check"><input type="checkbox" id="tow-parking"> <span data-t="tow_calc_parking">Z parkingu podziemnego −1 (+200 zł)</span></label>
+                <label class="tow-calc-check"><input type="checkbox" id="tow-bus-long"> <span data-t="tow_calc_bus_long">Długi Bus maxi (+150)</span></label>
               </div>
             </div>
           </div>
@@ -1618,10 +1613,10 @@ pl:{
   tow_calc_bus_short:"Bus (+50)",
   tow_calc_bus_long:"Długi Bus maxi (+150)",
   tow_calc_wheels0:"Zablokowane koło",
-  tow_calc_wheels1:"Zablokowane koło (+50)",
-  tow_calc_wheels2:"Zablokowane koła (+100)",
-  tow_calc_wheels3:"Zablokowane koła (+150)",
-  tow_calc_wheels4:"Zablokowane koła (+200)",
+  tow_calc_wheels1:"Zablokowane koło (+50 zł)",
+  tow_calc_wheels2:"Zablokowane koła (+100 zł)",
+  tow_calc_wheels3:"Zablokowane koła (+150 zł)",
+  tow_calc_wheels4:"Zablokowane koła (+200 zł)",
   tow_calc_est:"Szacunkowa cena",
   tow_calc_individual:"Indywidualna wycena — zadzwoń:",
   tow_calc_enter_route:"Wpisz skąd i dokąd — trasa policzy się automatycznie.",
@@ -1947,10 +1942,10 @@ en:{
   tow_calc_bus_short:"Bus (+50)",
   tow_calc_bus_long:"Long maxi bus (+150)",
   tow_calc_wheels0:"Locked wheel",
-  tow_calc_wheels1:"Locked wheel (+50)",
-  tow_calc_wheels2:"Locked wheels (+100)",
-  tow_calc_wheels3:"Locked wheels (+150)",
-  tow_calc_wheels4:"Locked wheels (+200)",
+  tow_calc_wheels1:"Locked wheel (+50 PLN)",
+  tow_calc_wheels2:"Locked wheels (+100 PLN)",
+  tow_calc_wheels3:"Locked wheels (+150 PLN)",
+  tow_calc_wheels4:"Locked wheels (+200 PLN)",
   tow_calc_est:"Estimated price",
   tow_calc_individual:"Individual quote — call:",
   tow_calc_enter_route:"Enter from and to — the route calculates automatically.",
@@ -2222,10 +2217,10 @@ ru:{
   tow_calc_bus_short:"Бус (+50)",
   tow_calc_bus_long:"Длинный бус maxi (+150)",
   tow_calc_wheels0:"Заблокированное колесо",
-  tow_calc_wheels1:"Заблокированное колесо (+50)",
-  tow_calc_wheels2:"Заблокированных колеса (+100)",
-  tow_calc_wheels3:"Заблокированных колеса (+150)",
-  tow_calc_wheels4:"Заблокированных колеса (+200)",
+  tow_calc_wheels1:"Заблокированное колесо (+50 zł)",
+  tow_calc_wheels2:"Заблокированных колеса (+100 zł)",
+  tow_calc_wheels3:"Заблокированных колеса (+150 zł)",
+  tow_calc_wheels4:"Заблокированных колеса (+200 zł)",
   tow_calc_est:"Ориентировочная цена",
   tow_calc_individual:"Индивидуальный расчёт — звоните:",
   tow_calc_enter_route:"Укажите откуда и куда — маршрут посчитается автоматически.",
@@ -2598,10 +2593,10 @@ ua:{
   tow_calc_bus_short:"Бус (+50)",
   tow_calc_bus_long:"Довгий бус maxi (+150)",
   tow_calc_wheels0:"Заблоковане колесо",
-  tow_calc_wheels1:"Заблоковане колесо (+50)",
-  tow_calc_wheels2:"Заблокованих колеса (+100)",
-  tow_calc_wheels3:"Заблокованих колеса (+150)",
-  tow_calc_wheels4:"Заблокованих колеса (+200)",
+  tow_calc_wheels1:"Заблоковане колесо (+50 zł)",
+  tow_calc_wheels2:"Заблокованих колеса (+100 zł)",
+  tow_calc_wheels3:"Заблокованих колеса (+150 zł)",
+  tow_calc_wheels4:"Заблокованих колеса (+200 zł)",
   tow_calc_est:"Орієнтовна ціна",
   tow_calc_individual:"Індивідуальний розрахунок — телефонуйте:",
   tow_calc_enter_route:"Вкажіть звідки і куди — маршрут порахується автоматично.",
@@ -4440,9 +4435,18 @@ function towSetRouteKm(km){
 function towSyncWheelsUi(){
   var wheelsCountEl=document.getElementById('tow-wheels-count');
   var wheelsLabel=document.getElementById('tow-wheels-label');
+  var wheelsPrice=document.getElementById('tow-wheels-price');
   if(wheelsCountEl)wheelsCountEl.textContent=String(towCalcWheelsCount);
   if(wheelsLabel){
     wheelsLabel.textContent=towT('tow_calc_wheels0','Zablokowane koło');
+  }
+  if(wheelsPrice){
+    if(towCalcWheelsCount>0){
+      var amt=towCalcWheelsCount*50;
+      wheelsPrice.textContent='+'+amt+(CL==='en'?' PLN':' zł');
+    }else{
+      wheelsPrice.textContent='';
+    }
   }
 }
 
