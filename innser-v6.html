@@ -248,6 +248,9 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
 @media(max-width:768px){.svc-detail-body{grid-template-columns:1fr;}.svc-detail-hero{flex-direction:column;text-align:center;}.svc-detail-hero-img{width:100%;max-width:360px;height:200px;margin:0 auto 4px;}}
 #p-prices .sc .sh{color:var(--y);}
 #p-prices .prices-abroad-note{color:var(--gl);font-size:.92rem;margin:-4px auto 12px;max-width:580px;line-height:1.45;}
+#p-prices .prices-abroad-links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 14px;margin-top:10px;}
+#p-prices .prices-abroad-links a{color:var(--y);font-weight:600;text-decoration:none;white-space:nowrap;}
+#p-prices .prices-abroad-links a:hover{color:var(--yl);text-decoration:underline;}
 .tow-calc{margin:24px 0 0;padding:0;background:transparent;border:none;border-radius:0;}
 .tow-calc-form{display:flex;flex-direction:column;gap:16px;}
 .tow-calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
@@ -735,7 +738,7 @@ label.tow-calc-extras-slot input{margin:0;accent-color:var(--y);flex-shrink:0;wi
 
 <div class="page" id="p-prices">
 <section class="sec svc-bg"><div class="mx" style="max-width:860px;">
-  <div class="sc"><span class="stag" data-t="prices_tag">Cennik</span><h1 class="sh" data-t="prices_title">CENY I KALKULATOR HOLOWANIA</h1><p class="prices-abroad-note" data-t="prices_abroad">Poza granicami Polski wycena wyłącznie indywidualnie — zadzwoń: 506-001-057.</p><p class="sd" data-t="prices_desc">Wpisz skąd–dokąd lub dystans w km — zobaczysz orientacyjną cenę. Dokładna wycena: 506-001-057.</p></div>
+  <div class="sc"><span class="stag" data-t="prices_tag">Cennik</span><h1 class="sh" data-t="prices_title">CENY I KALKULATOR HOLOWANIA</h1><p class="prices-abroad-note"><span data-t="prices_abroad">Transport samochodu lawetą za granicę — wycena tylko telefoniczna!</span><span class="prices-abroad-links"><a href="tel:+48506001057">506-001-057</a><a href="https://wa.me/48506001057" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="viber://chat?number=%2B48506001057">Viber</a><a href="https://t.me/%2B48506001057" target="_blank" rel="noopener noreferrer">Telegram</a><a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">FB</a></span></p><p class="sd" data-t="prices_desc">Wpisz skąd–dokąd lub dystans w km — zobaczysz orientacyjną cenę. Dokładna wycena: 506-001-057.</p></div>
         <div class="tow-calc" id="tow-calc">
           <div class="tow-calc-form">
             <div class="tow-calc-grid">
@@ -1341,7 +1344,7 @@ pl:{
   abt_vis_sub:"Pomoc Drogowa Warszawa 24h",abt_badge:"Zaufaj profesjonalistom",
   gal_tag:"Galeria",gal_title:"ZDJĘCIA Z NASZYCH AKCJI",gal_desc:"Profesjonalna pomoc drogowa w Warszawie.",gal_seo_title:"Galeria zdjęć — laweta Warszawa, holowanie 24/7 | INNSER",gal_seo_desc:"Zdjęcia z akcji INNSER: laweta Warszawa, holowanie aut, ewakuator 24/7, transport SUV i luksusowych aut, pomoc po wypadku, skup aut. Tel. 506-001-057.",gal_keywords:"laweta warszawa, holowanie warszawa, ewakuator warszawa, pomoc drogowa warszawa, autolaweta warszawa, holowanie powypadkowe, skup aut warszawa, zdjęcia lawety",gal_more:"Więcej zdjęć wkrótce...",
   map_tag:"Lokalizacja",map_title:"NASZA LOKALIZACJA",map_desc:"Baza INNSER w Warszawie. Zasięg do 500 km.",
-  prices_tag:"Cennik",prices_title:"CENY I KALKULATOR HOLOWANIA",prices_abroad:"Poza granicami Polski wycena wyłącznie indywidualnie — zadzwoń: 506-001-057.",prices_desc:"Wpisz skąd–dokąd lub dystans w km — zobaczysz orientacyjną cenę. Dokładna wycena: 506-001-057.",prices_calc_link:"Kalkulator wyceny holowania →",
+  prices_tag:"Cennik",prices_title:"CENY I KALKULATOR HOLOWANIA",prices_abroad:"Transport samochodu lawetą za granicę — wycena tylko telefoniczna!",prices_desc:"Wpisz skąd–dokąd lub dystans w km — zobaczysz orientacyjną cenę. Dokładna wycena: 506-001-057.",prices_calc_link:"Kalkulator wyceny holowania →",
   blog_tag:"Blog",blog_title:"PORADY I AKTUALNOŚCI",blog_desc:"Porady o <strong>awarii aut</strong>, <strong>lawecie</strong>, <strong>holowaniu</strong> i <strong>pomocy drogowej Warszawa</strong>.",
   b1_t:"Co robić gdy <strong>auto nie odpala zimą</strong>?",b1_d:"Poradnik: <strong>odpalanie</strong>, akumulator, <strong>pomoc drogowa</strong> w mroźne dni.",
   b2_t:"Jak bezpiecznie czekać na <strong>pomoc drogową</strong>?",b2_d:"Bezpieczeństwo na drodze przy awarii — pas, trójkąt, <strong>holowanie</strong>.",
@@ -1670,7 +1673,7 @@ en:{
   abt_vis_sub:"Roadside Assistance Warsaw 24h",abt_badge:"Trust the professionals",
   gal_tag:"Gallery",gal_title:"PHOTOS FROM OUR WORK",gal_desc:"Professional roadside assistance in Warsaw.",gal_seo_title:"Photo gallery — tow truck Warsaw, flatbed towing 24/7 | INNSER",gal_seo_desc:"Real INNSER jobs: flatbed towing Warsaw, roadside assistance 24/7, luxury car transport, accident recovery, cash for cars. Call 506-001-057.",gal_keywords:"tow truck warsaw, flatbed towing warsaw, roadside assistance warsaw, car towing warsaw, accident recovery warsaw, cash for cars warsaw, tow truck photos",gal_more:"More photos coming soon...",
   map_tag:"Location",map_title:"OUR LOCATION",map_desc:"INNSER base in Warsaw. Coverage up to 500 km.",
-  prices_tag:"Pricing",prices_title:"PRICES & TOW CALCULATOR",prices_abroad:"Beyond Poland — quote by phone only, individually: 506-001-057.",prices_desc:"Enter from–to or distance in km for an estimated price. Exact quote: 506-001-057.",prices_calc_link:"Tow price calculator →",
+  prices_tag:"Pricing",prices_title:"PRICES & TOW CALCULATOR",prices_abroad:"Car transport by flatbed abroad — quote by phone only!",prices_desc:"Enter from–to or distance in km for an estimated price. Exact quote: 506-001-057.",prices_calc_link:"Tow price calculator →",
   blog_tag:"Blog",blog_title:"TIPS AND NEWS",blog_desc:"Tips on <strong>breakdowns</strong>, <strong>flatbed towing</strong>, <strong>towing</strong> and <strong>roadside assistance Warsaw</strong>.",
   b1_t:"When your <strong>car won't start in winter</strong>",b1_d:"<strong>Jump start</strong>, battery & <strong>roadside help</strong> in cold weather.",
   b2_t:"Waiting safely for <strong>roadside assistance</strong>",b2_d:"Hard shoulder, triangle, <strong>towing</strong> — safety rules.",
@@ -1993,7 +1996,7 @@ ru:{
   abt_vis_sub:"Эвакуатор Круглосуточный Варшава",abt_badge:"Доверьтесь профессионалам",
   gal_tag:"Галерея",gal_title:"ФОТО НАШИХ РАБОТ",gal_desc:"Круглосуточный эвакуатор Варшава.",gal_seo_title:"Галерея фото — эвакуатор Варшава 24/7 | INNSER",gal_seo_desc:"Фото реальных выездов INNSER: эвакуатор Варшава, эвакуация авто 24/7, перевозка премиум авто, эвакуация после ДТП, скуп авто. Тел. 506-001-057.",gal_keywords:"эвакуатор варшава, евакуатор варшава, evakuator warszawa, эвакуация автомобиля варшава, помощь на дороге варшава, эвакуация после дтп, скуп авто варшава, фото эвакуатора",gal_more:"Больше фото скоро...",
   map_tag:"Местоположение",map_title:"НАШ АДРЕС",map_desc:"База в Варшаве. Радиус 500 км.",
-  prices_tag:"Цены",prices_title:"ЦЕНЫ И КАЛЬКУЛЯТОР ЭВАКУАЦИИ",prices_abroad:"За пределами Польши — расчёт только по телефону, индивидуально: 506-001-057.",prices_desc:"Укажите откуда–куда или км — увидите ориентировочную цену. Точный расчёт: 506-001-057.",prices_calc_link:"Калькулятор стоимости эвакуации →",
+  prices_tag:"Цены",prices_title:"ЦЕНЫ И КАЛЬКУЛЯТОР ЭВАКУАЦИИ",prices_abroad:"Перевозка автомобиля эвакуатором за границу — расчёт только по телефону!",prices_desc:"Укажите откуда–куда или км — увидите ориентировочную цену. Точный расчёт: 506-001-057.",prices_calc_link:"Калькулятор стоимости эвакуации →",
   blog_tag:"Блог",blog_title:"СОВЕТЫ И НОВОСТИ",blog_desc:"Советы по поломкам и эвакуации.",
   b1_t:"Что делать если авто не заводится зимой?",b1_d:"Инструкция в мороз.",
   b2_t:"Как безопасно ждать помощь?",b2_d:"Правила безопасности.",
@@ -2321,7 +2324,7 @@ ua:{
   abt_vis_sub:"Евакуатор Варшава Цілодобовий",abt_badge:"Довіртесь професіоналам",
   gal_tag:"Галерея",gal_title:"ФОТО НАШИХ РОБІТ",gal_desc:"Евакуатор та допомога на дорозі у Варшаві.",gal_seo_title:"Галерея фото — евакуатор Варшава 24/7 | INNSER",gal_seo_desc:"Фото реальних виїздів INNSER: евакуатор Варшава, евакуація авто 24/7, перевезення преміум авто, евакуація після ДТП, викуп авто. Тел. 506-001-057.",gal_keywords:"евакуатор варшава, євакуатор варшава, эвакуатор варшава, evakuator warszawa, евакуація авто варшава, допомога на дорозі варшава, евакуація після дтп, викуп авто варшава, фото евакуатора",gal_more:"Більше фото незабаром...",
   map_tag:"Розташування",map_title:"НАША АДРЕСА",map_desc:"База у Варшаві. Радіус 500 км.",
-  prices_tag:"Ціни",prices_title:"ЦІНИ ТА КАЛЬКУЛЯТОР ЕВАКУАЦІЇ",prices_abroad:"За межами Польщі — розрахунок лише телефоном, індивідуально: 506-001-057.",prices_desc:"Вкажіть звідки–куди або км — побачите орієнтовну ціну. Точний розрахунок: 506-001-057.",prices_calc_link:"Калькулятор вартості евакуації →",
+  prices_tag:"Ціни",prices_title:"ЦІНИ ТА КАЛЬКУЛЯТОР ЕВАКУАЦІЇ",prices_abroad:"Перевезення автомобіля евакuatorom за кордон — розрахунок лише телефоном!",prices_desc:"Вкажіть звідки–куди або км — побачите орієнтовну ціну. Точний розрахунок: 506-001-057.",prices_calc_link:"Калькулятор вартості евакуації →",
   blog_tag:"Блог",blog_title:"ПОРАДИ ТА НОВИНИ",blog_desc:"Поради щодо поломок.",
   b1_t:"Що робити якщо авто не заводиться взимку?",b1_d:"Інструкція в мороз.",
   b2_t:"Як безпечно чекати допомогу?",b2_d:"Правила безпеки.",
