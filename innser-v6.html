@@ -4244,7 +4244,6 @@ var towCalcLeafletMap=null;
 var towCalcLeafletRouteLayer=null;
 var towCalcLeafletMarkers=[];
 var towCalcLeafletLoadPromise=null;
-var towCalcRouteTimer=null;
 var towCalcWheelsCount=0;
 
 var towGmSoftDarkStyles=[
@@ -4702,11 +4701,7 @@ function towBindOsmAutocomplete(inputId,listId){
             input.dataset.lat=String(it.lat);
             input.dataset.lon=String(it.lon);
             towHideAcList(listId);
-            if(document.getElementById('tow-from')&&document.getElementById('tow-to')){
-              var to=document.getElementById('tow-to');
-              if(inputId==='tow-from'&&to&&to.value.trim())towCalcComputeRoute();
-              else if(inputId==='tow-to'&&document.getElementById('tow-from').value.trim())towCalcComputeRoute();
-            }
+            towTryComputeRoute();
           });
           list.appendChild(li);
         });
@@ -4720,10 +4715,12 @@ function towBindOsmAutocomplete(inputId,listId){
   });
 }
 
-function towResolvePoint(input){
+function towResolvePoint(input,opts){
+  opts=opts||{};
   if(!input)return Promise.resolve(null);
   var lat=input.dataset.lat,lon=input.dataset.lon;
   if(lat&&lon)return Promise.resolve({lat:parseFloat(lat),lon:parseFloat(lon),label:input.value.trim()});
+  if(!opts.geocode)return Promise.resolve(null);
   var q=input.value.trim();
   if(!q)return Promise.resolve(null);
   return towPhotonSearch(q).then(function(items){
@@ -4734,6 +4731,26 @@ function towResolvePoint(input){
     input.dataset.lon=String(best.lon);
     return best;
   });
+}
+
+function towStorePlaceCoords(input,place){
+  if(!input)return;
+  if(place&&place.geometry&&place.geometry.location){
+    input.dataset.lat=String(place.geometry.location.lat());
+    input.dataset.lon=String(place.geometry.location.lng());
+  }else{
+    delete input.dataset.lat;
+    delete input.dataset.lon;
+  }
+}
+
+function towTryComputeRoute(){
+  var fromInput=document.getElementById('tow-from');
+  var toInput=document.getElementById('tow-to');
+  if(!fromInput||!toInput)return;
+  if(fromInput.dataset.lat&&fromInput.dataset.lon&&toInput.dataset.lat&&toInput.dataset.lon){
+    towCalcComputeRoute();
+  }
 }
 
 function towOsmRouteFetch(from,to){
@@ -4789,49 +4806,29 @@ function towCalcGoogleRoute(){
   });
 }
 
-function towScheduleRouteCompute(delay){
-  clearTimeout(towCalcRouteTimer);
-  towCalcRouteTimer=setTimeout(function(){
-    var fromInput=document.getElementById('tow-from');
-    var toInput=document.getElementById('tow-to');
-    if(!fromInput||!toInput)return;
-    if(fromInput.value.trim().length>=3&&toInput.value.trim().length>=3){
-      towCalcComputeRoute();
-    }
-  },delay==null?750:delay);
-}
-
 function towBindRouteAutoCompute(){
   ['tow-from','tow-to'].forEach(function(id){
     var el=document.getElementById(id);
     if(!el||el.dataset.routeAuto==='1')return;
     el.dataset.routeAuto='1';
-    el.addEventListener('input',function(){
-      towScheduleRouteCompute(750);
-    });
     el.addEventListener('keydown',function(e){
       if(e.key==='Enter'){
         e.preventDefault();
-        clearTimeout(towCalcRouteTimer);
-        towCalcComputeRoute();
-      }
-    });
-    el.addEventListener('blur',function(){
-      var from=document.getElementById('tow-from');
-      var to=document.getElementById('tow-to');
-      if(from&&to&&from.value.trim()&&to.value.trim()){
-        clearTimeout(towCalcRouteTimer);
-        towScheduleRouteCompute(250);
+        towCalcComputeRoute({geocode:true});
       }
     });
   });
 }
 
-function towCalcComputeRoute(){
-  clearTimeout(towCalcRouteTimer);
+function towCalcComputeRoute(opts){
+  opts=opts||{};
+  var geocode=!!opts.geocode;
   var fromInput=document.getElementById('tow-from');
   var toInput=document.getElementById('tow-to');
   if(!fromInput||!toInput)return;
+  if(!geocode){
+    if(!fromInput.dataset.lat||!fromInput.dataset.lon||!toInput.dataset.lat||!toInput.dataset.lon)return;
+  }
   var fromTxt=fromInput.value.trim();
   var toTxt=toInput.value.trim();
   if(!fromTxt||!toTxt){
@@ -4840,7 +4837,7 @@ function towCalcComputeRoute(){
   }
   towSetRouteStatus(towT('tow_calc_loading','Liczenie trasy…'));
   towHideAllAcLists();
-  var chain=Promise.all([towResolvePoint(fromInput),towResolvePoint(toInput)]).then(function(pts){
+  var chain=Promise.all([towResolvePoint(fromInput,{geocode:geocode}),towResolvePoint(toInput,{geocode:geocode})]).then(function(pts){
     if(!pts[0]||!pts[1])throw new Error('geocode');
     if(towCalcUseGoogle&&towCalcDirections){
       return towCalcGoogleRoute().then(function(km){
@@ -4906,17 +4903,15 @@ function setupTowCalcMaps(key){
   if(fromInput){
     var fromAc=new google.maps.places.Autocomplete(fromInput,acOpts);
     fromAc.addListener('place_changed',function(){
-      delete fromInput.dataset.lat;
-      delete fromInput.dataset.lon;
-      towCalcComputeRoute();
+      towStorePlaceCoords(fromInput,fromAc.getPlace());
+      towTryComputeRoute();
     });
   }
   if(toInput){
     var toAc=new google.maps.places.Autocomplete(toInput,acOpts);
     toAc.addListener('place_changed',function(){
-      delete toInput.dataset.lat;
-      delete toInput.dataset.lon;
-      towCalcComputeRoute();
+      towStorePlaceCoords(toInput,toAc.getPlace());
+      towTryComputeRoute();
     });
   }
 }
