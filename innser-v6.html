@@ -287,9 +287,9 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
 .tow-calc-extras-col>.tow-calc-check:last-child{align-items:flex-start;min-height:36px;}
 .tow-calc-extras-col .tow-calc-wheels-row{width:100%;}
 .tow-calc-wheels-row{align-items:center;}
-.tow-calc-wheels-wrap{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;}
-.tow-calc-wheels-wrap>label{display:flex;align-items:flex-start;gap:8px;margin:0;cursor:pointer;line-height:1.4;flex:0 1 auto;}
-.tow-calc-wheels-wrap>label input{margin-top:3px;accent-color:var(--y);flex-shrink:0;}
+.tow-calc-wheels-wrap{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;width:100%;}
+.tow-calc-wheels-row .tow-calc-wheels-wrap{padding-left:24px;box-sizing:border-box;}
+.tow-wheels-label{font-size:.86rem;color:var(--gl);line-height:1.4;display:inline-block;width:10.6em;white-space:nowrap;}
 #tow-wheels-label{display:inline-block;width:10.6em;white-space:nowrap;}
 .tow-calc-wheels-step{display:inline-flex;align-items:center;border:1px solid var(--b4);border-radius:8px;overflow:hidden;flex-shrink:0;}
 .tow-calc-wheels-step button{background:var(--b3);border:none;color:var(--w);width:28px;height:28px;cursor:pointer;font-size:1rem;line-height:1;padding:0;font-family:inherit;}
@@ -766,8 +766,8 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
                 <div class="tow-calc-extras-col">
                   <div class="tow-calc-check tow-calc-wheels-row">
                     <div class="tow-calc-wheels-wrap">
-                      <label><input type="checkbox" id="tow-wheels-on"> <span id="tow-wheels-label">Zablokowane koło</span></label>
-                      <div class="tow-calc-wheels-step" id="tow-wheels-step" hidden>
+                      <span id="tow-wheels-label" class="tow-wheels-label">Zablokowane koło</span>
+                      <div class="tow-calc-wheels-step" id="tow-wheels-step">
                         <button type="button" id="tow-wheels-minus" aria-label="−">−</button>
                         <span id="tow-wheels-count">0</span>
                         <button type="button" id="tow-wheels-plus" aria-label="+">+</button>
@@ -4419,11 +4419,8 @@ function towSetRouteKm(km){
 }
 
 function towSyncWheelsUi(){
-  var wheelsOn=document.getElementById('tow-wheels-on');
-  var wheelsStep=document.getElementById('tow-wheels-step');
   var wheelsCountEl=document.getElementById('tow-wheels-count');
   var wheelsLabel=document.getElementById('tow-wheels-label');
-  if(wheelsStep)wheelsStep.hidden=!(wheelsOn&&wheelsOn.checked);
   if(wheelsCountEl)wheelsCountEl.textContent=String(towCalcWheelsCount);
   if(wheelsLabel){
     var keys=['tow_calc_wheels0','tow_calc_wheels1','tow_calc_wheels2','tow_calc_wheels3','tow_calc_wheels4'];
@@ -4434,8 +4431,7 @@ function towSyncWheelsUi(){
 function calcTowExtras(){
   var extras=0;
   var lines=[];
-  var wheelsOn=document.getElementById('tow-wheels-on');
-  var wheels=(wheelsOn&&wheelsOn.checked)?towCalcWheelsCount:0;
+  var wheels=towCalcWheelsCount;
   if(wheels>0){
     var wCost=wheels*50;
     extras+=wCost;
@@ -4938,14 +4934,10 @@ function initTowCalc(){
   var root=document.getElementById('tow-calc');
   if(!root||root.dataset.bound==='1')return;
   root.dataset.bound='1';
-  ['tow-lowered','tow-jeep','tow-parking','tow-wheels-on'].forEach(function(id){
+  ['tow-lowered','tow-jeep','tow-parking'].forEach(function(id){
     var el=document.getElementById(id);
     if(!el)return;
     el.addEventListener('change',function(){
-      if(id==='tow-wheels-on'&&el.checked){
-        towCalcWheelsCount=0;
-        towSyncWheelsUi();
-      }
       updateTowCalcPrice();
     });
   });
