@@ -816,25 +816,7 @@ ${faviconHeadBlock()}
 <meta name="twitter:description" content="Tania pomoc drogowa i tania laweta Warszawa — holowanie, autolaweta HDS, skup aut, złomowanie, odpalanie, wymiana koła 24/7. Zadzwoń: 506-001-057">
 <meta name="twitter:image" content="${ogImg}">
 <script>
-(function(){
-  try{
-    var saved = localStorage.getItem('innser_lang');
-    if(saved === 'ua') saved = 'uk';
-    if(saved && /^(pl|en|ru|uk)$/.test(saved)){
-      location.replace('/' + saved + '/');
-      return;
-    }
-  }catch(e){}
-  var langs = (typeof navigator.languages !== 'undefined' && navigator.languages && navigator.languages.length) ? Array.prototype.slice.call(navigator.languages) : [navigator.language || navigator.userLanguage || 'pl'];
-  var code = 'en';
-  for (var li = 0; li < langs.length; li++) {
-    var nav = String(langs[li] || '').toLowerCase();
-    if (nav.indexOf('ru') === 0) { code = 'ru'; break; }
-    if (nav.indexOf('uk') === 0 || nav.indexOf('ua') === 0) { code = 'uk'; break; }
-    if (nav.indexOf('pl') === 0) { code = 'pl'; break; }
-  }
-  location.replace('/' + code + '/');
-})();
+location.replace('/pl/');
 </script>
 <noscript><meta http-equiv="refresh" content="0;url=/pl/"></noscript>
 </head>
@@ -1029,6 +1011,7 @@ function writeNetlifyRedirects(html) {
   lines.push(`/ua/*  ${SITE}/uk/:splat  301`);
   lines.push(`/ua/  ${SITE}/uk/  301`);
   lines.push(`/ua  ${SITE}/uk/  301`);
+  lines.push(`/  ${SITE}/pl/  301`);
   // Старые URL прежнего сайта/шаблона (product-page, book-online…) — не из innser-v6; 301 на корень локали.
   lines.push('# legacy paths (demo store) → locale home');
   for (const seg of ['pl', 'en', 'ru', 'uk']) {
@@ -1080,6 +1063,7 @@ function writeVercelProjectJson(html) {
   const redirects = [
     ...legacyFaviconToCanonical,
     ...legacyRedirects,
+    { source: '/', destination: '/pl/', permanent: true },
     { source: '/ua/:path*', destination: '/uk/:path*', permanent: true },
     { source: '/ua/', destination: '/uk/', permanent: true },
     { source: '/ua', destination: '/uk/', permanent: true },
