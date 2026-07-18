@@ -71,11 +71,6 @@
       "statusCode": 301
     },
     {
-      "source": "/",
-      "destination": "/pl/",
-      "permanent": true
-    },
-    {
       "source": "/ua/:path*",
       "destination": "/uk/:path*",
       "permanent": true
