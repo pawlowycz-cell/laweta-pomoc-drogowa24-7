@@ -1,5 +1,7 @@
 /** Warsaw districts for local SEO landing pages (/pl/dzielnice/{slug}/). */
 
+import { renderDistrictRichHtml } from './districts-content.mjs';
+
 const LANGS = ['pl', 'en', 'ru', 'ua'];
 
 const NAMES = {
@@ -347,8 +349,7 @@ export function renderDistrictStaticHtml(lang, slug, localePathSeg) {
     })
     .join('\n');
   return `<h1 class="sh">${esc(c.h1(n))}</h1>
-<p class="sd">${esc(c.intro(n, d.feature[lang] || d.feature.pl))}</p>
-<p>${esc(c.p2(n))}</p>
+${renderDistrictRichHtml(lang, slug)}
 <h2 class="ar-title">${esc(c.svc)}</h2>
 <ul class="dist-links">${svcItems}</ul>
 <h2 class="ar-title">${esc(c.near(n))}</h2>

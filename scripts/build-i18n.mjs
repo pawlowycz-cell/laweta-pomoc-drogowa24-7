@@ -24,6 +24,7 @@ import {
   renderDistrictStaticHtml,
   renderDistrictsIndexStaticHtml,
 } from './districts-data.mjs';
+import { districtRichJsonForRuntime } from './districts-content.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.join(__dirname, '..');
@@ -619,7 +620,9 @@ function injectDistrictStaticBlock(html, langCl, localePathSeg, tail) {
 
 function injectDistrictsRuntimeData(html) {
   const json = districtsJsonForRuntime();
-  return html.replace(/var DISTRICTS=\[\];/, `var DISTRICTS=${json};`);
+  html = html.replace(/var DISTRICTS=\[\];/, `var DISTRICTS=${json};`);
+  const richJson = districtRichJsonForRuntime();
+  return html.replace(/var DISTRICT_RICH=\{\};/, `var DISTRICT_RICH=${richJson};`);
 }
 
 /** Real href on a[data-p] for crawlers (nav, footer, CTAs). */
