@@ -196,6 +196,46 @@
       "permanent": true
     },
     {
+      "source": "/pl/map",
+      "destination": "/pl/about/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/map/",
+      "destination": "/pl/about/",
+      "permanent": true
+    },
+    {
+      "source": "/en/map",
+      "destination": "/en/about/",
+      "permanent": true
+    },
+    {
+      "source": "/en/map/",
+      "destination": "/en/about/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/map",
+      "destination": "/ru/about/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/map/",
+      "destination": "/ru/about/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/map",
+      "destination": "/uk/about/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/map/",
+      "destination": "/uk/about/",
+      "permanent": true
+    },
+    {
       "source": "/pl",
       "destination": "/pl/",
       "permanent": true
@@ -233,11 +273,6 @@
     {
       "source": "/pl/about",
       "destination": "/pl/about/",
-      "permanent": true
-    },
-    {
-      "source": "/pl/map",
-      "destination": "/pl/map/",
       "permanent": true
     },
     {
@@ -476,11 +511,6 @@
       "permanent": true
     },
     {
-      "source": "/en/map",
-      "destination": "/en/map/",
-      "permanent": true
-    },
-    {
       "source": "/en/contact",
       "destination": "/en/contact/",
       "permanent": true
@@ -713,11 +743,6 @@
     {
       "source": "/ru/about",
       "destination": "/ru/about/",
-      "permanent": true
-    },
-    {
-      "source": "/ru/map",
-      "destination": "/ru/map/",
       "permanent": true
     },
     {
@@ -956,11 +981,6 @@
       "permanent": true
     },
     {
-      "source": "/uk/map",
-      "destination": "/uk/map/",
-      "permanent": true
-    },
-    {
       "source": "/uk/contact",
       "destination": "/uk/contact/",
       "permanent": true
@@ -1186,10 +1206,6 @@
       "destination": "/pl/about/index.html"
     },
     {
-      "source": "/pl/map/",
-      "destination": "/pl/map/index.html"
-    },
-    {
       "source": "/pl/contact/",
       "destination": "/pl/contact/index.html"
     },
@@ -1372,10 +1388,6 @@
     {
       "source": "/en/about/",
       "destination": "/en/about/index.html"
-    },
-    {
-      "source": "/en/map/",
-      "destination": "/en/map/index.html"
     },
     {
       "source": "/en/contact/",
@@ -1562,10 +1574,6 @@
       "destination": "/ru/about/index.html"
     },
     {
-      "source": "/ru/map/",
-      "destination": "/ru/map/index.html"
-    },
-    {
       "source": "/ru/contact/",
       "destination": "/ru/contact/index.html"
     },
@@ -1748,10 +1756,6 @@
     {
       "source": "/uk/about/",
       "destination": "/uk/about/index.html"
-    },
-    {
-      "source": "/uk/map/",
-      "destination": "/uk/map/index.html"
     },
     {
       "source": "/uk/contact/",

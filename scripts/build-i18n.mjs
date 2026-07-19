@@ -40,7 +40,7 @@ const PUBLIC_SRC = path.join(REPO_ROOT, 'public');
 
 const SITE = 'https://www.warszawa-laweta.com';
 /** SPA-вкладки меню с отдельным URL (как gallery/blog) — синхрон с INNSER_NAV_PAGES в innser-v6.html */
-const NAV_PAGE_TAILS = ['services', 'prices', 'about', 'map', 'contact', 'partners'];
+const NAV_PAGE_TAILS = ['services', 'prices', 'about', 'contact', 'partners'];
 const PRIVACY_PAGE_TAIL = 'polityka-prywatnosci';
 
 /**
@@ -1075,7 +1075,7 @@ function writeSitemapAndRobots(html) {
     if (tail === 'dzielnice' || tail === 'blog' || tail === 'services' || tail === 'contact' || tail === 'prices')
       return '0.85';
     if (String(tail).startsWith('dzielnice/')) return '0.82';
-    if (tail === 'gallery' || tail === 'about' || tail === 'map' || tail === 'partners' || tail === PRIVACY_PAGE_TAIL) return '0.82';
+    if (tail === 'gallery' || tail === 'about' || tail === 'partners' || tail === PRIVACY_PAGE_TAIL) return '0.82';
     if (String(tail).startsWith('blog/')) return '0.75';
     return '0.8';
   }
@@ -1163,6 +1163,11 @@ function writeNetlifyRedirects(html) {
   lines.push(`# старый мусорный путь из индекса`);
   lines.push(`/uk/blog/evo1  ${SITE}/uk/blog/  301`);
   lines.push(`/uk/blog/evo1/  ${SITE}/uk/blog/  301`);
+  // Карта перенесена в About — старые URL /map/ → /about/
+  for (const seg of ['pl', 'en', 'ru', 'uk']) {
+    lines.push(`/${seg}/map  ${SITE}/${seg}/about/  301`);
+    lines.push(`/${seg}/map/  ${SITE}/${seg}/about/  301`);
+  }
   appendTrailingSlashNetlify(lines, html);
   lines.push('# SPA: отдельный HTML на каждый URL (каноникал + title для Google)');
   for (const seg of ['pl', 'en', 'ru', 'uk']) {
@@ -1224,6 +1229,12 @@ function writeVercelProjectJson(html) {
     { source: '/uk/blog/evo1', destination: '/uk/blog/', permanent: true },
     { source: '/uk/blog/evo1/', destination: '/uk/blog/', permanent: true }
   );
+  for (const seg of ['pl', 'en', 'ru', 'uk']) {
+    redirects.push(
+      { source: `/${seg}/map`, destination: `/${seg}/about/`, permanent: true },
+      { source: `/${seg}/map/`, destination: `/${seg}/about/`, permanent: true }
+    );
+  }
   appendTrailingSlashRedirects(redirects, html);
   const rewrites = [];
   for (const seg of ['pl', 'en', 'ru', 'uk']) {

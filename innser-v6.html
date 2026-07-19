@@ -573,7 +573,6 @@ label.tow-calc-check span{line-height:1.25;min-width:0;white-space:nowrap;overfl
     <li><a href="/pl/services/" data-p="services" data-t="nav_svc" onclick="SP('services');return false;">Usługi</a></li>
     <li><a href="/pl/prices/" data-p="prices" data-t="nav_prices" onclick="SP('prices');return false;">Ceny</a></li>
     <li><a href="/pl/about/" data-p="about" data-t="nav_about" onclick="SP('about');return false;">Co robimy</a></li>
-    <li><a href="/pl/map/" data-p="map" data-t="nav_map" onclick="SP('map');return false;">Mapa</a></li>
     <li><a href="/pl/dzielnice/" data-p="districts" data-t="nav_districts" onclick="SP('districts');return false;">Dzielnice</a></li>
     <li><a href="/pl/blog/" data-p="blog" data-t="nav_blog" onclick="SP('blog');return false;">Blog</a></li>
     <li><a href="/pl/gallery/" data-p="gallery" data-t="nav_gal" onclick="SP('gallery');return false;">Zdjęcia</a></li>
@@ -847,6 +846,12 @@ label.tow-calc-check span{line-height:1.25;min-width:0;white-space:nowrap;overfl
   </div>
 </div>
 </section>
+
+<section class="sec map-bg" id="about-map"><div class="mx">
+  <div class="sc"><span class="stag" data-t="map_tag">Lokalizacja</span><h2 class="sh" data-t="map_title">NASZA LOKALIZACJA</h2><p class="sd" data-t="map_desc">Baza INNSER w Warszawie. Zasięg do 500 km.</p></div>
+  <div class="map-frame"><iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d19551.219987112527!2d21.12762775!3d52.22698919999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spl!2spl!4v1774472326254!5m2!1spl!2spl" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="INNSER Pomoc Drogowa Warszawa"></iframe></div>
+  <div style="text-align:center;margin-top:20px;"><a href="tel:+48506001057" class="btn btn-y">📞 506-001-057</a></div>
+</div></section>
 </div>
 
 <div class="page" id="p-gallery">
@@ -861,14 +866,6 @@ label.tow-calc-check span{line-height:1.25;min-width:0;white-space:nowrap;overfl
 <!--/innser-gallery-static-->
     </div>
   </div>
-</div></section>
-</div>
-
-<div class="page" id="p-map">
-<section class="sec map-bg"><div class="mx">
-  <div class="sc"><span class="stag" data-t="map_tag">Lokalizacja</span><h1 class="sh" data-t="map_title">NASZA LOKALIZACJA</h1><p class="sd" data-t="map_desc">Baza INNSER w Warszawie. Zasięg do 500 km.</p></div>
-  <div class="map-frame"><iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d19551.219987112527!2d21.12762775!3d52.22698919999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spl!2spl!4v1774472326254!5m2!1spl!2spl" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="INNSER Pomoc Drogowa Warszawa"></iframe></div>
-  <div style="text-align:center;margin-top:20px;"><a href="tel:+48506001057" class="btn btn-y">📞 506-001-057</a></div>
 </div></section>
 </div>
 
@@ -2920,7 +2917,7 @@ function goLang(l){
   u.pathname = '/' + parts.join('/') + '/';
   location.href = u.toString();
 }
-var INNSER_NAV_PAGES={services:1,prices:1,about:1,map:1,contact:1,partners:1,districts:1};
+var INNSER_NAV_PAGES={services:1,prices:1,about:1,contact:1,partners:1,districts:1};
 var __innserDistrictSlug='';
 var __innserPrevSlug='home';
 var __innserSvcFrom='home';
@@ -2953,6 +2950,7 @@ function parsePathToPage(){
     if(rest.length===1&&/^svc\d+$/.test(a)) return {langSeg:langSeg,pageId:a};
     if(rest.length===1&&a==='gallery') return {langSeg:langSeg,pageId:'gallery'};
     if(rest.length===1&&a==='polityka-prywatnosci') return {langSeg:langSeg,pageId:'privacy'};
+    if(rest.length===1&&a==='map') return {langSeg:langSeg,pageId:'about'};
     if(rest.length===1&&INNSER_NAV_PAGES[a]) return {langSeg:langSeg,pageId:a};
     return null;
   }catch(e){ return null; }
@@ -3213,8 +3211,6 @@ function applyRouteSeo(pageSlug){
       setMeta('meta[name="twitter:description"]','content',t.gal_seo_desc||'');
       if(t.gal_keywords) setMeta('meta[name="keywords"]','content',t.gal_keywords);
     } else if(!applySeoFromStrings(t.gal_title,t.gal_desc)) restoreSeoHome();
-  } else if(pageSlug==='map'){
-    if(!applySeoFromStrings(t.map_title,t.map_desc)) restoreSeoHome();
   } else if(pageSlug==='contact'){
     if(!applySeoFromStrings(t.cnt_title,t.cnt_desc)) restoreSeoHome();
   } else if(pageSlug==='district'&&__innserDistrictSlug){
