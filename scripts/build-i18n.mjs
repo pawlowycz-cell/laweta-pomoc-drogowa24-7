@@ -236,14 +236,15 @@ SL(PAGE_FIXED_LANG);
 renderAreas(PAGE_FIXED_LANG);`;
 }
 
-function hreflangBlock(canonicalUrl) {
+function hreflangBlock(canonicalUrl, xDefaultUrl) {
+  const xDefault = xDefaultUrl || `${SITE}/pl/`;
   const lines = [
     `<link rel="canonical" id="innser-canonical" href="${canonicalUrl}">`,
     `<link rel="alternate" id="innser-href-pl" hreflang="pl" href="${SITE}/pl/">`,
     `<link rel="alternate" id="innser-href-en" hreflang="en" href="${SITE}/en/">`,
     `<link rel="alternate" id="innser-href-ru" hreflang="ru" href="${SITE}/ru/">`,
     `<link rel="alternate" id="innser-href-uk" hreflang="uk" href="${SITE}/uk/">`,
-    `<link rel="alternate" id="innser-href-xdefault" hreflang="x-default" href="${SITE}/pl/">`,
+    `<link rel="alternate" id="innser-href-xdefault" hreflang="x-default" href="${xDefault}">`,
   ];
   return lines.join('\n');
 }
@@ -799,7 +800,7 @@ function writeRootRedirect() {
 ${faviconHeadBlock()}
 <title>INNSER — Pomoc Drogowa Warszawa 24h | Holowanie | Awaryjne Odpalanie | Wymiana Koła</title>
 <meta name="description" content="INNSER — Profesjonalna pomoc drogowa Warszawa i okolice 24/7. Tania laweta, holowanie, autolaweta HDS, skup aut, złomowanie. Odpalanie, wymiana koła, otwieranie aut. Zadzwoń: 506-001-057">
-<link rel="canonical" href="${SITE}/">
+${hreflangBlock(`${SITE}/`, `${SITE}/`)}
 <meta property="og:title" content="INNSER — Pomoc Drogowa Warszawa 24h | Holowanie | Odpalanie">
 <meta property="og:description" content="Profesjonalna pomoc drogowa Warszawa 24/7 — tania laweta, tanie holowanie, autolaweta HDS, holowanie powypadkowe, skup aut, złomowanie pojazdów. Odpalanie, wymiana koła, otwieranie aut. Zadzwoń: 506-001-057">
 <meta property="og:type" content="website">
@@ -817,6 +818,8 @@ ${faviconHeadBlock()}
 <meta name="twitter:image" content="${ogImg}">
 <script>
 (function(){
+  var ua=navigator.userAgent||'';
+  if(/Googlebot|Google-InspectionTool|GoogleOther|AdsBot-Google|Mediapartners-Google|bingbot|Slurp|DuckDuckBot|Baiduspider|YandexBot|Applebot|SemrushBot|AhrefsBot|MJ12bot|DotBot|PetalBot|Bytespider|facebookexternalhit|Twitterbot|LinkedInBot/i.test(ua))return;
   try{
     var saved=localStorage.getItem('innser_lang');
     if(saved==='ua')saved='uk';
@@ -840,6 +843,10 @@ ${faviconHeadBlock()}
 <noscript><meta http-equiv="refresh" content="0;url=/pl/"></noscript>
 </head>
 <body>
+<p style="font-family:system-ui,sans-serif;padding:1rem;line-height:1.6">
+  INNSER — Pomoc Drogowa Warszawa 24/7.
+  <a href="/pl/">Polski</a> · <a href="/en/">English</a> · <a href="/ru/">Русский</a> · <a href="/uk/">Українська</a>
+</p>
 <noscript>
   <p><a href="/pl/">INNSER — przejdź do serwisu (PL)</a></p>
   <p><a href="/en/">INNSER — go to site (EN)</a></p>
