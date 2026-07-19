@@ -5,11 +5,11 @@ import { renderDistrictRichHtml } from './districts-content.mjs';
 const LANGS = ['pl', 'en', 'ru', 'ua'];
 
 const NAMES = {
-  mokotow: { pl: 'Mokotów', en: 'Mokotów', ru: 'Мокotów', ua: 'Мокotów' },
+  mokotow: { pl: 'Mokotów', en: 'Mokotów', ru: 'Мокотув', ua: 'Мокотув' },
   wola: { pl: 'Wola', en: 'Wola', ru: 'Воля', ua: 'Воля' },
   'praga-poludnie': { pl: 'Praga-Południe', en: 'Praga-Południe', ru: 'Прага-Полудне', ua: 'Прага-Полудне' },
-  'praga-polnoc': { pl: 'Praga-Północ', en: 'Praga-Północ', ru: 'Прага-Пулноц', ua: 'Прага-Пулноц' },
-  srodmiescie: { pl: 'Śródmieście', en: 'Śródmieście', ru: 'Сродместье', ua: 'Середмістя' },
+  'praga-polnoc': { pl: 'Praga-Północ', en: 'Praga-Północ', ru: 'Прага-Пулноц', ua: 'Прага-Північ' },
+  srodmiescie: { pl: 'Śródmieście', en: 'Śródmieście', ru: 'Срудместье', ua: 'Середмістя' },
   ursynow: { pl: 'Ursynów', en: 'Ursynów', ru: 'Урсынув', ua: 'Урсинув' },
   bielany: { pl: 'Bielany', en: 'Bielany', ru: 'Беляны', ua: 'Біляни' },
   bemowo: { pl: 'Bemowo', en: 'Bemowo', ru: 'Бемово', ua: 'Бемово' },
