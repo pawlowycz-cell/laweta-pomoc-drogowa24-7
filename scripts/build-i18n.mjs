@@ -41,6 +41,7 @@ const PUBLIC_SRC = path.join(REPO_ROOT, 'public');
 const SITE = 'https://www.warszawa-laweta.com';
 /** SPA-вкладки меню с отдельным URL (как gallery/blog) — синхрон с INNSER_NAV_PAGES в innser-v6.html */
 const NAV_PAGE_TAILS = ['services', 'prices', 'about', 'map', 'contact', 'partners'];
+const PRIVACY_PAGE_TAIL = 'polityka-prywatnosci';
 
 /**
  * Своя іконка (вкладка, Google, apple-touch з цього ж PNG):
@@ -527,6 +528,13 @@ function seoMetaForTail(raw, localePathSeg, tail) {
     return { title: seoPageTitle(meta.title), desc: truncSeoDesc(meta.desc), kw: null };
   }
 
+  if (trimmed === PRIVACY_PAGE_TAIL) {
+    const title = extractTranslationField(raw, langCl, 'priv_seo_title');
+    const desc = extractTranslationField(raw, langCl, 'priv_seo_desc');
+    if (!title) return null;
+    return { title: seoPageTitle(title), desc: truncSeoDesc(desc), kw: null };
+  }
+
   const distM = /^dzielnice\/([a-z0-9-]+)$/.exec(trimmed);
   if (distM) {
     const meta = getDistrictSeoMeta(langCl, distM[1]);
@@ -581,6 +589,7 @@ function tailToPageId(tail) {
   if (blogM) return `blog-post-${blogM[1]}`;
   if (trimmed === 'dzielnice') return 'districts';
   if (/^dzielnice\/[a-z0-9-]+$/.test(trimmed)) return 'district';
+  if (trimmed === PRIVACY_PAGE_TAIL) return 'privacy';
   return trimmed;
 }
 
@@ -588,6 +597,7 @@ function pageIdToPathTail(pageId, districtSlug) {
   if (pageId === 'home') return '';
   if (pageId === 'districts') return 'dzielnice';
   if (pageId === 'district' && districtSlug) return `dzielnice/${districtSlug}`;
+  if (pageId === 'privacy') return PRIVACY_PAGE_TAIL;
   const blogM = /^blog-post-(b\d+)$/.exec(pageId);
   if (blogM) return `blog/${blogM[1]}`;
   return pageId;
@@ -717,6 +727,7 @@ function writeDeepRouteHtmlCopies(raw) {
     'blog',
     'gallery',
     'dzielnice',
+    PRIVACY_PAGE_TAIL,
     ...NAV_PAGE_TAILS,
     ...blogSlugs.map((b) => `blog/${b}`),
     ...svcIds,
@@ -955,6 +966,11 @@ function appendTrailingSlashRedirects(redirects, html) {
     redirects.push({ source: `/${seg}/blog`, destination: `/${seg}/blog/`, permanent: true });
     redirects.push({ source: `/${seg}/gallery`, destination: `/${seg}/gallery/`, permanent: true });
     redirects.push({ source: `/${seg}/dzielnice`, destination: `/${seg}/dzielnice/`, permanent: true });
+    redirects.push({
+      source: `/${seg}/${PRIVACY_PAGE_TAIL}`,
+      destination: `/${seg}/${PRIVACY_PAGE_TAIL}/`,
+      permanent: true,
+    });
     for (const nav of NAV_PAGE_TAILS) {
       redirects.push({ source: `/${seg}/${nav}`, destination: `/${seg}/${nav}/`, permanent: true });
     }
@@ -988,6 +1004,7 @@ function appendTrailingSlashNetlify(lines, html) {
     lines.push(`/${seg}/blog  /${seg}/blog/  301`);
     lines.push(`/${seg}/gallery  /${seg}/gallery/  301`);
     lines.push(`/${seg}/dzielnice  /${seg}/dzielnice/  301`);
+    lines.push(`/${seg}/${PRIVACY_PAGE_TAIL}  /${seg}/${PRIVACY_PAGE_TAIL}/  301`);
     for (const nav of NAV_PAGE_TAILS) {
       lines.push(`/${seg}/${nav}  /${seg}/${nav}/  301`);
     }
@@ -1016,6 +1033,7 @@ function writeSitemapAndRobots(html) {
     'blog',
     'gallery',
     'dzielnice',
+    PRIVACY_PAGE_TAIL,
     ...NAV_PAGE_TAILS,
     ...blogSlugs.map((b) => `blog/${b}`),
     ...svcIds,
@@ -1057,7 +1075,7 @@ function writeSitemapAndRobots(html) {
     if (tail === 'dzielnice' || tail === 'blog' || tail === 'services' || tail === 'contact' || tail === 'prices')
       return '0.85';
     if (String(tail).startsWith('dzielnice/')) return '0.82';
-    if (tail === 'gallery' || tail === 'about' || tail === 'map' || tail === 'partners') return '0.82';
+    if (tail === 'gallery' || tail === 'about' || tail === 'map' || tail === 'partners' || tail === PRIVACY_PAGE_TAIL) return '0.82';
     if (String(tail).startsWith('blog/')) return '0.75';
     return '0.8';
   }

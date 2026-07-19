@@ -216,6 +216,11 @@
       "permanent": true
     },
     {
+      "source": "/pl/polityka-prywatnosci",
+      "destination": "/pl/polityka-prywatnosci/",
+      "permanent": true
+    },
+    {
       "source": "/pl/services",
       "destination": "/pl/services/",
       "permanent": true
@@ -448,6 +453,11 @@
     {
       "source": "/en/dzielnice",
       "destination": "/en/dzielnice/",
+      "permanent": true
+    },
+    {
+      "source": "/en/polityka-prywatnosci",
+      "destination": "/en/polityka-prywatnosci/",
       "permanent": true
     },
     {
@@ -686,6 +696,11 @@
       "permanent": true
     },
     {
+      "source": "/ru/polityka-prywatnosci",
+      "destination": "/ru/polityka-prywatnosci/",
+      "permanent": true
+    },
+    {
       "source": "/ru/services",
       "destination": "/ru/services/",
       "permanent": true
@@ -918,6 +933,11 @@
     {
       "source": "/uk/dzielnice",
       "destination": "/uk/dzielnice/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/polityka-prywatnosci",
+      "destination": "/uk/polityka-prywatnosci/",
       "permanent": true
     },
     {
