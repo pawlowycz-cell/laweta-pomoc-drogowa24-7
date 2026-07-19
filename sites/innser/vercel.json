@@ -471,6 +471,106 @@
       "permanent": true
     },
     {
+      "source": "/pl/dzielnice/zabki",
+      "destination": "/pl/dzielnice/zabki/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/dzielnice/marki",
+      "destination": "/pl/dzielnice/marki/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/dzielnice/otwock",
+      "destination": "/pl/dzielnice/otwock/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/dzielnice/pruszkow",
+      "destination": "/pl/dzielnice/pruszkow/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/dzielnice/piaseczno",
+      "destination": "/pl/dzielnice/piaseczno/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/dzielnice/legionowo",
+      "destination": "/pl/dzielnice/legionowo/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/dzielnice/wolomin",
+      "destination": "/pl/dzielnice/wolomin/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/dzielnice/zielonka",
+      "destination": "/pl/dzielnice/zielonka/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/dzielnice/kobylka",
+      "destination": "/pl/dzielnice/kobylka/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/dzielnice/jozefow",
+      "destination": "/pl/dzielnice/jozefow/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/dzielnice/lomianki",
+      "destination": "/pl/dzielnice/lomianki/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/dzielnice/konstancin-jeziorna",
+      "destination": "/pl/dzielnice/konstancin-jeziorna/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/dzielnice/piastow",
+      "destination": "/pl/dzielnice/piastow/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/dzielnice/sulejowek",
+      "destination": "/pl/dzielnice/sulejowek/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/dzielnice/milanowek",
+      "destination": "/pl/dzielnice/milanowek/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/dzielnice/brwinow",
+      "destination": "/pl/dzielnice/brwinow/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/dzielnice/nadarzyn",
+      "destination": "/pl/dzielnice/nadarzyn/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/dzielnice/raszyn",
+      "destination": "/pl/dzielnice/raszyn/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/dzielnice/grodzisk-mazowiecki",
+      "destination": "/pl/dzielnice/grodzisk-mazowiecki/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/dzielnice/nowy-dwor-mazowiecki",
+      "destination": "/pl/dzielnice/nowy-dwor-mazowiecki/",
+      "permanent": true
+    },
+    {
       "source": "/en",
       "destination": "/en/",
       "permanent": true
@@ -703,6 +803,106 @@
     {
       "source": "/en/dzielnice/zoliborz",
       "destination": "/en/dzielnice/zoliborz/",
+      "permanent": true
+    },
+    {
+      "source": "/en/dzielnice/zabki",
+      "destination": "/en/dzielnice/zabki/",
+      "permanent": true
+    },
+    {
+      "source": "/en/dzielnice/marki",
+      "destination": "/en/dzielnice/marki/",
+      "permanent": true
+    },
+    {
+      "source": "/en/dzielnice/otwock",
+      "destination": "/en/dzielnice/otwock/",
+      "permanent": true
+    },
+    {
+      "source": "/en/dzielnice/pruszkow",
+      "destination": "/en/dzielnice/pruszkow/",
+      "permanent": true
+    },
+    {
+      "source": "/en/dzielnice/piaseczno",
+      "destination": "/en/dzielnice/piaseczno/",
+      "permanent": true
+    },
+    {
+      "source": "/en/dzielnice/legionowo",
+      "destination": "/en/dzielnice/legionowo/",
+      "permanent": true
+    },
+    {
+      "source": "/en/dzielnice/wolomin",
+      "destination": "/en/dzielnice/wolomin/",
+      "permanent": true
+    },
+    {
+      "source": "/en/dzielnice/zielonka",
+      "destination": "/en/dzielnice/zielonka/",
+      "permanent": true
+    },
+    {
+      "source": "/en/dzielnice/kobylka",
+      "destination": "/en/dzielnice/kobylka/",
+      "permanent": true
+    },
+    {
+      "source": "/en/dzielnice/jozefow",
+      "destination": "/en/dzielnice/jozefow/",
+      "permanent": true
+    },
+    {
+      "source": "/en/dzielnice/lomianki",
+      "destination": "/en/dzielnice/lomianki/",
+      "permanent": true
+    },
+    {
+      "source": "/en/dzielnice/konstancin-jeziorna",
+      "destination": "/en/dzielnice/konstancin-jeziorna/",
+      "permanent": true
+    },
+    {
+      "source": "/en/dzielnice/piastow",
+      "destination": "/en/dzielnice/piastow/",
+      "permanent": true
+    },
+    {
+      "source": "/en/dzielnice/sulejowek",
+      "destination": "/en/dzielnice/sulejowek/",
+      "permanent": true
+    },
+    {
+      "source": "/en/dzielnice/milanowek",
+      "destination": "/en/dzielnice/milanowek/",
+      "permanent": true
+    },
+    {
+      "source": "/en/dzielnice/brwinow",
+      "destination": "/en/dzielnice/brwinow/",
+      "permanent": true
+    },
+    {
+      "source": "/en/dzielnice/nadarzyn",
+      "destination": "/en/dzielnice/nadarzyn/",
+      "permanent": true
+    },
+    {
+      "source": "/en/dzielnice/raszyn",
+      "destination": "/en/dzielnice/raszyn/",
+      "permanent": true
+    },
+    {
+      "source": "/en/dzielnice/grodzisk-mazowiecki",
+      "destination": "/en/dzielnice/grodzisk-mazowiecki/",
+      "permanent": true
+    },
+    {
+      "source": "/en/dzielnice/nowy-dwor-mazowiecki",
+      "destination": "/en/dzielnice/nowy-dwor-mazowiecki/",
       "permanent": true
     },
     {
@@ -941,6 +1141,106 @@
       "permanent": true
     },
     {
+      "source": "/ru/dzielnice/zabki",
+      "destination": "/ru/dzielnice/zabki/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/dzielnice/marki",
+      "destination": "/ru/dzielnice/marki/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/dzielnice/otwock",
+      "destination": "/ru/dzielnice/otwock/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/dzielnice/pruszkow",
+      "destination": "/ru/dzielnice/pruszkow/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/dzielnice/piaseczno",
+      "destination": "/ru/dzielnice/piaseczno/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/dzielnice/legionowo",
+      "destination": "/ru/dzielnice/legionowo/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/dzielnice/wolomin",
+      "destination": "/ru/dzielnice/wolomin/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/dzielnice/zielonka",
+      "destination": "/ru/dzielnice/zielonka/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/dzielnice/kobylka",
+      "destination": "/ru/dzielnice/kobylka/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/dzielnice/jozefow",
+      "destination": "/ru/dzielnice/jozefow/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/dzielnice/lomianki",
+      "destination": "/ru/dzielnice/lomianki/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/dzielnice/konstancin-jeziorna",
+      "destination": "/ru/dzielnice/konstancin-jeziorna/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/dzielnice/piastow",
+      "destination": "/ru/dzielnice/piastow/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/dzielnice/sulejowek",
+      "destination": "/ru/dzielnice/sulejowek/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/dzielnice/milanowek",
+      "destination": "/ru/dzielnice/milanowek/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/dzielnice/brwinow",
+      "destination": "/ru/dzielnice/brwinow/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/dzielnice/nadarzyn",
+      "destination": "/ru/dzielnice/nadarzyn/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/dzielnice/raszyn",
+      "destination": "/ru/dzielnice/raszyn/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/dzielnice/grodzisk-mazowiecki",
+      "destination": "/ru/dzielnice/grodzisk-mazowiecki/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/dzielnice/nowy-dwor-mazowiecki",
+      "destination": "/ru/dzielnice/nowy-dwor-mazowiecki/",
+      "permanent": true
+    },
+    {
       "source": "/uk",
       "destination": "/uk/",
       "permanent": true
@@ -1174,6 +1474,106 @@
       "source": "/uk/dzielnice/zoliborz",
       "destination": "/uk/dzielnice/zoliborz/",
       "permanent": true
+    },
+    {
+      "source": "/uk/dzielnice/zabki",
+      "destination": "/uk/dzielnice/zabki/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/dzielnice/marki",
+      "destination": "/uk/dzielnice/marki/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/dzielnice/otwock",
+      "destination": "/uk/dzielnice/otwock/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/dzielnice/pruszkow",
+      "destination": "/uk/dzielnice/pruszkow/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/dzielnice/piaseczno",
+      "destination": "/uk/dzielnice/piaseczno/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/dzielnice/legionowo",
+      "destination": "/uk/dzielnice/legionowo/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/dzielnice/wolomin",
+      "destination": "/uk/dzielnice/wolomin/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/dzielnice/zielonka",
+      "destination": "/uk/dzielnice/zielonka/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/dzielnice/kobylka",
+      "destination": "/uk/dzielnice/kobylka/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/dzielnice/jozefow",
+      "destination": "/uk/dzielnice/jozefow/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/dzielnice/lomianki",
+      "destination": "/uk/dzielnice/lomianki/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/dzielnice/konstancin-jeziorna",
+      "destination": "/uk/dzielnice/konstancin-jeziorna/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/dzielnice/piastow",
+      "destination": "/uk/dzielnice/piastow/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/dzielnice/sulejowek",
+      "destination": "/uk/dzielnice/sulejowek/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/dzielnice/milanowek",
+      "destination": "/uk/dzielnice/milanowek/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/dzielnice/brwinow",
+      "destination": "/uk/dzielnice/brwinow/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/dzielnice/nadarzyn",
+      "destination": "/uk/dzielnice/nadarzyn/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/dzielnice/raszyn",
+      "destination": "/uk/dzielnice/raszyn/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/dzielnice/grodzisk-mazowiecki",
+      "destination": "/uk/dzielnice/grodzisk-mazowiecki/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/dzielnice/nowy-dwor-mazowiecki",
+      "destination": "/uk/dzielnice/nowy-dwor-mazowiecki/",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -1362,6 +1762,86 @@
       "destination": "/pl/dzielnice/zoliborz/index.html"
     },
     {
+      "source": "/pl/dzielnice/zabki/",
+      "destination": "/pl/dzielnice/zabki/index.html"
+    },
+    {
+      "source": "/pl/dzielnice/marki/",
+      "destination": "/pl/dzielnice/marki/index.html"
+    },
+    {
+      "source": "/pl/dzielnice/otwock/",
+      "destination": "/pl/dzielnice/otwock/index.html"
+    },
+    {
+      "source": "/pl/dzielnice/pruszkow/",
+      "destination": "/pl/dzielnice/pruszkow/index.html"
+    },
+    {
+      "source": "/pl/dzielnice/piaseczno/",
+      "destination": "/pl/dzielnice/piaseczno/index.html"
+    },
+    {
+      "source": "/pl/dzielnice/legionowo/",
+      "destination": "/pl/dzielnice/legionowo/index.html"
+    },
+    {
+      "source": "/pl/dzielnice/wolomin/",
+      "destination": "/pl/dzielnice/wolomin/index.html"
+    },
+    {
+      "source": "/pl/dzielnice/zielonka/",
+      "destination": "/pl/dzielnice/zielonka/index.html"
+    },
+    {
+      "source": "/pl/dzielnice/kobylka/",
+      "destination": "/pl/dzielnice/kobylka/index.html"
+    },
+    {
+      "source": "/pl/dzielnice/jozefow/",
+      "destination": "/pl/dzielnice/jozefow/index.html"
+    },
+    {
+      "source": "/pl/dzielnice/lomianki/",
+      "destination": "/pl/dzielnice/lomianki/index.html"
+    },
+    {
+      "source": "/pl/dzielnice/konstancin-jeziorna/",
+      "destination": "/pl/dzielnice/konstancin-jeziorna/index.html"
+    },
+    {
+      "source": "/pl/dzielnice/piastow/",
+      "destination": "/pl/dzielnice/piastow/index.html"
+    },
+    {
+      "source": "/pl/dzielnice/sulejowek/",
+      "destination": "/pl/dzielnice/sulejowek/index.html"
+    },
+    {
+      "source": "/pl/dzielnice/milanowek/",
+      "destination": "/pl/dzielnice/milanowek/index.html"
+    },
+    {
+      "source": "/pl/dzielnice/brwinow/",
+      "destination": "/pl/dzielnice/brwinow/index.html"
+    },
+    {
+      "source": "/pl/dzielnice/nadarzyn/",
+      "destination": "/pl/dzielnice/nadarzyn/index.html"
+    },
+    {
+      "source": "/pl/dzielnice/raszyn/",
+      "destination": "/pl/dzielnice/raszyn/index.html"
+    },
+    {
+      "source": "/pl/dzielnice/grodzisk-mazowiecki/",
+      "destination": "/pl/dzielnice/grodzisk-mazowiecki/index.html"
+    },
+    {
+      "source": "/pl/dzielnice/nowy-dwor-mazowiecki/",
+      "destination": "/pl/dzielnice/nowy-dwor-mazowiecki/index.html"
+    },
+    {
       "source": "/en/",
       "destination": "/en/index.html"
     },
@@ -1544,6 +2024,86 @@
     {
       "source": "/en/dzielnice/zoliborz/",
       "destination": "/en/dzielnice/zoliborz/index.html"
+    },
+    {
+      "source": "/en/dzielnice/zabki/",
+      "destination": "/en/dzielnice/zabki/index.html"
+    },
+    {
+      "source": "/en/dzielnice/marki/",
+      "destination": "/en/dzielnice/marki/index.html"
+    },
+    {
+      "source": "/en/dzielnice/otwock/",
+      "destination": "/en/dzielnice/otwock/index.html"
+    },
+    {
+      "source": "/en/dzielnice/pruszkow/",
+      "destination": "/en/dzielnice/pruszkow/index.html"
+    },
+    {
+      "source": "/en/dzielnice/piaseczno/",
+      "destination": "/en/dzielnice/piaseczno/index.html"
+    },
+    {
+      "source": "/en/dzielnice/legionowo/",
+      "destination": "/en/dzielnice/legionowo/index.html"
+    },
+    {
+      "source": "/en/dzielnice/wolomin/",
+      "destination": "/en/dzielnice/wolomin/index.html"
+    },
+    {
+      "source": "/en/dzielnice/zielonka/",
+      "destination": "/en/dzielnice/zielonka/index.html"
+    },
+    {
+      "source": "/en/dzielnice/kobylka/",
+      "destination": "/en/dzielnice/kobylka/index.html"
+    },
+    {
+      "source": "/en/dzielnice/jozefow/",
+      "destination": "/en/dzielnice/jozefow/index.html"
+    },
+    {
+      "source": "/en/dzielnice/lomianki/",
+      "destination": "/en/dzielnice/lomianki/index.html"
+    },
+    {
+      "source": "/en/dzielnice/konstancin-jeziorna/",
+      "destination": "/en/dzielnice/konstancin-jeziorna/index.html"
+    },
+    {
+      "source": "/en/dzielnice/piastow/",
+      "destination": "/en/dzielnice/piastow/index.html"
+    },
+    {
+      "source": "/en/dzielnice/sulejowek/",
+      "destination": "/en/dzielnice/sulejowek/index.html"
+    },
+    {
+      "source": "/en/dzielnice/milanowek/",
+      "destination": "/en/dzielnice/milanowek/index.html"
+    },
+    {
+      "source": "/en/dzielnice/brwinow/",
+      "destination": "/en/dzielnice/brwinow/index.html"
+    },
+    {
+      "source": "/en/dzielnice/nadarzyn/",
+      "destination": "/en/dzielnice/nadarzyn/index.html"
+    },
+    {
+      "source": "/en/dzielnice/raszyn/",
+      "destination": "/en/dzielnice/raszyn/index.html"
+    },
+    {
+      "source": "/en/dzielnice/grodzisk-mazowiecki/",
+      "destination": "/en/dzielnice/grodzisk-mazowiecki/index.html"
+    },
+    {
+      "source": "/en/dzielnice/nowy-dwor-mazowiecki/",
+      "destination": "/en/dzielnice/nowy-dwor-mazowiecki/index.html"
     },
     {
       "source": "/ru/",
@@ -1730,6 +2290,86 @@
       "destination": "/ru/dzielnice/zoliborz/index.html"
     },
     {
+      "source": "/ru/dzielnice/zabki/",
+      "destination": "/ru/dzielnice/zabki/index.html"
+    },
+    {
+      "source": "/ru/dzielnice/marki/",
+      "destination": "/ru/dzielnice/marki/index.html"
+    },
+    {
+      "source": "/ru/dzielnice/otwock/",
+      "destination": "/ru/dzielnice/otwock/index.html"
+    },
+    {
+      "source": "/ru/dzielnice/pruszkow/",
+      "destination": "/ru/dzielnice/pruszkow/index.html"
+    },
+    {
+      "source": "/ru/dzielnice/piaseczno/",
+      "destination": "/ru/dzielnice/piaseczno/index.html"
+    },
+    {
+      "source": "/ru/dzielnice/legionowo/",
+      "destination": "/ru/dzielnice/legionowo/index.html"
+    },
+    {
+      "source": "/ru/dzielnice/wolomin/",
+      "destination": "/ru/dzielnice/wolomin/index.html"
+    },
+    {
+      "source": "/ru/dzielnice/zielonka/",
+      "destination": "/ru/dzielnice/zielonka/index.html"
+    },
+    {
+      "source": "/ru/dzielnice/kobylka/",
+      "destination": "/ru/dzielnice/kobylka/index.html"
+    },
+    {
+      "source": "/ru/dzielnice/jozefow/",
+      "destination": "/ru/dzielnice/jozefow/index.html"
+    },
+    {
+      "source": "/ru/dzielnice/lomianki/",
+      "destination": "/ru/dzielnice/lomianki/index.html"
+    },
+    {
+      "source": "/ru/dzielnice/konstancin-jeziorna/",
+      "destination": "/ru/dzielnice/konstancin-jeziorna/index.html"
+    },
+    {
+      "source": "/ru/dzielnice/piastow/",
+      "destination": "/ru/dzielnice/piastow/index.html"
+    },
+    {
+      "source": "/ru/dzielnice/sulejowek/",
+      "destination": "/ru/dzielnice/sulejowek/index.html"
+    },
+    {
+      "source": "/ru/dzielnice/milanowek/",
+      "destination": "/ru/dzielnice/milanowek/index.html"
+    },
+    {
+      "source": "/ru/dzielnice/brwinow/",
+      "destination": "/ru/dzielnice/brwinow/index.html"
+    },
+    {
+      "source": "/ru/dzielnice/nadarzyn/",
+      "destination": "/ru/dzielnice/nadarzyn/index.html"
+    },
+    {
+      "source": "/ru/dzielnice/raszyn/",
+      "destination": "/ru/dzielnice/raszyn/index.html"
+    },
+    {
+      "source": "/ru/dzielnice/grodzisk-mazowiecki/",
+      "destination": "/ru/dzielnice/grodzisk-mazowiecki/index.html"
+    },
+    {
+      "source": "/ru/dzielnice/nowy-dwor-mazowiecki/",
+      "destination": "/ru/dzielnice/nowy-dwor-mazowiecki/index.html"
+    },
+    {
       "source": "/uk/",
       "destination": "/uk/index.html"
     },
@@ -1912,6 +2552,86 @@
     {
       "source": "/uk/dzielnice/zoliborz/",
       "destination": "/uk/dzielnice/zoliborz/index.html"
+    },
+    {
+      "source": "/uk/dzielnice/zabki/",
+      "destination": "/uk/dzielnice/zabki/index.html"
+    },
+    {
+      "source": "/uk/dzielnice/marki/",
+      "destination": "/uk/dzielnice/marki/index.html"
+    },
+    {
+      "source": "/uk/dzielnice/otwock/",
+      "destination": "/uk/dzielnice/otwock/index.html"
+    },
+    {
+      "source": "/uk/dzielnice/pruszkow/",
+      "destination": "/uk/dzielnice/pruszkow/index.html"
+    },
+    {
+      "source": "/uk/dzielnice/piaseczno/",
+      "destination": "/uk/dzielnice/piaseczno/index.html"
+    },
+    {
+      "source": "/uk/dzielnice/legionowo/",
+      "destination": "/uk/dzielnice/legionowo/index.html"
+    },
+    {
+      "source": "/uk/dzielnice/wolomin/",
+      "destination": "/uk/dzielnice/wolomin/index.html"
+    },
+    {
+      "source": "/uk/dzielnice/zielonka/",
+      "destination": "/uk/dzielnice/zielonka/index.html"
+    },
+    {
+      "source": "/uk/dzielnice/kobylka/",
+      "destination": "/uk/dzielnice/kobylka/index.html"
+    },
+    {
+      "source": "/uk/dzielnice/jozefow/",
+      "destination": "/uk/dzielnice/jozefow/index.html"
+    },
+    {
+      "source": "/uk/dzielnice/lomianki/",
+      "destination": "/uk/dzielnice/lomianki/index.html"
+    },
+    {
+      "source": "/uk/dzielnice/konstancin-jeziorna/",
+      "destination": "/uk/dzielnice/konstancin-jeziorna/index.html"
+    },
+    {
+      "source": "/uk/dzielnice/piastow/",
+      "destination": "/uk/dzielnice/piastow/index.html"
+    },
+    {
+      "source": "/uk/dzielnice/sulejowek/",
+      "destination": "/uk/dzielnice/sulejowek/index.html"
+    },
+    {
+      "source": "/uk/dzielnice/milanowek/",
+      "destination": "/uk/dzielnice/milanowek/index.html"
+    },
+    {
+      "source": "/uk/dzielnice/brwinow/",
+      "destination": "/uk/dzielnice/brwinow/index.html"
+    },
+    {
+      "source": "/uk/dzielnice/nadarzyn/",
+      "destination": "/uk/dzielnice/nadarzyn/index.html"
+    },
+    {
+      "source": "/uk/dzielnice/raszyn/",
+      "destination": "/uk/dzielnice/raszyn/index.html"
+    },
+    {
+      "source": "/uk/dzielnice/grodzisk-mazowiecki/",
+      "destination": "/uk/dzielnice/grodzisk-mazowiecki/index.html"
+    },
+    {
+      "source": "/uk/dzielnice/nowy-dwor-mazowiecki/",
+      "destination": "/uk/dzielnice/nowy-dwor-mazowiecki/index.html"
     }
   ],
   "headers": [
