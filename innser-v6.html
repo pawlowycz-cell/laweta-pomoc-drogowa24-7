@@ -260,7 +260,7 @@ html[lang="uk"] .svcc-phone,html[lang="ru"] .svcc-phone{font-size:.9rem;padding:
 @keyframes socRipple{0%{transform:scale(.85);opacity:.5}60%{opacity:.08}100%{transform:scale(1.42);opacity:0}}@keyframes socIconFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-4px) scale(1.07)}}@media (prefers-reduced-motion:reduce){.soc-link::after,.soc-link svg{animation:none!important}.soc-link::after{opacity:0!important}.mobile-call-bar__num,.nav-phone{animation:none!important}}
 .page{display:none;}.page.on{display:block;}
 .rv{opacity:1;transform:translateY(0);}
-@media(max-width:960px){.hero-shell{min-height:0;align-items:flex-start;overflow:visible;padding:12px 0 0;}.hero-shell-inner{grid-template-columns:1fr;gap:0;text-align:center;}.hero{min-height:calc(100vh - env(safe-area-inset-top,0px) - 104px - 52px - env(safe-area-inset-bottom,0px));min-height:calc(100svh - env(safe-area-inset-top,0px) - 104px - 52px - env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;justify-content:flex-start;box-sizing:border-box;padding:40px 0 28px;}.hsub{margin:0 auto 22px;max-width:100%;padding:0 2px;overflow-wrap:break-word;}.hbtns{justify-content:center;flex-direction:column;align-items:stretch;max-width:340px;margin-left:auto;margin-right:auto;}.hbtns .btn{width:100%;justify-content:center;}.hbadge{max-width:100%;white-space:normal;justify-content:center;text-align:center;line-height:1.35;flex-wrap:wrap;margin-left:auto;margin-right:auto;}.hero h1{overflow-wrap:break-word;line-height:1.08;}.hero-calc-band{margin-top:12px;padding-bottom:8px;}.hcard{display:block;max-width:100%;width:100%;margin:0 auto 28px;text-align:left;box-sizing:border-box;}.hero-tow-more{display:none;}.hero-calc-mob{display:inline-flex!important;align-self:center;margin:14px auto 0;font-size:.9rem;font-weight:600;color:var(--y);text-decoration:none;text-align:center;}.hero-calc-mob:hover{text-decoration:underline;}.cnt-g{grid-template-columns:1fr;}.foot-g{grid-template-columns:1fr 1fr;}.sc .sd{max-width:100%;overflow-wrap:break-word;padding:0 4px;box-sizing:border-box;}}@media(max-width:960px){
+@media(max-width:960px){.hero-shell{min-height:0;align-items:flex-start;overflow:visible;padding:12px 0 0;}.hero-shell-inner{grid-template-columns:1fr;gap:0;text-align:center;}.hero{min-height:calc(100vh - env(safe-area-inset-top,0px) - 104px - 72px - env(safe-area-inset-bottom,0px));min-height:calc(100svh - env(safe-area-inset-top,0px) - 104px - 72px - env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;justify-content:flex-start;box-sizing:border-box;padding:40px 0 28px;}.hsub{margin:0 auto 22px;max-width:100%;padding:0 2px;overflow-wrap:break-word;}.hbtns{justify-content:center;flex-direction:column;align-items:stretch;max-width:340px;margin-left:auto;margin-right:auto;}.hbtns .btn{width:100%;justify-content:center;}.hbadge{max-width:100%;white-space:normal;justify-content:center;text-align:center;line-height:1.35;flex-wrap:wrap;margin-left:auto;margin-right:auto;}.hero h1{overflow-wrap:break-word;line-height:1.08;}.hero-calc-band{margin-top:12px;padding-bottom:8px;}.hcard{display:block;max-width:100%;width:100%;margin:0 auto 28px;text-align:left;box-sizing:border-box;}.hero-tow-more{display:none;}.hero-calc-mob{display:inline-flex!important;align-self:center;margin:14px auto 0;font-size:.9rem;font-weight:600;color:var(--y);text-decoration:none;text-align:center;}.hero-calc-mob:hover{text-decoration:underline;}.cnt-g{grid-template-columns:1fr;}.foot-g{grid-template-columns:1fr 1fr;}.sc .sd{max-width:100%;overflow-wrap:break-word;padding:0 4px;box-sizing:border-box;}}@media(max-width:960px){
   .abt-g{display:flex;flex-direction:column;gap:28px;align-items:stretch;}
   .abt-vis{order:-1;min-height:unset;padding:28px 20px 24px;flex-direction:column;justify-content:center;gap:14px;}
   .abt-vis-inner{padding:0;}
@@ -452,12 +452,14 @@ label.tow-calc-check span{line-height:1.25;min-width:0;white-space:nowrap;overfl
   .topbar{padding-top:0!important;}
   body{
     padding-top:calc(env(safe-area-inset-top,0px) + 104px);
-    padding-bottom:calc(52px + env(safe-area-inset-bottom,0px));
+    padding-bottom:calc(72px + env(safe-area-inset-bottom,0px));
+    background:var(--b);
   }
+  html{background:var(--b);}
   /* Первый экран: только hero; svh — без прыжка фона при скролле (Safari) */
   .hero{
-    min-height:calc(100vh - env(safe-area-inset-top,0px) - 104px - 52px - env(safe-area-inset-bottom,0px));
-    min-height:calc(100svh - env(safe-area-inset-top,0px) - 104px - 52px - env(safe-area-inset-bottom,0px));
+    min-height:calc(100vh - env(safe-area-inset-top,0px) - 104px - 72px - env(safe-area-inset-bottom,0px));
+    min-height:calc(100svh - env(safe-area-inset-top,0px) - 104px - 72px - env(safe-area-inset-bottom,0px));
   }
   .hero-glow,.hero-glow2{animation:none!important;transform:none!important;}
   .pf{display:none!important;}
@@ -470,9 +472,9 @@ label.tow-calc-check span{line-height:1.25;min-width:0;white-space:nowrap;overfl
     left:0;right:0;bottom:0;
     z-index:1001;
     padding:9px 14px calc(9px + env(safe-area-inset-bottom,0px));
-    background:rgba(12,12,12,.92);
-    -webkit-backdrop-filter:blur(14px);
-    backdrop-filter:blur(14px);
+    background:#0c0c0c;
+    -webkit-backdrop-filter:none;
+    backdrop-filter:none;
     border-top:1px solid rgba(255,230,120,.45);
     text-decoration:none;
     color:rgba(255,235,190,.92);
@@ -480,7 +482,8 @@ label.tow-calc-check span{line-height:1.25;min-width:0;white-space:nowrap;overfl
     -webkit-tap-highlight-color:transparent;
     transition:background .2s ease;
   }
-  .mobile-call-bar:active{background:rgba(18,18,18,.96);}
+  body.menu-open .mobile-call-bar{display:none!important;}
+  .mobile-call-bar:active{background:#121212;}
   .mobile-call-bar__inner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:0;text-align:center;}
   .mobile-call-bar__label{font-size:.82rem;font-weight:600;letter-spacing:.03em;color:rgba(255,228,180,.95);text-transform:none;}
   .mobile-call-bar__num{font-family:var(--ff-d);font-size:1.38rem;font-weight:700;letter-spacing:.08em;color:var(--y);white-space:nowrap;animation:mobileBarNumPulse 3.2s ease-in-out infinite;}
@@ -495,17 +498,38 @@ label.tow-calc-check span{line-height:1.25;min-width:0;white-space:nowrap;overfl
   .tow-calc-call.btn-y,
   .svc-detail-mid-tel.btn-y{
     font-family:var(--ff-b)!important;
-    font-size:1.1rem!important;
+    font-size:1.05rem!important;
     font-weight:700!important;
-    letter-spacing:.02em!important;
-    padding:16px 32px!important;
+    letter-spacing:.01em!important;
+    padding:15px 22px!important;
     border-radius:50px!important;
     gap:8px!important;
     line-height:1.2!important;
+    white-space:nowrap!important;
+    max-width:100%!important;
+    box-sizing:border-box!important;
   }
   a.svcc-phone{
     width:100%!important;
     max-width:340px!important;
+  }
+  html[lang="ru"] .btn-y,
+  html[lang="uk"] .btn-y,
+  html[lang="ru"] a.svcc-phone,
+  html[lang="uk"] a.svcc-phone,
+  html[lang="ru"] .tow-calc-call.btn-y,
+  html[lang="uk"] .tow-calc-call.btn-y,
+  html[lang="ru"] .svc-detail-mid-tel.btn-y,
+  html[lang="uk"] .svc-detail-mid-tel.btn-y{
+    font-size:.95rem!important;
+    padding:14px 16px!important;
+  }
+  .hero-tow-result{padding:14px 12px 16px;}
+  .svcc{
+    background:var(--b3);
+    -webkit-transform:translateZ(0);
+    transform:translateZ(0);
+    isolation:isolate;
   }
   .burger.open{position:relative;z-index:9999999;}
   .nm{
@@ -513,20 +537,27 @@ label.tow-calc-check span{line-height:1.25;min-width:0;white-space:nowrap;overfl
     position:fixed;
     top:calc(env(safe-area-inset-top,0px) + 104px);
     left:0;right:0;
+    bottom:0;
+    height:auto;
+    overflow-x:hidden;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior:contain;
     background:#0a0a0a;
     flex-direction:column;
     z-index:99999;
-    border-bottom:3px solid var(--y);
-    box-shadow:0 10px 40px rgba(0,0,0,.9);
+    border-bottom:none;
+    box-shadow:none;
+    padding-bottom:calc(20px + env(safe-area-inset-bottom,0px));
   }
   .nm.open{display:flex;}
   .nm li{list-style:none;width:100%;}
   .nm li.nm-logo-item{display:none;}
   .nm a{
     display:block;
-    padding:16px 24px;
+    padding:13px 22px;
     font-family:var(--ff-b);
-    font-size:1rem;
+    font-size:.95rem;
     font-weight:600;
     color:rgba(255,255,255,.7);
     border-bottom:1px solid rgba(255,255,255,.06);
@@ -535,11 +566,12 @@ label.tow-calc-check span{line-height:1.25;min-width:0;white-space:nowrap;overfl
   .nm a.on{color:var(--y)!important;background:rgba(255,209,0,.05)!important;}
   .nm li:last-child a{
     text-align:center!important;
-    color:rgba(255,209,0,.6)!important;
-    font-size:.9rem!important;
-    padding:12px 24px 16px!important;
+    color:rgba(255,209,0,.85)!important;
+    font-size:.95rem!important;
+    padding:16px 24px 20px!important;
     border:none!important;
     background:none!important;
+    margin-top:8px;
   }
   .burger span{transition:.3s;}
   .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
@@ -2219,7 +2251,7 @@ ru:{
   home_og_desc:"Эвакуатор и лавета Варшава 24/7: помощь на дороге, прикур, эвакуация. Приезд ~30 мин. 506-001-057.",
   home_tw_title:"Эвакуатор и лавета Варшава 24/7 | ~30 мин | 506-001-057",
   home_tw_desc:"Эвакуатор и лавета Варшава: прикур, эвакуация. Фиксированная цена. 506-001-057.",
-  hero_call:"Звоните: 506-001-057",hero_svc:"Наши услуги",
+  hero_call:"Звоните 506-001-057",hero_svc:"Наши услуги",
   sticky_call_lbl:"Звоните сейчас",sticky_call_aria:"Позвонить в службу помощи на дороге — 506-001-057",
   hcard_t:"Калькулятор эвакуации",hcard_d:"Откуда–куда или км — ориентировочная цена сразу.",hcard_more:"Полный калькулятор →",
   hs_avail:"Доступность",hs_range:"Радиус",hs_time:"Приезд",hs_lang:"Языки",
@@ -2232,7 +2264,7 @@ ru:{
   svc5_h2:"Аварийное открытие авто — <strong class=\"xb\">Варшава</strong> 24ч",svc5_p1:"Заперли ключи в машине? <strong class=\"xb\">INNSER</strong> откроет ваш автомобиль быстро и без повреждений. Работаем круглосуточно, 7 дней в неделю по всей <strong class=\"xb\">Варшаве</strong> и в радиусе 500 км.",svc5_h3:"Как мы открываем автомобили?",svc5_p3:"Используем профессиональные инструменты, которые открывают замок без риска для лакокрасочного покрытия, уплотнителей и электроники. Опыт работы со всеми популярными марками.",svc5_h4:"Где работаем?",svc5_p4:"Вся <strong class=\"xb\">Варшава</strong> и окрестности — подземные парковки, жилые комплексы, дороги. Приезд <strong class=\"xb\">20-30 минут</strong>. Звоните: <strong class=\"xb\">506-001-057</strong>.",svc5_faq1q:"Повредит ли <strong class=\"xb\">открытие мой</strong> автомобиль?",svc5_faq1a:"Нет — <strong class=\"xb\">специальные инструменты</strong> не повреждают лак и уплотнители.",svc5_faq2q:"Работаете ли <strong class=\"xb\">ночью</strong>?",svc5_faq2a:"Да, доступны <strong class=\"xb\">24/7</strong>.",svc5_faq3q:"<strong class=\"xb\">Какие марки</strong> открываете?",svc5_faq3a:"Все <strong class=\"xb\">популярные марки</strong> — VW, Toyota, Ford, BMW, Audi и другие.",
   svc6_t:"Эвакуатор в Варшаве 24/7",svc6_d:"Быстрая подача эвакуатора, эвакуация с подземных парковок и с аукционов, легковые и фургоны. Звоните: 506-001-057.",
   svcp_title:"ПОЛНЫЙ СПИСОК УСЛУГ",svcp_desc:"Эвакуатор круглосуточный Варшава — доступная эвакуация и помощь на дороге. Звоните: 506-001-057",
-  cta_t:"НУЖНА ПОМОЩЬ?",cta_d:"Звоните — доступны 24/7!",cta_btn:"Звоните: 506-001-057",
+  cta_t:"НУЖНА ПОМОЩЬ?",cta_d:"Звоните — доступны 24/7!",cta_btn:"Звоните 506-001-057",
   faq_tag:"FAQ",faq_title:"ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ",
   faq_q1:"Сколько стоит Эвакуатор (Лавета) в Варшаве?",faq_a1:"Цена по Варшаве — от 250 зл (до 15 км). Точную фиксированную цену называем заранее по телефону — без скрытых доплат. Звоните: 506-001-057.",
   faq_q2:"Как быстро приезжает эвакуатор?",faq_a2:"Обычно 20–30 минут по Варшаве. Работаем круглосуточно, 7 дней в неделю, включая праздники.",
@@ -2464,7 +2496,7 @@ ru:{
   tow_calc_extras:"Дополнительно",
   tow_calc_lowered:"Низкое авто (+50 zł)",
   tow_calc_jeep:"SUV (+50 zł)",
-  tow_calc_parking:"С подземного паркинга −1 (+200 zł)",
+  tow_calc_parking:"Паркинг −1 (+200 zł)",
   tow_calc_bus_short:"Бус (+50)",
   tow_calc_bus_long:"Длинный бус maxi (+150)",
   tow_calc_wheels0:"Заблокированное колесо",
@@ -2547,7 +2579,7 @@ ua:{
   home_og_desc:"Евакуатор і лавета Варшава 24/7: допомога на дорозі, прикур, евакуація. Приїзд ~30 хв. 506-001-057.",
   home_tw_title:"Евакуатор і лавета Варшава 24/7 | 506-001-057",
   home_tw_desc:"Евакуатор і лавета Варшава: прикур, евакуація. Фіксована ціна. 506-001-057.",
-  hero_call:"Дзвоніть: 506-001-057",hero_svc:"Наші послуги",
+  hero_call:"Дзвоніть 506-001-057",hero_svc:"Наші послуги",
   sticky_call_lbl:"Дзвоніть зараз",sticky_call_aria:"Подзвонити у службу допомоги на дорозі — 506-001-057",
   hcard_t:"Калькулятор евакуації",hcard_d:"Звідки–куди або км — орієнтовна ціна одразу.",hcard_more:"Повний калькулятор →",
   hs_avail:"Доступність",hs_range:"Радіус",hs_time:"Приїзд",hs_lang:"Мови",
@@ -2560,7 +2592,7 @@ ua:{
   svc5_h2:"Аварійне <strong class=\"xb\">відкриття авто</strong> — Варшава 24г",svc5_p1:"Замкнули ключі в машині? <strong class=\"xb\">INNSER</strong> відкриє ваш автомобіль швидко і без пошкоджень. Працюємо цілодобово, 7 днів на тиждень по всій <strong class=\"xb\">Варшаві</strong> та в радіусі 500 км.",svc5_h3:"Як ми відкриваємо автомобілі?",svc5_p3:"Використовуємо професійні інструменти, які відкривають замок без ризику для лакофарбового покриття, ущільнювачів і електроніки. Досвід роботи з усіма популярними марками.",svc5_h4:"Де працюємо?",svc5_p4:"Вся <strong class=\"xb\">Варшава</strong> та околиці — підземні паркінги, житлові комплекси, дороги. Приїзд <strong class=\"xb\">20-30 хвилин</strong>. Телефонуйте: <strong class=\"xb\">506-001-057</strong>.",svc5_faq1q:"Чи пошкодить <strong class=\"xb\">відкриття мій</strong> автомобіль?",svc5_faq1a:"Ні — <strong class=\"xb\">спеціальні інструменти</strong> не пошкоджують лак і ущільнювачі.",svc5_faq2q:"Чи працюєте <strong class=\"xb\">вночі</strong>?",svc5_faq2a:"Так, доступні <strong class=\"xb\">24/7</strong>.",svc5_faq3q:"<strong class=\"xb\">Які марки</strong> відкриваєте?",svc5_faq3a:"Всі <strong class=\"xb\">популярні марки</strong> — VW, Toyota, Ford, BMW, Audi та інші.",
   svc6_t:"Евакуація",svc6_d:"Евакуація авто та мотоциклів. З підземних парковок.",
   svcp_title:"ПОВНИЙ ПЕРЕЛІК ПОСЛУГ",svcp_desc:"Евакуатор Варшава цілодобово — доступна евакуація та допомога на дорозі. Дзвоніть: 506-001-057",
-  cta_t:"ПОТРІБНА ДОПОМОГА?",cta_d:"Дзвоніть — доступні 24/7!",cta_btn:"Дзвоніть: 506-001-057",
+  cta_t:"ПОТРІБНА ДОПОМОГА?",cta_d:"Дзвоніть — доступні 24/7!",cta_btn:"Дзвоніть 506-001-057",
   faq_tag:"FAQ",faq_title:"ЧАСТІ ЗАПИТАННЯ",
   faq_q1:"Скільки коштує Евакуатор (Лавета) у Варшаві?",faq_a1:"Ціна по Варшаві — від 250 зл (до 15 км). Точну фіксовану ціну називаємо заздалегідь по телефону — без прихованих доплат. Телефонуйте: 506-001-057.",
   faq_q2:"Як швидко приїжджає евакуатор?",faq_a2:"Зазвичай 20–30 хвилин у Варшаві. Працюємо цілодобово, 7 днів на тиждень, включно зі святами.",
@@ -2840,7 +2872,7 @@ ua:{
   tow_calc_extras:"Додатково",
   tow_calc_lowered:"Низьке авто (+50 zł)",
   tow_calc_jeep:"SUV (+50 zł)",
-  tow_calc_parking:"З підземного паркінгу −1 (+200 zł)",
+  tow_calc_parking:"Паркінг −1 (+200 zł)",
   tow_calc_bus_short:"Бус (+50)",
   tow_calc_bus_long:"Довгий бус maxi (+150)",
   tow_calc_wheels0:"Заблоковане колесо",
@@ -3743,6 +3775,7 @@ function SP(p,opts){
   });
   document.getElementById('nm').classList.remove('open');
   var bb=document.getElementById('burger-btn'); if(bb) bb.classList.remove('open');
+  document.body.classList.remove('menu-open');
   document.body.style.overflow='';
   window.scrollTo({top:0,behavior:'smooth'});
   setTimeout(initReveals,100);
@@ -4194,10 +4227,13 @@ function toggleMenu(){
   var btn = document.getElementById('burger-btn');
   nm.classList.toggle('open');
   btn.classList.toggle('open');
+  var open = nm.classList.contains('open');
+  document.body.classList.toggle('menu-open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
   // Hide back button when menu is open, restore when closed
   var backBtn = document.querySelector('.page-back-btn');
   if(backBtn){
-    if(nm.classList.contains('open')){
+    if(open){
       backBtn.style.display = 'none';
     } else {
       backBtn.style.display = '';
@@ -4214,6 +4250,7 @@ document.addEventListener('DOMContentLoaded', function(){
       var btn = document.getElementById('burger-btn');
       nm.classList.remove('open');
       btn.classList.remove('open');
+      document.body.classList.remove('menu-open');
       document.body.style.overflow = '';
     });
   });
