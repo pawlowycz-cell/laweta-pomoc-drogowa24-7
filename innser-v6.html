@@ -144,12 +144,15 @@ document.addEventListener('click',function(e){
 .hero-tow-extras-title{margin:0 0 8px;font-size:.82rem;font-weight:600;color:var(--gl);letter-spacing:.02em;}
 .hero-tow-extras-top{display:flex;align-items:flex-end;gap:10px;margin-bottom:8px;min-width:0;}
 .hero-tow-extras-top .tow-calc-wheels-cell{flex:1 1 auto;min-width:0;min-height:30px;gap:6px;margin:0;}
-.hero-tow-km-compact{flex:0 0 92px;width:92px;min-width:84px;margin:0;}
-.hero-tow-km-compact label{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px;}
-.hero-tow-km-compact .tow-calc-input{padding:6px 8px;font-size:.82rem;text-align:center;}
+.hero-tow-km-compact{display:flex;flex-direction:column;align-items:stretch;flex:0 0 88px;width:88px;min-width:0;max-width:88px;margin:0;margin-left:-2px;}
+.hero-tow-km-compact label{display:block;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0 0 3px;padding:0;text-align:left;}
+.hero-tow-km-compact .tow-calc-input{display:block;width:100%;max-width:100%;margin:0;padding:6px 8px;font-size:.82rem;text-align:left;-moz-appearance:textfield;appearance:textfield;}
+.hero-tow-km-compact .tow-calc-input::-webkit-outer-spin-button,
+.hero-tow-km-compact .tow-calc-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
 .hero-tow-extras-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px;}
 .hero-tow-extras .tow-wheels-label{font-size:.88rem;}
 .hero-tow-extras .tow-wheels-price{flex:0 0 4.8em;width:4.8em;min-width:4.8em;font-size:.86rem;}
+.hero-tow-extras .tow-wheels-price:empty{display:none;flex:0;width:0;min-width:0;}
 .hero-tow-extras .tow-calc-wheels-step{height:22px;margin-left:0;}
 .hero-tow-extras .tow-calc-wheels-step button,.hero-tow-extras .tow-calc-wheels-step span{width:22px;min-width:22px;height:22px;line-height:22px;font-size:.82rem;}
 .hero-tow-extras label.tow-calc-check{min-height:30px;font-size:.88rem;gap:8px;}
@@ -167,7 +170,7 @@ document.addEventListener('click',function(e){
 /* Mobile: km full width under wheels — keep compact only on desktop homepage */
 @media(max-width:960px){
   .hero-tow-extras-top{flex-direction:column;align-items:stretch;gap:8px;}
-  .hero-tow-km-compact{flex:none;width:100%;min-width:0;}
+  .hero-tow-km-compact{flex:none;width:100%;min-width:0;max-width:none;margin-left:0;}
   .hero-tow-km-compact .tow-calc-input{text-align:left;padding:8px 10px;font-size:.86rem;}
   .hero-tow-extras-grid{grid-template-columns:1fr;}
 }
