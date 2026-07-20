@@ -5245,8 +5245,13 @@ function towLocalCity(name){
 
 function towPhotonIsPoi(p){
   if(!p)return false;
+  /* Buildings / houses with a housenumber are addresses, not POIs */
+  if(p.housenumber&&(p.street||p.name)){
+    var k0=p.osm_key||'';
+    if(k0==='building'||k0==='place'||k0==='highway')return false;
+  }
   var k=p.osm_key||'';
-  return k==='amenity'||k==='shop'||k==='tourism'||k==='office'||k==='craft'||k==='leisure'||k==='healthcare'||(k==='building'&&!!p.name);
+  return k==='amenity'||k==='shop'||k==='tourism'||k==='office'||k==='craft'||k==='leisure'||k==='healthcare';
 }
 
 function towPhotonLabel(p){
@@ -5350,16 +5355,40 @@ function towHouseSortKey(it){
   return String(h.num).padStart(6,'0')+'|'+(h.letter||'')+'|'+(it.label||'');
 }
 
+function towIsStreetAddress(it){
+  if(!it)return false;
+  if(it.street&&it.housenumber)return true;
+  return /\b\d+[a-z]?\b/i.test(String(it.label||'').split(',')[0]||'');
+}
+
+/* Prefer real street addresses over shops/POIs when coords/label collide */
 function towDedupeResults(items){
-  var seenLabel={},seenGeo={},out=[];
-  items.forEach(function(it){
+  var bestByLabel={},bestByGeo={};
+  function prefer(a,b){
+    if(!a)return b;
+    if(!b)return a;
+    var aGood=towIsStreetAddress(a)&&!a.poi;
+    var bGood=towIsStreetAddress(b)&&!b.poi;
+    if(aGood!==bGood)return bGood?b:a;
+    if(!!a.poi!==!!b.poi)return a.poi?b:a;
+    return a;
+  }
+  (items||[]).forEach(function(it){
     if(!it||it.lat==null||it.lon==null||!it.label)return;
     var lk=towNorm(it.label);
     var gk=Number(it.lat).toFixed(4)+','+Number(it.lon).toFixed(4);
-    if(seenLabel[lk]||seenGeo[gk])return;
-    seenLabel[lk]=1;
-    seenGeo[gk]=1;
-    out.push(it);
+    bestByLabel[lk]=prefer(bestByLabel[lk],it);
+    bestByGeo[gk]=prefer(bestByGeo[gk],it);
+  });
+  var seen={},out=[];
+  Object.keys(bestByLabel).forEach(function(lk){
+    var it=bestByLabel[lk];
+    var gk=Number(it.lat).toFixed(4)+','+Number(it.lon).toFixed(4);
+    var best=prefer(it,bestByGeo[gk]);
+    var id=towNorm(best.label)+'|'+Number(best.lat).toFixed(4)+','+Number(best.lon).toFixed(4);
+    if(seen[id])return;
+    seen[id]=1;
+    out.push(best);
   });
   return out;
 }
@@ -5447,14 +5476,26 @@ function towPhotonSearch(q){
   if(!q||q.trim().length<2)return Promise.resolve([]);
   var trimmed=q.trim();
   var qParsed=towParseAddr(trimmed);
-  var jobs=towQueryVariants(trimmed).map(towPhotonFetch);
+  var variants=towQueryVariants(trimmed);
+  /* Also search base house number (3a → 3) so Photon returns building hits, not only shops */
+  if(qParsed.house&&qParsed.letter&&qParsed.tokens.length){
+    var baseQ=qParsed.tokens.join(' ')+' '+qParsed.num;
+    if(variants.indexOf(baseQ)<0)variants.push(baseQ);
+    var withCity=baseQ+' Warszawa';
+    if(variants.indexOf(withCity)<0)variants.push(withCity);
+  }
+  var jobs=variants.map(towPhotonFetch);
   jobs.push(towNominatimSearch(trimmed));
+  if(qParsed.house&&qParsed.letter&&qParsed.tokens.length){
+    jobs.push(towNominatimSearch(qParsed.tokens.join(' ')+' '+qParsed.num+' Warszawa'));
+  }
   return Promise.all(jobs).then(function(groups){
     var all=towFilterPolandOnly(towDedupeResults([].concat.apply([],groups))
       .filter(function(x){return x.label&&x.lat!=null&&x.lon!=null;}));
-    /* When user typed a house number, drop shops/POIs — keep street addresses only */
+    /* Drop pure business names; keep anything that already looks like street + number */
     if(qParsed.house){
       all=all.filter(function(it){
+        if(towIsStreetAddress(it))return true;
         if(it.poi)return false;
         if(/\.(pl|com|eu)\b/i.test(it.label||'')||/\.(pl|com|eu)\b/i.test(it.name||''))return false;
         return true;
