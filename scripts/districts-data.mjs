@@ -483,78 +483,114 @@ function districtName(slug, lang) {
   return NAMES[slug]?.[lang] || NAMES[slug]?.pl || slug;
 }
 
+function isSuburb(kind) {
+  return kind === 'suburb';
+}
+
 const COPY = {
   pl: {
-    h1: (n) => `Laweta Warszawa ${n} — pomoc drogowa 24h`,
+    h1: (n, kind) =>
+      isSuburb(kind)
+        ? `Laweta ${n} — pomoc drogowa 24h`
+        : `Laweta Warszawa ${n} — pomoc drogowa 24h`,
     intro: (n, f) =>
       `INNSER — tania laweta i pomoc drogowa w dzielnicy ${n}. Znamy ${f}. Dojazd zwykle 20–30 minut, całodobowo.`,
     p2: (n) =>
       `Holowanie, awaryjne odpalanie, wymiana koła i otwieranie aut w ${n} i całej Warszawie. Cena ustalana z góry — bez ukrytych opłat. Zadzwoń: 506-001-057.`,
     svc: 'Nasze usługi w Warszawie',
     near: (n) => `Obsługujemy również dzielnice sąsiadujące z ${n}:`,
-    linkLaweta: (n) => `Laweta Warszawa ${n}`,
+    linkLaweta: (n, kind) => (isSuburb(kind) ? `Laweta ${n}` : `Laweta Warszawa ${n}`),
     indexTitle: 'Laweta Warszawa — dzielnice i miasta podmiejskie',
     indexDesc: 'Pomoc drogowa INNSER w dzielnicach Warszawy i miastach podmiejskich (Ząbki, Marki, Otwock, Pruszków, Piaseczno…). Wybierz swój rejon — dojazd 24/7.',
-    seoTitle: (n) => `Laweta Warszawa ${n} — pomoc drogowa 24h | INNSER`,
-    seoDesc: (n) =>
-      `Laweta i pomoc drogowa ${n}, Warszawa 24/7. Holowanie od 250 zł, dojazd ~30 min. INNSER: 506-001-057.`,
+    seoTitle: (n, kind) =>
+      isSuburb(kind)
+        ? `Laweta ${n} — pomoc drogowa 24h | INNSER`
+        : `Laweta Warszawa ${n} — pomoc drogowa 24h | INNSER`,
+    seoDesc: (n, kind) =>
+      isSuburb(kind)
+        ? `Laweta i pomoc drogowa ${n} 24/7. Holowanie od 250 zł, dojazd ~30 min. INNSER: 506-001-057.`
+        : `Laweta i pomoc drogowa ${n}, Warszawa 24/7. Holowanie od 250 zł, dojazd ~30 min. INNSER: 506-001-057.`,
     indexSeoTitle: 'Laweta Warszawa — dzielnice i okolice 24/7 | INNSER',
     indexSeoDesc:
       'Pomoc drogowa i laweta w dzielnicach Warszawy i miastach podmiejskich — Ząbki, Marki, Piaseczno, Pruszków, Otwock. INNSER 24/7, 506-001-057.',
   },
   en: {
-    h1: (n) => `Tow truck Warsaw ${n} — roadside assistance 24/7`,
+    h1: (n, kind) =>
+      isSuburb(kind)
+        ? `Tow truck ${n} — roadside assistance 24/7`
+        : `Tow truck Warsaw ${n} — roadside assistance 24/7`,
     intro: (n, f) =>
       `INNSER — affordable tow truck and roadside help in ${n}. We know ${f}. Arrival usually 20–30 minutes, 24/7.`,
     p2: (n) =>
       `Towing, jump starts, tyre changes and car lockout service across ${n} and all of Warsaw. Fixed price upfront. Call: 506-001-057.`,
     svc: 'Our services in Warsaw',
     near: (n) => `We also serve districts next to ${n}:`,
-    linkLaweta: (n) => `Tow truck Warsaw ${n}`,
+    linkLaweta: (n, kind) => (isSuburb(kind) ? `Tow truck ${n}` : `Tow truck Warsaw ${n}`),
     indexTitle: 'Tow truck Warsaw — districts & suburbs',
     indexDesc: 'INNSER roadside assistance in Warsaw districts and suburbs (Ząbki, Marki, Otwock, Pruszków, Piaseczno…). Pick your area — 24/7 arrival.',
-    seoTitle: (n) => `Tow truck Warsaw ${n} — 24/7 roadside help | INNSER`,
-    seoDesc: (n) =>
-      `Tow truck & roadside assistance ${n}, Warsaw 24/7. Towing from 250 PLN, ~30 min ETA. INNSER: 506-001-057.`,
+    seoTitle: (n, kind) =>
+      isSuburb(kind)
+        ? `Tow truck ${n} — 24/7 roadside help | INNSER`
+        : `Tow truck Warsaw ${n} — 24/7 roadside help | INNSER`,
+    seoDesc: (n, kind) =>
+      isSuburb(kind)
+        ? `Tow truck & roadside assistance ${n} 24/7. Towing from 250 PLN, ~30 min ETA. INNSER: 506-001-057.`
+        : `Tow truck & roadside assistance ${n}, Warsaw 24/7. Towing from 250 PLN, ~30 min ETA. INNSER: 506-001-057.`,
     indexSeoTitle: 'Tow truck Warsaw — districts & suburbs 24/7 | INNSER',
     indexSeoDesc:
       'Roadside assistance in Warsaw districts and suburbs — Ząbki, Marki, Piaseczno, Pruszków, Otwock. INNSER 24/7, 506-001-057.',
   },
   ru: {
-    h1: (n) => `Эвакуатор Варшава ${n} — помощь на дороге 24/7`,
+    h1: (n, kind) =>
+      isSuburb(kind)
+        ? `Эвакуатор ${n} — помощь на дороге 24/7`
+        : `Эвакуатор Варшава ${n} — помощь на дороге 24/7`,
     intro: (n, f) =>
       `INNSER — лавета и эвакуатор в ${n}. Знаем ${f}. Приезд обычно 20–30 минут, круглосуточно.`,
     p2: (n) =>
       `Эвакуация, прикур, замена колеса и открытие авто на ${n} и по всей Варшаве. Цена согласована заранее. Звоните: 506-001-057.`,
     svc: 'Наши услуги в Варшаве',
     near: (n) => `Также обслуживаем соседние районы рядом с ${n}:`,
-    linkLaweta: (n) => `Эвакуатор Варшава ${n}`,
+    linkLaweta: (n, kind) => (isSuburb(kind) ? `Эвакуатор ${n}` : `Эвакуатор Варшава ${n}`),
     indexTitle: 'Эвакуатор Варшава — районы и пригороды',
     indexDesc: 'Помощь на дороге INNSER в районах Варшавы и пригородах (Зомбки, Марки, Отвоцк, Прушкув, Пясечно…). Выберите свой — приезд 24/7.',
-    seoTitle: (n) => `Эвакуатор Варшава ${n} — помощь 24/7 | INNSER`,
-    seoDesc: (n) =>
-      `Эвакуатор и лавета ${n}, Варшава 24/7. Эвакуация от 250 zł, приезд ~30 мин. INNSER: 506-001-057.`,
+    seoTitle: (n, kind) =>
+      isSuburb(kind)
+        ? `Эвакуатор ${n} — помощь 24/7 | INNSER`
+        : `Эвакуатор Варшава ${n} — помощь 24/7 | INNSER`,
+    seoDesc: (n, kind) =>
+      isSuburb(kind)
+        ? `Эвакуатор и лавета ${n} 24/7. Эвакуация от 250 zł, приезд ~30 мин. INNSER: 506-001-057.`
+        : `Эвакуатор и лавета ${n}, Варшава 24/7. Эвакуация от 250 zł, приезд ~30 мин. INNSER: 506-001-057.`,
     indexSeoTitle: 'Эвакуатор Варшава — районы и пригороды 24/7 | INNSER',
     indexSeoDesc:
       'Эвакуатор во всех районах Варшавы — Мокotów, Воля, Прага, Урсынów и другие. INNSER 24/7, 506-001-057.',
   },
   ua: {
-    h1: (n) => `Евакуатор Варшава ${n} — допомога на дорозі 24/7`,
+    h1: (n, kind) =>
+      isSuburb(kind)
+        ? `Евакуатор ${n} — допомога на дорозі 24/7`
+        : `Евакуатор Варшава ${n} — допомога на дорозі 24/7`,
     intro: (n, f) =>
-      `INNSER — лавета та евакуатор у ${n}. Знаємо ${f}. Приїзд зазвичай 20–30 хвилин, цілодobово.`,
+      `INNSER — лавета та евакуатор у ${n}. Знаємо ${f}. Приїзд зазвичай 20–30 хвилин, цілодобово.`,
     p2: (n) =>
       `Евакуація, прикур, заміна колеса та відкриття авто на ${n} і по всій Варшаві. Ціна домовлена наперед. Телефон: 506-001-057.`,
     svc: 'Наші послуги у Варшаві',
     near: (n) => `Також обслуговуємо сусідні райони біля ${n}:`,
-    linkLaweta: (n) => `Евакуатор Варшава ${n}`,
+    linkLaweta: (n, kind) => (isSuburb(kind) ? `Евакуатор ${n}` : `Евакуатор Варшава ${n}`),
     indexTitle: 'Евакуатор Варшава — райони та передмістя',
-    indexDesc: 'Допомога на дорозі INNSER у районах Варшави та передмістях (Зомбки, Маркі, Отвоцьк, Прушкув, Пясечно…). Оберіть свій — приїзд 24/7.',
-    seoTitle: (n) => `Евакуатор Варшава ${n} — допомога 24/7 | INNSER`,
-    seoDesc: (n) =>
-      `Евакуатор і лавета ${n}, Варшава 24/7. Евакуація від 250 zł, приїзд ~30 хв. INNSER: 506-001-057.`,
+    indexDesc: 'Допомога на дорозі INNSER у районах Варшавы та передмістях (Зомбки, Маркі, Отвоцьк, Прушкув, Пясечно…). Оберіть свій — приїзд 24/7.',
+    seoTitle: (n, kind) =>
+      isSuburb(kind)
+        ? `Евакуатор ${n} — допомога 24/7 | INNSER`
+        : `Евакуатор Варшава ${n} — допомога 24/7 | INNSER`,
+    seoDesc: (n, kind) =>
+      isSuburb(kind)
+        ? `Евакуатор і лавета ${n} 24/7. Евакуація від 250 zł, приїзд ~30 хв. INNSER: 506-001-057.`
+        : `Евакуатор і лавета ${n}, Варшава 24/7. Евакуація від 250 zł, приїзд ~30 хв. INNSER: 506-001-057.`,
     indexSeoTitle: 'Евакуатор Варшава — райони та передмістя 24/7 | INNSER',
     indexSeoDesc:
-      'Евакуатор у всіх районах Варшави — Mokotów, Wola, Praga, Ursynów та інші. INNSER 24/7, 506-001-057.',
+      'Евакуатор у всіх районах Варшавы — Mokotów, Wola, Praga, Ursynów та інші. INNSER 24/7, 506-001-057.',
   },
 };
 
@@ -570,7 +606,8 @@ export function getDistrictSeoMeta(lang, slug) {
   if (!d) return null;
   const c = COPY[lang] || COPY.pl;
   const n = districtName(slug, lang);
-  return { title: c.seoTitle(n), desc: c.seoDesc(n) };
+  const kind = d.kind || 'district';
+  return { title: c.seoTitle(n, kind), desc: c.seoDesc(n, kind) };
 }
 
 export function getDistrictsIndexSeoMeta(lang) {
@@ -600,13 +637,15 @@ export function renderDistrictStaticHtml(lang, slug, localePathSeg) {
         `<li><a href="/${seg}/${p}/">${esc(labels[i])}</a></li>`
     )
     .join('\n');
+  const kind = d.kind || 'district';
   const nearItems = d.neighbors
     .map((nb) => {
       const nn = districtName(nb, lang);
-      return `<a href="/${seg}/dzielnice/${nb}/" class="ar-tag">${esc(c.linkLaweta(nn))}</a>`;
+      const nk = districtBySlug(nb)?.kind || 'district';
+      return `<a href="/${seg}/dzielnice/${nb}/" class="ar-tag">${esc(c.linkLaweta(nn, nk))}</a>`;
     })
     .join('\n');
-  return `<h1 class="sh">${esc(c.h1(n))}</h1>
+  return `<h1 class="sh">${esc(c.h1(n, kind))}</h1>
 ${renderDistrictRichHtml(lang, slug)}
 <h2 class="ar-title">${esc(c.svc)}</h2>
 <ul class="dist-links">${svcItems}</ul>
@@ -631,7 +670,8 @@ export function renderDistrictsIndexStaticHtml(lang, localePathSeg) {
     list
       .map((d) => {
         const n = districtName(d.slug, lang);
-        return `<a href="/${seg}/dzielnice/${d.slug}/" class="ar-tag">${esc(c.linkLaweta(n))}</a>`;
+        const kind = d.kind || 'district';
+        return `<a href="/${seg}/dzielnice/${d.slug}/" class="ar-tag">${esc(c.linkLaweta(n, kind))}</a>`;
       })
       .join('\n');
   return `<h1 class="sh">${esc(c.indexTitle)}</h1>

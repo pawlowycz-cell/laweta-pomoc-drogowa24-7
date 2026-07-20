@@ -2799,53 +2799,54 @@ function districtSvcLabels(lang){
   return m[lang]||m.pl;
 }
 function districtCopy(lang){
+  function sub(kind){return kind==='suburb';}
   var pl={
-    h1:function(n){return 'Laweta Warszawa '+n+' — pomoc drogowa 24h';},
+    h1:function(n,kind){return sub(kind)?'Laweta '+n+' — pomoc drogowa 24h':'Laweta Warszawa '+n+' — pomoc drogowa 24h';},
     intro:function(n,f){return 'INNSER — tania laweta i pomoc drogowa w dzielnicy '+n+'. Znamy '+f+'. Dojazd zwykle 20–30 minut, całodobowo.';},
     p2:function(n){return 'Holowanie, awaryjne odpalanie, wymiana koła i otwieranie aut w '+n+' i całej Warszawie. Cena ustalana z góry — bez ukrytych opłat. Zadzwoń: 506-001-057.';},
     svc:'Nasze usługi w Warszawie',near:function(n){return 'Obsługujemy również sąsiednie dzielnice i miasta obok '+n+':';},
-    link:function(n){return 'Laweta Warszawa '+n;},
-    seoT:function(n){return 'Laweta Warszawa '+n+' — pomoc drogowa 24h | INNSER';},
-    seoD:function(n){return 'Laweta i pomoc drogowa '+n+', Warszawa 24/7. Holowanie od 250 zł, dojazd ~30 min. INNSER: 506-001-057.';},
+    link:function(n,kind){return sub(kind)?'Laweta '+n:'Laweta Warszawa '+n;},
+    seoT:function(n,kind){return sub(kind)?'Laweta '+n+' — pomoc drogowa 24h | INNSER':'Laweta Warszawa '+n+' — pomoc drogowa 24h | INNSER';},
+    seoD:function(n,kind){return sub(kind)?'Laweta i pomoc drogowa '+n+' 24/7. Holowanie od 250 zł, dojazd ~30 min. INNSER: 506-001-057.':'Laweta i pomoc drogowa '+n+', Warszawa 24/7. Holowanie od 250 zł, dojazd ~30 min. INNSER: 506-001-057.';},
     idxT:'Laweta Warszawa — dzielnice i miasta podmiejskie',idxD:'Pomoc drogowa INNSER w dzielnicach Warszawy i miastach podmiejskich (Ząbki, Marki, Otwock, Pruszków, Piaseczno…). Wybierz swój rejon — dojazd 24/7.',
     idxSeoT:'Laweta Warszawa — dzielnice i okolice 24/7 | INNSER',idxSeoD:'Pomoc drogowa i laweta w dzielnicach Warszawy i miastach podmiejskich — Ząbki, Marki, Piaseczno, Pruszków, Otwock. INNSER 24/7, 506-001-057.',
     idxDist:'Dzielnice Warszawy',idxSub:'Miasta podmiejskie'
   };
   var en={
-    h1:function(n){return 'Tow truck Warsaw '+n+' — roadside assistance 24/7';},
+    h1:function(n,kind){return sub(kind)?'Tow truck '+n+' — roadside assistance 24/7':'Tow truck Warsaw '+n+' — roadside assistance 24/7';},
     intro:function(n,f){return 'INNSER — affordable tow truck and roadside help in '+n+'. We know '+f+'. Arrival usually 20–30 minutes, 24/7.';},
     p2:function(n){return 'Towing, jump starts, tyre changes and car lockout service across '+n+' and all of Warsaw. Fixed price upfront. Call: 506-001-057.';},
     svc:'Our services in Warsaw',near:function(n){return 'We also serve nearby districts and towns next to '+n+':';},
-    link:function(n){return 'Tow truck Warsaw '+n;},
-    seoT:function(n){return 'Tow truck Warsaw '+n+' — 24/7 roadside help | INNSER';},
-    seoD:function(n){return 'Tow truck & roadside assistance '+n+', Warsaw 24/7. Towing from 250 PLN, ~30 min ETA. INNSER: 506-001-057.';},
+    link:function(n,kind){return sub(kind)?'Tow truck '+n:'Tow truck Warsaw '+n;},
+    seoT:function(n,kind){return sub(kind)?'Tow truck '+n+' — 24/7 roadside help | INNSER':'Tow truck Warsaw '+n+' — 24/7 roadside help | INNSER';},
+    seoD:function(n,kind){return sub(kind)?'Tow truck & roadside assistance '+n+' 24/7. Towing from 250 PLN, ~30 min ETA. INNSER: 506-001-057.':'Tow truck & roadside assistance '+n+', Warsaw 24/7. Towing from 250 PLN, ~30 min ETA. INNSER: 506-001-057.';},
     idxT:'Tow truck Warsaw — districts & suburbs',idxD:'INNSER roadside assistance in Warsaw districts and suburbs (Ząbki, Marki, Otwock, Pruszków, Piaseczno…). Pick your area — 24/7 arrival.',
     idxSeoT:'Tow truck Warsaw — districts & suburbs 24/7 | INNSER',idxSeoD:'Roadside assistance in Warsaw districts and suburbs — Ząbki, Marki, Piaseczno, Pruszków, Otwock. INNSER 24/7, 506-001-057.',
     idxDist:'Warsaw districts',idxSub:'Suburban towns'
   };
   var ru={
-    h1:function(n){return 'Эвакуатор Варшава '+n+' — помощь на дороге 24/7';},
+    h1:function(n,kind){return sub(kind)?'Эвакуатор '+n+' — помощь на дороге 24/7':'Эвакуатор Варшава '+n+' — помощь на дороге 24/7';},
     intro:function(n,f){return 'INNSER — лавета и эвакуатор в '+n+'. Знаем '+f+'. Приезд обычно 20–30 минут, круглосуточно.';},
     p2:function(n){return 'Эвакуация, прикур, замена колеса и открытие авто на '+n+' и по всей Варшаве. Цена согласована заранее. Звоните: 506-001-057.';},
     svc:'Наши услуги в Варшаве',near:function(n){return 'Также обслуживаем соседние районы и пригороды рядом с '+n+':';},
-    link:function(n){return 'Эвакуатор Варшава '+n;},
-    seoT:function(n){return 'Эвакуатор Варшава '+n+' — помощь 24/7 | INNSER';},
-    seoD:function(n){return 'Эвакуатор и лавета '+n+', Варшава 24/7. Эвакуация от 250 zł, приезд ~30 мин. INNSER: 506-001-057.';},
+    link:function(n,kind){return sub(kind)?'Эвакуатор '+n:'Эвакуатор Варшава '+n;},
+    seoT:function(n,kind){return sub(kind)?'Эвакуатор '+n+' — помощь 24/7 | INNSER':'Эвакуатор Варшава '+n+' — помощь 24/7 | INNSER';},
+    seoD:function(n,kind){return sub(kind)?'Эвакуатор и лавета '+n+' 24/7. Эвакуация от 250 zł, приезд ~30 мин. INNSER: 506-001-057.':'Эвакуатор и лавета '+n+', Варшава 24/7. Эвакуация от 250 zł, приезд ~30 мин. INNSER: 506-001-057.';},
     idxT:'Эвакуатор Варшава — районы и пригороды',idxD:'Помощь на дороге INNSER в районах Варшавы и пригородах (Зомбки, Марки, Отвоцк, Прушкув, Пясечно…). Выберите свой — приезд 24/7.',
     idxSeoT:'Эвакуатор Варшава — районы и пригороды 24/7 | INNSER',idxSeoD:'Эвакуатор в районах Варшавы и пригородах — Зомбки, Марки, Пясечно, Прушкув, Отвоцк. INNSER 24/7, 506-001-057.',
     idxDist:'Районы Варшавы',idxSub:'Пригороды'
   };
   var ua={
-    h1:function(n){return 'Евакуатор Варшава '+n+' — допомога на дорозі 24/7';},
+    h1:function(n,kind){return sub(kind)?'Евакуатор '+n+' — допомога на дорозі 24/7':'Евакуатор Варшава '+n+' — допомога на дорозі 24/7';},
     intro:function(n,f){return 'INNSER — лавета та евакуатор у '+n+'. Знаємо '+f+'. Приїзд зазвичай 20–30 хвилин, цілодобово.';},
     p2:function(n){return 'Евакуація, прикур, заміна колеса та відкриття авто на '+n+' і по всій Варшаві. Ціна домовлена наперед. Телефон: 506-001-057.';},
     svc:'Наші послуги у Варшаві',near:function(n){return 'Також обслуговуємо сусідні райони та передмістя біля '+n+':';},
-    link:function(n){return 'Евакуатор Варшава '+n;},
-    seoT:function(n){return 'Евакуатор Варшава '+n+' — допомога 24/7 | INNSER';},
-    seoD:function(n){return 'Евакуатор і лавета '+n+', Варшава 24/7. Евакуація від 250 zł, приїзд ~30 хв. INNSER: 506-001-057.';},
+    link:function(n,kind){return sub(kind)?'Евакуатор '+n:'Евакуатор Варшава '+n;},
+    seoT:function(n,kind){return sub(kind)?'Евакуатор '+n+' — допомога 24/7 | INNSER':'Евакуатор Варшава '+n+' — допомога 24/7 | INNSER';},
+    seoD:function(n,kind){return sub(kind)?'Евакуатор і лавета '+n+' 24/7. Евакуація від 250 zł, приїзд ~30 хв. INNSER: 506-001-057.':'Евакуатор і лавета '+n+', Варшава 24/7. Евакуація від 250 zł, приїзд ~30 хв. INNSER: 506-001-057.';},
     idxT:'Евакуатор Варшава — райони та передмістя',idxD:'Допомога на дорозі INNSER у районах Варшави та передмістях (Зомбки, Маркі, Отвоцьк, Прушкув, Пясечно…). Оберіть свій — приїзд 24/7.',
-    idxSeoT:'Евакуатор Варшава — райони та передмістя 24/7 | INNSER',idxSeoD:'Евакуатор у районах Варшави та передмістях — Зомбки, Маркі, Пясечно, Прушкув, Отвоцьк. INNSER 24/7, 506-001-057.',
-    idxDist:'Райони Варшави',idxSub:'Передмістя'
+    idxSeoT:'Евакуатор Варшава — райони та передмістя 24/7 | INNSER',idxSeoD:'Евакуатор у районах Варшавы та передмістях — Зомбки, Маркі, Пясечно, Прушкув, Отвоцьк. INNSER 24/7, 506-001-057.',
+    idxDist:'Райони Варшавы',idxSub:'Передмістя'
   };
   return ({pl:pl,en:en,ru:ru,ua:ua})[lang]||pl;
 }
@@ -2882,10 +2883,12 @@ function buildDistrictPageHtml(slug,lang){
   var near=(d.neighbors||[]).map(function(nb){
     var nd=getDistrictBySlug(nb);
     var nn=nd?((nd.names&&nd.names[lang])||nd.names.pl):nb;
-    return '<a href="'+districtPageHref(nb,lang)+'" class="ar-tag" data-p="district" data-district="'+nb+'" onclick="SP(\'district\',{districtSlug:\''+nb+'\'});return false;">'+c.link(nn)+'</a>';
+    var nk=nd?(nd.kind||'district'):'district';
+    return '<a href="'+districtPageHref(nb,lang)+'" class="ar-tag" data-p="district" data-district="'+nb+'" onclick="SP(\'district\',{districtSlug:\''+nb+'\'});return false;">'+c.link(nn,nk)+'</a>';
   }).join('');
   var rich=renderDistrictRichBody(slug,lang);
-  return '<h1 class="sh">'+c.h1(n)+'</h1>'+rich+'<h2 class="ar-title">'+c.svc+'</h2><ul class="dist-links">'+svc+'</ul><h2 class="ar-title">'+c.near(n)+'</h2><div class="ar-list dist-near">'+near+'</div><p style="text-align:center;margin-top:28px"><a href="tel:+48506001057" class="btn btn-y">📞 506-001-057</a></p>';
+  var kind=d.kind||'district';
+  return '<h1 class="sh">'+c.h1(n,kind)+'</h1>'+rich+'<h2 class="ar-title">'+c.svc+'</h2><ul class="dist-links">'+svc+'</ul><h2 class="ar-title">'+c.near(n)+'</h2><div class="ar-list dist-near">'+near+'</div><p style="text-align:center;margin-top:28px"><a href="tel:+48506001057" class="btn btn-y">📞 506-001-057</a></p>';
 }
 function buildDistrictsIndexHtml(lang){
   lang=lang||CL;
@@ -2893,7 +2896,8 @@ function buildDistrictsIndexHtml(lang){
   function tags(list){
     return list.map(function(x){
       var n=(x.names&&x.names[lang])||x.names.pl;
-      return '<a href="'+districtPageHref(x.slug,lang)+'" class="ar-tag" data-p="district" data-district="'+x.slug+'" onclick="SP(\'district\',{districtSlug:\''+x.slug+'\'});return false;">'+c.link(n)+'</a>';
+      var kind=x.kind||'district';
+      return '<a href="'+districtPageHref(x.slug,lang)+'" class="ar-tag" data-p="district" data-district="'+x.slug+'" onclick="SP(\'district\',{districtSlug:\''+x.slug+'\'});return false;">'+c.link(n,kind)+'</a>';
     }).join('');
   }
   var city=DISTRICTS.filter(function(x){return (x.kind||'district')==='district';});
@@ -3388,12 +3392,13 @@ function applyRouteSeo(pageSlug){
     var dd=getDistrictBySlug(__innserDistrictSlug);
     if(dd){
       var dn=(dd.names&&dd.names[CL])||dd.names.pl;
-      setDocumentTitle(dc.seoT(dn));
-      setMeta('meta[name="description"]','content',dc.seoD(dn));
-      setMeta('meta[property="og:title"]','content',dc.seoT(dn));
-      setMeta('meta[property="og:description"]','content',dc.seoD(dn));
-      setMeta('meta[name="twitter:title"]','content',dc.seoT(dn));
-      setMeta('meta[name="twitter:description"]','content',dc.seoD(dn));
+      var dk=dd.kind||'district';
+      setDocumentTitle(dc.seoT(dn,dk));
+      setMeta('meta[name="description"]','content',dc.seoD(dn,dk));
+      setMeta('meta[property="og:title"]','content',dc.seoT(dn,dk));
+      setMeta('meta[property="og:description"]','content',dc.seoD(dn,dk));
+      setMeta('meta[name="twitter:title"]','content',dc.seoT(dn,dk));
+      setMeta('meta[name="twitter:description"]','content',dc.seoD(dn,dk));
     } else restoreSeoHome();
   } else if(pageSlug==='districts'){
     var ic=districtCopy(CL);
