@@ -1,5 +1,7 @@
 /** Rich per-road SEO body — full PL / EN / RU / UA. */
 
+import { renderLandingPhotosHtml } from './landing-photos.mjs';
+
 const ROAD_RICH = {
   "a2": {
     "pl": {
@@ -1318,6 +1320,7 @@ export function renderRoadRichHtml(lang, slug) {
   const c = getRoadRichContent(lang, slug);
   if (!c) return '';
   let html = `<p class="dist-lead">${esc(c.lead)}</p>`;
+  html += renderLandingPhotosHtml(slug, lang, 'road');
   html += `<h2 class="ar-title dist-h2">${esc(c.whyTitle)}</h2>`;
   for (const b of c.blocks) {
     html += `<h3 class="dist-h3">${esc(b.title)}</h3><p>${esc(b.text)}</p>`;

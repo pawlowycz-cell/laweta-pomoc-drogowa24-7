@@ -34,6 +34,7 @@ import {
   renderRoadsIndexStaticHtml,
 } from './roads-data.mjs';
 import { roadRichJsonForRuntime } from './roads-content.mjs';
+import { landingGalleryJsonForRuntime, loadLandingGallery } from './landing-photos.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.join(__dirname, '..');
@@ -673,7 +674,7 @@ function injectRoadStaticBlock(html, langCl, localePathSeg, tail) {
   return html;
 }
 
-function injectDistrictsRuntimeData(html) {
+function injectDistrictsRuntimeData(html, galleryItems) {
   const json = districtsJsonForRuntime();
   html = html.replace(/var DISTRICTS=\[\];/, `var DISTRICTS=${json};`);
   const richJson = districtRichJsonForRuntime();
@@ -681,7 +682,10 @@ function injectDistrictsRuntimeData(html) {
   const roadsJson = roadsJsonForRuntime();
   html = html.replace(/var ROADS=\[\];/, `var ROADS=${roadsJson};`);
   const roadRichJson = roadRichJsonForRuntime();
-  return html.replace(/var ROAD_RICH=\{\};/, `var ROAD_RICH=${roadRichJson};`);
+  html = html.replace(/var ROAD_RICH=\{\};/, `var ROAD_RICH=${roadRichJson};`);
+  const gal = galleryItems || loadLandingGallery();
+  const galJson = landingGalleryJsonForRuntime(gal);
+  return html.replace(/var LANDING_GALLERY=\[\];/, `var LANDING_GALLERY=${galJson};`);
 }
 
 /** Real href on a[data-p] for crawlers (nav, footer, CTAs). */
@@ -779,6 +783,7 @@ function writeDeepRouteHtmlCopies(raw) {
   const distSlugs = districtSlugs();
   const rdSlugs = roadSlugs();
   const galleryItems = collectGalleryItems(raw);
+  loadLandingGallery(raw);
   const tails = [
     'blog',
     'gallery',
@@ -922,7 +927,7 @@ function buildLocaleHtml(raw, key) {
   html = bakeDataTTranslations(html, raw, langCl);
   html = patchLocalBusinessSchema(html, langCl);
   html = injectFaqJsonLd(html, raw, langCl);
-  html = injectDistrictsRuntimeData(html);
+  html = injectDistrictsRuntimeData(html, collectGalleryItems(raw));
 
   html = patchHtmlLinkHrefs(html, L.pathSeg);
 

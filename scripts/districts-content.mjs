@@ -1,5 +1,7 @@
 /** Rich per-district + suburb SEO body — full PL / EN / RU / UA. */
 
+import { renderLandingPhotosHtml } from './landing-photos.mjs';
+
 const LOCATIVE = {
   'mokotow': { pl: "Mokotowie", en: "Mokotów", ru: "Мокотуве", ua: "Мокотуві" },
   'wola': { pl: "Woli", en: "Wola", ru: "Воле", ua: "Волі" },
@@ -3410,6 +3412,7 @@ export function renderDistrictRichHtml(lang, slug) {
   const c = getDistrictRichContent(lang, slug);
   if (!c) return '';
   let html = `<p class="dist-lead">${esc(c.lead)}</p>`;
+  html += renderLandingPhotosHtml(slug, lang, 'district');
   html += `<h2 class="ar-title dist-h2">${esc(c.whyTitle)}</h2>`;
   for (const b of c.blocks) {
     html += `<h3 class="dist-h3">${esc(b.title)}</h3><p>${esc(b.text)}</p>`;
