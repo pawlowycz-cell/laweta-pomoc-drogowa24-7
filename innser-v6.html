@@ -185,6 +185,25 @@ document.addEventListener('click',function(e){
 .svcc-badge24{display:flex;justify-content:center;margin-bottom:12px;}.svcc-badge24 img{width:60px;height:60px;}
 .svcc-phone{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:auto;margin-left:auto;margin-right:auto;background:var(--y);color:var(--b);font-family:var(--ff-b);font-size:.95rem;font-weight:700;letter-spacing:.02em;line-height:1.2;padding:13px 30px;border-radius:50px;text-decoration:none;transition:.3s;white-space:nowrap;width:100%;max-width:340px;box-sizing:border-box;border:none;cursor:pointer;}
 html[lang="uk"] .svcc-phone,html[lang="ru"] .svcc-phone{font-size:.9rem;padding:13px 16px;white-space:nowrap;text-align:center;}
+/* Desktop RU/UA: longer Cyrillic titles — denser type so hero matches PL height */
+@media(min-width:961px){
+  html[lang="ru"] .hero h1,
+  html[lang="uk"] .hero h1{
+    font-size:clamp(2.05rem,3.7vw,3.25rem);
+    letter-spacing:.5px;
+    line-height:1.04;
+    margin-bottom:14px;
+  }
+  html[lang="ru"] .hero h1 em,
+  html[lang="uk"] .hero h1 em{letter-spacing:.4px;}
+  html[lang="ru"] .hsub,
+  html[lang="uk"] .hsub{
+    font-size:1.02rem;
+    line-height:1.5;
+    margin-bottom:22px;
+    max-width:34em;
+  }
+}
 .svcc-phone:hover{background:var(--yl);transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,209,0,.3);}
 /* Same yellow capsule as hero CTA — calculator + services */
 .tow-calc-call.btn-y,.hero-tow-result .tow-calc-call,.svc-detail-mid-tel.btn-y{
@@ -2246,7 +2265,7 @@ en:{
 },
 ru:{
   nav_home:"Главная",nav_svc:"Услуги",nav_prices:"Цены",nav_about:"О нас",nav_gal:"Фото",nav_map:"Карта",nav_districts:"Районы",nav_blog:"Блог",nav_partners:"Сотрудничество",nav_cnt:"Контакт",
-  hero_badge:"Доступны 24/7 — Звоните Сейчас!",hero_t1:"ЭВАКУАТОР ВАРШАВА",hero_t2:"ПОМОЩЬ НА ДОРОГЕ 24/7",
+  hero_badge:"Доступны 24/7 — Звоните Сейчас!",hero_t1:"ЭВАКУАТОР ВАРШАВА",hero_t2:"ПОМОЩЬ 24/7",
   hero_sub:"<strong class=\"xb\">Профессиональная помощь на дороге</strong>, <strong class=\"xb\">эвакуатор</strong> и <strong class=\"xb\">лавета</strong> по Варшаве и в радиусе 500 км. <strong class=\"xb\">Доступные цены</strong> — оценка по телефону. Быстро, безопасно, <strong class=\"xb\">24/7</strong>.",
   home_keywords:"эвакуатор варшава, дешевый эвакуатор варшава, недорогой эвакуатор варшава, эвакуатор варшава 24/7, заказать эвакуатор в варшаве, лавета варшава, лафета варшава, помощь на дороге варшава, прикурить машину варшава, разряжен аккумулятор варшава, разряженный аккумулятор варшава, сел аккумулятор варшава, прикурить разряженный аккумулятор варшава, услуга прикурить машину в варшаве, прикурить автомобиль варшава, прикурить машину в варшаве, как вызвать эвакуатор в польше, услуги лафета, автоэвакуатор, эвакуатор варшава 24 7, эвакуатор цена, эвакуатор в варшаве, услуги эвакуатора, автолавета, эвакуатор для легковой машины, эвакуация автомобиля варшава, evakuator warszawa, ewakuator warszawa, tow truck warszawa, INNSER",
   home_seo_title:"Эвакуатор и лавета Варшава 24/7 | ~30 мин | 506-001-057",
@@ -2574,7 +2593,7 @@ ru:{
 },
 ua:{
   nav_home:"Головна",nav_svc:"Послуги",nav_prices:"Ціни",nav_about:"Про нас",nav_gal:"Фото",nav_map:"Карта",nav_districts:"Райони",nav_blog:"Блог",nav_partners:"Співпраця",nav_cnt:"Контакт",
-  hero_badge:"Доступні 24/7 — Дзвоніть Зараз!",hero_t1:"ЕВАКУАТОР ВАРШАВА",hero_t2:"ДОПОМОГА НА ДОРОЗІ 24/7",
+  hero_badge:"Доступні 24/7 — Дзвоніть Зараз!",hero_t1:"ЕВАКУАТОР ВАРШАВА",hero_t2:"ДОПОМОГА 24/7",
   hero_sub:"<strong class=\"xb\">Професійна допомога на дорозі</strong>, <strong class=\"xb\">евакуатор</strong> і <strong class=\"xb\">лавета</strong> у Варшаві та в радіусі 500 км. <strong class=\"xb\">Доступні ціни</strong> — оцінка телефоном. Швидко, безпечно, <strong class=\"xb\">24/7</strong>.",
   home_keywords:"евакуатор варшава, дешевий евакуатор варшава, евакуатор варшава 24/7, замовити евакуатор варшава, лавета варшава, лафета варшава, допомога на дорозі варшава, евакуатор варшава ціна, евакуатор варшава 24 7, евакуатор в варшаве, евакуатор цена, евакуация автомобиля варшава, автолавета, услуги евакуатора, как вызвать эвакуатор в польше, evakuator warszawa, ewakuator warszawa, tow truck warszawa, INNSER",
   home_seo_title:"Евакуатор і лавета Варшава 24/7 | ~30 хв | 506-001-057",
