@@ -141,16 +141,16 @@ document.addEventListener('click',function(e){
 .hero-tow .tow-calc-field label,.hero-tow .tow-calc-km-field label{font-size:.72rem;margin-bottom:3px;color:var(--g);}
 .hero-tow .tow-calc-input{padding:8px 10px;font-size:.86rem;border-radius:8px;}
 .hero-tow-extras{margin-top:2px;padding:10px;border:1px solid var(--b4);border-radius:10px;background:rgba(0,0,0,.14);}
-.hero-tow-extras-title{margin:0 0 8px;font-size:.72rem;font-weight:600;color:var(--gl);letter-spacing:.02em;}
-.hero-tow-extras-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px;}
-.hero-tow-extras .tow-calc-wheels-cell{grid-column:1/-1;min-height:28px;gap:6px;}
-.hero-tow-extras .tow-wheels-label{font-size:.78rem;}
-.hero-tow-extras .tow-wheels-price{flex:0 0 4.8em;width:4.8em;min-width:4.8em;font-size:.78rem;}
-.hero-tow-extras .tow-calc-wheels-step{height:20px;margin-left:0;}
-.hero-tow-extras .tow-calc-wheels-step button,.hero-tow-extras .tow-calc-wheels-step span{width:20px;min-width:20px;height:20px;line-height:20px;font-size:.78rem;}
-.hero-tow-extras label.tow-calc-check{min-height:26px;font-size:.76rem;gap:6px;}
-.hero-tow-extras label.tow-calc-check input{flex:0 0 14px;width:14px;height:14px;}
-.hero-tow-extras label.tow-calc-check span{white-space:normal;overflow:visible;text-overflow:unset;}
+.hero-tow-extras-title{margin:0 0 8px;font-size:.82rem;font-weight:600;color:var(--gl);letter-spacing:.02em;}
+.hero-tow-extras-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px;}
+.hero-tow-extras .tow-calc-wheels-cell{grid-column:1/-1;min-height:30px;gap:6px;}
+.hero-tow-extras .tow-wheels-label{font-size:.88rem;}
+.hero-tow-extras .tow-wheels-price{flex:0 0 4.8em;width:4.8em;min-width:4.8em;font-size:.86rem;}
+.hero-tow-extras .tow-calc-wheels-step{height:22px;margin-left:0;}
+.hero-tow-extras .tow-calc-wheels-step button,.hero-tow-extras .tow-calc-wheels-step span{width:22px;min-width:22px;height:22px;line-height:22px;font-size:.82rem;}
+.hero-tow-extras label.tow-calc-check{min-height:30px;font-size:.88rem;gap:8px;}
+.hero-tow-extras label.tow-calc-check input{flex:0 0 15px;width:15px;height:15px;}
+.hero-tow-extras label.tow-calc-check span{white-space:normal;overflow:visible;text-overflow:unset;line-height:1.3;}
 .hero-tow-result{margin-top:4px;padding:12px 10px;text-align:center;background:rgba(255,209,0,.04);border:1px solid rgba(255,209,0,.18);border-radius:12px;}
 .hero-tow-result .tow-calc-result-label{font-size:.72rem;margin-bottom:2px;}
 .hero-tow-result .tow-calc-price{font-size:1.55rem;margin:0 0 4px;min-height:1.65em;line-height:1.65em;}
@@ -690,13 +690,13 @@ label.tow-calc-check span{line-height:1.25;min-width:0;white-space:nowrap;overfl
       <p class="hcard-calc-hint" data-t="hcard_d">Skąd–dokąd lub km — orientacyjna cena od razu.</p>
       <div class="hero-tow" id="hero-tow-calc">
         <div class="tow-calc-field tow-ac-wrap">
-          <label for="hero-tow-from" data-t="tow_calc_from">Skąd</label>
-          <input type="text" id="hero-tow-from" class="tow-calc-input" autocomplete="off" spellcheck="false" data-t-ph="tow_calc_from_ph" placeholder="Adres w Polsce…">
+          <label for="hero-tow-from" data-t="tow_calc_from">Punkt A</label>
+          <input type="text" id="hero-tow-from" class="tow-calc-input" autocomplete="off" spellcheck="false" data-t-ph="tow_calc_from_ph" placeholder="Punkt A">
           <ul class="tow-ac-list" id="hero-tow-from-list" hidden role="listbox"></ul>
         </div>
         <div class="tow-calc-field tow-ac-wrap">
-          <label for="hero-tow-to" data-t="tow_calc_to">Dokąd</label>
-          <input type="text" id="hero-tow-to" class="tow-calc-input" autocomplete="off" spellcheck="false" data-t-ph="tow_calc_to_ph" placeholder="Adres w Polsce…">
+          <label for="hero-tow-to" data-t="tow_calc_to">Punkt B</label>
+          <input type="text" id="hero-tow-to" class="tow-calc-input" autocomplete="off" spellcheck="false" data-t-ph="tow_calc_to_ph" placeholder="Punkt B">
           <ul class="tow-ac-list" id="hero-tow-to-list" hidden role="listbox"></ul>
         </div>
         <div class="tow-calc-km-field">
@@ -869,13 +869,13 @@ label.tow-calc-check span{line-height:1.25;min-width:0;white-space:nowrap;overfl
           <div class="tow-calc-form">
             <div class="tow-calc-grid">
               <div class="tow-calc-field tow-ac-wrap">
-                <label for="tow-from" data-t="tow_calc_from">Skąd</label>
-                <input type="text" id="tow-from" class="tow-calc-input" autocomplete="off" spellcheck="false" data-t-ph="tow_calc_from_ph" placeholder="Adres w Polsce…">
+                <label for="tow-from" data-t="tow_calc_from">Punkt A</label>
+                <input type="text" id="tow-from" class="tow-calc-input" autocomplete="off" spellcheck="false" data-t-ph="tow_calc_from_ph" placeholder="Punkt A">
                 <ul class="tow-ac-list" id="tow-from-list" hidden role="listbox"></ul>
               </div>
               <div class="tow-calc-field tow-ac-wrap">
-                <label for="tow-to" data-t="tow_calc_to">Dokąd</label>
-                <input type="text" id="tow-to" class="tow-calc-input" autocomplete="off" spellcheck="false" data-t-ph="tow_calc_to_ph" placeholder="Adres w Polsce…">
+                <label for="tow-to" data-t="tow_calc_to">Punkt B</label>
+                <input type="text" id="tow-to" class="tow-calc-input" autocomplete="off" spellcheck="false" data-t-ph="tow_calc_to_ph" placeholder="Punkt B">
                 <ul class="tow-ac-list" id="tow-to-list" hidden role="listbox"></ul>
               </div>
             </div>
@@ -1777,10 +1777,10 @@ pl:{
   svc1_faq3a:"Tak, holujemy samochody i <strong class=\"xb\">motocykle</strong>.",
   tow_calc_title:"Kalkulator wyceny holowania",
   tow_calc_note:"Cena orientacyjna. Parking −2 i niżej — tylko po telefonie.",
-  tow_calc_from:"Skąd",
-  tow_calc_to:"Dokąd",
-  tow_calc_from_ph:"Adres w Polsce…",
-  tow_calc_to_ph:"Adres w Polsce…",
+  tow_calc_from:"Punkt A",
+  tow_calc_to:"Punkt B",
+  tow_calc_from_ph:"Punkt A",
+  tow_calc_to_ph:"Punkt B",
   tow_calc_km:"Dystans (km)",
   tow_calc_dist:"Dystans:",
   tow_calc_loading:"Liczenie…",
@@ -2106,10 +2106,10 @@ en:{
   svc1_faq3a:"Yes, we tow cars and <strong class=\"xb\">motorcycles</strong>.",
   tow_calc_title:"Tow price calculator",
   tow_calc_note:"Estimated price only. Level −2 and below — call for a quote.",
-  tow_calc_from:"From",
-  tow_calc_to:"To",
-  tow_calc_from_ph:"Address in Poland…",
-  tow_calc_to_ph:"Address in Poland…",
+  tow_calc_from:"Point A",
+  tow_calc_to:"Point B",
+  tow_calc_from_ph:"Point A",
+  tow_calc_to_ph:"Point B",
   tow_calc_km:"Distance (km)",
   tow_calc_dist:"Distance:",
   tow_calc_loading:"Calculating…",
@@ -2381,10 +2381,10 @@ ru:{
   svc1_faq3a:"Да, эвакуируем авто и <strong class=\"xb\">мотоциклы</strong>.",
   tow_calc_title:"Калькулятор стоимости эвакуации",
   tow_calc_note:"Ориентировочная цена. Паркинг −2 и ниже — только по телефону.",
-  tow_calc_from:"Откуда",
-  tow_calc_to:"Куда",
-  tow_calc_from_ph:"Адрес в Польше…",
-  tow_calc_to_ph:"Адрес в Польше…",
+  tow_calc_from:"Пункт A",
+  tow_calc_to:"Пункт B",
+  tow_calc_from_ph:"Пункт A",
+  tow_calc_to_ph:"Пункт B",
   tow_calc_km:"Расстояние (км)",
   tow_calc_dist:"Дистанция:",
   tow_calc_loading:"Считаем…",
@@ -2757,10 +2757,10 @@ ua:{
   svc1_faq3a:"Так, евакуюємо авто і <strong class=\"xb\">мотоцикли</strong>.",
   tow_calc_title:"Калькулятор вартості евакуації",
   tow_calc_note:"Орієнтовна ціна. Паркінг −2 і нижче — лише телефоном.",
-  tow_calc_from:"Звідки",
-  tow_calc_to:"Куди",
-  tow_calc_from_ph:"Адреса в Польщі…",
-  tow_calc_to_ph:"Адреса в Польщі…",
+  tow_calc_from:"Пункт A",
+  tow_calc_to:"Пункт B",
+  tow_calc_from_ph:"Пункт A",
+  tow_calc_to_ph:"Пункт B",
   tow_calc_km:"Відстань (км)",
   tow_calc_dist:"Дистанція:",
   tow_calc_loading:"Рахуємо…",
@@ -5255,23 +5255,14 @@ function towPhotonLabel(p){
   var name=p.name||'';
   var street=p.street||'';
   var housenumber=p.housenumber||'';
-  if(towPhotonIsPoi(p)&&name){
-    var poiParts=[name];
-    if(street&&street!==name){
-      poiParts.push(housenumber?street+' '+housenumber:street);
-    }
-    if(city)poiParts.push(city);
-    return poiParts.join(', ');
-  }
+  /* Prefer street address — skip POI/brand names (e.g. "Merigo") not shown in Google Maps */
   var line='';
-  if(housenumber&&(street||name)){
-    line=(street||name)+' '+housenumber;
-  } else if(street&&name&&street!==name){
-    line=p.street+' '+p.name;
-  } else if(p.name){
-    line=p.name;
-  } else if(p.street){
-    line=p.street;
+  if(street){
+    line=housenumber?street+' '+housenumber:street;
+  } else if(name&&!towPhotonIsPoi(p)){
+    line=housenumber?name+' '+housenumber:name;
+  } else if(name){
+    line=name;
   }
   var parts=[];
   if(line)parts.push(line);
@@ -5325,21 +5316,23 @@ function towNominatimLabel(item){
   var a=item.address||{};
   var city=a.city||a.town||a.village||a.suburb||a.city_district||a.municipality||'';
   if(CL!=='en')city=towLocalCity(city)||city;
-  if(towNominatimIsPoi(item)&&item.name){
-    var poiParts=[item.name];
-    var road=a.road||a.pedestrian||a.footway||'';
-    if(road)poiParts.push(road+(a.house_number?' '+a.house_number:''));
-    if(city)poiParts.push(city);
-    return poiParts.join(', ');
+  var road=a.road||a.pedestrian||a.footway||'';
+  var line='';
+  if(road){
+    line=a.house_number?road+' '+a.house_number:road;
+  } else if(item.name&&!towNominatimIsPoi(item)){
+    line=a.house_number?item.name+' '+a.house_number:item.name;
+  } else if(item.name){
+    line=item.name;
   }
-  var line=item.name||a.road||a.pedestrian||a.footway||'';
-  if(a.house_number&&line)line=line+' '+a.house_number;
   var parts=[];
   if(line)parts.push(line);
   if(city&&city!==line)parts.push(city);
   if(parts.length)return parts.join(', ');
   if(item.display_name){
     var bits=item.display_name.split(',').map(function(s){return s.trim();}).filter(Boolean);
+    /* Skip leading POI/brand name when next bit looks like a street */
+    if(bits.length>=3&&/\d/.test(bits[1]))return bits[1]+', '+(bits[bits.length-2]||bits[2]);
     if(bits.length>=2)return bits[0]+', '+bits[bits.length-2];
     return bits[0]||'';
   }
