@@ -244,7 +244,7 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
 @keyframes socRipple{0%{transform:scale(.85);opacity:.5}60%{opacity:.08}100%{transform:scale(1.42);opacity:0}}@keyframes socIconFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-4px) scale(1.07)}}@media (prefers-reduced-motion:reduce){.soc-link::after,.soc-link svg{animation:none!important}.soc-link::after{opacity:0!important}.mobile-call-bar__num,.nav-phone{animation:none!important}}
 .page{display:none;}.page.on{display:block;}
 .rv{opacity:1;transform:translateY(0);}
-@media(max-width:960px){.hero .mx{grid-template-columns:1fr;gap:0;text-align:center;}.hero .mx>div{min-width:0;}.hsub{margin:0 auto 28px;max-width:100%;padding:0 2px;overflow-wrap:break-word;}.hbtns{justify-content:center;}.hbadge{max-width:100%;white-space:normal;justify-content:center;text-align:center;line-height:1.35;flex-wrap:wrap;}.hero h1{overflow-wrap:break-word;line-height:1.08;}.hcard{display:block;max-width:440px;margin:28px auto 0;text-align:left;}.cnt-g{grid-template-columns:1fr;}.foot-g{grid-template-columns:1fr 1fr;}.sc .sd{max-width:100%;overflow-wrap:break-word;padding:0 4px;box-sizing:border-box;}}@media(max-width:960px){
+@media(max-width:960px){.hero .mx{grid-template-columns:1fr;gap:0;text-align:center;}.hero .mx>div{min-width:0;}.hsub{margin:0 auto 28px;max-width:100%;padding:0 2px;overflow-wrap:break-word;}.hbtns{justify-content:center;flex-direction:column;align-items:stretch;max-width:340px;margin-left:auto;margin-right:auto;}.hbtns .btn{width:100%;justify-content:center;}.hbadge{max-width:100%;white-space:normal;justify-content:center;text-align:center;line-height:1.35;flex-wrap:wrap;}.hero h1{overflow-wrap:break-word;line-height:1.08;}.hcard{display:none;}.hero-calc-mob{display:inline-flex!important;margin-top:14px;font-size:.9rem;font-weight:600;color:var(--y);text-decoration:none;}.hero-calc-mob:hover{text-decoration:underline;}.cnt-g{grid-template-columns:1fr;}.foot-g{grid-template-columns:1fr 1fr;}.sc .sd{max-width:100%;overflow-wrap:break-word;padding:0 4px;box-sizing:border-box;}}@media(max-width:960px){
   .abt-g{display:flex;flex-direction:column;gap:28px;align-items:stretch;}
   .abt-vis{order:-1;min-height:unset;padding:28px 20px 24px;flex-direction:column;justify-content:center;gap:14px;}
   .abt-vis-inner{padding:0;}
@@ -681,6 +681,7 @@ label.tow-calc-check span{line-height:1.25;min-width:0;white-space:nowrap;overfl
       <a href="tel:+48506001057" class="btn btn-y">📞 <span data-t="hero_call">Zadzwoń: 506-001-057</span></a>
       <a href="/pl/services/" class="btn btn-o" data-p="services" onclick="SP('services');return false;"><span data-t="hero_svc">Nasze usługi</span> →</a>
     </div>
+    <a href="/pl/prices/" class="hero-calc-mob" data-p="prices" data-t="hcard_more" onclick="SP('prices');return false;" style="display:none;">Pełny kalkulator →</a>
   </div><div>
     <div class="hcard hcard-calc">
       <h2 data-t="hcard_t">Kalkulator holowania</h2>
