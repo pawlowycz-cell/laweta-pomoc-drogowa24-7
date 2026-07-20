@@ -1,6 +1,7 @@
 /** Warsaw districts + suburbs for local SEO landing pages (/pl/dzielnice/{slug}/). */
 
 import { renderDistrictRichHtml } from './districts-content.mjs';
+import { ROADS, COPY as ROAD_COPY, NAMES as ROAD_NAMES } from './roads-data.mjs';
 
 const LANGS = ['pl', 'en', 'ru', 'ua'];
 
@@ -656,12 +657,13 @@ ${renderDistrictRichHtml(lang, slug)}
 
 export function renderDistrictsIndexStaticHtml(lang, localePathSeg) {
   const c = COPY[lang] || COPY.pl;
+  const rc = ROAD_COPY[lang] || ROAD_COPY.pl;
   const seg = localePathSeg;
   const labels = {
-    pl: { dist: 'Dzielnice Warszawy', sub: 'Miasta podmiejskie' },
-    en: { dist: 'Warsaw districts', sub: 'Suburban towns' },
-    ru: { dist: 'Районы Варшавы', sub: 'Пригороды' },
-    ua: { dist: 'Райони Варшави', sub: 'Передмістя' },
+    pl: { dist: 'Dzielnice Warszawy', sub: 'Miasta podmiejskie', roads: 'Trasy i autostrady' },
+    en: { dist: 'Warsaw districts', sub: 'Suburban towns', roads: 'Highways & roads' },
+    ru: { dist: 'Районы Варшавы', sub: 'Пригороды', roads: 'Трассы' },
+    ua: { dist: 'Райони Варшави', sub: 'Передмістя', roads: 'Траси' },
   };
   const lab = labels[lang] || labels.pl;
   const city = DISTRICTS.filter((d) => (d.kind || 'district') === 'district');
@@ -674,12 +676,18 @@ export function renderDistrictsIndexStaticHtml(lang, localePathSeg) {
         return `<a href="/${seg}/dzielnice/${d.slug}/" class="ar-tag">${esc(c.linkLaweta(n, kind))}</a>`;
       })
       .join('\n');
+  const roadTags = ROADS.map((d) => {
+    const n = ROAD_NAMES[d.slug]?.[lang] || ROAD_NAMES[d.slug]?.pl || d.code || d.slug;
+    return `<a href="/${seg}/trasy/${d.slug}/" class="ar-tag">${esc(rc.linkLaweta(n))}</a>`;
+  }).join('\n');
   return `<h1 class="sh">${esc(c.indexTitle)}</h1>
 <p class="sd">${esc(c.indexDesc)}</p>
 <h2 class="ar-title dist-h2">${esc(lab.dist)}</h2>
 <div class="ar-list dist-all">${tags(city)}</div>
 <h2 class="ar-title dist-h2">${esc(lab.sub)}</h2>
 <div class="ar-list dist-all">${tags(subs)}</div>
+<h2 class="ar-title dist-h2">${esc(lab.roads)}</h2>
+<div class="ar-list dist-all">${roadTags}</div>
 <p style="text-align:center;margin-top:28px"><a href="tel:+48506001057" class="btn btn-y">📞 506-001-057</a></p>`;
 }
 
