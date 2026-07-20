@@ -620,24 +620,20 @@ label.tow-calc-check span{line-height:1.25;min-width:0;white-space:nowrap;overfl
   .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
   .burger.open span:nth-child(2){opacity:0;}
   .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-  /* RU/UA: короткие строки в герое — Bebas + большой letter-spacing ломают узкие экраны */
-  /* Match PL visual density — same type scale for all languages */
+  /* RU/UA only: longer Cyrillic titles need denser mobile type. EN matches PL size. */
   html[lang="ru"] .hero h1,
-  html[lang="uk"] .hero h1,
-  html[lang="en"] .hero h1{
+  html[lang="uk"] .hero h1{
     letter-spacing:.05em;
     font-size:clamp(1.7rem,6.8vw,2.85rem);
     margin-bottom:16px;
     line-height:1.06;
   }
   html[lang="ru"] .hero h1 em,
-  html[lang="uk"] .hero h1 em,
-  html[lang="en"] .hero h1 em{
+  html[lang="uk"] .hero h1 em{
     letter-spacing:.04em;
   }
   html[lang="ru"] .hsub,
-  html[lang="uk"] .hsub,
-  html[lang="en"] .hsub{
+  html[lang="uk"] .hsub{
     font-size:1.05rem;
     line-height:1.55;
     margin:0 auto 22px;
