@@ -156,7 +156,7 @@ document.addEventListener('click',function(e){
 .hero-tow-result .tow-calc-price{font-size:1.55rem;margin:0 0 4px;min-height:1.65em;line-height:1.65em;}
 .hero-tow-result .tow-calc-breakdown{font-size:.7rem;margin:0 0 8px;line-height:1.35;min-height:1.35em;display:block!important;visibility:visible;}
 .hero-tow-result .tow-calc-breakdown:empty{visibility:hidden;display:block!important;min-height:1.35em;}
-.hero-tow-result .tow-calc-call{width:100%;max-width:none;padding:10px 12px;font-size:.88rem;}
+.hero-tow-result .tow-calc-call{width:100%;max-width:none;}
 .hero-tow-more{display:inline-block;margin-top:8px;font-size:.76rem;font-weight:600;color:var(--y);text-decoration:none;}
 .hero-tow-more:hover{text-decoration:underline;}
 .hero-tow .tow-ac-list{z-index:30;}
@@ -167,9 +167,25 @@ document.addEventListener('click',function(e){
 .svcc-img{height:220px;flex-shrink:0;overflow:hidden;border-bottom:1px solid rgba(255,209,0,.1);}.svcc-img img{width:100%;height:100%;object-fit:cover;object-position:center;transition:.4s;}.svcc:hover .svcc-img img{transform:scale(1.05);}.svcc-img-icon{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f0d00,#111);font-size:4rem;}
 .svcc h3{font-family:var(--ff-d);font-size:1.3rem;letter-spacing:1px;margin-bottom:10px;}.svcc p{color:var(--g);font-size:.9rem;line-height:1.6;max-width:360px;margin-left:auto;margin-right:auto;margin-bottom:22px;flex:0 1 auto;}
 .svcc-badge24{display:flex;justify-content:center;margin-bottom:12px;}.svcc-badge24 img{width:60px;height:60px;}
-.svcc-phone{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin-top:auto;background:var(--y);color:var(--b);font-family:var(--ff-d);font-size:1.4rem;letter-spacing:2px;padding:16px 24px 12px;border-radius:50px;text-decoration:none;transition:.2s;font-weight:700;white-space:nowrap;max-width:100%;box-sizing:border-box;}
-html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16px 10px;}
-.svcc-phone:hover{background:var(--yl);transform:scale(1.04);}
+.svcc-phone{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:auto;margin-left:auto;margin-right:auto;background:var(--y);color:var(--b);font-family:var(--ff-b);font-size:.95rem;font-weight:700;letter-spacing:.02em;line-height:1.2;padding:13px 30px;border-radius:50px;text-decoration:none;transition:.3s;white-space:nowrap;width:100%;max-width:340px;box-sizing:border-box;border:none;cursor:pointer;}
+html[lang="uk"] .svcc-phone,html[lang="ru"] .svcc-phone{font-size:.9rem;padding:13px 22px;white-space:normal;text-align:center;}
+.svcc-phone:hover{background:var(--yl);transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,209,0,.3);}
+/* Same yellow capsule as hero CTA — calculator + services */
+.tow-calc-call.btn-y,.hero-tow-result .tow-calc-call,.svc-detail-mid-tel.btn-y{
+  font-family:var(--ff-b)!important;
+  font-size:.95rem;
+  font-weight:700;
+  letter-spacing:.02em;
+  line-height:1.2;
+  padding:13px 30px;
+  border-radius:50px;
+  gap:8px;
+  width:100%;
+  max-width:340px;
+  justify-content:center;
+  box-sizing:border-box;
+}
+.hero-tow-result .tow-calc-call{max-width:none;padding:13px 30px;font-size:.95rem;}
 .abt-bg{background:var(--b2);}.abt-g{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;}.abt-feats{display:flex;flex-direction:column;gap:16px;margin-top:24px;}.abt-f{display:flex;gap:14px;align-items:flex-start;padding:14px;background:rgba(255,209,0,.025);border-radius:10px;border-left:3px solid var(--y);}.abt-fi{width:40px;height:40px;min-width:40px;background:rgba(255,209,0,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.15rem;}.abt-f h3{font-size:.95rem;margin-bottom:3px;}.abt-f p{font-size:.85rem;color:var(--g);}.abt-vis{position:relative;border-radius:18px;overflow:hidden;min-height:420px;background:linear-gradient(135deg,var(--b4),var(--b3));display:flex;align-items:center;justify-content:center;}.abt-vis-inner{padding:40px;text-align:center;}.abt-vis-big{font-family:var(--ff-d);font-size:6rem;color:var(--y);letter-spacing:6px;line-height:1;}.abt-vis-sub{font-size:1rem;color:var(--g);margin-top:8px;}.abt-badge{position:absolute;bottom:20px;left:20px;background:var(--y);color:var(--b);padding:10px 18px;border-radius:10px;font-weight:700;font-size:.85rem;z-index:2;}
 .gal-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;}.gal-i{aspect-ratio:4/3;background:var(--b4);border-radius:12px;overflow:hidden;cursor:pointer;transition:.3s;position:relative;}.gal-i:hover{transform:scale(1.03);}.gal-i img{width:100%;height:100%;object-fit:cover;}.gal-i-ph{display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:var(--g);font-size:.85rem;text-align:center;padding:20px;}
 .lightbox{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;cursor:pointer;}.lightbox.show{display:flex;}.lightbox img{max-width:90vw;max-height:90vh;border-radius:8px;}.lb-close{position:absolute;top:20px;right:20px;font-size:2rem;color:var(--w);cursor:pointer;background:none;border:none;width:50px;height:50px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,.1);}
@@ -351,7 +367,7 @@ label.tow-calc-check span{line-height:1.25;min-width:0;white-space:nowrap;overfl
 .tow-calc-breakdown:empty{display:none;}
 .tow-calc-individual{font-size:.88rem;color:var(--gl);margin:0 0 14px;line-height:1.45;}
 .tow-calc-individual .tow-calc-phone{color:var(--y);font-weight:700;}
-.tow-calc-call{width:100%;max-width:320px;justify-content:center;margin:0 auto;}
+.tow-calc-call{width:100%;max-width:340px;justify-content:center;margin:0 auto;}
 .tow-calc-footnote{margin:14px 0 0;font-size:.78rem;color:var(--g);line-height:1.5;text-align:center;}
 @media(max-width:640px){
   .tow-calc-grid{grid-template-columns:1fr;}
@@ -475,9 +491,22 @@ label.tow-calc-check span{line-height:1.25;min-width:0;white-space:nowrap;overfl
     font-size:1.35rem!important;
     letter-spacing:1px!important;
   }
-  .btn-y{
+  .btn-y,
+  a.svcc-phone,
+  .tow-calc-call.btn-y,
+  .svc-detail-mid-tel.btn-y{
+    font-family:var(--ff-b)!important;
     font-size:1.1rem!important;
+    font-weight:700!important;
+    letter-spacing:.02em!important;
     padding:16px 32px!important;
+    border-radius:50px!important;
+    gap:8px!important;
+    line-height:1.2!important;
+  }
+  a.svcc-phone{
+    width:100%!important;
+    max-width:340px!important;
   }
   .burger.open{position:relative;z-index:9999999;}
   .nm{
