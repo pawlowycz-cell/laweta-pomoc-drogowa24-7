@@ -208,8 +208,8 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
   .abt-badge{position:static;left:auto;bottom:auto;transform:none;max-width:100%;display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px;text-align:center;white-space:normal;}
 }
 @media(max-width:768px){
-  body.show-back .page.on > *:first-child > .mx{padding-top:56px;}
-  body.show-back .page.on > .svc-detail:first-child > .mx{padding-top:64px;}
+  body.show-back .page.on > *:first-child > .mx{padding-top:72px;}
+  body.show-back .page.on > .svc-detail:first-child > .mx{padding-top:80px;}
 }
 @media(max-width:640px){.blog-post-shell{padding:22px 16px 32px;}}
 .bimg{margin:26px 0;text-align:center;}
@@ -287,14 +287,14 @@ html[lang="uk"] .svcc-phone{font-size:1.12rem;letter-spacing:1px;padding:16px 16
 .tow-calc-extras{margin-top:14px;border:1px solid var(--b4);border-radius:12px;background:rgba(0,0,0,.12);padding:14px;}
 .tow-calc-extras-title{margin:0 0 12px;font-size:.88rem;font-weight:600;color:var(--gl);}
 .tow-calc-extras-rows{display:flex;flex-direction:column;gap:12px;}
-.tow-calc-extras-row{display:flex;align-items:center;gap:16px;height:36px;overflow:hidden;}
-.tow-calc-extras-row>*{flex:1 1 0;min-width:0;height:36px;}
-.tow-calc-wheels-cell{display:flex;align-items:center;gap:8px;height:36px;min-width:0;overflow:hidden;}
+.tow-calc-extras-row{display:flex;align-items:center;gap:16px;min-height:36px;}
+.tow-calc-extras-row>*{flex:1 1 0;min-width:0;min-height:36px;}
+.tow-calc-wheels-cell{display:flex;align-items:center;gap:8px;min-height:36px;min-width:0;}
 .tow-calc-wheels-gap{flex:0 0 16px;width:16px;height:16px;}
 .tow-wheels-label,#tow-wheels-label{flex:1 1 auto;text-align:left;line-height:1.25;font-size:.86rem;color:var(--gl);min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .tow-wheels-price{flex:0 0 auto;font-size:.86rem;font-weight:600;color:var(--gl);white-space:nowrap;}
 .tow-wheels-price:empty{display:none;}
-label.tow-calc-check{display:flex;align-items:center;gap:8px;margin:0;font-size:.86rem;color:var(--gl);line-height:1.25;cursor:pointer;min-width:0;height:36px;}
+label.tow-calc-check{display:flex;align-items:center;gap:8px;margin:0;font-size:.86rem;color:var(--gl);line-height:1.25;cursor:pointer;min-width:0;min-height:36px;}
 label.tow-calc-check input{flex:0 0 16px;width:16px;height:16px;margin:0;accent-color:var(--y);}
 label.tow-calc-check span{line-height:1.25;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .tow-calc-wheels-step{display:inline-flex;align-items:center;border:1px solid var(--b4);border-radius:8px;overflow:hidden;flex-shrink:0;height:22px;}
@@ -311,7 +311,45 @@ label.tow-calc-check span{line-height:1.25;min-width:0;white-space:nowrap;overfl
 .tow-calc-individual .tow-calc-phone{color:var(--y);font-weight:700;}
 .tow-calc-call{width:100%;max-width:320px;justify-content:center;margin:0 auto;}
 .tow-calc-footnote{margin:14px 0 0;font-size:.78rem;color:var(--g);line-height:1.5;text-align:center;}
-@media(max-width:640px){.tow-calc-grid{grid-template-columns:1fr;}.tow-calc-extras-row{flex-direction:column;align-items:stretch;gap:12px;}}
+@media(max-width:640px){
+  .tow-calc-grid{grid-template-columns:1fr;}
+  .tow-calc-extras{padding:14px 12px;}
+  .tow-calc-extras-row{
+    flex-direction:column;
+    align-items:stretch;
+    gap:12px;
+    height:auto;
+    min-height:0;
+    overflow:visible;
+  }
+  .tow-calc-extras-row>*{
+    flex:0 0 auto;
+    width:100%;
+    height:auto;
+    min-height:36px;
+  }
+  .tow-calc-wheels-cell{
+    height:auto;
+    min-height:36px;
+    overflow:visible;
+    flex-wrap:wrap;
+    row-gap:8px;
+  }
+  label.tow-calc-check{
+    height:auto;
+    min-height:36px;
+    align-items:flex-start;
+    padding-top:8px;
+    padding-bottom:8px;
+  }
+  label.tow-calc-check input{margin-top:2px;}
+  label.tow-calc-check span,
+  .tow-wheels-label,#tow-wheels-label{
+    white-space:normal;
+    overflow:visible;
+    text-overflow:unset;
+  }
+}
 
 .rev-card{background:var(--b3);border:1px solid var(--b4);border-radius:14px;padding:24px;position:relative;transition:.3s;}
 .rev-card:hover{border-color:rgba(255,209,0,.3);transform:translateY(-3px);}
