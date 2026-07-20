@@ -142,8 +142,12 @@ document.addEventListener('click',function(e){
 .hero-tow .tow-calc-input{padding:8px 10px;font-size:.86rem;border-radius:8px;}
 .hero-tow-extras{margin-top:2px;padding:10px;border:1px solid var(--b4);border-radius:10px;background:rgba(0,0,0,.14);}
 .hero-tow-extras-title{margin:0 0 8px;font-size:.82rem;font-weight:600;color:var(--gl);letter-spacing:.02em;}
+.hero-tow-extras-top{display:flex;align-items:flex-end;gap:10px;margin-bottom:8px;min-width:0;}
+.hero-tow-extras-top .tow-calc-wheels-cell{flex:1 1 auto;min-width:0;min-height:30px;gap:6px;margin:0;}
+.hero-tow-km-compact{flex:0 0 92px;width:92px;min-width:84px;margin:0;}
+.hero-tow-km-compact label{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px;}
+.hero-tow-km-compact .tow-calc-input{padding:6px 8px;font-size:.82rem;text-align:center;}
 .hero-tow-extras-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px;}
-.hero-tow-extras .tow-calc-wheels-cell{grid-column:1/-1;min-height:30px;gap:6px;}
 .hero-tow-extras .tow-wheels-label{font-size:.88rem;}
 .hero-tow-extras .tow-wheels-price{flex:0 0 4.8em;width:4.8em;min-width:4.8em;font-size:.86rem;}
 .hero-tow-extras .tow-calc-wheels-step{height:22px;margin-left:0;}
@@ -160,7 +164,16 @@ document.addEventListener('click',function(e){
 .hero-tow-more{display:inline-block;margin-top:8px;font-size:.76rem;font-weight:600;color:var(--y);text-decoration:none;}
 .hero-tow-more:hover{text-decoration:underline;}
 .hero-tow .tow-ac-list{z-index:30;}
-@media(max-width:640px){.hero-tow-extras-grid{grid-template-columns:1fr;}}
+/* Mobile: km full width under wheels — keep compact only on desktop homepage */
+@media(max-width:960px){
+  .hero-tow-extras-top{flex-direction:column;align-items:stretch;gap:8px;}
+  .hero-tow-km-compact{flex:none;width:100%;min-width:0;}
+  .hero-tow-km-compact .tow-calc-input{text-align:left;padding:8px 10px;font-size:.86rem;}
+  .hero-tow-extras-grid{grid-template-columns:1fr;}
+}
+@media(min-width:961px){
+  .hero-tow-km-compact label{font-size:.68rem;}
+}
 
 .svc-bg{background:linear-gradient(180deg,var(--b),#0f0e00,var(--b));}.svc-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:22px;align-items:stretch;width:100%;max-width:100%;min-width:0;}.svcc{background:var(--b3);border:1px solid rgba(255,209,0,.28);border-radius:var(--r);overflow:hidden;transition:.35s;position:relative;display:flex;flex-direction:column;height:100%;width:100%;max-width:100%;min-width:0;box-sizing:border-box;box-shadow:0 0 0 1px rgba(255,209,0,.06) inset;}.svcc:hover{border-color:var(--y);transform:translateY(-4px);box-shadow:0 12px 40px rgba(255,209,0,.12),0 0 0 1px rgba(255,209,0,.12) inset;}.svcc:hover .svcc-img img{transform:scale(1.06);}.svcc-img-icon{display:flex;align-items:center;justify-content:center;height:100%;font-size:5rem;background:linear-gradient(135deg,#0f0d00,#1a1500);}
 .svcc-img-inner{font-size:5.5rem;line-height:1;filter:drop-shadow(0 4px 20px rgba(255,209,0,.2));}.svcc-body{padding:28px 28px 32px;text-align:center;display:flex;flex-direction:column;align-items:center;flex:1;min-height:0;width:100%;box-sizing:border-box;}.svcc-icon{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;background:rgba(255,209,0,.1);border-radius:12px;font-size:1.4rem;margin-bottom:14px;}.svcc-icon-big{font-size:3.2rem;margin-bottom:18px;width:70px;height:70px;background:rgba(255,209,0,.08);border-radius:16px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,209,0,.15);}
@@ -787,13 +800,9 @@ label.tow-calc-check span{line-height:1.25;min-width:0;white-space:nowrap;overfl
           <input type="text" id="hero-tow-to" class="tow-calc-input" autocomplete="off" spellcheck="false" data-t-ph="tow_calc_to_ph" placeholder="Punkt B">
           <ul class="tow-ac-list" id="hero-tow-to-list" hidden role="listbox"></ul>
         </div>
-        <div class="tow-calc-km-field">
-          <label for="hero-tow-km-manual" data-t="tow_calc_km">Dystans (km)</label>
-          <input type="number" id="hero-tow-km-manual" class="tow-calc-input" min="0" step="0.1" inputmode="decimal" placeholder="—">
-        </div>
         <div class="hero-tow-extras">
           <p class="hero-tow-extras-title" data-t="tow_calc_extras">Dodatkowe opcje</p>
-          <div class="hero-tow-extras-grid">
+          <div class="hero-tow-extras-top">
             <div class="tow-calc-wheels-cell">
               <span id="hero-tow-wheels-label" class="tow-wheels-label" data-t="tow_calc_wheels0">Zablokowane koło</span>
               <div class="tow-calc-wheels-step" id="hero-tow-wheels-step">
@@ -803,6 +812,12 @@ label.tow-calc-check span{line-height:1.25;min-width:0;white-space:nowrap;overfl
               </div>
               <span id="hero-tow-wheels-price" class="tow-wheels-price" aria-live="polite"></span>
             </div>
+            <div class="tow-calc-km-field hero-tow-km-compact">
+              <label for="hero-tow-km-manual" data-t="tow_calc_km">Dystans (km)</label>
+              <input type="number" id="hero-tow-km-manual" class="tow-calc-input" min="0" step="0.1" inputmode="decimal" placeholder="—">
+            </div>
+          </div>
+          <div class="hero-tow-extras-grid">
             <label class="tow-calc-check"><input type="checkbox" id="hero-tow-jeep"> <span data-t="tow_calc_jeep">SUV (+50 zł)</span></label>
             <label class="tow-calc-check"><input type="checkbox" id="hero-tow-lowered"> <span data-t="tow_calc_lowered">Niskie auto (+50 zł)</span></label>
             <label class="tow-calc-check"><input type="checkbox" id="hero-tow-bus-short"> <span data-t="tow_calc_bus_short">Bus (+50)</span></label>
