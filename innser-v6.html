@@ -5313,6 +5313,17 @@ function towHouseFromItem(it){
   return towParseAddr(it.label||'');
 }
 
+function towIsWarsaw(it){
+  if(!it)return false;
+  var blob=towNorm([it.city,it.label,it.name].filter(Boolean).join(' '));
+  return blob.indexOf('warszawa')>=0||blob.indexOf('warsaw')>=0;
+}
+
+function towQueryMentionsWarsaw(q){
+  var n=towNorm(q);
+  return n.indexOf('warszawa')>=0||n.indexOf('warsaw')>=0;
+}
+
 function towScoreResult(it,query){
   var q=towParseAddr(query);
   var lab=towHouseFromItem(it);
@@ -5322,6 +5333,8 @@ function towScoreResult(it,query){
 
   q.tokens.forEach(function(t){
     if(t.length<2)return;
+    /* City name in query is not a street token match requirement */
+    if(t==='warszawa'||t==='warsaw')return;
     if(l.indexOf(t)>=0)score+=45;
   });
 
@@ -5342,6 +5355,10 @@ function towScoreResult(it,query){
     if(full&&l.indexOf(full)>=0)score+=80;
   }
 
+  /* Business first: most jobs are in Warsaw */
+  if(towIsWarsaw(it))score+=800;
+  else if(it.dist!=null)score+=Math.max(0,120-Math.sqrt(it.dist)*80);
+
   /* Business/POI results (shops etc.) go last when looking for a street address */
   if(it.poi)score-=350;
   if(/\.(pl|com|eu)\b/i.test(it.label||'')||/\.(pl|com|eu)\b/i.test(it.name||''))score-=200;
@@ -5351,8 +5368,8 @@ function towScoreResult(it,query){
 
 function towHouseSortKey(it){
   var h=towHouseFromItem(it);
-  if(h.num==null)return '999999|zz|'+(it.label||'');
-  return String(h.num).padStart(6,'0')+'|'+(h.letter||'')+'|'+(it.label||'');
+  if(h.num==null)return '999999|zz';
+  return String(h.num).padStart(6,'0')+'|'+(h.letter||'');
 }
 
 function towIsStreetAddress(it){
@@ -5440,6 +5457,7 @@ function towNominatimSearch(q){
     return towFilterPolandOnly(list.map(function(item){
       var lat=parseFloat(item.lat),lon=parseFloat(item.lon);
       var a=item.address||{};
+      var city=a.city||a.town||a.village||a.municipality||'';
       return {
         label:towNominatimLabel(item),
         lat:lat,
@@ -5449,7 +5467,8 @@ function towNominatimSearch(q){
         poi:towNominatimIsPoi(item),
         name:item.name||'',
         housenumber:a.house_number||'',
-        street:a.road||a.pedestrian||a.footway||''
+        street:a.road||a.pedestrian||a.footway||'',
+        city:city
       };
     }));
   }).catch(function(){return [];});
@@ -5468,7 +5487,8 @@ function towPhotonMapFeature(f){
     poi:towPhotonIsPoi(p),
     name:p.name||'',
     housenumber:p.housenumber||'',
-    street:p.street||''
+    street:p.street||'',
+    city:p.city||p.locality||''
   };
 }
 
@@ -5477,6 +5497,18 @@ function towPhotonSearch(q){
   var trimmed=q.trim();
   var qParsed=towParseAddr(trimmed);
   var variants=towQueryVariants(trimmed);
+  /* Prefer Warsaw hits: most jobs are in the capital */
+  if(!towQueryMentionsWarsaw(trimmed)&&qParsed.tokens.length){
+    var wq=trimmed.replace(/\s+/g,' ').trim()+' Warszawa';
+    if(variants.indexOf(wq)<0)variants.push(wq);
+    if(qParsed.house){
+      var streetW=qParsed.tokens.filter(function(t){return t!=='warszawa'&&t!=='warsaw';}).join(' ');
+      if(streetW){
+        var wExact=streetW+' '+qParsed.house+' Warszawa';
+        if(variants.indexOf(wExact)<0)variants.push(wExact);
+      }
+    }
+  }
   /* Also search base house number (3a → 3) so Photon returns building hits, not only shops */
   if(qParsed.house&&qParsed.letter&&qParsed.tokens.length){
     var baseQ=qParsed.tokens.join(' ')+' '+qParsed.num;
@@ -5486,6 +5518,9 @@ function towPhotonSearch(q){
   }
   var jobs=variants.map(towPhotonFetch);
   jobs.push(towNominatimSearch(trimmed));
+  if(!towQueryMentionsWarsaw(trimmed)){
+    jobs.push(towNominatimSearch(trimmed+' Warszawa'));
+  }
   if(qParsed.house&&qParsed.letter&&qParsed.tokens.length){
     jobs.push(towNominatimSearch(qParsed.tokens.join(' ')+' '+qParsed.num+' Warszawa'));
   }
@@ -5504,8 +5539,11 @@ function towPhotonSearch(q){
     all.forEach(function(it){
       it._score=towScoreResult(it,trimmed);
       it._hkey=towHouseSortKey(it);
+      it._waw=towIsWarsaw(it)?1:0;
     });
     all.sort(function(a,b){
+      /* Warsaw always first when the same street/number exists there */
+      if(a._waw!==b._waw)return b._waw-a._waw;
       if(b._score!==a._score)return b._score-a._score;
       if(a._hkey!==b._hkey)return a._hkey<b._hkey?-1:1;
       if(a.pl!==b.pl)return a.pl?-1:1;
