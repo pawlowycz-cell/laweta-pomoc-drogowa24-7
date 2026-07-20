@@ -25,6 +25,15 @@ import {
   renderDistrictsIndexStaticHtml,
 } from './districts-data.mjs';
 import { districtRichJsonForRuntime } from './districts-content.mjs';
+import {
+  roadSlugs,
+  roadsJsonForRuntime,
+  getRoadSeoMeta,
+  getRoadsIndexSeoMeta,
+  renderRoadStaticHtml,
+  renderRoadsIndexStaticHtml,
+} from './roads-data.mjs';
+import { roadRichJsonForRuntime } from './roads-content.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.join(__dirname, '..');
@@ -528,6 +537,11 @@ function seoMetaForTail(raw, localePathSeg, tail) {
     return { title: seoPageTitle(meta.title), desc: truncSeoDesc(meta.desc), kw: null };
   }
 
+  if (trimmed === 'trasy') {
+    const meta = getRoadsIndexSeoMeta(langCl);
+    return { title: seoPageTitle(meta.title), desc: truncSeoDesc(meta.desc), kw: null };
+  }
+
   if (trimmed === PRIVACY_PAGE_TAIL) {
     const title = extractTranslationField(raw, langCl, 'priv_seo_title');
     const desc = extractTranslationField(raw, langCl, 'priv_seo_desc');
@@ -538,6 +552,13 @@ function seoMetaForTail(raw, localePathSeg, tail) {
   const distM = /^dzielnice\/([a-z0-9-]+)$/.exec(trimmed);
   if (distM) {
     const meta = getDistrictSeoMeta(langCl, distM[1]);
+    if (!meta) return null;
+    return { title: seoPageTitle(meta.title), desc: truncSeoDesc(meta.desc), kw: null };
+  }
+
+  const roadM = /^trasy\/([a-z0-9-]+)$/.exec(trimmed);
+  if (roadM) {
+    const meta = getRoadSeoMeta(langCl, roadM[1]);
     if (!meta) return null;
     return { title: seoPageTitle(meta.title), desc: truncSeoDesc(meta.desc), kw: null };
   }
@@ -589,22 +610,26 @@ function tailToPageId(tail) {
   if (blogM) return `blog-post-${blogM[1]}`;
   if (trimmed === 'dzielnice') return 'districts';
   if (/^dzielnice\/[a-z0-9-]+$/.test(trimmed)) return 'district';
+  if (trimmed === 'trasy') return 'roads';
+  if (/^trasy\/[a-z0-9-]+$/.test(trimmed)) return 'road';
   if (trimmed === PRIVACY_PAGE_TAIL) return 'privacy';
   return trimmed;
 }
 
-function pageIdToPathTail(pageId, districtSlug) {
+function pageIdToPathTail(pageId, districtSlug, roadSlug) {
   if (pageId === 'home') return '';
   if (pageId === 'districts') return 'dzielnice';
   if (pageId === 'district' && districtSlug) return `dzielnice/${districtSlug}`;
+  if (pageId === 'roads') return 'trasy';
+  if (pageId === 'road' && roadSlug) return `trasy/${roadSlug}`;
   if (pageId === 'privacy') return PRIVACY_PAGE_TAIL;
   const blogM = /^blog-post-(b\d+)$/.exec(pageId);
   if (blogM) return `blog/${blogM[1]}`;
   return pageId;
 }
 
-function innserHrefForPage(pageId, localePathSeg, districtSlug) {
-  const tail = pageIdToPathTail(pageId, districtSlug);
+function innserHrefForPage(pageId, localePathSeg, districtSlug, roadSlug) {
+  const tail = pageIdToPathTail(pageId, districtSlug, roadSlug);
   return tail ? `/${localePathSeg}/${tail}/` : `/${localePathSeg}/`;
 }
 
@@ -628,18 +653,48 @@ function injectDistrictStaticBlock(html, langCl, localePathSeg, tail) {
   return html;
 }
 
+function injectRoadStaticBlock(html, langCl, localePathSeg, tail) {
+  const trimmed = String(tail).replace(/^\/+|\/+$/g, '');
+  if (trimmed === 'trasy') {
+    const inner = renderRoadsIndexStaticHtml(langCl, localePathSeg);
+    return html.replace(
+      /<!--innser-roads-index-static-->[\s\S]*?<!--\/innser-roads-index-static-->/,
+      `<!--innser-roads-index-static-->\n${inner}\n<!--/innser-roads-index-static-->`
+    );
+  }
+  const m = /^trasy\/([a-z0-9-]+)$/.exec(trimmed);
+  if (m) {
+    const inner = renderRoadStaticHtml(langCl, m[1], localePathSeg);
+    return html.replace(
+      /<!--innser-road-page-static-->[\s\S]*?<!--\/innser-road-page-static-->/,
+      `<!--innser-road-page-static-->\n${inner}\n<!--/innser-road-page-static-->`
+    );
+  }
+  return html;
+}
+
 function injectDistrictsRuntimeData(html) {
   const json = districtsJsonForRuntime();
   html = html.replace(/var DISTRICTS=\[\];/, `var DISTRICTS=${json};`);
   const richJson = districtRichJsonForRuntime();
-  return html.replace(/var DISTRICT_RICH=\{\};/, `var DISTRICT_RICH=${richJson};`);
+  html = html.replace(/var DISTRICT_RICH=\{\};/, `var DISTRICT_RICH=${richJson};`);
+  const roadsJson = roadsJsonForRuntime();
+  html = html.replace(/var ROADS=\[\];/, `var ROADS=${roadsJson};`);
+  const roadRichJson = roadRichJsonForRuntime();
+  return html.replace(/var ROAD_RICH=\{\};/, `var ROAD_RICH=${roadRichJson};`);
 }
 
 /** Real href on a[data-p] for crawlers (nav, footer, CTAs). */
 function patchHtmlLinkHrefs(html, localePathSeg) {
   return html.replace(/<a(\s[^>]*?\bdata-p="([^"]+)"[^>]*)>/gi, (match, attrs, pageId) => {
     const distM = attrs.match(/\bdata-district="([^"]+)"/);
-    const href = innserHrefForPage(pageId, localePathSeg, distM ? distM[1] : '');
+    const roadM = attrs.match(/\bdata-road="([^"]+)"/);
+    const href = innserHrefForPage(
+      pageId,
+      localePathSeg,
+      distM ? distM[1] : '',
+      roadM ? roadM[1] : ''
+    );
     const cleaned = attrs.replace(/\bhref="[^"]*"/, '').trim();
     return `<a href="${href}" ${cleaned}>`;
   });
@@ -722,16 +777,19 @@ function writeDeepRouteHtmlCopies(raw) {
   const blogSlugs = discoverBlogPostSlugs(raw);
   const svcIds = discoverSvcPageIds(raw);
   const distSlugs = districtSlugs();
+  const rdSlugs = roadSlugs();
   const galleryItems = collectGalleryItems(raw);
   const tails = [
     'blog',
     'gallery',
     'dzielnice',
+    'trasy',
     PRIVACY_PAGE_TAIL,
     ...NAV_PAGE_TAILS,
     ...blogSlugs.map((b) => `blog/${b}`),
     ...svcIds,
     ...distSlugs.map((s) => `dzielnice/${s}`),
+    ...rdSlugs.map((s) => `trasy/${s}`),
   ];
   let n = 0;
   for (const key of Object.keys(LOCALES)) {
@@ -749,6 +807,9 @@ function writeDeepRouteHtmlCopies(raw) {
       html = patchHtmlLinkHrefs(html, seg);
       if (tail === 'dzielnice' || tail.startsWith('dzielnice/')) {
         html = injectDistrictStaticBlock(html, langCl, seg, tail);
+      }
+      if (tail === 'trasy' || tail.startsWith('trasy/')) {
+        html = injectRoadStaticBlock(html, langCl, seg, tail);
       }
       if (tail === 'gallery' && galleryItems.length) {
         const pageUrl = `${SITE}/${seg}/gallery/`;
@@ -961,11 +1022,13 @@ function appendTrailingSlashRedirects(redirects, html) {
   const svcIds = discoverSvcPageIds(html);
   const blogSlugs = discoverBlogPostSlugs(html);
   const distSlugs = districtSlugs();
+  const rdSlugs = roadSlugs();
   for (const seg of ['pl', 'en', 'ru', 'uk']) {
     redirects.push({ source: `/${seg}`, destination: `/${seg}/`, permanent: true });
     redirects.push({ source: `/${seg}/blog`, destination: `/${seg}/blog/`, permanent: true });
     redirects.push({ source: `/${seg}/gallery`, destination: `/${seg}/gallery/`, permanent: true });
     redirects.push({ source: `/${seg}/dzielnice`, destination: `/${seg}/dzielnice/`, permanent: true });
+    redirects.push({ source: `/${seg}/trasy`, destination: `/${seg}/trasy/`, permanent: true });
     redirects.push({
       source: `/${seg}/${PRIVACY_PAGE_TAIL}`,
       destination: `/${seg}/${PRIVACY_PAGE_TAIL}/`,
@@ -991,6 +1054,13 @@ function appendTrailingSlashRedirects(redirects, html) {
         permanent: true,
       });
     }
+    for (const rslug of rdSlugs) {
+      redirects.push({
+        source: `/${seg}/trasy/${rslug}`,
+        destination: `/${seg}/trasy/${rslug}/`,
+        permanent: true,
+      });
+    }
   }
 }
 
@@ -998,12 +1068,14 @@ function appendTrailingSlashNetlify(lines, html) {
   const svcIds = discoverSvcPageIds(html);
   const blogSlugs = discoverBlogPostSlugs(html);
   const distSlugs = districtSlugs();
+  const rdSlugs = roadSlugs();
   lines.push('# canonical trailing slash — один URL на страницу для Google');
   for (const seg of ['pl', 'en', 'ru', 'uk']) {
     lines.push(`/${seg}  /${seg}/  301`);
     lines.push(`/${seg}/blog  /${seg}/blog/  301`);
     lines.push(`/${seg}/gallery  /${seg}/gallery/  301`);
     lines.push(`/${seg}/dzielnice  /${seg}/dzielnice/  301`);
+    lines.push(`/${seg}/trasy  /${seg}/trasy/  301`);
     lines.push(`/${seg}/${PRIVACY_PAGE_TAIL}  /${seg}/${PRIVACY_PAGE_TAIL}/  301`);
     for (const nav of NAV_PAGE_TAILS) {
       lines.push(`/${seg}/${nav}  /${seg}/${nav}/  301`);
@@ -1017,6 +1089,9 @@ function appendTrailingSlashNetlify(lines, html) {
     for (const dslug of distSlugs) {
       lines.push(`/${seg}/dzielnice/${dslug}  /${seg}/dzielnice/${dslug}/  301`);
     }
+    for (const rslug of rdSlugs) {
+      lines.push(`/${seg}/trasy/${rslug}  /${seg}/trasy/${rslug}/  301`);
+    }
   }
 }
 
@@ -1027,17 +1102,20 @@ function writeSitemapAndRobots(html) {
   const blogSlugs = discoverBlogPostSlugs(html);
   const svcIds = discoverSvcPageIds(html);
   const distSlugs = districtSlugs();
+  const rdSlugs = roadSlugs();
   /** @type {(string|null)[]} null = корень локали */
   const tails = [
     null,
     'blog',
     'gallery',
     'dzielnice',
+    'trasy',
     PRIVACY_PAGE_TAIL,
     ...NAV_PAGE_TAILS,
     ...blogSlugs.map((b) => `blog/${b}`),
     ...svcIds,
     ...distSlugs.map((s) => `dzielnice/${s}`),
+    ...rdSlugs.map((s) => `trasy/${s}`),
   ];
   console.log(
     'Sitemap: blog posts',
@@ -1045,7 +1123,9 @@ function writeSitemapAndRobots(html) {
     '| services',
     svcIds.join(', ') || '(none)',
     '| districts',
-    distSlugs.length
+    distSlugs.length,
+    '| roads',
+    rdSlugs.length
   );
 
   function locFor(seg, tail) {
@@ -1065,16 +1145,30 @@ function writeSitemapAndRobots(html) {
   }
 
   function changefreqFor(tail) {
-    if (tail == null || tail === 'blog' || tail === 'gallery' || tail === 'dzielnice' || NAV_PAGE_TAILS.includes(tail))
+    if (
+      tail == null ||
+      tail === 'blog' ||
+      tail === 'gallery' ||
+      tail === 'dzielnice' ||
+      tail === 'trasy' ||
+      NAV_PAGE_TAILS.includes(tail)
+    )
       return 'weekly';
     return 'monthly';
   }
 
   function priorityFor(tail) {
     if (tail == null) return '1.0';
-    if (tail === 'dzielnice' || tail === 'blog' || tail === 'services' || tail === 'contact' || tail === 'prices')
+    if (
+      tail === 'dzielnice' ||
+      tail === 'trasy' ||
+      tail === 'blog' ||
+      tail === 'services' ||
+      tail === 'contact' ||
+      tail === 'prices'
+    )
       return '0.85';
-    if (String(tail).startsWith('dzielnice/')) return '0.82';
+    if (String(tail).startsWith('dzielnice/') || String(tail).startsWith('trasy/')) return '0.82';
     if (tail === 'gallery' || tail === 'about' || tail === 'partners' || tail === PRIVACY_PAGE_TAIL) return '0.82';
     if (String(tail).startsWith('blog/')) return '0.75';
     return '0.8';
@@ -1134,6 +1228,7 @@ function writeImageSitemap(raw) {
 function writeNetlifyRedirects(html) {
   const svcIds = discoverSvcPageIds(html);
   const distSlugs = districtSlugs();
+  const rdSlugs = roadSlugs();
   const lines = [
     '# INNSER i18n — отдаём index.html внутри каждой языковой папки',
     '# SPA: блог и карточки услуг (история + прямые ссылки); svc* из разметки innser-v6.html',
@@ -1175,6 +1270,7 @@ function writeNetlifyRedirects(html) {
     lines.push(`/${seg}/blog/  /${seg}/blog/index.html  200`);
     lines.push(`/${seg}/gallery/  /${seg}/gallery/index.html  200`);
     lines.push(`/${seg}/dzielnice/  /${seg}/dzielnice/index.html  200`);
+    lines.push(`/${seg}/trasy/  /${seg}/trasy/index.html  200`);
     for (const nav of NAV_PAGE_TAILS) {
       lines.push(`/${seg}/${nav}/  /${seg}/${nav}/index.html  200`);
     }
@@ -1184,6 +1280,9 @@ function writeNetlifyRedirects(html) {
     }
     for (const dslug of distSlugs) {
       lines.push(`/${seg}/dzielnice/${dslug}/  /${seg}/dzielnice/${dslug}/index.html  200`);
+    }
+    for (const rslug of rdSlugs) {
+      lines.push(`/${seg}/trasy/${rslug}/  /${seg}/trasy/${rslug}/index.html  200`);
     }
   }
   fs.writeFileSync(path.join(OUT, '_redirects'), lines.join('\n') + '\n', 'utf8');
@@ -1197,6 +1296,7 @@ function writeVercelProjectJson(html) {
   const svcIds = discoverSvcPageIds(html);
   const blogSlugs = discoverBlogPostSlugs(html);
   const distSlugs = districtSlugs();
+  const rdSlugs = roadSlugs();
   // Внешний destination: Vercel не подставляет :path* в абсолютный URL — только $1 из группы в source.
   // Google «Смена адреса» проверяет именно 301 с главной; permanent:true в Vercel даёт 308.
   const legacyFaviconToCanonical = LEGACY_SITE_HOSTS.map((host) => ({
@@ -1242,6 +1342,7 @@ function writeVercelProjectJson(html) {
     rewrites.push({ source: `/${seg}/blog/`, destination: `/${seg}/blog/index.html` });
     rewrites.push({ source: `/${seg}/gallery/`, destination: `/${seg}/gallery/index.html` });
     rewrites.push({ source: `/${seg}/dzielnice/`, destination: `/${seg}/dzielnice/index.html` });
+    rewrites.push({ source: `/${seg}/trasy/`, destination: `/${seg}/trasy/index.html` });
     for (const nav of NAV_PAGE_TAILS) {
       rewrites.push({ source: `/${seg}/${nav}/`, destination: `/${seg}/${nav}/index.html` });
     }
@@ -1258,6 +1359,12 @@ function writeVercelProjectJson(html) {
       rewrites.push({
         source: `/${seg}/dzielnice/${dslug}/`,
         destination: `/${seg}/dzielnice/${dslug}/index.html`,
+      });
+    }
+    for (const rslug of rdSlugs) {
+      rewrites.push({
+        source: `/${seg}/trasy/${rslug}/`,
+        destination: `/${seg}/trasy/${rslug}/index.html`,
       });
     }
   }

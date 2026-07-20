@@ -887,6 +887,24 @@ label.tow-calc-check span{line-height:1.25;min-width:0;white-space:nowrap;overfl
 <section class="cta"><div class="mx"><h2 data-t="cta_t">POTRZEBUJESZ POMOCY NA DRODZE?</h2><p data-t="cta_d">ZaDzwoń teraz!</p><a href="tel:+48506001057" class="btn btn-bk">📞 <span data-t="cta_btn">Zadzwoń: 506-001-057</span></a></div></section>
 </div>
 
+<div class="page" id="p-roads">
+<section class="sec areas-bg"><div class="mx dist-body">
+  <!--innser-roads-index-static-->
+  <h1 class="sh">Laweta Warszawa — trasy i autostrady</h1>
+  <!--/innser-roads-index-static-->
+</div></section>
+<section class="cta"><div class="mx"><h2 data-t="cta_t">POTRZEBUJESZ POMOCY NA DRODZE?</h2><p data-t="cta_d">ZaDzwoń teraz!</p><a href="tel:+48506001057" class="btn btn-bk">📞 <span data-t="cta_btn">Zadzwoń: 506-001-057</span></a></div></section>
+</div>
+
+<div class="page" id="p-road">
+<section class="sec svc-bg"><div class="mx dist-body">
+  <!--innser-road-page-static-->
+  <h1 class="sh">Laweta — trasa</h1>
+  <!--/innser-road-page-static-->
+</div></section>
+<section class="cta"><div class="mx"><h2 data-t="cta_t">POTRZEBUJESZ POMOCY NA DRODZE?</h2><p data-t="cta_d">ZaDzwoń teraz!</p><a href="tel:+48506001057" class="btn btn-bk">📞 <span data-t="cta_btn">Zadzwoń: 506-001-057</span></a></div></section>
+</div>
+
 <div class="page" id="p-privacy">
 <section class="sec svc-bg"><div class="mx dist-body">
   <h1 class="sh" data-t="priv_title">Polityka prywatności i pliki cookie</h1>
@@ -2688,6 +2706,8 @@ let CL='pl';
 
 var DISTRICTS=[];
 var DISTRICT_RICH={};
+var ROADS=[];
+var ROAD_RICH={};
 
 var AREAS = {
   pl: {
@@ -2748,7 +2768,16 @@ function renderAreas(l) {
       s.innerHTML = a.suburbs.map(function(x){return '<span class="ar-tag">'+x+'</span>';}).join('');
     }
   }
-  if(r) r.innerHTML = a.roads.map(function(x){return '<span class="ar-tag">'+x+'</span>';}).join('');
+  if(r){
+    if(ROADS.length){
+      r.innerHTML=ROADS.map(function(x){
+        var n=(x.names&&x.names[l])||x.names.pl;
+        return '<a href="'+roadPageHref(x.slug,l)+'" class="ar-tag" data-p="road" data-road="'+x.slug+'" onclick="SP(\'road\',{roadSlug:\''+x.slug+'\'});return false;">'+n+'</a>';
+      }).join('');
+    } else {
+      r.innerHTML = a.roads.map(function(x){return '<span class="ar-tag">'+x+'</span>';}).join('');
+    }
+  }
 }
 
 function getDistrictBySlug(slug){
@@ -2885,6 +2914,109 @@ function renderDistrictsIndexPage(){
   box.innerHTML=buildDistrictsIndexHtml(CL);
 }
 
+function getRoadBySlug(slug){
+  for(var i=0;i<ROADS.length;i++) if(ROADS[i].slug===slug) return ROADS[i];
+  return null;
+}
+function roadPageHref(slug,lang){
+  lang=lang||CL;
+  var seg=lang==='ua'?'uk':lang;
+  return '/'+seg+'/trasy/'+slug+'/';
+}
+function roadCopy(lang){
+  var pl={
+    h1:function(n){return 'Laweta '+n+' — pomoc drogowa 24h | Warszawa';},
+    svc:'Nasze usługi w Warszawie',near:function(n){return 'Obsługujemy również sąsiednie trasy obok '+n+':';},
+    link:function(n){return 'Laweta '+n;},
+    seoT:function(n){return 'Laweta '+n+' — pomoc drogowa 24h | INNSER';},
+    seoD:function(n){return 'Laweta i holowanie na '+n+' przy Warszawie 24/7. Holowanie od 250 zł, dojazd ~30 min. INNSER: 506-001-057.';},
+    idxT:'Laweta Warszawa — trasy i autostrady',idxD:'Pomoc drogowa INNSER na A2, S2, S7, S8, S17, S79, DK7, DK8, DK17, DK50 i obwodnicy Warszawy. Wybierz trasę — dojazd 24/7.',
+    idxSeoT:'Laweta Warszawa — trasy A2 S2 S7 S8 24/7 | INNSER',idxSeoD:'Pomoc drogowa i laweta na autostradach i drogach wokół Warszawy — A2, S2, S7, S8, S17, DK50. INNSER 24/7, 506-001-057.'
+  };
+  var en={
+    h1:function(n){return 'Tow truck '+n+' — roadside assistance 24/7 | Warsaw';},
+    svc:'Our services in Warsaw',near:function(n){return 'We also serve nearby roads next to '+n+':';},
+    link:function(n){return 'Tow truck '+n;},
+    seoT:function(n){return 'Tow truck '+n+' — 24/7 roadside help | INNSER';},
+    seoD:function(n){return 'Towing on '+n+' near Warsaw 24/7. From 250 PLN, ~30 min ETA. INNSER: 506-001-057.';},
+    idxT:'Tow truck Warsaw — highways & roads',idxD:'INNSER roadside assistance on A2, S2, S7, S8, S17, S79, DK7, DK8, DK17, DK50 and the Warsaw ring. Pick a road — 24/7 arrival.',
+    idxSeoT:'Tow truck Warsaw — A2 S2 S7 S8 roads 24/7 | INNSER',idxSeoD:'Roadside assistance on motorways and roads around Warsaw — A2, S2, S7, S8, S17, DK50. INNSER 24/7, 506-001-057.'
+  };
+  var ru={
+    h1:function(n){return 'Эвакуатор '+n+' — помощь на дороге 24/7 | Варшава';},
+    svc:'Наши услуги в Варшаве',near:function(n){return 'Также обслуживаем соседние трассы рядом с '+n+':';},
+    link:function(n){return 'Эвакуатор '+n;},
+    seoT:function(n){return 'Эвакуатор '+n+' — помощь 24/7 | INNSER';},
+    seoD:function(n){return 'Эвакуатор на '+n+' у Варшавы 24/7. От 250 zł, приезд ~30 мин. INNSER: 506-001-057.';},
+    idxT:'Эвакуатор Варшава — трассы и автомагистрали',idxD:'Помощь на дороге INNSER на A2, S2, S7, S8, S17, S79, DK7, DK8, DK17, DK50 и окружной Варшавы. Выберите трассу — приезд 24/7.',
+    idxSeoT:'Эвакуатор Варшава — трассы A2 S2 S7 S8 24/7 | INNSER',idxSeoD:'Эвакуатор на автомагистралях и дорогах вокруг Варшавы — A2, S2, S7, S8, S17, DK50. INNSER 24/7, 506-001-057.'
+  };
+  var ua={
+    h1:function(n){return 'Евакуатор '+n+' — допомога на дорозі 24/7 | Варшава';},
+    svc:'Наші послуги у Варшаві',near:function(n){return 'Також обслуговуємо сусідні траси біля '+n+':';},
+    link:function(n){return 'Евакуатор '+n;},
+    seoT:function(n){return 'Евакуатор '+n+' — допомога 24/7 | INNSER';},
+    seoD:function(n){return 'Евакуатор на '+n+' біля Варшави 24/7. Від 250 zł, приїзд ~30 хв. INNSER: 506-001-057.';},
+    idxT:'Евакуатор Варшава — траси та автомагістралі',idxD:'Допомога на дорозі INNSER на A2, S2, S7, S8, S17, S79, DK7, DK8, DK17, DK50 та об’їзній Варшави. Оберіть трасу — приїзд 24/7.',
+    idxSeoT:'Евакуатор Варшава — траси A2 S2 S7 S8 24/7 | INNSER',idxSeoD:'Евакуатор на автомагістралях і дорогах навколо Варшави — A2, S2, S7, S8, S17, DK50. INNSER 24/7, 506-001-057.'
+  };
+  return ({pl:pl,en:en,ru:ru,ua:ua})[lang]||pl;
+}
+function renderRoadRichBody(slug,lang){
+  var rich=ROAD_RICH[slug];
+  if(!rich) return '';
+  var c=rich[lang]||rich.pl;
+  if(!c) return '';
+  var html='<p class="dist-lead">'+escDistHtml(c.lead)+'</p>';
+  html+='<h2 class="ar-title dist-h2">'+escDistHtml(c.whyTitle)+'</h2>';
+  for(var i=0;i<(c.blocks||[]).length;i++){
+    var b=c.blocks[i];
+    html+='<h3 class="dist-h3">'+escDistHtml(b.title)+'</h3><p>'+escDistHtml(b.text)+'</p>';
+  }
+  html+='<h2 class="ar-title dist-h2">'+escDistHtml(c.h2transport)+'</h2><p>'+escDistHtml(c.transport)+'</p>';
+  html+='<h2 class="ar-title dist-h2">'+escDistHtml(c.h2help)+'</h2><p>'+escDistHtml(c.helpIntro)+'</p>';
+  html+='<ul class="dist-bullets">'+(c.bullets||[]).map(function(b){return '<li>'+escDistHtml(b)+'</li>';}).join('')+'</ul>';
+  html+='<p class="dist-closing">'+escDistHtml(c.closing)+'</p>';
+  return html;
+}
+function buildRoadPageHtml(slug,lang){
+  var d=getRoadBySlug(slug);
+  if(!d) return '';
+  lang=lang||CL;
+  var c=roadCopy(lang);
+  var n=(d.names&&d.names[lang])||d.names.pl;
+  var seg=lang==='ua'?'uk':lang;
+  var labels=districtSvcLabels(lang);
+  var paths=['svc1','svc6','svc2','prices'];
+  var svc=paths.map(function(p,i){return '<li><a href="/'+seg+'/'+p+'/">'+labels[i]+'</a></li>';}).join('');
+  var near=(d.neighbors||[]).map(function(nb){
+    var nd=getRoadBySlug(nb);
+    var nn=nd?((nd.names&&nd.names[lang])||nd.names.pl):nb;
+    return '<a href="'+roadPageHref(nb,lang)+'" class="ar-tag" data-p="road" data-road="'+nb+'" onclick="SP(\'road\',{roadSlug:\''+nb+'\'});return false;">'+c.link(nn)+'</a>';
+  }).join('');
+  var rich=renderRoadRichBody(slug,lang);
+  return '<h1 class="sh">'+c.h1(n)+'</h1>'+rich+'<h2 class="ar-title">'+c.svc+'</h2><ul class="dist-links">'+svc+'</ul><h2 class="ar-title">'+c.near(n)+'</h2><div class="ar-list dist-near">'+near+'</div><p style="text-align:center;margin-top:28px"><a href="tel:+48506001057" class="btn btn-y">📞 506-001-057</a></p>';
+}
+function buildRoadsIndexHtml(lang){
+  lang=lang||CL;
+  var c=roadCopy(lang);
+  var tags=ROADS.map(function(x){
+    var n=(x.names&&x.names[lang])||x.names.pl;
+    return '<a href="'+roadPageHref(x.slug,lang)+'" class="ar-tag" data-p="road" data-road="'+x.slug+'" onclick="SP(\'road\',{roadSlug:\''+x.slug+'\'});return false;">'+c.link(n)+'</a>';
+  }).join('');
+  return '<h1 class="sh">'+c.idxT+'</h1><p class="sd">'+c.idxD+'</p><div class="ar-list dist-all">'+tags+'</div><p style="text-align:center;margin-top:28px"><a href="tel:+48506001057" class="btn btn-y">📞 506-001-057</a></p>';
+}
+function renderRoadPage(slug){
+  var box=document.querySelector('#p-road .dist-body');
+  if(!box||!slug) return;
+  box.innerHTML=buildRoadPageHtml(slug,CL);
+}
+function renderRoadsIndexPage(){
+  var box=document.querySelector('#p-roads .dist-body');
+  if(!box) return;
+  box.innerHTML=buildRoadsIndexHtml(CL);
+}
+
 function updateGalleryImgAlts(l){
   var suf=l==='ua'?'uk':l;
   document.querySelectorAll('img[data-alt-pl]').forEach(function(img){
@@ -2938,6 +3070,7 @@ function goLang(l){
 }
 var INNSER_NAV_PAGES={services:1,prices:1,about:1,contact:1,partners:1,districts:1};
 var __innserDistrictSlug='';
+var __innserRoadSlug='';
 var __innserPrevSlug='home';
 var __innserSvcFrom='home';
 var __innserHistCount=0;
@@ -2966,6 +3099,8 @@ function parsePathToPage(){
     }
     if(rest.length===1&&a==='dzielnice') return {langSeg:langSeg,pageId:'districts'};
     if(rest.length===2&&a==='dzielnice'&&/^[a-z0-9-]+$/.test(b)) return {langSeg:langSeg,pageId:'district',districtSlug:b};
+    if(rest.length===1&&a==='trasy') return {langSeg:langSeg,pageId:'roads'};
+    if(rest.length===2&&a==='trasy'&&/^[a-z0-9-]+$/.test(b)) return {langSeg:langSeg,pageId:'road',roadSlug:b};
     if(rest.length===1&&/^svc\d+$/.test(a)) return {langSeg:langSeg,pageId:a};
     if(rest.length===1&&a==='gallery') return {langSeg:langSeg,pageId:'gallery'};
     if(rest.length===1&&a==='polityka-prywatnosci') return {langSeg:langSeg,pageId:'privacy'};
@@ -2990,6 +3125,15 @@ function initInnserPathRoute(){
     SP('districts',{skipHistory:true});
     return;
   }
+  if(o.pageId==='road'){
+    __innserRoadSlug=o.roadSlug||'';
+    SP('road',{skipHistory:true,roadSlug:o.roadSlug});
+    return;
+  }
+  if(o.pageId==='roads'){
+    SP('roads',{skipHistory:true});
+    return;
+  }
   SP(o.pageId,{skipHistory:true});
 }
 function syncUrlToPage(p,push){
@@ -3004,6 +3148,8 @@ function syncUrlToPage(p,push){
     else if(p==='gallery') path='/'+seg+'/gallery/';
     else if(p==='districts') path='/'+seg+'/dzielnice/';
     else if(p==='district'&&__innserDistrictSlug) path='/'+seg+'/dzielnice/'+__innserDistrictSlug+'/';
+    else if(p==='roads') path='/'+seg+'/trasy/';
+    else if(p==='road'&&__innserRoadSlug) path='/'+seg+'/trasy/'+__innserRoadSlug+'/';
     else if(p==='privacy') path='/'+seg+'/polityka-prywatnosci/';
     else if(INNSER_NAV_PAGES[p]) path='/'+seg+'/'+p+'/';
     else if(/^svc\d+$/.test(p)) path='/'+seg+'/'+p+'/';
@@ -3026,17 +3172,21 @@ function innserPathTailFromPageId(p){
   if(p==='gallery') return 'gallery';
   if(p==='districts') return 'dzielnice';
   if(p==='district'&&__innserDistrictSlug) return 'dzielnice/'+__innserDistrictSlug;
+  if(p==='roads') return 'trasy';
+  if(p==='road'&&__innserRoadSlug) return 'trasy/'+__innserRoadSlug;
   if(p==='privacy') return 'polityka-prywatnosci';
   if(INNSER_NAV_PAGES[p]) return p;
   if(/^svc\d+$/.test(p)) return p;
   return '';
 }
-function innserPageHref(p,lang,districtSlug){
+function innserPageHref(p,lang,districtSlug,roadSlug){
   if(location.protocol==='file:') return '#';
   lang=lang||CL;
   var seg=lang==='ua'?'uk':lang;
   if(p==='districts') return '/'+seg+'/dzielnice/';
   if(p==='district'&&districtSlug) return '/'+seg+'/dzielnice/'+districtSlug+'/';
+  if(p==='roads') return '/'+seg+'/trasy/';
+  if(p==='road'&&roadSlug) return '/'+seg+'/trasy/'+roadSlug+'/';
   var tail=innserPathTailFromPageId(p);
   return tail?'/'+seg+'/'+tail+'/':'/'+seg+'/';
 }
@@ -3044,7 +3194,8 @@ function patchInnserLinkHrefs(lang){
   lang=lang||CL;
   document.querySelectorAll('a[data-p]').forEach(function(a){
     var ds=a.getAttribute('data-district')||'';
-    a.setAttribute('href',innserPageHref(a.getAttribute('data-p'),lang,ds));
+    var rs=a.getAttribute('data-road')||'';
+    a.setAttribute('href',innserPageHref(a.getAttribute('data-p'),lang,ds,rs));
   });
 }
 function updateCanonicalAndHreflang(pageId){
@@ -3252,6 +3403,26 @@ function applyRouteSeo(pageSlug){
     setMeta('meta[property="og:description"]','content',ic.idxSeoD);
     setMeta('meta[name="twitter:title"]','content',ic.idxSeoT);
     setMeta('meta[name="twitter:description"]','content',ic.idxSeoD);
+  } else if(pageSlug==='road'&&__innserRoadSlug){
+    var rc=roadCopy(CL);
+    var rd=getRoadBySlug(__innserRoadSlug);
+    if(rd){
+      var rn=(rd.names&&rd.names[CL])||rd.names.pl;
+      setDocumentTitle(rc.seoT(rn));
+      setMeta('meta[name="description"]','content',rc.seoD(rn));
+      setMeta('meta[property="og:title"]','content',rc.seoT(rn));
+      setMeta('meta[property="og:description"]','content',rc.seoD(rn));
+      setMeta('meta[name="twitter:title"]','content',rc.seoT(rn));
+      setMeta('meta[name="twitter:description"]','content',rc.seoD(rn));
+    } else restoreSeoHome();
+  } else if(pageSlug==='roads'){
+    var ric=roadCopy(CL);
+    setDocumentTitle(ric.idxSeoT);
+    setMeta('meta[name="description"]','content',ric.idxSeoD);
+    setMeta('meta[property="og:title"]','content',ric.idxSeoT);
+    setMeta('meta[property="og:description"]','content',ric.idxSeoD);
+    setMeta('meta[name="twitter:title"]','content',ric.idxSeoT);
+    setMeta('meta[name="twitter:description"]','content',ric.idxSeoD);
   } else if(pageSlug==='privacy'&&t.priv_seo_title){
     setDocumentTitle(t.priv_seo_title);
     setMeta('meta[name="description"]','content',t.priv_seo_desc||'');
@@ -3325,14 +3496,17 @@ function SP(p,opts){
   var replaceHistory=!!opts.replaceHistory;
   if(!skipHistory&&!fromPopstate) __innserPrevSlug=currentPageSlug();
   if(p==='district'&&opts.districtSlug) __innserDistrictSlug=opts.districtSlug;
+  if(p==='road'&&opts.roadSlug) __innserRoadSlug=opts.roadSlug;
   document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('on'));
   document.getElementById('p-'+p).classList.add('on');
   if(p==='district') renderDistrictPage(__innserDistrictSlug);
   if(p==='districts') renderDistrictsIndexPage();
+  if(p==='road') renderRoadPage(__innserRoadSlug);
+  if(p==='roads') renderRoadsIndexPage();
   syncInactivePages();
   document.querySelectorAll('.nm a').forEach(a=>{
     a.classList.remove('on');
-    var ap=p.startsWith('blog-post')?'blog':(p.startsWith('svc')?'services':(p==='district'?'districts':p));
+    var ap=p.startsWith('blog-post')?'blog':(p.startsWith('svc')?'services':(p==='district'?'districts':(p==='road'?'roads':p)));
     if(a.getAttribute('data-p')===ap)a.classList.add('on');
   });
   document.getElementById('nm').classList.remove('open');
@@ -5448,6 +5622,10 @@ window.addEventListener('popstate',function(){
     SP('district',{fromPopstate:true,districtSlug:o.districtSlug});
   } else if(pageId==='districts'){
     SP('districts',{fromPopstate:true});
+  } else if(pageId==='road'){
+    SP('road',{fromPopstate:true,roadSlug:o.roadSlug});
+  } else if(pageId==='roads'){
+    SP('roads',{fromPopstate:true});
   } else {
     SP(pageId,{fromPopstate:true});
   }

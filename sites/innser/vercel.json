@@ -256,6 +256,11 @@
       "permanent": true
     },
     {
+      "source": "/pl/trasy",
+      "destination": "/pl/trasy/",
+      "permanent": true
+    },
+    {
       "source": "/pl/polityka-prywatnosci",
       "destination": "/pl/polityka-prywatnosci/",
       "permanent": true
@@ -571,6 +576,61 @@
       "permanent": true
     },
     {
+      "source": "/pl/trasy/a2",
+      "destination": "/pl/trasy/a2/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/trasy/s2",
+      "destination": "/pl/trasy/s2/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/trasy/s7",
+      "destination": "/pl/trasy/s7/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/trasy/s8",
+      "destination": "/pl/trasy/s8/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/trasy/s17",
+      "destination": "/pl/trasy/s17/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/trasy/s79",
+      "destination": "/pl/trasy/s79/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/trasy/dk7",
+      "destination": "/pl/trasy/dk7/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/trasy/dk8",
+      "destination": "/pl/trasy/dk8/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/trasy/dk17",
+      "destination": "/pl/trasy/dk17/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/trasy/dk50",
+      "destination": "/pl/trasy/dk50/",
+      "permanent": true
+    },
+    {
+      "source": "/pl/trasy/obwodnica",
+      "destination": "/pl/trasy/obwodnica/",
+      "permanent": true
+    },
+    {
       "source": "/en",
       "destination": "/en/",
       "permanent": true
@@ -588,6 +648,11 @@
     {
       "source": "/en/dzielnice",
       "destination": "/en/dzielnice/",
+      "permanent": true
+    },
+    {
+      "source": "/en/trasy",
+      "destination": "/en/trasy/",
       "permanent": true
     },
     {
@@ -906,6 +971,61 @@
       "permanent": true
     },
     {
+      "source": "/en/trasy/a2",
+      "destination": "/en/trasy/a2/",
+      "permanent": true
+    },
+    {
+      "source": "/en/trasy/s2",
+      "destination": "/en/trasy/s2/",
+      "permanent": true
+    },
+    {
+      "source": "/en/trasy/s7",
+      "destination": "/en/trasy/s7/",
+      "permanent": true
+    },
+    {
+      "source": "/en/trasy/s8",
+      "destination": "/en/trasy/s8/",
+      "permanent": true
+    },
+    {
+      "source": "/en/trasy/s17",
+      "destination": "/en/trasy/s17/",
+      "permanent": true
+    },
+    {
+      "source": "/en/trasy/s79",
+      "destination": "/en/trasy/s79/",
+      "permanent": true
+    },
+    {
+      "source": "/en/trasy/dk7",
+      "destination": "/en/trasy/dk7/",
+      "permanent": true
+    },
+    {
+      "source": "/en/trasy/dk8",
+      "destination": "/en/trasy/dk8/",
+      "permanent": true
+    },
+    {
+      "source": "/en/trasy/dk17",
+      "destination": "/en/trasy/dk17/",
+      "permanent": true
+    },
+    {
+      "source": "/en/trasy/dk50",
+      "destination": "/en/trasy/dk50/",
+      "permanent": true
+    },
+    {
+      "source": "/en/trasy/obwodnica",
+      "destination": "/en/trasy/obwodnica/",
+      "permanent": true
+    },
+    {
       "source": "/ru",
       "destination": "/ru/",
       "permanent": true
@@ -923,6 +1043,11 @@
     {
       "source": "/ru/dzielnice",
       "destination": "/ru/dzielnice/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/trasy",
+      "destination": "/ru/trasy/",
       "permanent": true
     },
     {
@@ -1241,6 +1366,61 @@
       "permanent": true
     },
     {
+      "source": "/ru/trasy/a2",
+      "destination": "/ru/trasy/a2/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/trasy/s2",
+      "destination": "/ru/trasy/s2/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/trasy/s7",
+      "destination": "/ru/trasy/s7/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/trasy/s8",
+      "destination": "/ru/trasy/s8/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/trasy/s17",
+      "destination": "/ru/trasy/s17/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/trasy/s79",
+      "destination": "/ru/trasy/s79/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/trasy/dk7",
+      "destination": "/ru/trasy/dk7/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/trasy/dk8",
+      "destination": "/ru/trasy/dk8/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/trasy/dk17",
+      "destination": "/ru/trasy/dk17/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/trasy/dk50",
+      "destination": "/ru/trasy/dk50/",
+      "permanent": true
+    },
+    {
+      "source": "/ru/trasy/obwodnica",
+      "destination": "/ru/trasy/obwodnica/",
+      "permanent": true
+    },
+    {
       "source": "/uk",
       "destination": "/uk/",
       "permanent": true
@@ -1258,6 +1438,11 @@
     {
       "source": "/uk/dzielnice",
       "destination": "/uk/dzielnice/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/trasy",
+      "destination": "/uk/trasy/",
       "permanent": true
     },
     {
@@ -1574,6 +1759,61 @@
       "source": "/uk/dzielnice/nowy-dwor-mazowiecki",
       "destination": "/uk/dzielnice/nowy-dwor-mazowiecki/",
       "permanent": true
+    },
+    {
+      "source": "/uk/trasy/a2",
+      "destination": "/uk/trasy/a2/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/trasy/s2",
+      "destination": "/uk/trasy/s2/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/trasy/s7",
+      "destination": "/uk/trasy/s7/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/trasy/s8",
+      "destination": "/uk/trasy/s8/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/trasy/s17",
+      "destination": "/uk/trasy/s17/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/trasy/s79",
+      "destination": "/uk/trasy/s79/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/trasy/dk7",
+      "destination": "/uk/trasy/dk7/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/trasy/dk8",
+      "destination": "/uk/trasy/dk8/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/trasy/dk17",
+      "destination": "/uk/trasy/dk17/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/trasy/dk50",
+      "destination": "/uk/trasy/dk50/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/trasy/obwodnica",
+      "destination": "/uk/trasy/obwodnica/",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -1592,6 +1832,10 @@
     {
       "source": "/pl/dzielnice/",
       "destination": "/pl/dzielnice/index.html"
+    },
+    {
+      "source": "/pl/trasy/",
+      "destination": "/pl/trasy/index.html"
     },
     {
       "source": "/pl/services/",
@@ -1842,6 +2086,50 @@
       "destination": "/pl/dzielnice/nowy-dwor-mazowiecki/index.html"
     },
     {
+      "source": "/pl/trasy/a2/",
+      "destination": "/pl/trasy/a2/index.html"
+    },
+    {
+      "source": "/pl/trasy/s2/",
+      "destination": "/pl/trasy/s2/index.html"
+    },
+    {
+      "source": "/pl/trasy/s7/",
+      "destination": "/pl/trasy/s7/index.html"
+    },
+    {
+      "source": "/pl/trasy/s8/",
+      "destination": "/pl/trasy/s8/index.html"
+    },
+    {
+      "source": "/pl/trasy/s17/",
+      "destination": "/pl/trasy/s17/index.html"
+    },
+    {
+      "source": "/pl/trasy/s79/",
+      "destination": "/pl/trasy/s79/index.html"
+    },
+    {
+      "source": "/pl/trasy/dk7/",
+      "destination": "/pl/trasy/dk7/index.html"
+    },
+    {
+      "source": "/pl/trasy/dk8/",
+      "destination": "/pl/trasy/dk8/index.html"
+    },
+    {
+      "source": "/pl/trasy/dk17/",
+      "destination": "/pl/trasy/dk17/index.html"
+    },
+    {
+      "source": "/pl/trasy/dk50/",
+      "destination": "/pl/trasy/dk50/index.html"
+    },
+    {
+      "source": "/pl/trasy/obwodnica/",
+      "destination": "/pl/trasy/obwodnica/index.html"
+    },
+    {
       "source": "/en/",
       "destination": "/en/index.html"
     },
@@ -1856,6 +2144,10 @@
     {
       "source": "/en/dzielnice/",
       "destination": "/en/dzielnice/index.html"
+    },
+    {
+      "source": "/en/trasy/",
+      "destination": "/en/trasy/index.html"
     },
     {
       "source": "/en/services/",
@@ -2106,6 +2398,50 @@
       "destination": "/en/dzielnice/nowy-dwor-mazowiecki/index.html"
     },
     {
+      "source": "/en/trasy/a2/",
+      "destination": "/en/trasy/a2/index.html"
+    },
+    {
+      "source": "/en/trasy/s2/",
+      "destination": "/en/trasy/s2/index.html"
+    },
+    {
+      "source": "/en/trasy/s7/",
+      "destination": "/en/trasy/s7/index.html"
+    },
+    {
+      "source": "/en/trasy/s8/",
+      "destination": "/en/trasy/s8/index.html"
+    },
+    {
+      "source": "/en/trasy/s17/",
+      "destination": "/en/trasy/s17/index.html"
+    },
+    {
+      "source": "/en/trasy/s79/",
+      "destination": "/en/trasy/s79/index.html"
+    },
+    {
+      "source": "/en/trasy/dk7/",
+      "destination": "/en/trasy/dk7/index.html"
+    },
+    {
+      "source": "/en/trasy/dk8/",
+      "destination": "/en/trasy/dk8/index.html"
+    },
+    {
+      "source": "/en/trasy/dk17/",
+      "destination": "/en/trasy/dk17/index.html"
+    },
+    {
+      "source": "/en/trasy/dk50/",
+      "destination": "/en/trasy/dk50/index.html"
+    },
+    {
+      "source": "/en/trasy/obwodnica/",
+      "destination": "/en/trasy/obwodnica/index.html"
+    },
+    {
       "source": "/ru/",
       "destination": "/ru/index.html"
     },
@@ -2120,6 +2456,10 @@
     {
       "source": "/ru/dzielnice/",
       "destination": "/ru/dzielnice/index.html"
+    },
+    {
+      "source": "/ru/trasy/",
+      "destination": "/ru/trasy/index.html"
     },
     {
       "source": "/ru/services/",
@@ -2370,6 +2710,50 @@
       "destination": "/ru/dzielnice/nowy-dwor-mazowiecki/index.html"
     },
     {
+      "source": "/ru/trasy/a2/",
+      "destination": "/ru/trasy/a2/index.html"
+    },
+    {
+      "source": "/ru/trasy/s2/",
+      "destination": "/ru/trasy/s2/index.html"
+    },
+    {
+      "source": "/ru/trasy/s7/",
+      "destination": "/ru/trasy/s7/index.html"
+    },
+    {
+      "source": "/ru/trasy/s8/",
+      "destination": "/ru/trasy/s8/index.html"
+    },
+    {
+      "source": "/ru/trasy/s17/",
+      "destination": "/ru/trasy/s17/index.html"
+    },
+    {
+      "source": "/ru/trasy/s79/",
+      "destination": "/ru/trasy/s79/index.html"
+    },
+    {
+      "source": "/ru/trasy/dk7/",
+      "destination": "/ru/trasy/dk7/index.html"
+    },
+    {
+      "source": "/ru/trasy/dk8/",
+      "destination": "/ru/trasy/dk8/index.html"
+    },
+    {
+      "source": "/ru/trasy/dk17/",
+      "destination": "/ru/trasy/dk17/index.html"
+    },
+    {
+      "source": "/ru/trasy/dk50/",
+      "destination": "/ru/trasy/dk50/index.html"
+    },
+    {
+      "source": "/ru/trasy/obwodnica/",
+      "destination": "/ru/trasy/obwodnica/index.html"
+    },
+    {
       "source": "/uk/",
       "destination": "/uk/index.html"
     },
@@ -2384,6 +2768,10 @@
     {
       "source": "/uk/dzielnice/",
       "destination": "/uk/dzielnice/index.html"
+    },
+    {
+      "source": "/uk/trasy/",
+      "destination": "/uk/trasy/index.html"
     },
     {
       "source": "/uk/services/",
@@ -2632,6 +3020,50 @@
     {
       "source": "/uk/dzielnice/nowy-dwor-mazowiecki/",
       "destination": "/uk/dzielnice/nowy-dwor-mazowiecki/index.html"
+    },
+    {
+      "source": "/uk/trasy/a2/",
+      "destination": "/uk/trasy/a2/index.html"
+    },
+    {
+      "source": "/uk/trasy/s2/",
+      "destination": "/uk/trasy/s2/index.html"
+    },
+    {
+      "source": "/uk/trasy/s7/",
+      "destination": "/uk/trasy/s7/index.html"
+    },
+    {
+      "source": "/uk/trasy/s8/",
+      "destination": "/uk/trasy/s8/index.html"
+    },
+    {
+      "source": "/uk/trasy/s17/",
+      "destination": "/uk/trasy/s17/index.html"
+    },
+    {
+      "source": "/uk/trasy/s79/",
+      "destination": "/uk/trasy/s79/index.html"
+    },
+    {
+      "source": "/uk/trasy/dk7/",
+      "destination": "/uk/trasy/dk7/index.html"
+    },
+    {
+      "source": "/uk/trasy/dk8/",
+      "destination": "/uk/trasy/dk8/index.html"
+    },
+    {
+      "source": "/uk/trasy/dk17/",
+      "destination": "/uk/trasy/dk17/index.html"
+    },
+    {
+      "source": "/uk/trasy/dk50/",
+      "destination": "/uk/trasy/dk50/index.html"
+    },
+    {
+      "source": "/uk/trasy/obwodnica/",
+      "destination": "/uk/trasy/obwodnica/index.html"
     }
   ],
   "headers": [
