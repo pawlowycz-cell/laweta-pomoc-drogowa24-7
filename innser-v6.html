@@ -4248,8 +4248,34 @@ function applyRouteSeo(pageSlug){
   }
 }
 
+/** Related-service link labels always mirror current svc*_t titles. */
+var SVC_REL_TITLE={
+  svc_rel_tow:'svc1_t',svc_rel_assist:'svc1_t',svc2_link_tow:'svc1_t',svc3_link_tow:'svc1_t',
+  svc_rel_jump:'svc2_t',svc1_link_jump:'svc2_t',svc3_link_cables:'svc2_t',
+  svc_rel_boost:'svc3_t',svc2_link_boost:'svc3_t',
+  svc_rel_wheel:'svc4_t',svc1_link_wheel:'svc4_t',svc2_link_wheel:'svc4_t',svc3_link_wheel:'svc4_t',
+  svc_rel_lock:'svc5_t',
+  svc_rel_hol:'svc6_t',
+  svc_rel_buy:'svc7_t',svc1_link_buy:'svc7_t',
+  svc_rel_scrap:'svc8_t',
+  svc_rel_laweta:'svc9_t'
+};
+function plainSvcTitle(lang,key){
+  var v=T[lang]&&T[lang][key];
+  if(v==null)return '';
+  return String(v).replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim();
+}
+function syncSvcRelLabels(lang){
+  if(!T[lang])return;
+  Object.keys(SVC_REL_TITLE).forEach(function(rel){
+    var title=plainSvcTitle(lang,SVC_REL_TITLE[rel]);
+    if(title) T[lang][rel]=title+' →';
+  });
+}
+
 function SL(l){
   CL=l;
+  syncSvcRelLabels(l);
   document.querySelectorAll('.lb').forEach(b=>b.classList.remove('on'));
   document.getElementById('lb-'+l).classList.add('on');
   document.querySelectorAll('[data-t]').forEach(el=>{
