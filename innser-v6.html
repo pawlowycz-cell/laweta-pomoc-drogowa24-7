@@ -344,23 +344,28 @@ html[lang="uk"] .svcc-phone,html[lang="ru"] .svcc-phone{font-size:.9rem;padding:
 .svc-detail-tel-wrap{margin:28px 0 6px;text-align:center;}
 .svc-detail-mid-tel{width:100%;max-width:440px;justify-content:center;box-shadow:0 4px 24px rgba(255,209,0,.22);}
 
-.buyout-flow{margin:0 0 28px;padding:20px 18px 18px;background:var(--b3);border:1px solid var(--b4);border-radius:16px;}
+.buyout-flow{margin:0 0 28px;padding:22px 22px 20px;background:var(--b3);border:1px solid var(--b4);border-radius:16px;}
 .buyout-flow > h2{margin-top:0!important;}
 .buyout-flow > p:last-child{margin-bottom:0;}
-.buyout-steps{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:12px 0 16px;}
-.buyout-step{flex:1 1 120px;min-width:110px;max-width:180px;background:var(--b2);border:1px solid rgba(255,209,0,.18);border-radius:12px;padding:14px 12px 16px;}
+.buyout-steps{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr auto 1fr;gap:8px 6px;align-items:stretch;margin:14px 0 18px;}
+.buyout-step{min-width:0;background:var(--b2);border:1px solid rgba(255,209,0,.18);border-radius:12px;padding:14px 12px 16px;height:100%;}
 .buyout-step-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--y);color:var(--b);font-weight:800;font-size:.85rem;margin-bottom:8px;}
-.buyout-step p{margin:0;color:var(--gl);font-size:.86rem;line-height:1.4;}
-.buyout-step-arrow{display:flex;align-items:center;justify-content:center;color:var(--y);font-size:1.35rem;font-weight:700;flex:0 0 auto;padding:0 2px;line-height:1;align-self:center;}
+.buyout-step p{margin:0;color:var(--gl);font-size:.84rem;line-height:1.4;}
+.buyout-step-arrow{display:flex;align-items:center;justify-content:center;color:var(--y);font-size:1.25rem;font-weight:700;padding:0 2px;line-height:1;}
 .buyout-need-title{font-size:.95rem;color:var(--w);font-weight:700;margin:4px 0 10px;}
-.buyout-checklist{list-style:none;padding:0;margin:0 0 14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;}
+.buyout-checklist{list-style:none;padding:0;margin:0 0 14px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
 .buyout-checklist li{background:var(--b2);border:1px solid var(--b4);border-radius:10px;padding:10px 12px 10px 34px;color:var(--gl);font-size:.86rem;line-height:1.4;position:relative;}
 .buyout-checklist li::before{content:'→';position:absolute;left:12px;top:10px;color:var(--y);font-weight:700;}
+@media(max-width:1100px){
+  .buyout-checklist{grid-template-columns:repeat(3,1fr);}
+}
+@media(max-width:900px){
+  .buyout-steps{grid-template-columns:1fr;gap:8px;}
+  .buyout-step-arrow{transform:rotate(90deg);padding:2px 0;}
+  .buyout-checklist{grid-template-columns:1fr 1fr;}
+}
 @media(max-width:768px){
   .buyout-flow{padding:16px 14px;}
-  .buyout-steps{flex-direction:column;align-items:stretch;}
-  .buyout-step{max-width:none;flex:1 1 auto;}
-  .buyout-step-arrow{transform:rotate(90deg);padding:2px 0;}
   .buyout-checklist{grid-template-columns:1fr;}
 }
 
@@ -1620,14 +1625,14 @@ label.tow-calc-check span{line-height:1.25;min-width:0;white-space:nowrap;overfl
         <a href="tel:+48506001057" class="btn btn-y">📞 <span data-t="cta_btn">Zadzwoń: 506-001-057</span></a>
       </div>
     </div>
-    <div class="svc-detail-body">
-      <div class="svc-detail-text">
+    
         <div class="buyout-flow">
           <h2 data-t="svc7_h3">Jak działa <strong class="xb">pilny skup auta</strong>?</h2>
           <p data-t="svc7_p3">Cenimy Twój czas — proces jest prosty i przejrzysty:</p>
           <div class="buyout-steps" role="list">
             <div class="buyout-step" role="listitem"><span class="buyout-step-num">1</span><p data-t="svc7_step1">Zadzwoń lub napisz na WhatsApp / Telegram / SMS: <strong class="xb">506-001-057</strong></p></div>
-            <span class="buyout-step-arrow" aria-hidden="true">→</span>
+<div class="svc-detail-body">
+      <div class="svc-detail-text">            <span class="buyout-step-arrow" aria-hidden="true">→</span>
             <div class="buyout-step" role="listitem"><span class="buyout-step-num">2</span><p data-t="svc7_step2">Przyślij dane auta, <strong class="xb">swoją cenę</strong> i zdjęcia</p></div>
             <span class="buyout-step-arrow" aria-hidden="true">→</span>
             <div class="buyout-step" role="listitem"><span class="buyout-step-num">3</span><p data-t="svc7_step3">Dostaniesz propozycję zwykle w <strong class="xb">15 minut</strong></p></div>
