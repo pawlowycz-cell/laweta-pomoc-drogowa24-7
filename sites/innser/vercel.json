@@ -5,6 +5,28 @@
   "outputDirectory": "dist",
   "redirects": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "warszawa-laweta.com"
+        }
+      ],
+      "destination": "https://www.warszawa-laweta.com/",
+      "statusCode": 301
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "warszawa-laweta.com"
+        }
+      ],
+      "destination": "https://www.warszawa-laweta.com/$1",
+      "statusCode": 301
+    },
+    {
       "source": "/favicon.ico",
       "has": [
         {

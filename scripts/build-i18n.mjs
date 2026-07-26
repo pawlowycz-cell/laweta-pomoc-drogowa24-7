@@ -69,6 +69,9 @@ const LEGACY_SITE_HOSTS = [
   'laweta-pomoc-drogowa24-7.com',
   'www.laweta-pomoc-drogowa24-7.com',
 ];
+/** Apex primary brand host → www (301). Avoid Vercel default temporary 307. */
+const PRIMARY_APEX_HOST = 'warszawa-laweta.com';
+const PRIMARY_HOST = 'www.warszawa-laweta.com';
 /** Open Graph / Twitter — innser-logo.png (окремо від favicon). */
 const OG_IMAGE_PATH = '/assets/innser-logo.png';
 const OG_IMAGE_WIDTH = '1024';
@@ -1245,6 +1248,9 @@ function writeNetlifyRedirects(html) {
   for (const host of LEGACY_SITE_HOSTS) {
     lines.push(`https://${host}/*  ${SITE}/:splat  301!`);
   }
+  // Brand apex → www (permanent)
+  lines.push(`https://${PRIMARY_APEX_HOST}/*  ${SITE}/:splat  301!`);
+  lines.push(`https://${PRIMARY_APEX_HOST}/  ${SITE}/  301!`);
   // Кореневий /favicon.ico у dist (copyRootFaviconIco); для Netlify — рядки 200! вище.
   // Legacy /ua → canonical /uk/ (hreflang uk). Absolute URL + trailing slash = один 301 (без /ua/→/uk→/uk/).
   // Порядок: сначала /ua/* и /ua/, потом /ua — иначе Netlify может сопоставить /ua/ с правилом /ua и отдать Location: /uk (второй хоп).
@@ -1304,6 +1310,9 @@ function writeVercelProjectJson(html) {
   const rdSlugs = roadSlugs();
   // Внешний destination: Vercel не подставляет :path* в абсолютный URL — только $1 из группы в source.
   // Google «Смена адреса» проверяет именно 301 с главной; permanent:true в Vercel даёт 308.
+  // ВАЖНО (Domains UI): для laweta-pomoc-* НЕ включать «Redirect to www» на том же домене —
+  // иначе apex→www даст 308 и только потом сработает 301 на warszawa (2 хопа). Apex и www
+  // старого домена должны оба идти одним 301 на www.warszawa-laweta.com (эти правила ниже).
   const legacyFaviconToCanonical = LEGACY_SITE_HOSTS.map((host) => ({
     source: '/favicon.ico',
     has: [{ type: 'host', value: host }],
@@ -1314,7 +1323,13 @@ function writeVercelProjectJson(html) {
     { source: '/', has: [{ type: 'host', value: host }], destination: `${SITE}/`, statusCode: 301 },
     { source: '/(.*)', has: [{ type: 'host', value: host }], destination: `${SITE}/$1`, statusCode: 301 },
   ]);
+  // Apex brand host → www with real 301 (Google prefers permanent; Vercel Domains often emits 307).
+  const primaryApexRedirects = [
+    { source: '/', has: [{ type: 'host', value: PRIMARY_APEX_HOST }], destination: `${SITE}/`, statusCode: 301 },
+    { source: '/(.*)', has: [{ type: 'host', value: PRIMARY_APEX_HOST }], destination: `${SITE}/$1`, statusCode: 301 },
+  ];
   const redirects = [
+    ...primaryApexRedirects,
     ...legacyFaviconToCanonical,
     ...legacyRedirects,
     { source: '/ua/:path*', destination: '/uk/:path*', permanent: true },
