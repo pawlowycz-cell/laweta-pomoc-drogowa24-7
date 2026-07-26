@@ -938,6 +938,7 @@ function buildLocaleHtml(raw, key) {
 }
 
 function writeRootRedirect() {
+  // Fallback only: Vercel/Netlify should 301 / → /pl/ before this file is served.
   const ogImg = `${SITE}${OG_IMAGE_PATH}`;
   const redirectHtml = `<!DOCTYPE html>
 <html lang="pl">
@@ -945,65 +946,22 @@ function writeRootRedirect() {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 ${faviconHeadBlock()}
-<title>INNSER — Pomoc Drogowa Warszawa 24h | Holowanie | Awaryjne Odpalanie | Wymiana Koła</title>
-<meta name="description" content="INNSER — Profesjonalna pomoc drogowa Warszawa i okolice 24/7. Tania laweta, holowanie, autolaweta HDS, skup aut, złomowanie. Odpalanie, wymiana koła, otwieranie aut. Zadzwoń: 506-001-057">
-${hreflangBlock(`${SITE}/`, `${SITE}/`)}
-<meta property="og:title" content="INNSER — Pomoc Drogowa Warszawa 24h | Holowanie | Odpalanie">
-<meta property="og:description" content="Profesjonalna pomoc drogowa Warszawa 24/7 — tania laweta, tanie holowanie, autolaweta HDS, holowanie powypadkowe, skup aut, złomowanie pojazdów. Odpalanie, wymiana koła, otwieranie aut. Zadzwoń: 506-001-057">
-<meta property="og:type" content="website">
-<meta property="og:url" content="${SITE}/">
-<meta property="og:locale" content="pl_PL">
-<meta property="og:site_name" content="INNSER Pomoc Drogowa">
+<title>INNSER — Pomoc Drogowa Warszawa 24h</title>
+<meta name="description" content="INNSER — pomoc drogowa Warszawa 24/7. Zadzwoń: 506-001-057">
+${hreflangBlock(`${SITE}/pl/`, `${SITE}/pl/`)}
+<meta property="og:url" content="${SITE}/pl/">
 <meta property="og:image" content="${ogImg}">
-<meta property="og:image:width" content="${OG_IMAGE_WIDTH}">
-<meta property="og:image:height" content="${OG_IMAGE_HEIGHT}">
-<meta property="og:image:alt" content="INNSER — logo pomocy drogowej Warszawa 24/7">
-<meta property="og:image:type" content="image/jpeg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="INNSER — Pomoc Drogowa Warszawa 24h">
-<meta name="twitter:description" content="Tania pomoc drogowa i tania laweta Warszawa — holowanie, autolaweta HDS, skup aut, złomowanie, odpalanie, wymiana koła 24/7. Zadzwoń: 506-001-057">
-<meta name="twitter:image" content="${ogImg}">
-<script>
-(function(){
-  var ua=navigator.userAgent||'';
-  if(/Googlebot|Google-InspectionTool|GoogleOther|AdsBot-Google|Mediapartners-Google|bingbot|Slurp|DuckDuckBot|Baiduspider|YandexBot|Applebot|SemrushBot|AhrefsBot|MJ12bot|DotBot|PetalBot|Bytespider|facebookexternalhit|Twitterbot|LinkedInBot/i.test(ua))return;
-  try{
-    var saved=localStorage.getItem('innser_lang');
-    if(saved==='ua')saved='uk';
-    if(saved&&/^(pl|en|ru|uk)$/.test(saved)){
-      location.replace('/'+saved+'/');
-      return;
-    }
-  }catch(e){}
-  var langs=(typeof navigator.languages!=='undefined'&&navigator.languages&&navigator.languages.length)?Array.prototype.slice.call(navigator.languages):[navigator.language||navigator.userLanguage||'pl'];
-  var code='pl';
-  for(var li=0;li<langs.length;li++){
-    var nav=String(langs[li]||'').toLowerCase();
-    if(nav.indexOf('ru')===0){code='ru';break;}
-    if(nav.indexOf('uk')===0||nav.indexOf('ua')===0){code='uk';break;}
-    if(nav.indexOf('pl')===0){code='pl';break;}
-    if(nav.indexOf('en')===0){code='en';break;}
-  }
-  location.replace('/'+code+'/');
-})();
-</script>
-<noscript><meta http-equiv="refresh" content="0;url=/pl/"></noscript>
+<link rel="alternate" hreflang="x-default" href="${SITE}/pl/">
+<meta http-equiv="refresh" content="0;url=/pl/">
+<script>location.replace('/pl/');</script>
 </head>
 <body>
-<p style="font-family:system-ui,sans-serif;padding:1rem;line-height:1.6">
-  INNSER — Pomoc Drogowa Warszawa 24/7.
-  <a href="/pl/">Polski</a> · <a href="/en/">English</a> · <a href="/ru/">Русский</a> · <a href="/uk/">Українська</a>
-</p>
-<noscript>
-  <p><a href="/pl/">INNSER — przejdź do serwisu (PL)</a></p>
-  <p><a href="/en/">INNSER — go to site (EN)</a></p>
-  <p><a href="/ru/">INNSER — перейти на сайт (RU)</a></p>
-  <p><a href="/uk/">INNSER — перейти на сайт (UA)</a></p>
-</noscript>
+<p><a href="/pl/">INNSER — Pomoc Drogowa Warszawa</a></p>
 </body>
 </html>`;
   fs.writeFileSync(path.join(OUT, 'index.html'), redirectHtml, 'utf8');
 }
+
 
 /** Slugi постов из массива BLOGS: `post:'b1'` — добавили строку в innser-v6.html → пересобрали dist. */
 function discoverBlogPostSlugs(html) {
@@ -1250,7 +1208,8 @@ function writeNetlifyRedirects(html) {
   }
   // Brand apex → www (permanent)
   lines.push(`https://${PRIMARY_APEX_HOST}/*  ${SITE}/:splat  301!`);
-  lines.push(`https://${PRIMARY_APEX_HOST}/  ${SITE}/  301!`);
+  lines.push(`https://${PRIMARY_APEX_HOST}/  ${SITE}/pl/  301!`);
+  lines.push(`/  /pl/  301`);
   // Кореневий /favicon.ico у dist (copyRootFaviconIco); для Netlify — рядки 200! вище.
   // Legacy /ua → canonical /uk/ (hreflang uk). Absolute URL + trailing slash = один 301 (без /ua/→/uk→/uk/).
   // Порядок: сначала /ua/* и /ua/, потом /ua — иначе Netlify может сопоставить /ua/ с правилом /ua и отдать Location: /uk (второй хоп).
@@ -1320,18 +1279,23 @@ function writeVercelProjectJson(html) {
     statusCode: 301,
   }));
   const legacyRedirects = LEGACY_SITE_HOSTS.flatMap((host) => [
-    { source: '/', has: [{ type: 'host', value: host }], destination: `${SITE}/`, statusCode: 301 },
+    { source: '/', has: [{ type: 'host', value: host }], destination: `${SITE}/pl/`, statusCode: 301 },
     { source: '/(.*)', has: [{ type: 'host', value: host }], destination: `${SITE}/$1`, statusCode: 301 },
   ]);
   // Apex brand host → www with real 301 (Google prefers permanent; Vercel Domains often emits 307).
   const primaryApexRedirects = [
-    { source: '/', has: [{ type: 'host', value: PRIMARY_APEX_HOST }], destination: `${SITE}/`, statusCode: 301 },
+    { source: '/', has: [{ type: 'host', value: PRIMARY_APEX_HOST }], destination: `${SITE}/pl/`, statusCode: 301 },
     { source: '/(.*)', has: [{ type: 'host', value: PRIMARY_APEX_HOST }], destination: `${SITE}/$1`, statusCode: 301 },
+  ];
+  // Canonical locale home: bare / must not be a 200 soft-landing (JS). One HTTP 301 → /pl/.
+  const rootToPl = [
+    { source: '/', destination: '/pl/', statusCode: 301 },
   ];
   const redirects = [
     ...primaryApexRedirects,
     ...legacyFaviconToCanonical,
     ...legacyRedirects,
+    ...rootToPl,
     { source: '/ua/:path*', destination: '/uk/:path*', permanent: true },
     { source: '/ua/', destination: '/uk/', permanent: true },
     { source: '/ua', destination: '/uk/', permanent: true },
