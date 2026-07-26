@@ -1208,7 +1208,8 @@ function writeNetlifyRedirects(html) {
   }
   // Brand apex → www (permanent)
   lines.push(`https://${PRIMARY_APEX_HOST}/*  ${SITE}/:splat  301!`);
-  lines.push(`https://${PRIMARY_APEX_HOST}/  ${SITE}/pl/  301!`);
+  lines.push(`https://${PRIMARY_APEX_HOST}/  ${SITE}/  301!`);
+  // Netlify has no Vercel middleware — hard 301 to PL home (Vercel uses middleware.js instead).
   lines.push(`/  /pl/  301`);
   // Кореневий /favicon.ico у dist (copyRootFaviconIco); для Netlify — рядки 200! вище.
   // Legacy /ua → canonical /uk/ (hreflang uk). Absolute URL + trailing slash = один 301 (без /ua/→/uk→/uk/).
@@ -1279,23 +1280,20 @@ function writeVercelProjectJson(html) {
     statusCode: 301,
   }));
   const legacyRedirects = LEGACY_SITE_HOSTS.flatMap((host) => [
-    { source: '/', has: [{ type: 'host', value: host }], destination: `${SITE}/pl/`, statusCode: 301 },
+    { source: '/', has: [{ type: 'host', value: host }], destination: `${SITE}/`, statusCode: 301 },
     { source: '/(.*)', has: [{ type: 'host', value: host }], destination: `${SITE}/$1`, statusCode: 301 },
   ]);
   // Apex brand host → www with real 301 (Google prefers permanent; Vercel Domains often emits 307).
   const primaryApexRedirects = [
-    { source: '/', has: [{ type: 'host', value: PRIMARY_APEX_HOST }], destination: `${SITE}/pl/`, statusCode: 301 },
+    { source: '/', has: [{ type: 'host', value: PRIMARY_APEX_HOST }], destination: `${SITE}/`, statusCode: 301 },
     { source: '/(.*)', has: [{ type: 'host', value: PRIMARY_APEX_HOST }], destination: `${SITE}/$1`, statusCode: 301 },
   ];
-  // Canonical locale home: bare / must not be a 200 soft-landing (JS). One HTTP 301 → /pl/.
-  const rootToPl = [
-    { source: '/', destination: '/pl/', statusCode: 301 },
-  ];
+  // Bare / language negotiation is Edge Middleware (sites/innser/middleware.js).
+  // Do NOT add vercel.json `/` → `/pl/` here — config redirects run before middleware.
   const redirects = [
     ...primaryApexRedirects,
     ...legacyFaviconToCanonical,
     ...legacyRedirects,
-    ...rootToPl,
     { source: '/ua/:path*', destination: '/uk/:path*', permanent: true },
     { source: '/ua/', destination: '/uk/', permanent: true },
     { source: '/ua', destination: '/uk/', permanent: true },

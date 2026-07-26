@@ -12,7 +12,7 @@
           "value": "warszawa-laweta.com"
         }
       ],
-      "destination": "https://www.warszawa-laweta.com/pl/",
+      "destination": "https://www.warszawa-laweta.com/",
       "statusCode": 301
     },
     {
@@ -56,7 +56,7 @@
           "value": "laweta-pomoc-drogowa24-7.com"
         }
       ],
-      "destination": "https://www.warszawa-laweta.com/pl/",
+      "destination": "https://www.warszawa-laweta.com/",
       "statusCode": 301
     },
     {
@@ -78,7 +78,7 @@
           "value": "www.laweta-pomoc-drogowa24-7.com"
         }
       ],
-      "destination": "https://www.warszawa-laweta.com/pl/",
+      "destination": "https://www.warszawa-laweta.com/",
       "statusCode": 301
     },
     {
@@ -90,11 +90,6 @@
         }
       ],
       "destination": "https://www.warszawa-laweta.com/$1",
-      "statusCode": 301
-    },
-    {
-      "source": "/",
-      "destination": "/pl/",
       "statusCode": 301
     },
     {

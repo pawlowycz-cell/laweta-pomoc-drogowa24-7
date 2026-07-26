@@ -3832,8 +3832,16 @@ function updateGalleryPageLang(l){
     if(cap) cap.textContent=capTxt;
   });
 }
+function setInnserLangCookie(l){
+  try{
+    var seg=(l==='ua'?'uk':l);
+    if(!/^(pl|en|ru|uk)$/.test(seg))seg='pl';
+    document.cookie='innser_lang='+seg+';Path=/;Max-Age=31536000;SameSite=Lax';
+  }catch(e){}
+}
 function goLang(l){
   try{ localStorage.setItem('innser_lang', l); }catch(e){}
+  setInnserLangCookie(l);
   var seg = (l === 'ua' ? 'uk' : l);
   if (location.protocol === 'file:') {
     SL(l);
@@ -4275,6 +4283,7 @@ function syncSvcRelLabels(lang){
 
 function SL(l){
   CL=l;
+  setInnserLangCookie(l);
   syncSvcRelLabels(l);
   document.querySelectorAll('.lb').forEach(b=>b.classList.remove('on'));
   document.getElementById('lb-'+l).classList.add('on');
