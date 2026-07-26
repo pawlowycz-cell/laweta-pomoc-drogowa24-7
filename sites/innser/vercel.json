@@ -358,6 +358,11 @@
       "permanent": true
     },
     {
+      "source": "/pl/svc10",
+      "destination": "/pl/svc10/",
+      "permanent": true
+    },
+    {
       "source": "/pl/blog/b1",
       "destination": "/pl/blog/b1/",
       "permanent": true
@@ -750,6 +755,11 @@
     {
       "source": "/en/svc9",
       "destination": "/en/svc9/",
+      "permanent": true
+    },
+    {
+      "source": "/en/svc10",
+      "destination": "/en/svc10/",
       "permanent": true
     },
     {
@@ -1148,6 +1158,11 @@
       "permanent": true
     },
     {
+      "source": "/ru/svc10",
+      "destination": "/ru/svc10/",
+      "permanent": true
+    },
+    {
       "source": "/ru/blog/b1",
       "destination": "/ru/blog/b1/",
       "permanent": true
@@ -1540,6 +1555,11 @@
     {
       "source": "/uk/svc9",
       "destination": "/uk/svc9/",
+      "permanent": true
+    },
+    {
+      "source": "/uk/svc10",
+      "destination": "/uk/svc10/",
       "permanent": true
     },
     {
@@ -1956,6 +1976,10 @@
       "destination": "/pl/svc9/index.html"
     },
     {
+      "source": "/pl/svc10/",
+      "destination": "/pl/svc10/index.html"
+    },
+    {
       "source": "/pl/dzielnice/mokotow/",
       "destination": "/pl/dzielnice/mokotow/index.html"
     },
@@ -2266,6 +2290,10 @@
     {
       "source": "/en/svc9/",
       "destination": "/en/svc9/index.html"
+    },
+    {
+      "source": "/en/svc10/",
+      "destination": "/en/svc10/index.html"
     },
     {
       "source": "/en/dzielnice/mokotow/",
@@ -2580,6 +2608,10 @@
       "destination": "/ru/svc9/index.html"
     },
     {
+      "source": "/ru/svc10/",
+      "destination": "/ru/svc10/index.html"
+    },
+    {
       "source": "/ru/dzielnice/mokotow/",
       "destination": "/ru/dzielnice/mokotow/index.html"
     },
@@ -2890,6 +2922,10 @@
     {
       "source": "/uk/svc9/",
       "destination": "/uk/svc9/index.html"
+    },
+    {
+      "source": "/uk/svc10/",
+      "destination": "/uk/svc10/index.html"
     },
     {
       "source": "/uk/dzielnice/mokotow/",

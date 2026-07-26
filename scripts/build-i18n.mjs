@@ -813,10 +813,11 @@ function writeDeepRouteHtmlCopies(raw) {
       let html = patchHtmlSeoForTail(baseHtml, seg, tail, raw);
       html = patchHtmlActivePage(html, tail);
       html = patchHtmlLinkHrefs(html, seg);
-      if (tail === 'dzielnice' || tail.startsWith('dzielnice/')) {
+      // Keep index shells localized on every deep page (baseHtml already has them from home bake).
+      if (tail.startsWith('dzielnice/')) {
         html = injectDistrictStaticBlock(html, langCl, seg, tail);
       }
-      if (tail === 'trasy' || tail.startsWith('trasy/')) {
+      if (tail.startsWith('trasy/')) {
         html = injectRoadStaticBlock(html, langCl, seg, tail);
       }
       if (tail === 'gallery' && galleryItems.length) {
@@ -879,9 +880,10 @@ function buildLocaleHtml(raw, key) {
     /<meta property="og:description" content="[^"]*">/,
     `<meta property="og:description" content="${L.ogDescription.replace(/"/g, '&quot;')}">`
   );
+  // Match id="innser-og-url" (source HTML) — bare content= pattern never hit.
   html = html.replace(
-    /<meta property="og:url" content="[^"]*">/,
-    `<meta property="og:url" content="${url}">`
+    /<meta property="og:url"(?:\s+id="[^"]*")?\s+content="[^"]*">/,
+    `<meta property="og:url" id="innser-og-url" content="${url}">`
   );
   html = html.replace(
     /<meta property="og:locale" content="[^"]*">/,
@@ -931,6 +933,9 @@ function buildLocaleHtml(raw, key) {
   html = patchLocalBusinessSchema(html, langCl);
   html = injectFaqJsonLd(html, raw, langCl);
   html = injectDistrictsRuntimeData(html, collectGalleryItems(raw));
+  // Localize inactive dzielnice/trasy shells so every locale HTML has correct H1s.
+  html = injectDistrictStaticBlock(html, langCl, L.pathSeg, 'dzielnice');
+  html = injectRoadStaticBlock(html, langCl, L.pathSeg, 'trasy');
 
   html = patchHtmlLinkHrefs(html, L.pathSeg);
 
