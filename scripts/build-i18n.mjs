@@ -1381,6 +1381,94 @@ function writeVercelProjectJson(html) {
   fs.writeFileSync(path.join(INNSER_DIST_ROOT, 'vercel.json'), JSON.stringify(cfg, null, 2) + '\n', 'utf8');
 }
 
+/** macOS junk / AppleDouble — cpSync+chmod often ENOENT on these during large gallery copies. */
+function shouldSkipCopyName(name) {
+  return name === '.DS_Store' || name === '.gitkeep' || name.startsWith('._') || name === 'Thumbs.db';
+}
+
+function sleepMs(ms) {
+  const end = Date.now() + ms;
+  while (Date.now() < end) {
+    /* retry backoff for flaky copyFile */
+  }
+}
+
+/** Robust recursive copy (avoids fs.cpSync chmod races on large assets/gallery). */
+function copyTreeRobust(srcRoot, dstRoot) {
+  let copied = 0;
+  let skipped = 0;
+  function walk(srcDir, dstDir) {
+    fs.mkdirSync(dstDir, { recursive: true });
+    let entries;
+    try {
+      entries = fs.readdirSync(srcDir, { withFileTypes: true });
+    } catch (e) {
+      console.warn('copyTree: cannot read', srcDir, e.message);
+      return;
+    }
+    for (const ent of entries) {
+      if (shouldSkipCopyName(ent.name)) {
+        skipped++;
+        continue;
+      }
+      const s = path.join(srcDir, ent.name);
+      const d = path.join(dstDir, ent.name);
+      let st;
+      try {
+        st = fs.lstatSync(s);
+      } catch (e) {
+        console.warn('copyTree: skip missing', s, e.message);
+        skipped++;
+        continue;
+      }
+      if (st.isSymbolicLink()) {
+        skipped++;
+        continue;
+      }
+      if (st.isDirectory()) {
+        walk(s, d);
+        continue;
+      }
+      if (!st.isFile()) {
+        skipped++;
+        continue;
+      }
+      let ok = false;
+      for (let attempt = 1; attempt <= 4; attempt++) {
+        try {
+          fs.copyFileSync(s, d);
+          ok = true;
+          copied++;
+          break;
+        } catch (e) {
+          if (attempt === 4) {
+            console.warn('copyTree: failed', path.relative(REPO_ROOT, s), e.message);
+            skipped++;
+          } else {
+            sleepMs(40 * attempt);
+          }
+        }
+      }
+      void ok;
+    }
+  }
+  walk(srcRoot, dstRoot);
+  return { copied, skipped };
+}
+
+function replaceDirFromSource(src, dstLabel) {
+  const dst = path.join(OUT, dstLabel);
+  fs.rmSync(dst, { recursive: true, force: true });
+  const { copied, skipped } = copyTreeRobust(src, dst);
+  console.log(
+    'Copied',
+    path.relative(REPO_ROOT, src),
+    '->',
+    path.relative(REPO_ROOT, dst),
+    `(${copied} files` + (skipped ? `, skipped ${skipped}` : '') + ')'
+  );
+}
+
 /** Копирует assets/ в dist/assets — на Netlify заливай только содержимое dist/ (и index.html будет рядом с assets/). */
 function copyAssetsIntoDist() {
   if (!fs.existsSync(ASSETS_SRC)) {
@@ -1389,10 +1477,7 @@ function copyAssetsIntoDist() {
     );
     return;
   }
-  const dst = path.join(OUT, 'assets');
-  fs.rmSync(dst, { recursive: true, force: true });
-  fs.cpSync(ASSETS_SRC, dst, { recursive: true });
-  console.log('Copied', path.relative(REPO_ROOT, ASSETS_SRC), '->', path.relative(REPO_ROOT, dst));
+  replaceDirFromSource(ASSETS_SRC, 'assets');
 }
 
 /** Фото для карточек услуг 7–9: skup-samochodow.png, zlomowanie-pojazdow.png, laweta-warszawa-24h.png */
@@ -1403,10 +1488,7 @@ function copyServiceImagesIntoDist() {
     );
     return;
   }
-  const dst = path.join(OUT, 'images');
-  fs.rmSync(dst, { recursive: true, force: true });
-  fs.cpSync(IMAGES_SRC, dst, { recursive: true });
-  console.log('Copied', path.relative(REPO_ROOT, IMAGES_SRC), '->', path.relative(REPO_ROOT, dst));
+  replaceDirFromSource(IMAGES_SRC, 'images');
 }
 
 function copyPublicRootFiles() {
