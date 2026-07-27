@@ -1017,6 +1017,15 @@ function discoverSvcPageIds(html) {
 }
 
 /** Один канонический URL со слэшем — Google не видит /ru и /ru/ как две страницы. */
+
+/** Removed service: keep old /svc10 URLs alive → ditch/parking recovery (svc9). */
+function appendRetiredSvcRedirects(redirects) {
+  for (const seg of ['pl', 'en', 'ru', 'uk']) {
+    redirects.push({ source: `/${seg}/svc10`, destination: `/${seg}/svc9/`, permanent: true });
+    redirects.push({ source: `/${seg}/svc10/`, destination: `/${seg}/svc9/`, permanent: true });
+  }
+}
+
 function appendTrailingSlashRedirects(redirects, html) {
   const svcIds = discoverSvcPageIds(html);
   const blogSlugs = discoverBlogPostSlugs(html);
@@ -1082,6 +1091,8 @@ function appendTrailingSlashNetlify(lines, html) {
     for (const svc of svcIds) {
       lines.push(`/${seg}/${svc}  /${seg}/${svc}/  301`);
     }
+    lines.push(`/${seg}/svc10  /${seg}/svc9/  301`);
+    lines.push(`/${seg}/svc10/  /${seg}/svc9/  301`);
     for (const slug of blogSlugs) {
       lines.push(`/${seg}/blog/${slug}  /${seg}/blog/${slug}/  301`);
     }
@@ -1351,6 +1362,7 @@ function writeVercelProjectJson(html) {
     );
   }
   appendTrailingSlashRedirects(redirects, html);
+  appendRetiredSvcRedirects(redirects);
   const rewrites = [];
   for (const seg of ['pl', 'en', 'ru', 'uk']) {
     rewrites.push({ source: `/${seg}/`, destination: `/${seg}/index.html` });
