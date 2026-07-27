@@ -697,6 +697,15 @@ label.tow-calc-check span{line-height:1.25;min-width:0;white-space:nowrap;overfl
 
 
 @media(min-width:769px){
+  /* Desktop: языки + шапка закреплены при скролле (как на mobile) */
+  .site-header{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    width:100%;
+  }
+  body{padding-top:104px;}
   .nm{
     position:absolute;
     left:50%;
