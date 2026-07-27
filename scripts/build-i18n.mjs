@@ -677,6 +677,33 @@ function injectRoadStaticBlock(html, langCl, localePathSeg, tail) {
   return html;
 }
 
+/** Localize inactive district/road detail shells (View Source / crawlers on every locale page). */
+function injectInactiveDetailShells(html, langCl) {
+  const distH1 = {
+    pl: 'Laweta Warszawa — dzielnica',
+    en: 'Tow truck Warsaw — district',
+    ru: 'Эвакуатор Варшава — район',
+    ua: 'Евакуатор Варшава — район',
+  };
+  const roadH1 = {
+    pl: 'Laweta — trasa',
+    en: 'Tow truck — road',
+    ru: 'Эвакуатор — трасса',
+    ua: 'Евакуатор — траса',
+  };
+  const d = distH1[langCl] || distH1.pl;
+  const r = roadH1[langCl] || roadH1.pl;
+  html = html.replace(
+    /<!--innser-district-page-static-->[\s\S]*?<!--\/innser-district-page-static-->/,
+    `<!--innser-district-page-static-->\n  <h1 class="sh">${d}</h1>\n  <!--/innser-district-page-static-->`
+  );
+  html = html.replace(
+    /<!--innser-road-page-static-->[\s\S]*?<!--\/innser-road-page-static-->/,
+    `<!--innser-road-page-static-->\n  <h1 class="sh">${r}</h1>\n  <!--/innser-road-page-static-->`
+  );
+  return html;
+}
+
 function injectDistrictsRuntimeData(html, galleryItems) {
   const json = districtsJsonForRuntime();
   html = html.replace(/var DISTRICTS=\[\];/, `var DISTRICTS=${json};`);
@@ -936,6 +963,7 @@ function buildLocaleHtml(raw, key) {
   // Localize inactive dzielnice/trasy shells so every locale HTML has correct H1s.
   html = injectDistrictStaticBlock(html, langCl, L.pathSeg, 'dzielnice');
   html = injectRoadStaticBlock(html, langCl, L.pathSeg, 'trasy');
+  html = injectInactiveDetailShells(html, langCl);
 
   html = patchHtmlLinkHrefs(html, L.pathSeg);
 
