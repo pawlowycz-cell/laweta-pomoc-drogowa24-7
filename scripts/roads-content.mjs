@@ -1,7 +1,7 @@
 /** Rich per-road SEO body — full PL / EN / RU / UA. */
 
 import { renderLandingPhotosHtml } from './landing-photos.mjs';
-import { roadLocalBlock } from './local-extra-blocks.mjs';
+import { roadLocalBlocks } from './local-extra-blocks.mjs';
 
 /** Junction / corridor meta for unique local paragraphs (kept here to avoid circular imports). */
 const ROAD_META = {
@@ -1429,11 +1429,20 @@ function withRoadLocalBlock(lang, slug, c) {
   if (!c) return c;
   const meta = ROAD_META[slug];
   if (!meta) return c;
-  const lb = roadLocalBlock(lang, meta.code, meta.feature, meta.neighbors);
-  if (!lb) return c;
+  const extra = roadLocalBlocks(
+    lang,
+    meta.code,
+    meta.feature,
+    meta.neighbors,
+    slug
+  );
+  if (!extra?.length) return c;
   const blocks = c.blocks || [];
   if (blocks.some((b) => b.localExtra)) return c;
-  return { ...c, blocks: [...blocks, { ...lb, localExtra: true }] };
+  return {
+    ...c,
+    blocks: [...blocks, ...extra.map((b) => ({ ...b, localExtra: true }))],
+  };
 }
 
 export function getRoadRichContent(lang, slug) {

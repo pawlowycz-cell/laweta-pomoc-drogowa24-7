@@ -1,7 +1,7 @@
 /** Rich per-district + suburb SEO body — full PL / EN / RU / UA. */
 
 import { renderLandingPhotosHtml } from './landing-photos.mjs';
-import { districtLocalBlock } from './local-extra-blocks.mjs';
+import { districtLocalBlocks } from './local-extra-blocks.mjs';
 
 const LOCATIVE = {
   'mokotow': { pl: "Mokotowie", en: "Mokotów", ru: "Мокотуве", ua: "Мокотуві" },
@@ -3405,11 +3405,14 @@ function esc(s) {
 
 function withDistrictLocalBlock(lang, slug, c) {
   if (!c) return c;
-  const lb = districtLocalBlock(lang, slug, LANDMARKS, LOCATIVE);
-  if (!lb) return c;
+  const extra = districtLocalBlocks(lang, slug, LANDMARKS, LOCATIVE);
+  if (!extra?.length) return c;
   const blocks = c.blocks || [];
   if (blocks.some((b) => b.localExtra)) return c;
-  return { ...c, blocks: [...blocks, { ...lb, localExtra: true }] };
+  return {
+    ...c,
+    blocks: [...blocks, ...extra.map((b) => ({ ...b, localExtra: true }))],
+  };
 }
 
 export function getDistrictRichContent(lang, slug) {

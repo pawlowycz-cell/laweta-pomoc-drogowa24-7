@@ -1,95 +1,155 @@
 /**
  * Unique local SEO paragraphs for district/road pages (PL/EN/RU/UA).
- * Appended at render + baked into runtime JSON so crawlers and SPA see the same text.
+ * Uses hand-written flavor + landmark weave — not a single shared template.
  */
 
-export function districtLocalBlock(lang, slug, landmarks, locative) {
+import { DISTRICT_FLAVOR, ROAD_FLAVOR } from './landing-flavor.mjs';
+
+/**
+ * @returns {{ title: string, text: string }[] | null}
+ */
+export function districtLocalBlocks(lang, slug, landmarks, locative) {
+  const flavor = DISTRICT_FLAVOR[slug]?.[lang] || DISTRICT_FLAVOR[slug]?.pl;
   const lm = landmarks?.[slug];
   const loc = locative?.[slug]?.[lang] || locative?.[slug]?.pl || slug;
-  if (!lm) return null;
-  const streets = (lm.streets || []).slice(0, 4).join(', ');
-  const malls = (lm.malls || []).slice(0, 3).join(', ');
-  const hubs = (lm.hubs || []).slice(0, 4).join(', ');
-  const kind = lm.kind === 'suburb' ? 'suburb' : 'district';
+  if (!flavor || !lm) return null;
 
-  const pack = {
+  const streetList = lm.streets || [];
+  const mallList = lm.malls || [];
+  const hubList = lm.hubs || [];
+  const streets = streetList.join(', ');
+  const malls = mallList.join(', ');
+  const hubs = hubList.join(', ');
+  const s0 = streetList[0] || loc;
+  const s1 = streetList[1] || streetList[0] || loc;
+  const m0 = mallList[0] || 'lokalne CH';
+  const h0 = hubList[0] || loc;
+  const suburb = lm.kind === 'suburb';
+
+  const titles = {
     pl: {
-      title: kind === 'suburb' ? `Lokalne punkty w ${loc}` : `Lokalne punkty na ${loc}`,
-      text:
-        `W praktyce najczęściej jedziemy na ${streets || 'główne arterie'}. ` +
-        `Parkingi i centra handlowe w tym rejonie (${malls || 'lokalne CH'}) to typowe miejsca, skąd holujemy auta — także z poziomów −1/−2. ` +
-        `Osiedla i węzły: ${hubs || 'centrum lokalne'}. ` +
-        `Jeśli auto nie odpala po nocy, stoi po kolizji albo nie wyjedzie z ciasnego garażu, INNSER podaje cenę z góry (tel. 506-001-057) i dobiera lawetę albo odpalanie na miejscu. ` +
-        `Dojazd zwykle 20–40 minut; holowanie od 250 zł do 15 km. Obsługujemy PL / EN / RU / UA.`,
+      scene: suburb ? `Jak wygląda pomoc drogowa w ${loc}` : `Jak wygląda pomoc drogowa na ${loc}`,
+      map: suburb ? `Mapa wezwań — ${loc}` : `Mapa wezwań na ${loc}`,
     },
     en: {
-      title: `Local spots in ${loc}`,
-      text:
-        `In practice we most often respond on ${streets || 'the main arteries'}. ` +
-        `Shopping centres and car parks here (${malls || 'local malls'}) are typical pickup points — including levels −1/−2. ` +
-        `Neighbourhoods and hubs: ${hubs || 'the local centre'}. ` +
-        `Whether the car won’t start after a night out, sits after a crash, or won’t leave a tight garage, INNSER quotes upfront (tel. 506-001-057) and sends a flatbed or an on-site jump start. ` +
-        `Arrival usually 20–40 minutes; towing from 250 PLN up to 15 km. We speak PL / EN / RU / UA.`,
+      scene: `What roadside help looks like in ${loc}`,
+      map: `Call map — ${loc}`,
     },
     ru: {
-      title: `Локальные точки в районе ${loc}`,
-      text:
-        `На практике чаще всего выезжаем на ${streets || 'основные улицы'}. ` +
-        `ТЦ и паркинги здесь (${malls || 'локальные ТЦ'}) — обычные точки эвакуации, в том числе с уровней −1/−2. ` +
-        `ЖК и узлы: ${hubs || 'локальный центр'}. ` +
-        `Если авто не заводится после ночи, стоит после ДТП или не выезжает из тесного гаража — INNSER называет цену заранее (тел. 506-001-057) и присылает лавету или прикур на месте. ` +
-        `Приезд обычно 20–40 минут; эвакуация от 250 zł до 15 км. Говорим RU / PL / EN / UA.`,
+      scene: `Как выглядит помощь на дороге в ${loc}`,
+      map: `Карта вызовов — ${loc}`,
     },
     ua: {
-      title: `Локальні точки в районі ${loc}`,
-      text:
-        `На практиці найчастіше виїжджаємо на ${streets || 'головні вулиці'}. ` +
-        `ТРЦ і паркінги тут (${malls || 'локальні ТРЦ'}) — звичні точки евакуації, зокрема з рівнів −1/−2. ` +
-        `ЖК і вузли: ${hubs || 'локальний центр'}. ` +
-        `Якщо авто не заводиться після ночі, стоїть після ДТП або не виїжджає з тісного гаража — INNSER називає ціну заздалегідь (тел. 506-001-057) і надсилає лафету або прикур на місці. ` +
-        `Приїзд зазвичай 20–40 хвилин; евакуація від 250 zł до 15 км. Мови: UA / PL / RU / EN.`,
+      scene: `Як виглядає допомога на дорозі в ${loc}`,
+      map: `Карта викликів — ${loc}`,
     },
   };
-  return pack[lang] || pack.pl;
+  const t = titles[lang] || titles.pl;
+
+  const mapText = {
+    pl:
+      `Konkretne punkty, które padają najczęściej: ulice ${streets}; centra i parkingi ${malls}; osiedla / węzły ${hubs}. ` +
+      `W godzinach 7–9 i 16–19 na ${s0} oraz ${s1} liczy się znajomość objazdów — nie stoimy w korku „na ślepo”. ` +
+      `Po nocy przy ${h0} często wystarczy booster; po stłuczce albo awarii przy ${m0} — laweta, także z poziomów −1/−2. ` +
+      `Holujemy auta, motocykle i skutery do partnerskiego warsztatu albo pod wskazany adres. ` +
+      `Holowanie od 250 zł (do 15 km), dojazd zwykle 20–40 min w mieście — poza Warszawą doliczamy km. Tel. 506-001-057 (PL / EN / RU / UA).`,
+    en:
+      `Pins we hear most: streets ${streets}; malls and parks ${malls}; hubs ${hubs}. ` +
+      `At 7–9 and 16–19 on ${s0} and ${s1} shortcuts matter — we do not sit blind in the jam. ` +
+      `After a night out near ${h0} a booster is often enough; after a crash or failure at ${m0} — flatbed, including −1/−2. ` +
+      `We tow cars, motorcycles and scooters to a partner workshop or your address. ` +
+      `Towing from 250 PLN (up to 15 km), usually 20–40 min in the city — outside Warsaw we add km. Tel. 506-001-057 (PL / EN / RU / UA).`,
+    ru:
+      `Точки, которые звучат чаще всего: улицы ${streets}; ТЦ и паркинги ${malls}; ЖК / узлы ${hubs}. ` +
+      `В 7–9 и 16–19 на ${s0} и ${s1} важны объезды — не стоим в пробке вслепую. ` +
+      `После ночи у ${h0} часто хватает бустера; после ДТП или поломки у ${m0} — лавета, в том числе с −1/−2. ` +
+      `Ведём авто, мото и скутеры в партнёрский сервис или по адресу. ` +
+      `Эвакуация от 250 zł (до 15 км), обычно 20–40 мин в городе — за Варшавой добавляем км. Тел. 506-001-057 (RU / PL / EN / UA).`,
+    ua:
+      `Точки, що звучать найчастіше: вулиці ${streets}; ТРЦ і паркінги ${malls}; ЖК / вузли ${hubs}. ` +
+      `О 7–9 і 16–19 на ${s0} та ${s1} важливі об’їзди — не стоїмо в заторі наосліп. ` +
+      `Після ночі біля ${h0} часто вистачає бустера; після ДТП чи поломки біля ${m0} — лафета, зокрема з −1/−2. ` +
+      `Веземо авто, мото і скутери в партнерський сервіс або за адресою. ` +
+      `Евакуація від 250 zł (до 15 км), зазвичай 20–40 хв у місті — за Варшавою додаємо км. Тел. 506-001-057 (UA / PL / RU / EN).`,
+  };
+
+  return [
+    { title: t.scene, text: `${flavor.scene} ${flavor.ops}`.replace(/\s+/g, ' ').trim() },
+    { title: t.map, text: (mapText[lang] || mapText.pl).trim() },
+  ];
 }
 
-/** Extra unique copy for highway pages — junctions / corridor specifics. */
-export function roadLocalBlock(lang, code, feature, neighbors) {
+/** @deprecated single-block API — use districtLocalBlocks */
+export function districtLocalBlock(lang, slug, landmarks, locative) {
+  const blocks = districtLocalBlocks(lang, slug, landmarks, locative);
+  return blocks ? blocks[0] : null;
+}
+
+/**
+ * @returns {{ title: string, text: string }[] | null}
+ */
+export function roadLocalBlocks(lang, code, feature, neighbors, slug) {
+  const key = slug || String(code || '').toLowerCase().replace(/\s+/g, '');
+  const flavor = ROAD_FLAVOR[key]?.[lang] || ROAD_FLAVOR[key]?.pl;
   const feat = (feature && (feature[lang] || feature.pl)) || code;
-  const near = (neighbors || []).slice(0, 4).join(', ');
-  const pack = {
+  const near = (neighbors || []).slice(0, 5).join(', ');
+  if (!flavor) return null;
+
+  const titles = {
     pl: {
-      title: `Konkretnie na trasie ${code}`,
-      text:
-        `Na odcinku przy Warszawie (${feat}) najczęściej zdejmujemy pojazdy z pasa awaryjnego i pobocza, a potem dowozimy do warsztatu w stolicy lub dalej po Polsce. ` +
-        (near ? `Sąsiednie trasy, z którymi łączymy dojazd: ${near}. ` : '') +
-        `Po kolizji ważne jest szybkie zabezpieczenie auta i bezpieczny zjazd — nie zostawiamy Was bez informacji o cenie. ` +
-        `Zadzwońcie 506-001-057: podamy ETA i kwotę przed wyjazdem. Holowanie od 250 zł (do 15 km), dłuższe trasy wyceniamy indywidualnie. PL / EN / RU / UA.`,
+      scene: `Realna praca na ${code}`,
+      map: `Węzły i sąsiednie trasy — ${code}`,
     },
     en: {
-      title: `What we do on ${code}`,
-      text:
-        `On the Warsaw stretch (${feat}) we usually recover vehicles from the hard shoulder / roadside and then tow to a workshop in the capital or further across Poland. ` +
-        (near ? `Nearby roads we also cover when linking jobs: ${near}. ` : '') +
-        `After a crash, securing the car and a safe exit matter — and you get the price before we roll. ` +
-        `Call 506-001-057 for ETA and a fixed quote. Towing from 250 PLN (up to 15 km); longer routes priced individually. PL / EN / RU / UA.`,
+      scene: `Real work on ${code}`,
+      map: `Junctions and nearby roads — ${code}`,
     },
     ru: {
-      title: `Что делаем на трассе ${code}`,
-      text:
-        `На участке у Варшавы (${feat}) чаще всего снимаем авто с аварийной полосы / обочины и везём в сервис в столице или дальше по Польше. ` +
-        (near ? `Соседние трассы, с которыми стыкуем выезды: ${near}. ` : '') +
-        `После ДТП важны быстрая фиксация и безопасный съезд — цену называем до выезда. ` +
-        `Звоните 506-001-057: скажем ETA и сумму. Эвакуация от 250 zł (до 15 км), дальние рейсы — индивидуально. RU / PL / EN / UA.`,
+      scene: `Реальная работа на ${code}`,
+      map: `Развязки и соседние трассы — ${code}`,
     },
     ua: {
-      title: `Що робимо на трасі ${code}`,
-      text:
-        `На ділянці біля Варшави (${feat}) найчастіше знімаємо авто з аварійної смуги / узбіччя й веземо в сервіс у столиці або далі Польщею. ` +
-        (near ? `Суміжні траси, з якими стикуємо виїзди: ${near}. ` : '') +
-        `Після ДТП важливі швидка фіксація й безпечний з’їзд — ціну називаємо до виїзду. ` +
-        `Телефонуйте 506-001-057: скажемо ETA і суму. Евакуація від 250 zł (до 15 км), далекі рейси — індивідуально. UA / PL / RU / EN.`,
+      scene: `Реальна робота на ${code}`,
+      map: `Розв’язки та суміжні траси — ${code}`,
     },
   };
-  return pack[lang] || pack.pl;
+  const t = titles[lang] || titles.pl;
+
+  const mapText = {
+    pl:
+      `Odcinek przy Warszawie: ${feat}. ` +
+      (near ? `Sąsiednie trasy w dyspozytorni: ${near}. ` : '') +
+      `Zdejmujemy z pasa awaryjnego / pobocza, ustawiamy oznakowanie, zabezpieczamy po kolizji i dowozimy do warsztatu w stolicy lub dalej (do 500 km). ` +
+      `Po telefonie pytamy o kilometr / węzeł, kierunek jazdy i czy auto da się zepchnąć — od tego zależy ETA. ` +
+      `Cenę podajemy przed wyjazdem — tel. 506-001-057. Holowanie od 250 zł (do 15 km), dłuższe trasy indywidualnie. PL / EN / RU / UA.`,
+    en:
+      `Warsaw stretch: ${feat}. ` +
+      (near ? `Linked roads on the desk: ${near}. ` : '') +
+      `Hard shoulder / roadside recovery, cones if needed, post-crash secure, tow to a capital workshop or further (up to 500 km). ` +
+      `On the call we ask for km / junction, direction and whether the car can be pushed — that sets ETA. ` +
+      `Price before we roll — tel. 506-001-057. Towing from 250 PLN (up to 15 km); longer routes individually. PL / EN / RU / UA.`,
+    ru:
+      `Участок у Варшавы: ${feat}. ` +
+      (near ? `Соседние трассы на пульте: ${near}. ` : '') +
+      `Съём с аварийной / обочины, обозначение, фиксация после ДТП, доставка в сервис в столице или дальше (до 500 км). ` +
+      `По телефону уточняем км / развязку, направление и можно ли откатить авто — от этого ETA. ` +
+      `Цена до выезда — тел. 506-001-057. Эвакуация от 250 zł (до 15 км), дальше — индивидуально. RU / PL / EN / UA.`,
+    ua:
+      `Ділянка біля Варшави: ${feat}. ` +
+      (near ? `Суміжні траси на пульті: ${near}. ` : '') +
+      `Зйом з аварійної / узбіччя, позначення, фіксація після ДТП, доставка в сервіс у столиці або далі (до 500 км). ` +
+      `Телефоном уточнюємо км / розв’язку, напрямок і чи можна відкотити авто — від цього ETA. ` +
+      `Ціна до виїзду — тел. 506-001-057. Евакуація від 250 zł (до 15 км), далі — індивідуально. UA / PL / RU / EN.`,
+  };
+
+  return [
+    { title: t.scene, text: `${flavor.scene} ${flavor.ops}`.replace(/\s+/g, ' ').trim() },
+    { title: t.map, text: (mapText[lang] || mapText.pl).trim() },
+  ];
+}
+
+/** @deprecated */
+export function roadLocalBlock(lang, code, feature, neighbors) {
+  const blocks = roadLocalBlocks(lang, code, feature, neighbors);
+  return blocks ? blocks[0] : null;
 }
