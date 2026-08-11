@@ -435,6 +435,14 @@ function injectFaqJsonLd(html, raw, langCl) {
   return html.replace('</head>', `${tag}</head>`);
 }
 
+/** FAQPage belongs only on locale homes — strip from deep-route copies. */
+function stripFaqJsonLd(html) {
+  return html.replace(
+    /<script type="application\/ld\+json">\s*\{[\s\S]*?"@type"\s*:\s*"FAQPage"[\s\S]*?\}\s*<\/script>\s*/g,
+    ''
+  );
+}
+
 /** Подпись вкладки: ALL CAPS → первая буква заглавная, остальные строчные (как у галереи/главной). */
 function tabTitleCase(s) {
   if (!s) return '';
@@ -838,6 +846,7 @@ function writeDeepRouteHtmlCopies(raw) {
       const dir = path.join(OUT, seg, ...parts);
       fs.mkdirSync(dir, { recursive: true });
       let html = patchHtmlSeoForTail(baseHtml, seg, tail, raw);
+      html = stripFaqJsonLd(html);
       html = patchHtmlActivePage(html, tail);
       html = patchHtmlLinkHrefs(html, seg);
       // Keep index shells localized on every deep page (baseHtml already has them from home bake).
@@ -1021,8 +1030,20 @@ function discoverSvcPageIds(html) {
 /** Removed service: keep old /svc10 URLs alive → ditch/parking recovery (svc9). */
 function appendRetiredSvcRedirects(redirects) {
   for (const seg of ['pl', 'en', 'ru', 'uk']) {
+    // Must run before trailing-slash rules; both slash variants go straight to svc9.
     redirects.push({ source: `/${seg}/svc10`, destination: `/${seg}/svc9/`, permanent: true });
     redirects.push({ source: `/${seg}/svc10/`, destination: `/${seg}/svc9/`, permanent: true });
+  }
+}
+
+/** Drop stale retired service folders left from previous builds (OUT is not wiped). */
+function removeRetiredSvcOrphans() {
+  for (const seg of ['pl', 'en', 'ru', 'uk']) {
+    const dir = path.join(OUT, seg, 'svc10');
+    if (fs.existsSync(dir)) {
+      fs.rmSync(dir, { recursive: true, force: true });
+      console.log('Removed orphan', path.relative(REPO_ROOT, dir));
+    }
   }
 }
 
@@ -1046,6 +1067,7 @@ function appendTrailingSlashRedirects(redirects, html) {
       redirects.push({ source: `/${seg}/${nav}`, destination: `/${seg}/${nav}/`, permanent: true });
     }
     for (const svc of svcIds) {
+      if (svc === 'svc10') continue;
       redirects.push({ source: `/${seg}/${svc}`, destination: `/${seg}/${svc}/`, permanent: true });
     }
     for (const slug of blogSlugs) {
@@ -1089,6 +1111,7 @@ function appendTrailingSlashNetlify(lines, html) {
       lines.push(`/${seg}/${nav}  /${seg}/${nav}/  301`);
     }
     for (const svc of svcIds) {
+      if (svc === 'svc10') continue;
       lines.push(`/${seg}/${svc}  /${seg}/${svc}/  301`);
     }
     lines.push(`/${seg}/svc10  /${seg}/svc9/  301`);
@@ -1361,8 +1384,9 @@ function writeVercelProjectJson(html) {
       { source: `/${seg}/map/`, destination: `/${seg}/about/`, permanent: true }
     );
   }
-  appendTrailingSlashRedirects(redirects, html);
+  // Retired URLs first so /svc10 never becomes a trailing-slash rewrite to orphan HTML.
   appendRetiredSvcRedirects(redirects);
+  appendTrailingSlashRedirects(redirects, html);
   const rewrites = [];
   for (const seg of ['pl', 'en', 'ru', 'uk']) {
     rewrites.push({ source: `/${seg}/`, destination: `/${seg}/index.html` });
@@ -1380,6 +1404,7 @@ function writeVercelProjectJson(html) {
       });
     }
     for (const svc of svcIds) {
+      if (svc === 'svc10') continue;
       rewrites.push({ source: `/${seg}/${svc}/`, destination: `/${seg}/${svc}/index.html` });
     }
     for (const dslug of distSlugs) {
@@ -1673,6 +1698,7 @@ async function main() {
   }
 
   writeDeepRouteHtmlCopies(raw);
+  removeRetiredSvcOrphans();
 
   writeRootRedirect();
   console.log('Wrote', path.relative(REPO_ROOT, path.join(OUT, 'index.html')));
