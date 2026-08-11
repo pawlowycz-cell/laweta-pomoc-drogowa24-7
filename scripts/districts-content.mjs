@@ -1,6 +1,7 @@
 /** Rich per-district + suburb SEO body — full PL / EN / RU / UA. */
 
 import { renderLandingPhotosHtml } from './landing-photos.mjs';
+import { districtLocalBlock } from './local-extra-blocks.mjs';
 
 const LOCATIVE = {
   'mokotow': { pl: "Mokotowie", en: "Mokotów", ru: "Мокотуве", ua: "Мокотуві" },
@@ -3402,10 +3403,19 @@ function esc(s) {
     .replace(/"/g, '&quot;');
 }
 
+function withDistrictLocalBlock(lang, slug, c) {
+  if (!c) return c;
+  const lb = districtLocalBlock(lang, slug, LANDMARKS, LOCATIVE);
+  if (!lb) return c;
+  const blocks = c.blocks || [];
+  if (blocks.some((b) => b.localExtra)) return c;
+  return { ...c, blocks: [...blocks, { ...lb, localExtra: true }] };
+}
+
 export function getDistrictRichContent(lang, slug) {
   const rich = DISTRICT_RICH[slug];
   if (!rich) return null;
-  return rich[lang] || rich.pl;
+  return withDistrictLocalBlock(lang, slug, rich[lang] || rich.pl);
 }
 
 export function renderDistrictRichHtml(lang, slug) {
@@ -3425,7 +3435,18 @@ export function renderDistrictRichHtml(lang, slug) {
 }
 
 export function districtRichJsonForRuntime() {
-  return JSON.stringify(DISTRICT_RICH);
+  const out = {};
+  for (const slug of Object.keys(DISTRICT_RICH)) {
+    out[slug] = {};
+    for (const lang of ['pl', 'en', 'ru', 'ua']) {
+      out[slug][lang] = withDistrictLocalBlock(
+        lang,
+        slug,
+        DISTRICT_RICH[slug][lang] || DISTRICT_RICH[slug].pl
+      );
+    }
+  }
+  return JSON.stringify(out);
 }
 
 export { LOCATIVE, LANDMARKS, DISTRICT_RICH };

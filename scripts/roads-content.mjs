@@ -1,6 +1,121 @@
 /** Rich per-road SEO body — full PL / EN / RU / UA. */
 
 import { renderLandingPhotosHtml } from './landing-photos.mjs';
+import { roadLocalBlock } from './local-extra-blocks.mjs';
+
+/** Junction / corridor meta for unique local paragraphs (kept here to avoid circular imports). */
+const ROAD_META = {
+  a2: {
+    code: 'A2',
+    neighbors: ['S2', 'S8', 'DK8', 'Obwodnica'],
+    feature: {
+      pl: 'autostrada A2, węzły Konotopa, Pruszków i Grodzisk Mazowiecki',
+      en: 'A2 motorway, Konotopa, Pruszków and Grodzisk Mazowiecki junctions',
+      ru: 'автомагистраль A2, развязки Konotopa, Pruszków и Grodzisk Mazowiecki',
+      ua: 'автомагістраль A2, розв’язки Konotopa, Pruszków і Grodzisk Mazowiecki',
+    },
+  },
+  s2: {
+    code: 'S2',
+    neighbors: ['A2', 'S7', 'S8', 'S79', 'Obwodnica'],
+    feature: {
+      pl: 'Południowa Obwodnica Warszawy, węzły Puławska, Wilanów i Konotopa',
+      en: 'Warsaw Southern Ring Road, Puławska, Wilanów and Konotopa junctions',
+      ru: 'Южная окружная Варшавы, развязки Puławska, Wilanów и Konotopa',
+      ua: 'Південна об’їзна Варшави, розв’язки Puławska, Wilanów і Konotopa',
+    },
+  },
+  s7: {
+    code: 'S7',
+    neighbors: ['S2', 'S8', 'DK7', 'Obwodnica'],
+    feature: {
+      pl: 'droga ekspresowa S7, kierunek Gdańsk / Kraków, węzły Czosnów i Modlin',
+      en: 'S7 expressway towards Gdańsk / Kraków, Czosnów and Modlin junctions',
+      ru: 'скоростная S7 на Гданьск / Краков, развязки Czosnów и Modlin',
+      ua: 'швидкісна S7 на Гданськ / Краків, розв’язки Czosnów і Modlin',
+    },
+  },
+  s8: {
+    code: 'S8',
+    neighbors: ['A2', 'S2', 'S7', 'DK8', 'Obwodnica'],
+    feature: {
+      pl: 'droga ekspresowa S8, Trasa Armii Krajowej, kierunek Wrocław / Białystok',
+      en: 'S8 expressway, Armii Krajowej route, towards Wrocław / Białystok',
+      ru: 'скоростная S8, трасса Armii Krajowej, направление Вроцлав / Белосток',
+      ua: 'швидкісна S8, траса Armii Krajowej, напрямок Вроцлав / Білосток',
+    },
+  },
+  s17: {
+    code: 'S17',
+    neighbors: ['S2', 'DK17', 'DK50', 'Obwodnica'],
+    feature: {
+      pl: 'droga ekspresowa S17 w stronę Lublina, Wawer i Otwock',
+      en: 'S17 expressway towards Lublin, Wawer and Otwock corridor',
+      ru: 'скоростная S17 на Люблин, коридор Wawer и Otwock',
+      ua: 'швидкісна S17 на Люблін, коридор Wawer і Otwock',
+    },
+  },
+  s79: {
+    code: 'S79',
+    neighbors: ['S2', 'S7', 'A2'],
+    feature: {
+      pl: 'S79 przy lotnisku Okęcie / Chopina, Marynarska i Salomea',
+      en: 'S79 near Chopin Airport / Okęcie, Marynarska and Salomea',
+      ru: 'S79 у аэропорта Окенче / Шопена, Marynarska и Salomea',
+      ua: 'S79 біля аеропорту Окенче / Шопена, Marynarska і Salomea',
+    },
+  },
+  dk7: {
+    code: 'DK7',
+    neighbors: ['S7', 'DK50', 'S8'],
+    feature: {
+      pl: 'droga krajowa DK7 (Krakowska / Gdańska), miasta pod Warszawą',
+      en: 'national road DK7 (Krakowska / Gdańska), towns near Warsaw',
+      ru: 'национальная дорога DK7 (Krakowska / Gdańska), города у Варшавы',
+      ua: 'національна дорога DK7 (Krakowska / Gdańska), міста біля Варшави',
+    },
+  },
+  dk8: {
+    code: 'DK8',
+    neighbors: ['A2', 'S8', 'DK7'],
+    feature: {
+      pl: 'droga krajowa DK8, kierunek Wrocław / Białystok poza ekspresówkami',
+      en: 'national road DK8 towards Wrocław / Białystok off the expressways',
+      ru: 'национальная дорога DK8 на Вроцлав / Белосток вне скоростных',
+      ua: 'національна дорога DK8 на Вроцлав / Білосток поза швидкісними',
+    },
+  },
+  dk17: {
+    code: 'DK17',
+    neighbors: ['S17', 'DK50'],
+    feature: {
+      pl: 'droga krajowa DK17 w stronę Lublina, Wawer i Józefów',
+      en: 'national road DK17 towards Lublin, Wawer and Józefów',
+      ru: 'национальная дорога DK17 на Люблин, Wawer и Józefów',
+      ua: 'національна дорога DK17 на Люблін, Wawer і Józefów',
+    },
+  },
+  dk50: {
+    code: 'DK50',
+    neighbors: ['S17', 'DK7', 'DK17', 'Obwodnica'],
+    feature: {
+      pl: 'obwodnica mazowiecka DK50 — Grójec, Mszczonów, Sochaczew, Wyszków',
+      en: 'Mazovian ring DK50 — Grójec, Mszczonów, Sochaczew, Wyszków',
+      ru: 'мазовецкая окружная DK50 — Grójec, Mszczonów, Sochaczew, Wyszków',
+      ua: 'мазовецька об’їзна DK50 — Grójec, Mszczonów, Sochaczew, Wyszków',
+    },
+  },
+  obwodnica: {
+    code: 'Obwodnica',
+    neighbors: ['A2', 'S2', 'S7', 'S8', 'S17'],
+    feature: {
+      pl: 'obwodnica Warszawy — S2, S8, A2 i łączniki wokół stolicy',
+      en: 'Warsaw ring — S2, S8, A2 and link roads around the capital',
+      ru: 'окружная Варшавы — S2, S8, A2 и связки вокруг столицы',
+      ua: 'об’їзна Варшави — S2, S8, A2 і зв’язки навколо столиці',
+    },
+  },
+};
 
 const ROAD_RICH = {
   "a2": {
@@ -1310,10 +1425,21 @@ function esc(s) {
     .replace(/"/g, '&quot;');
 }
 
+function withRoadLocalBlock(lang, slug, c) {
+  if (!c) return c;
+  const meta = ROAD_META[slug];
+  if (!meta) return c;
+  const lb = roadLocalBlock(lang, meta.code, meta.feature, meta.neighbors);
+  if (!lb) return c;
+  const blocks = c.blocks || [];
+  if (blocks.some((b) => b.localExtra)) return c;
+  return { ...c, blocks: [...blocks, { ...lb, localExtra: true }] };
+}
+
 export function getRoadRichContent(lang, slug) {
   const rich = ROAD_RICH[slug];
   if (!rich) return null;
-  return rich[lang] || rich.pl;
+  return withRoadLocalBlock(lang, slug, rich[lang] || rich.pl);
 }
 
 export function renderRoadRichHtml(lang, slug) {
@@ -1333,7 +1459,18 @@ export function renderRoadRichHtml(lang, slug) {
 }
 
 export function roadRichJsonForRuntime() {
-  return JSON.stringify(ROAD_RICH);
+  const out = {};
+  for (const slug of Object.keys(ROAD_RICH)) {
+    out[slug] = {};
+    for (const lang of ['pl', 'en', 'ru', 'ua']) {
+      out[slug][lang] = withRoadLocalBlock(
+        lang,
+        slug,
+        ROAD_RICH[slug][lang] || ROAD_RICH[slug].pl
+      );
+    }
+  }
+  return JSON.stringify(out);
 }
 
 export { ROAD_RICH };
