@@ -1467,9 +1467,12 @@ export function renderRoadRichHtml(lang, slug) {
   return html;
 }
 
-export function roadRichJsonForRuntime() {
+/** @param {string} [onlySlug] If set, bake just that road (deep-route size cut). */
+export function roadRichJsonForRuntime(onlySlug) {
   const out = {};
-  for (const slug of Object.keys(ROAD_RICH)) {
+  const slugs = onlySlug ? [onlySlug] : Object.keys(ROAD_RICH);
+  for (const slug of slugs) {
+    if (!ROAD_RICH[slug]) continue;
     out[slug] = {};
     for (const lang of ['pl', 'en', 'ru', 'ua']) {
       out[slug][lang] = withRoadLocalBlock(

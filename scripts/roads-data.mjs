@@ -282,13 +282,41 @@ export function renderRoadStaticHtml(lang, slug, localePathSeg) {
       return `<a href="/${seg}/trasy/${nb}/" class="ar-tag">${esc(c.linkLaweta(nn))}</a>`;
     })
     .join('\n');
-  return `<h1 class="sh">${esc(c.h1(n))}</h1>
+  const crumbHome = { pl: 'Strona główna', en: 'Home', ru: 'Главная', ua: 'Головна' };
+  const crumbRoads = { pl: 'Trasy', en: 'Roads', ru: 'Трассы', ua: 'Траси' };
+  const homeLabel = crumbHome[lang] || crumbHome.pl;
+  const roadsLabel = crumbRoads[lang] || crumbRoads.pl;
+  const pageUrl = `https://www.warszawa-laweta.com/${seg}/trasy/${slug}/`;
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: homeLabel,
+        item: `https://www.warszawa-laweta.com/${seg}/`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: roadsLabel,
+        item: `https://www.warszawa-laweta.com/${seg}/trasy/`,
+      },
+      { '@type': 'ListItem', position: 3, name: n, item: pageUrl },
+    ],
+  };
+  return `<article class="dist-article">
+<nav class="dist-crumb" aria-label="Breadcrumb"><a href="/${seg}/">${esc(homeLabel)}</a> · <a href="/${seg}/trasy/">${esc(roadsLabel)}</a> · <span>${esc(n)}</span></nav>
+<h1 class="sh">${esc(c.h1(n))}</h1>
 ${renderRoadRichHtml(lang, slug)}
 <h2 class="ar-title">${esc(c.svc)}</h2>
 <ul class="dist-links">${svcItems}</ul>
 <h2 class="ar-title">${esc(c.near(n))}</h2>
 <div class="ar-list dist-near">${nearItems}</div>
-<p style="text-align:center;margin-top:28px"><a href="tel:+48506001057" class="btn btn-y">📞 506-001-057</a></p>`;
+<p style="text-align:center;margin-top:28px"><a href="tel:+48506001057" class="btn btn-y">📞 506-001-057</a></p>
+</article>
+<script type="application/ld+json">${JSON.stringify(breadcrumbLd)}</script>`;
 }
 
 export function renderRoadsIndexStaticHtml(lang, localePathSeg) {

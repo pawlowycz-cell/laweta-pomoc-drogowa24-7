@@ -18,6 +18,7 @@ import {
 } from './gallery-seo.mjs';
 import {
   districtSlugs,
+  districtBySlug,
   districtsJsonForRuntime,
   getDistrictSeoMeta,
   getDistrictsIndexSeoMeta,
@@ -726,6 +727,112 @@ function injectDistrictsRuntimeData(html, galleryItems) {
   return html.replace(/var LANDING_GALLERY=\[\];/, `var LANDING_GALLERY=${galJson};`);
 }
 
+/**
+ * Remove inactive SPA .page sections from deep-route HTML so crawlers
+ * do not see home/blog/services as hidden text on every URL.
+ */
+function pruneInactivePages(html, keepPageId) {
+  if (!keepPageId || keepPageId === 'home') return html;
+  const openRe = /<div class="page(?: on)?" id="p-([^"]+)">/g;
+  let out = '';
+  let last = 0;
+  let m;
+  while ((m = openRe.exec(html)) !== null) {
+    const id = m[1];
+    const start = m.index;
+    const tagEnd = html.indexOf('>', start);
+    if (tagEnd < 0) break;
+    let depth = 1;
+    let i = tagEnd + 1;
+    while (i < html.length && depth > 0) {
+      const nextOpen = html.indexOf('<div', i);
+      const nextClose = html.indexOf('</div>', i);
+      if (nextClose < 0) break;
+      if (nextOpen >= 0 && nextOpen < nextClose) {
+        // Only count real <div ...> tags (not strings in scripts casually — rare in .page)
+        const ch = html[nextOpen + 4];
+        if (ch === ' ' || ch === '>' || ch === '\n' || ch === '\r' || ch === '\t') {
+          depth++;
+        }
+        i = nextOpen + 4;
+      } else {
+        depth--;
+        i = nextClose + 6;
+      }
+    }
+    const end = i;
+    out += html.slice(last, start);
+    if (id === keepPageId) {
+      let block = html.slice(start, end);
+      block = block.replace(
+        /<div class="page(?: on)?" id="/,
+        '<div class="page on" id="'
+      );
+      out += block;
+    }
+    last = end;
+    openRe.lastIndex = end;
+  }
+  out += html.slice(last);
+  return out;
+}
+
+/** Replace `var NAME={...};` / `var NAME=[...];` with brace/bracket awareness (JSON may be one line). */
+function replaceRuntimeVar(html, varName, newLiteral) {
+  const needle = `var ${varName}=`;
+  const start = html.indexOf(needle);
+  if (start < 0) return html;
+  let i = start + needle.length;
+  while (i < html.length && /\s/.test(html[i])) i++;
+  const open = html[i];
+  if (open !== '{' && open !== '[') return html;
+  const close = open === '{' ? '}' : ']';
+  let depth = 0;
+  let inStr = false;
+  let esc = false;
+  for (; i < html.length; i++) {
+    const ch = html[i];
+    if (inStr) {
+      if (esc) {
+        esc = false;
+        continue;
+      }
+      if (ch === '\\') {
+        esc = true;
+        continue;
+      }
+      if (ch === '"') inStr = false;
+      continue;
+    }
+    if (ch === '"') {
+      inStr = true;
+      continue;
+    }
+    if (ch === open) depth++;
+    else if (ch === close) {
+      depth--;
+      if (depth === 0) {
+        i++;
+        if (html[i] === ';') i++;
+        return `${html.slice(0, start)}var ${varName}=${newLiteral};${html.slice(i)}`;
+      }
+    }
+  }
+  return html;
+}
+
+/** Shrink DISTRICT_RICH / ROAD_RICH on deep copies to the active slug (or empty). */
+function scopeRichRuntimeJson(html, tail) {
+  const trimmed = String(tail || '').replace(/^\/+|\/+$/g, '');
+  const distM = /^dzielnice\/([a-z0-9-]+)$/.exec(trimmed);
+  const roadM = /^trasy\/([a-z0-9-]+)$/.exec(trimmed);
+  const distJson = distM ? districtRichJsonForRuntime(distM[1]) : '{}';
+  const roadJson = roadM ? roadRichJsonForRuntime(roadM[1]) : '{}';
+  html = replaceRuntimeVar(html, 'DISTRICT_RICH', distJson);
+  html = replaceRuntimeVar(html, 'ROAD_RICH', roadJson);
+  return html;
+}
+
 /** Real href on a[data-p] for crawlers (nav, footer, CTAs). */
 function patchHtmlLinkHrefs(html, localePathSeg) {
   return html.replace(/<a(\s[^>]*?\bdata-p="([^"]+)"[^>]*)>/gi, (match, attrs, pageId) => {
@@ -850,10 +957,10 @@ function writeDeepRouteHtmlCopies(raw) {
       html = patchHtmlActivePage(html, tail);
       html = patchHtmlLinkHrefs(html, seg);
       // Keep index shells localized on every deep page (baseHtml already has them from home bake).
-      if (tail.startsWith('dzielnice/')) {
+      if (tail.startsWith('dzielnice')) {
         html = injectDistrictStaticBlock(html, langCl, seg, tail);
       }
-      if (tail.startsWith('trasy/')) {
+      if (tail.startsWith('trasy')) {
         html = injectRoadStaticBlock(html, langCl, seg, tail);
       }
       if (tail === 'gallery' && galleryItems.length) {
@@ -864,12 +971,16 @@ function writeDeepRouteHtmlCopies(raw) {
           buildGalleryJsonLd(galleryItems, pageUrl, seg, SITE)
         );
       }
+      // SEO: drop hidden SPA pages + unused rich JSON (noise for Google on every URL).
+      const keepId = tailToPageId(tail);
+      html = pruneInactivePages(html, keepId);
+      html = scopeRichRuntimeJson(html, tail);
       fs.writeFileSync(path.join(dir, 'index.html'), html, 'utf8');
       n++;
     }
   }
   console.log(
-    `Wrote ${n} deep-route copies (${Object.keys(LOCALES).length} locales × routes) — canonical + hreflang в static HTML`
+    `Wrote ${n} deep-route copies (${Object.keys(LOCALES).length} locales × routes) — pruned SPA + canonical/hreflang`
   );
 }
 
@@ -1201,7 +1312,13 @@ function writeSitemapAndRobots(html) {
       tail === 'prices'
     )
       return '0.85';
-    if (String(tail).startsWith('dzielnice/') || String(tail).startsWith('trasy/')) return '0.82';
+    if (String(tail).startsWith('dzielnice/')) {
+      const slug = String(tail).slice('dzielnice/'.length);
+      const kind = districtBySlug(slug)?.kind || 'district';
+      // Suburbs slightly lower — reduces cannibalization vs core Warsaw districts.
+      return kind === 'suburb' ? '0.70' : '0.80';
+    }
+    if (String(tail).startsWith('trasy/')) return '0.78';
     if (tail === 'gallery' || tail === 'about' || tail === 'partners' || tail === PRIVACY_PAGE_TAIL) return '0.82';
     if (String(tail).startsWith('blog/')) return '0.75';
     return '0.8';

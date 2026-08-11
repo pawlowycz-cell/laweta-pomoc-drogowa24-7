@@ -3437,9 +3437,12 @@ export function renderDistrictRichHtml(lang, slug) {
   return html;
 }
 
-export function districtRichJsonForRuntime() {
+/** @param {string} [onlySlug] If set, bake just that district (deep-route size cut). */
+export function districtRichJsonForRuntime(onlySlug) {
   const out = {};
-  for (const slug of Object.keys(DISTRICT_RICH)) {
+  const slugs = onlySlug ? [onlySlug] : Object.keys(DISTRICT_RICH);
+  for (const slug of slugs) {
+    if (!DISTRICT_RICH[slug]) continue;
     out[slug] = {};
     for (const lang of ['pl', 'en', 'ru', 'ua']) {
       out[slug][lang] = withDistrictLocalBlock(

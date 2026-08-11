@@ -646,13 +646,46 @@ export function renderDistrictStaticHtml(lang, slug, localePathSeg) {
       return `<a href="/${seg}/dzielnice/${nb}/" class="ar-tag">${esc(c.linkLaweta(nn, nk))}</a>`;
     })
     .join('\n');
-  return `<h1 class="sh">${esc(c.h1(n, kind))}</h1>
+  const crumbHome = { pl: 'Strona główna', en: 'Home', ru: 'Главная', ua: 'Головна' };
+  const crumbDist = {
+    pl: 'Dzielnice',
+    en: 'Districts',
+    ru: 'Районы',
+    ua: 'Райони',
+  };
+  const homeLabel = crumbHome[lang] || crumbHome.pl;
+  const distLabel = crumbDist[lang] || crumbDist.pl;
+  const pageUrl = `https://www.warszawa-laweta.com/${seg}/dzielnice/${slug}/`;
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: homeLabel,
+        item: `https://www.warszawa-laweta.com/${seg}/`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: distLabel,
+        item: `https://www.warszawa-laweta.com/${seg}/dzielnice/`,
+      },
+      { '@type': 'ListItem', position: 3, name: n, item: pageUrl },
+    ],
+  };
+  return `<article class="dist-article">
+<nav class="dist-crumb" aria-label="Breadcrumb"><a href="/${seg}/">${esc(homeLabel)}</a> · <a href="/${seg}/dzielnice/">${esc(distLabel)}</a> · <span>${esc(n)}</span></nav>
+<h1 class="sh">${esc(c.h1(n, kind))}</h1>
 ${renderDistrictRichHtml(lang, slug)}
 <h2 class="ar-title">${esc(c.svc)}</h2>
 <ul class="dist-links">${svcItems}</ul>
 <h2 class="ar-title">${esc(c.near(n))}</h2>
 <div class="ar-list dist-near">${nearItems}</div>
-<p style="text-align:center;margin-top:28px"><a href="tel:+48506001057" class="btn btn-y">📞 506-001-057</a></p>`;
+<p style="text-align:center;margin-top:28px"><a href="tel:+48506001057" class="btn btn-y">📞 506-001-057</a></p>
+</article>
+<script type="application/ld+json">${JSON.stringify(breadcrumbLd)}</script>`;
 }
 
 export function renderDistrictsIndexStaticHtml(lang, localePathSeg) {
