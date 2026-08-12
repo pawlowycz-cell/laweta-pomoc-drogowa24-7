@@ -199,16 +199,16 @@ const LOCALES = {
     cl: 'ru',
     title: 'Эвакуатор Варшава 24/7 | Лавета | 506-001-057',
     description:
-      'Эвакуатор в Варшаве 24/7 — дешёвый эвакуатор и лавета. Прикур, эвакуация, фиксированная цена. Приезд ~30 мин. 506-001-057.',
+      'Как заказать эвакуатор в Варшаве: звоните 506-001-057 или WhatsApp / Telegram / Viber. Услуги эвакуатора 24/7 — от 250 зл, приезд ~30 мин.',
     keywords:
-      'эвакуатор варшава, дешевый эвакуатор варшава, эвакуатор варшава 24/7, лавета варшава, лафета варшава, прикурить машину в варшаве, прикурить автомобиль варшава, разряжен аккумулятор варшава, разряженный аккумулятор варшава, сел аккумулятор варшава, прикурить разряженный аккумулятор варшава, услуга прикурить машину в варшаве, помощь на дороге варшава, как вызвать эвакуатор в польше, автоэвакуатор, эвакуатор варшава 24 7, эвакуатор цена, эвакуатор в варшаве, услуги эвакуатора, эвакуация автомобиля варшава, evakuator warszawa, ewakuator warszawa, tow truck warszawa, INNSER',
+      'эвакуатор варшава, как заказать эвакуатор в варшаве, как вызвать эвакуатор, как вызвать эвакуатор в варшаве, услуги эвакуатора в варшаве, услуги эвакуатора, заказать эвакуатор в варшаве, эвакуатор в варшаве, дешевый эвакуатор варшава, эвакуатор варшава 24/7, лавета варшава, помощь на дороге варшава, как вызвать эвакуатор в польше, автоэвакуатор, эвакуация автомобиля варшава, evakuator warszawa, ewakuator warszawa, INNSER',
     ogTitle: 'Эвакуатор Варшава 24/7 | Лавета | 506-001-057',
     ogDescription:
-      'Эвакуатор в Варшаве 24/7: лавета, прикур, эвакуация. Приезд ~30 мин. 506-001-057.',
+      'Как вызвать эвакуатор в Варшаве: телефон 506-001-057 или мессенджеры. Услуги эвакуатора 24/7, приезд ~30 мин.',
     ogLocale: 'ru_RU',
     twitterTitle: 'Эвакуатор Варшава 24/7 | Лавета | 506-001-057',
     twitterDescription:
-      'Эвакуатор в Варшаве: лавета, прикур, эвакуация. Фиксированная цена. 506-001-057.',
+      'Как заказать эвакуатор в Варшаве — звонок или WhatsApp / Telegram / Viber. 506-001-057.',
     ogImageAlt: 'INNSER — эвакуатор Варшава 24/7',
   },
   uk: {
@@ -434,6 +434,51 @@ function injectFaqJsonLd(html, raw, langCl) {
   const tag = `<script type="application/ld+json">${JSON.stringify(faq)}</script>\n`;
   if (html.includes('"@type":"FAQPage"')) return html;
   return html.replace('</head>', `${tag}</head>`);
+}
+
+/** HowTo JSON-LD («как заказать / вызвать эвакуатор») — только на главные локали. */
+function buildHowToOrderJsonLd(raw, langCl) {
+  const name = extractTranslationField(raw, langCl, 'howto_name');
+  const desc = extractTranslationField(raw, langCl, 'howto_desc');
+  if (!name) return null;
+  const steps = [];
+  for (let i = 1; i <= 3; i++) {
+    const sn = extractTranslationField(raw, langCl, `howto_s${i}`);
+    const st = extractTranslationField(raw, langCl, `howto_s${i}t`);
+    if (!sn || !st) continue;
+    steps.push({
+      '@type': 'HowToStep',
+      position: i,
+      name: stripHtmlForSeo(decodeJsTranslation(sn)),
+      text: stripHtmlForSeo(decodeJsTranslation(st)),
+    });
+  }
+  if (steps.length < 2) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: stripHtmlForSeo(decodeJsTranslation(name)),
+    description: desc
+      ? stripHtmlForSeo(decodeJsTranslation(desc))
+      : stripHtmlForSeo(decodeJsTranslation(name)),
+    step: steps,
+  };
+}
+
+function injectHowToOrderJsonLd(html, raw, langCl) {
+  const howto = buildHowToOrderJsonLd(raw, langCl);
+  if (!howto) return html;
+  if (html.includes('"@type":"HowTo"')) return html;
+  const tag = `<script type="application/ld+json">${JSON.stringify(howto)}</script>\n`;
+  return html.replace('</head>', `${tag}</head>`);
+}
+
+/** HowTo belongs only on locale homes — strip from deep-route copies. */
+function stripHowToJsonLd(html) {
+  return html.replace(
+    /<script type="application\/ld\+json">\s*\{[\s\S]*?"@type"\s*:\s*"HowTo"[\s\S]*?\}\s*<\/script>\s*/g,
+    ''
+  );
 }
 
 /** FAQPage belongs only on locale homes — strip from deep-route copies. */
@@ -954,6 +999,7 @@ function writeDeepRouteHtmlCopies(raw) {
       fs.mkdirSync(dir, { recursive: true });
       let html = patchHtmlSeoForTail(baseHtml, seg, tail, raw);
       html = stripFaqJsonLd(html);
+      html = stripHowToJsonLd(html);
       html = patchHtmlActivePage(html, tail);
       html = patchHtmlLinkHrefs(html, seg);
       // Keep index shells localized on every deep page (baseHtml already has them from home bake).
@@ -1079,6 +1125,7 @@ function buildLocaleHtml(raw, key) {
   html = bakeDataTTranslations(html, raw, langCl);
   html = patchLocalBusinessSchema(html, langCl);
   html = injectFaqJsonLd(html, raw, langCl);
+  html = injectHowToOrderJsonLd(html, raw, langCl);
   html = injectDistrictsRuntimeData(html, collectGalleryItems(raw));
   // Localize inactive dzielnice/trasy shells so every locale HTML has correct H1s.
   html = injectDistrictStaticBlock(html, langCl, L.pathSeg, 'dzielnice');
