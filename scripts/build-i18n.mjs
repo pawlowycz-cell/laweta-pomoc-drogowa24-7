@@ -473,20 +473,26 @@ function injectHowToOrderJsonLd(html, raw, langCl) {
   return html.replace('</head>', `${tag}</head>`);
 }
 
+/**
+ * Remove one JSON-LD <script> by @type. Must not span across tags — a naive
+ * [\s\S]*?"@type":"HowTo" match starts at LocalBusiness and eats <style> + fonts.
+ */
+function stripJsonLdByType(html, typeName) {
+  const typeRe = new RegExp(`"@type"\\s*:\\s*"${typeName}"`);
+  return html.replace(
+    /<script type="application\/ld\+json">([\s\S]*?)<\/script>\s*/g,
+    (full, body) => (typeRe.test(body) ? '' : full)
+  );
+}
+
 /** HowTo belongs only on locale homes — strip from deep-route copies. */
 function stripHowToJsonLd(html) {
-  return html.replace(
-    /<script type="application\/ld\+json">\s*\{[\s\S]*?"@type"\s*:\s*"HowTo"[\s\S]*?\}\s*<\/script>\s*/g,
-    ''
-  );
+  return stripJsonLdByType(html, 'HowTo');
 }
 
 /** FAQPage belongs only on locale homes — strip from deep-route copies. */
 function stripFaqJsonLd(html) {
-  return html.replace(
-    /<script type="application\/ld\+json">\s*\{[\s\S]*?"@type"\s*:\s*"FAQPage"[\s\S]*?\}\s*<\/script>\s*/g,
-    ''
-  );
+  return stripJsonLdByType(html, 'FAQPage');
 }
 
 /** Подпись вкладки: ALL CAPS → первая буква заглавная, остальные строчные (как у галереи/главной). */
