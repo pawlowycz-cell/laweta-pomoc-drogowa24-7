@@ -570,36 +570,68 @@ const COPY = {
   ua: {
     h1: (n, kind) =>
       isSuburb(kind)
-        ? `Евакуатор ${n} — допомога на дорозі 24/7`
-        : `Евакуатор Варшава ${n} — допомога на дорозі 24/7`,
+        ? `Лавета ${n} — допомога на дорозі 24/7`
+        : `Лавета ${n} — район Варшави 24/7`,
     intro: (n, f) =>
       `INNSER — лавета та евакуатор у ${n}. Знаємо ${f}. Приїзд зазвичай 20–30 хвилин, цілодобово.`,
     p2: (n) =>
       `Евакуація, прикур, заміна колеса та відкриття авто на ${n} і по всій Варшаві. Ціна домовлена наперед. Телефон: 506-001-057.`,
     svc: 'Наші послуги у Варшаві',
     near: (n) => `Також обслуговуємо сусідні райони біля ${n}:`,
-    linkLaweta: (n, kind) => (isSuburb(kind) ? `Евакуатор ${n}` : `Евакуатор Варшава ${n}`),
-    indexTitle: 'Евакуатор Варшава — райони та передмістя',
-    indexDesc: 'Допомога на дорозі INNSER у районах Варшавы та передмістях (Зомбки, Маркі, Отвоцьк, Прушкув, Пясечно…). Оберіть свій — приїзд 24/7.',
+    linkLaweta: (n) => `Лавета ${n}`,
+    indexTitle: 'Лавета по районах Варшави та передмістях',
+    indexDesc: 'Допомога на дорозі INNSER у районах Варшави та передмістях (Зомбки, Маркі, Отвоцьк, Прушкув, Пясечно…). Оберіть свій — приїзд 24/7.',
     seoTitle: (n, kind) =>
       isSuburb(kind)
-        ? `Евакуатор ${n} — допомога 24/7 | INNSER`
-        : `Евакуатор Варшава ${n} — допомога 24/7 | INNSER`,
+        ? `Лавета ${n} — передмістя Варшави 24/7 | INNSER`
+        : `Лавета ${n} — район Варшави 24/7 | INNSER`,
     seoDesc: (n, kind) =>
       isSuburb(kind)
-        ? `Евакуатор і лавета ${n} 24/7. Евакуація від 250 zł, приїзд ~30 хв. INNSER: 506-001-057.`
-        : `Евакуатор і лавета ${n}, Варшава 24/7. Евакуація від 250 zł, приїзд ~30 хв. INNSER: 506-001-057.`,
-    indexSeoTitle: 'Евакуатор Варшава — райони та передмістя 24/7 | INNSER',
+        ? `Лавета і евакуатор у ${n} 24/7. Евакуація від 250 zł, приїзд ~30 хв. INNSER: 506-001-057.`
+        : `Лавета і евакуатор у районі ${n}, Варшава 24/7. Евакуація від 250 zł, приїзд ~30 хв. INNSER: 506-001-057.`,
+    indexSeoTitle: 'Райони Варшави — лавета і допомога 24/7 | INNSER',
     indexSeoDesc:
-      'Евакуатор у всіх районах Варшавы — Mokotów, Wola, Praga, Ursynów та інші. INNSER 24/7, 506-001-057.',
+      'Лавета і допомога на дорозі в районах Варшави — Мокотув, Воля, Прага, Урсинув та інші. INNSER 24/7, 506-001-057.',
   },
 };
 
 const SVC_LABELS = {
-  pl: ['Pomoc drogowa 24h', 'Holowanie / laweta', 'Odpalanie na kable', 'Cennik lawety'],
-  en: ['Roadside assistance 24/7', 'Towing / flatbed', 'Jump start', 'Price calculator'],
-  ru: ['Помощь на дороге 24/7', 'Эвакуация / лавета', 'Прикур', 'Цены эвакуатора'],
-  ua: ['Допомога на дорозі 24/7', 'Евакуація / лавета', 'Прикур', 'Ціни евакуатора'],
+  pl: [
+    'Pomoc drogowa 24h',
+    'Holowanie / laweta',
+    'Odpalanie na kable',
+    'Wymiana koła',
+    'Otwieranie aut',
+    'Parking podziemny / rów',
+    'Cennik lawety',
+  ],
+  en: [
+    'Roadside assistance 24/7',
+    'Towing / flatbed',
+    'Jump start',
+    'Tyre change',
+    'Car lockout',
+    'Underground parking / ditch',
+    'Price calculator',
+  ],
+  ru: [
+    'Помощь на дороге 24/7',
+    'Эвакуация / лавета',
+    'Прикур',
+    'Замена колеса',
+    'Открытие авто',
+    'Подземный паркинг / кювет',
+    'Цены эвакуатора',
+  ],
+  ua: [
+    'Допомога на дорозі 24/7',
+    'Евакуація / лавета',
+    'Прикур',
+    'Заміна колеса',
+    'Відкриття авто',
+    'Підземний паркінг / кювет',
+    'Ціни евакуатора',
+  ],
 };
 
 export function getDistrictSeoMeta(lang, slug) {
@@ -631,7 +663,7 @@ export function renderDistrictStaticHtml(lang, slug, localePathSeg) {
   const n = districtName(slug, lang);
   const seg = localePathSeg;
   const labels = SVC_LABELS[lang] || SVC_LABELS.pl;
-  const svcPaths = ['svc1', 'svc6', 'svc2', 'prices'];
+  const svcPaths = ['svc1', 'svc6', 'svc2', 'svc4', 'svc5', 'svc9', 'prices'];
   const svcItems = svcPaths
     .map(
       (p, i) =>

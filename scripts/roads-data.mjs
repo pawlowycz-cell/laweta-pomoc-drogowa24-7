@@ -215,30 +215,62 @@ const COPY = {
       'Лавета и помощь на автомагистралях вокруг Варшавы — A2, S2, S7, S8, S17, DK50. INNSER 24/7, 506-001-057.',
   },
   ua: {
-    h1: (n) => `Евакуатор ${n} — допомога на дорозі 24/7 | Варшава`,
+    h1: (n) => `Лавета на ${n} — допомога 24/7 | Варшава`,
     intro: (n, f) =>
       `INNSER — лафета та евакуатор на трасі ${n}. Знаємо ${f}. Приїзд зазвичай 20–40 хвилин, цілодобово.`,
     p2: (n) =>
       `Евакуація з аварійної смуги, прикур, заміна колеса та відкриття авто на ${n} навколо Варшави. Ціна домовлена наперед. Телефон: 506-001-057.`,
     svc: 'Наші послуги у Варшаві',
     near: (n) => `Також обслуговуємо сусідні траси біля ${n}:`,
-    linkLaweta: (n) => `Евакуатор ${n}`,
-    indexTitle: 'Евакуатор Варшава — траси та автомагістралі',
+    linkLaweta: (n) => `Лавета на ${n}`,
+    indexTitle: 'Лавета на трасах біля Варшави',
     indexDesc: 'Допомога на дорозі INNSER на A2, S2, S7, S8, S17, S79, DK7, DK8, DK17, DK50 та об’їзній Варшави. Оберіть трасу — приїзд 24/7.',
-    seoTitle: (n) => `Евакуатор ${n} — допомога 24/7 | INNSER`,
+    seoTitle: (n) => `Лавета на ${n} — допомога 24/7 | INNSER`,
     seoDesc: (n) =>
-      `Евакуатор на ${n} біля Варшави 24/7. Від 250 zł, приїзд ~30 хв. INNSER: 506-001-057.`,
-    indexSeoTitle: 'Евакуатор Варшава — траси A2 S2 S7 S8 24/7 | INNSER',
+      `Лавета і евакуатор на ${n} біля Варшави 24/7. Від 250 zł, приїзд ~30 хв. INNSER: 506-001-057.`,
+    indexSeoTitle: 'Лавета на трасах біля Варшави — A2 S2 S7 S8 24/7 | INNSER',
     indexSeoDesc:
-      'Евакуатор на автомагістралях і дорогах навколо Варшави — A2, S2, S7, S8, S17, DK50. INNSER 24/7, 506-001-057.',
+      'Лавета і допомога на автомагістралях навколо Варшави — A2, S2, S7, S8, S17, DK50. INNSER 24/7, 506-001-057.',
   },
 };
 
 const SVC_LABELS = {
-  pl: ['Pomoc drogowa 24h', 'Holowanie / laweta', 'Odpalanie na kable', 'Cennik lawety'],
-  en: ['Roadside assistance 24/7', 'Towing / flatbed', 'Jump start', 'Price calculator'],
-  ru: ['Помощь на дороге 24/7', 'Эвакуация / лавета', 'Прикур', 'Цены эвакуатора'],
-  ua: ['Допомога на дорозі 24/7', 'Евакуація / лавета', 'Прикур', 'Ціни евакуатора'],
+  pl: [
+    'Pomoc drogowa 24h',
+    'Holowanie / laweta',
+    'Odpalanie na kable',
+    'Wymiana koła',
+    'Otwieranie aut',
+    'Parking podziemny / rów',
+    'Cennik lawety',
+  ],
+  en: [
+    'Roadside assistance 24/7',
+    'Towing / flatbed',
+    'Jump start',
+    'Tyre change',
+    'Car lockout',
+    'Underground parking / ditch',
+    'Price calculator',
+  ],
+  ru: [
+    'Помощь на дороге 24/7',
+    'Эвакуация / лавета',
+    'Прикур',
+    'Замена колеса',
+    'Открытие авто',
+    'Подземный паркинг / кювет',
+    'Цены эвакуатора',
+  ],
+  ua: [
+    'Допомога на дорозі 24/7',
+    'Евакуація / лавета',
+    'Прикур',
+    'Заміна колеса',
+    'Відкриття авто',
+    'Підземний паркінг / кювет',
+    'Ціни евакуатора',
+  ],
 };
 
 export function getRoadSeoMeta(lang, slug) {
@@ -269,7 +301,7 @@ export function renderRoadStaticHtml(lang, slug, localePathSeg) {
   const n = roadName(slug, lang);
   const seg = localePathSeg;
   const labels = SVC_LABELS[lang] || SVC_LABELS.pl;
-  const svcPaths = ['svc1', 'svc6', 'svc2', 'prices'];
+  const svcPaths = ['svc1', 'svc6', 'svc2', 'svc4', 'svc5', 'svc9', 'prices'];
   const svcItems = svcPaths
     .map(
       (p, i) =>

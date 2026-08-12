@@ -36,6 +36,12 @@ import {
 } from './roads-data.mjs';
 import { roadRichJsonForRuntime } from './roads-content.mjs';
 import { landingGalleryJsonForRuntime, loadLandingGallery } from './landing-photos.mjs';
+import {
+  injectStaticSvcGrids,
+  injectSvcPageJsonLd,
+  stripServiceJsonLdOnDeepRoute,
+  stripArticleJsonLd,
+} from './svc-seo.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.join(__dirname, '..');
@@ -1027,6 +1033,19 @@ function writeDeepRouteHtmlCopies(raw) {
       const keepId = tailToPageId(tail);
       html = pruneInactivePages(html, keepId);
       html = scopeRichRuntimeJson(html, tail);
+      const extract = (lc, field) => extractTranslationField(raw, lc, field);
+      if (!(keepId && String(keepId).startsWith('blog-post-'))) {
+        html = stripArticleJsonLd(html);
+      }
+      if (keepId && /^svc\d+$/.test(keepId)) {
+        html = injectSvcPageJsonLd(html, extract, langCl, seg, keepId);
+      } else {
+        html = stripServiceJsonLdOnDeepRoute(html, keepId);
+      }
+      // Re-bake crawlable cards on /services/ (and home shell if ever kept).
+      if (keepId === 'services' || keepId === 'home') {
+        html = injectStaticSvcGrids(html, extract, langCl, seg);
+      }
       fs.writeFileSync(path.join(dir, 'index.html'), html, 'utf8');
       n++;
     }
@@ -1132,6 +1151,20 @@ function buildLocaleHtml(raw, key) {
   html = patchLocalBusinessSchema(html, langCl);
   html = injectFaqJsonLd(html, raw, langCl);
   html = injectHowToOrderJsonLd(html, raw, langCl);
+  // Lockout Service JSON-LD belongs on svc5 only — remove from locale homes.
+  html = html.replace(
+    /<script type="application\/ld\+json">([\s\S]*?)<\/script>\s*/g,
+    (full, body) => {
+      if (
+        /"@type"\s*:\s*"Service"/.test(body) &&
+        /otwieranie|lockout|Открытие|Відкриття/i.test(body)
+      )
+        return '';
+      return full;
+    }
+  );
+  const extract = (lc, field) => extractTranslationField(raw, lc, field);
+  html = injectStaticSvcGrids(html, extract, langCl, L.pathSeg);
   html = injectDistrictsRuntimeData(html, collectGalleryItems(raw));
   // Localize inactive dzielnice/trasy shells so every locale HTML has correct H1s.
   html = injectDistrictStaticBlock(html, langCl, L.pathSeg, 'dzielnice');
@@ -1348,7 +1381,8 @@ function writeSitemapAndRobots(html) {
       tail === 'gallery' ||
       tail === 'dzielnice' ||
       tail === 'trasy' ||
-      NAV_PAGE_TAILS.includes(tail)
+      NAV_PAGE_TAILS.includes(tail) ||
+      /^svc\d+$/.test(String(tail || ''))
     )
       return 'weekly';
     return 'monthly';
@@ -1356,6 +1390,8 @@ function writeSitemapAndRobots(html) {
 
   function priorityFor(tail) {
     if (tail == null) return '1.0';
+    if (tail === 'svc1' || tail === 'svc6') return '0.9';
+    if (/^svc\d+$/.test(String(tail || ''))) return '0.85';
     if (
       tail === 'dzielnice' ||
       tail === 'trasy' ||
