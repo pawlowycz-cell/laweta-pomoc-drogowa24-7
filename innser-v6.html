@@ -4111,8 +4111,8 @@ function districtSvcLabels(lang){
   var m={
     pl:['Pomoc drogowa 24h','Holowanie / laweta','Odpalanie na kable','Wymiana koła','Otwieranie aut','Parking podziemny / rów','Cennik lawety'],
     en:['Roadside assistance 24/7','Towing / flatbed','Jump start','Tyre change','Car lockout','Underground parking / ditch','Price calculator'],
-    ru:['Помощь на дороге 24/7','Эвакуация / лавета','Прикур','Замена колеса','Открытие авто','Подземный паркинг / кювет','Цены эвакуатора'],
-    ua:['Допомога на дорозі 24/7','Евакуація / лавета','Прикур','Заміна колеса','Відкриття авто','Підземний паркінг / кювет','Ціни евакуатора']
+    ru:['Эвакуатор в Варшаве 24/7','Лавета в Варшаве 24/7','Прикур','Замена колеса','Открытие авто','Подземный паркинг / кювет','Цены эвакуатора'],
+    ua:['Евакуатор у Варшаві 24/7','Лафета у Варшаві 24/7','Прикур','Заміна колеса','Відкриття авто','Підземний паркінг / кювет','Ціни евакуатора']
   };
   return m[lang]||m.pl;
 }
@@ -4143,7 +4143,7 @@ function districtCopy(lang){
     idxDist:'Warsaw districts',idxSub:'Suburban towns',idxRoads:'Highways & roads'
   };
   var ru={
-    h1:function(n){return n+' — Эвакуатор рядом 24/7 — Разговариваем на Русском';},
+    h1:function(n){return n;},
     intro:function(n,f){return 'INNSER в '+n+'. Знаем '+f+'. Приезд обычно 20–30 минут, круглосуточно.';},
     p2:function(n){return 'Эвакуация, прикур, замена колеса и открытие авто в '+n+'. Цена согласована заранее. Звоните: 506-001-057.';},
     svc:'Наши услуги в Варшаве',near:function(n){return 'Также обслуживаем соседние районы и пригороды рядом с '+n+':';},
@@ -4152,11 +4152,11 @@ function districtCopy(lang){
     seoD:function(n){return n+' — эвакуатор рядом 24/7. Разговариваем на Русском. Приезд ~30 мин, 24/7. INNSER: 506-001-057.';},
     idxT:'Районы Варшавы и пригороды',idxD:'INNSER в районах Варшавы и пригородах (Зомбки, Марки, Отвоцк, Прушкув, Пясечно…). Выберите свой — приезд 24/7.',
     idxSeoT:'Районы Варшавы и пригороды | INNSER',idxSeoD:'Районы и пригороды Варшавы — Мокотув, Воля, Прага, Урсынув. Услуги: /ru/ и /ru/svc6/. INNSER 24/7.',
-    citywide:function(seg){return '<p class="dist-citywide">По всему городу: <a href="/'+seg+'/">эвакуатор Варшава</a>, <a href="/'+seg+'/svc1/">заказ эвакуатора</a>, <a href="/'+seg+'/svc6/">лавета</a>. Эта страница — только район.</p>';},
+    citywide:function(){return '';},
     idxDist:'Районы Варшавы',idxSub:'Пригороды',idxRoads:'Трассы'
   };
   var ua={
-    h1:function(n){return n+' — Евакуатор поруч 24/7 — Розмовляємо Українською';},
+    h1:function(n){return n;},
     intro:function(n,f){return 'INNSER у '+n+'. Знаємо '+f+'. Приїзд зазвичай 20–30 хвилин, цілодобово.';},
     p2:function(n){return 'Евакуація, прикур, заміна колеса та відкриття авто в '+n+'. Ціна домовлена наперед. Телефон: 506-001-057.';},
     svc:'Наші послуги у Варшаві',near:function(n){return 'Також обслуговуємо сусідні райони та передмістя біля '+n+':';},
@@ -4165,7 +4165,7 @@ function districtCopy(lang){
     seoD:function(n){return n+' — евакуатор поруч 24/7. Розмовляємо Українською. Приїзд ~30 хв, 24/7. INNSER: 506-001-057.';},
     idxT:'Райони Варшави та передмістя',idxD:'INNSER у районах Варшави та передмістях (Зомбки, Маркі, Отвоцьк, Прушкув, Пясечно…). Оберіть свій — приїзд 24/7.',
     idxSeoT:'Райони Варшави та передмістя | INNSER',idxSeoD:'Райони та передмістя Варшави — Мокотув, Воля, Прага, Урсинув. Послуги: /uk/ і /uk/svc6/. INNSER 24/7.',
-    citywide:function(seg){return '<p class="dist-citywide">По всьому місту: <a href="/'+seg+'/">евакуатор Варшава</a>, <a href="/'+seg+'/svc1/">замовити евакуатор</a>, <a href="/'+seg+'/svc6/">лафета</a>. Ця сторінка — лише район.</p>';},
+    citywide:function(){return '';},
     idxDist:'Райони Варшави',idxSub:'Передмістя',idxRoads:'Траси'
   };
   return ({pl:pl,en:en,ru:ru,ua:ua})[lang]||pl;
