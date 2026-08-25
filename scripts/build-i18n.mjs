@@ -746,16 +746,16 @@ function injectRoadStaticBlock(html, langCl, localePathSeg, tail) {
 /** Localize inactive district/road detail shells (View Source / crawlers on every locale page). */
 function injectInactiveDetailShells(html, langCl) {
   const distH1 = {
-    pl: 'Laweta Warszawa — dzielnica',
-    en: 'Tow truck Warsaw — district',
-    ru: 'Эвакуатор Варшава — район',
-    ua: 'Евакуатор Варшава — район',
+    pl: 'Laweta — dzielnica',
+    en: 'Flatbed — district',
+    ru: 'Лавета — район',
+    ua: 'Лавета — район',
   };
   const roadH1 = {
     pl: 'Laweta — trasa',
-    en: 'Tow truck — road',
-    ru: 'Эвакуатор — трасса',
-    ua: 'Евакуатор — траса',
+    en: 'Flatbed — road',
+    ru: 'Лавета — трасса',
+    ua: 'Лавета — траса',
   };
   const d = distH1[langCl] || distH1.pl;
   const r = roadH1[langCl] || roadH1.pl;
@@ -789,7 +789,7 @@ function injectDistrictsRuntimeData(html, galleryItems) {
  * do not see home/blog/services as hidden text on every URL.
  */
 function pruneInactivePages(html, keepPageId) {
-  if (!keepPageId || keepPageId === 'home') return html;
+  if (!keepPageId) return html;
   const openRe = /<div class="page(?: on)?" id="p-([^"]+)">/g;
   let out = '';
   let last = 0;
@@ -1172,8 +1172,23 @@ function buildLocaleHtml(raw, key) {
   html = injectInactiveDetailShells(html, langCl);
 
   html = patchHtmlLinkHrefs(html, L.pathSeg);
+  html = bakeLocaleImgAlts(html, langCl);
 
   return html;
+}
+
+/** Set img alt from data-alt-{lang} for static HTML (crawlers don't run applyLang). */
+function bakeLocaleImgAlts(html, langCl) {
+  const suf = langCl === 'ua' ? 'uk' : langCl;
+  return html.replace(/<img\b[^>]*>/gi, (tag) => {
+    const m = tag.match(new RegExp(`\\sdata-alt-${suf}="([^"]*)"`, 'i'));
+    if (!m) return tag;
+    const alt = m[1];
+    if (/\salt="/i.test(tag)) {
+      return tag.replace(/\salt="[^"]*"/i, ` alt="${alt}"`);
+    }
+    return tag.replace(/<img\b/i, `<img alt="${alt}"`);
+  });
 }
 
 function writeRootRedirect() {
@@ -1393,21 +1408,20 @@ function writeSitemapAndRobots(html) {
     if (tail === 'svc1' || tail === 'svc6') return '0.9';
     if (/^svc\d+$/.test(String(tail || ''))) return '0.85';
     if (
-      tail === 'dzielnice' ||
-      tail === 'trasy' ||
       tail === 'blog' ||
       tail === 'services' ||
       tail === 'contact' ||
       tail === 'prices'
     )
       return '0.85';
+    if (tail === 'dzielnice' || tail === 'trasy') return '0.65';
     if (String(tail).startsWith('dzielnice/')) {
       const slug = String(tail).slice('dzielnice/'.length);
       const kind = districtBySlug(slug)?.kind || 'district';
-      // Suburbs slightly lower — reduces cannibalization vs core Warsaw districts.
-      return kind === 'suburb' ? '0.70' : '0.80';
+      // Keep districts below home/services to reduce citywide query cannibalization.
+      return kind === 'suburb' ? '0.45' : '0.55';
     }
-    if (String(tail).startsWith('trasy/')) return '0.78';
+    if (String(tail).startsWith('trasy/')) return '0.55';
     if (tail === 'gallery' || tail === 'about' || tail === 'partners' || tail === PRIVACY_PAGE_TAIL) return '0.82';
     if (String(tail).startsWith('blog/')) return '0.75';
     return '0.8';
@@ -1905,6 +1919,15 @@ async function main() {
 
   writeDeepRouteHtmlCopies(raw);
   removeRetiredSvcOrphans();
+
+  // Prune locale homes AFTER deep copies (deep routes need the full SPA base).
+  for (const key of Object.keys(LOCALES)) {
+    const L = LOCALES[key];
+    const homePath = path.join(OUT, L.pathSeg, 'index.html');
+    let html = fs.readFileSync(homePath, 'utf8');
+    html = pruneInactivePages(html, 'home');
+    fs.writeFileSync(homePath, html, 'utf8');
+  }
 
   writeRootRedirect();
   console.log('Wrote', path.relative(REPO_ROOT, path.join(OUT, 'index.html')));
