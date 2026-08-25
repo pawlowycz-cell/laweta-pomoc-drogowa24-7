@@ -754,14 +754,14 @@ function injectInactiveDetailShells(html, langCl) {
   const distH1 = {
     pl: 'Laweta — dzielnica',
     en: 'Flatbed — district',
-    ru: 'Лавета — район',
-    ua: 'Лавета — район',
+    ru: 'Район',
+    ua: 'Район',
   };
   const roadH1 = {
     pl: 'Laweta — trasa',
     en: 'Flatbed — road',
-    ru: 'Лавета — трасса',
-    ua: 'Лавета — траса',
+    ru: 'Трасса',
+    ua: 'Траса',
   };
   const d = distH1[langCl] || distH1.pl;
   const r = roadH1[langCl] || roadH1.pl;
