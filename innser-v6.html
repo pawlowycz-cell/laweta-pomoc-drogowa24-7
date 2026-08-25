@@ -5044,16 +5044,21 @@ for (var ri = 0; ri < list.length; ri++) {
 }
 var startLang = route0 ? (route0.langSeg === 'uk' ? 'ua' : route0.langSeg) : detectedLang;
 SL(startLang);
-  document.getElementById('svc-grid-home').innerHTML=SVCS.map(function(s){return buildSvcCard(s,'home');}).join('');
-  document.getElementById('svc-grid-full').innerHTML=SVCS.map(function(s){return buildSvcCard(s,'services');}).join('');
-  document.getElementById('blog-grid').innerHTML=BLOGS.map(buildBlogCard).join('');
+  var _svcHome=document.getElementById('svc-grid-home');
+  if(_svcHome) _svcHome.innerHTML=SVCS.map(function(s){return buildSvcCard(s,'home');}).join('');
+  var _svcFull=document.getElementById('svc-grid-full');
+  if(_svcFull) _svcFull.innerHTML=SVCS.map(function(s){return buildSvcCard(s,'services');}).join('');
+  var _blogGrid=document.getElementById('blog-grid');
+  if(_blogGrid) _blogGrid.innerHTML=BLOGS.map(buildBlogCard).join('');
     initReveals();
 renderAreas(startLang);
 document.addEventListener('click', function(e){
   var card = e.target.closest('.svc-clickable');
   if(card){
+    if(e.target.closest('a[href^="tel:"]')) return;
     __innserSvcFrom=card.getAttribute('data-svc-from')||'home';
-    SP(card.getAttribute('data-page'));
+    var page=card.getAttribute('data-page');
+    if(page) SP(page);
   }
 });
   syncInactivePages();

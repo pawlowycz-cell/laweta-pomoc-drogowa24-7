@@ -249,9 +249,12 @@ for (var ri = 0; ri < list.length; ri++) {
 }
 var startLang = route0 ? (route0.langSeg === 'uk' ? 'ua' : route0.langSeg) : detectedLang;
 SL(startLang);
-  document.getElementById('svc-grid-home').innerHTML=SVCS.map(function(s){return buildSvcCard(s,'home');}).join('');
-  document.getElementById('svc-grid-full').innerHTML=SVCS.map(function(s){return buildSvcCard(s,'services');}).join('');
-  document.getElementById('blog-grid').innerHTML=BLOGS.map(buildBlogCard).join('');
+  var _svcHome=document.getElementById('svc-grid-home');
+  if(_svcHome) _svcHome.innerHTML=SVCS.map(function(s){return buildSvcCard(s,'home');}).join('');
+  var _svcFull=document.getElementById('svc-grid-full');
+  if(_svcFull) _svcFull.innerHTML=SVCS.map(function(s){return buildSvcCard(s,'services');}).join('');
+  var _blogGrid=document.getElementById('blog-grid');
+  if(_blogGrid) _blogGrid.innerHTML=BLOGS.map(buildBlogCard).join('');
     initReveals();
 renderAreas(startLang);`;
 
@@ -259,9 +262,12 @@ function fixedLangSnippet(cl) {
   return `  // Locale fixed for this URL (/${cl === 'ua' ? 'uk' : cl}/)
 var PAGE_FIXED_LANG = '${cl}';
 SL(PAGE_FIXED_LANG);
-  document.getElementById('svc-grid-home').innerHTML=SVCS.map(function(s){return buildSvcCard(s,'home');}).join('');
-  document.getElementById('svc-grid-full').innerHTML=SVCS.map(function(s){return buildSvcCard(s,'services');}).join('');
-  document.getElementById('blog-grid').innerHTML=BLOGS.map(buildBlogCard).join('');
+  var _svcHome=document.getElementById('svc-grid-home');
+  if(_svcHome) _svcHome.innerHTML=SVCS.map(function(s){return buildSvcCard(s,'home');}).join('');
+  var _svcFull=document.getElementById('svc-grid-full');
+  if(_svcFull) _svcFull.innerHTML=SVCS.map(function(s){return buildSvcCard(s,'services');}).join('');
+  var _blogGrid=document.getElementById('blog-grid');
+  if(_blogGrid) _blogGrid.innerHTML=BLOGS.map(buildBlogCard).join('');
     initReveals();
 renderAreas(PAGE_FIXED_LANG);`;
 }
