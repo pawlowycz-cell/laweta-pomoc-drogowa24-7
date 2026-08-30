@@ -42,6 +42,11 @@ import {
   stripServiceJsonLdOnDeepRoute,
   stripArticleJsonLd,
 } from './svc-seo.mjs';
+import {
+  getSvcReviews,
+  getHomeReviews,
+  reviewsHtmlList,
+} from './svc-google-reviews.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.join(__dirname, '..');
@@ -1076,6 +1081,44 @@ function slimBlogPostBoilerplate(html, keepId, langCl, seg, extract) {
   return html;
 }
 
+function replaceGoogleReviewsListHtml(html, reviews) {
+  const openRe = /<div id="google-reviews-list"[^>]*>/;
+  const m = openRe.exec(html);
+  if (!m) return html;
+  const start = m.index;
+  const openEnd = start + m[0].length;
+  let depth = 1;
+  let i = openEnd;
+  while (i < html.length && depth > 0) {
+    const nextOpen = html.indexOf('<div', i);
+    const nextClose = html.indexOf('</div>', i);
+    if (nextClose < 0) break;
+    if (nextOpen >= 0 && nextOpen < nextClose) {
+      const ch = html[nextOpen + 4];
+      if (ch === ' ' || ch === '>' || ch === '\n' || ch === '\r' || ch === '\t') depth++;
+      i = nextOpen + 4;
+    } else {
+      depth--;
+      if (depth === 0) {
+        const inner = reviewsHtmlList(reviews);
+        return html.slice(0, openEnd) + inner + html.slice(nextClose);
+      }
+      i = nextClose + 6;
+    }
+  }
+  return html;
+}
+
+function bakeGoogleReviewsForPage(html, langCl, pageId) {
+  if (!pageId || pageId === 'blog' || String(pageId).startsWith('blog-post-')) {
+    return html;
+  }
+  const reviews = /^svc\d+$/.test(pageId)
+    ? getSvcReviews(langCl, pageId)
+    : getHomeReviews(langCl);
+  return replaceGoogleReviewsListHtml(html, reviews);
+}
+
 function writeDeepRouteHtmlCopies(raw) {
   const blogSlugs = discoverBlogPostSlugs(raw);
   const svcIds = discoverSvcPageIds(raw);
@@ -1146,6 +1189,7 @@ function writeDeepRouteHtmlCopies(raw) {
       if (keepId === 'services' || keepId === 'home') {
         html = injectStaticSvcGrids(html, extract, langCl, seg);
       }
+      html = bakeGoogleReviewsForPage(html, langCl, keepId || 'home');
       fs.writeFileSync(path.join(dir, 'index.html'), html, 'utf8');
       n++;
     }
@@ -1273,6 +1317,7 @@ function buildLocaleHtml(raw, key) {
 
   html = patchHtmlLinkHrefs(html, L.pathSeg);
   html = bakeLocaleImgAlts(html, langCl);
+  html = bakeGoogleReviewsForPage(html, langCl, 'home');
 
   return html;
 }
