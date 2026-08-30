@@ -197,7 +197,7 @@ export const GOOGLE_REVIEWS_BY_SVC = {
 /** Home / non-svc pages: short mixed set, names not used in svc lists above. */
 export const GOOGLE_REVIEWS_HOME = {
   pl: [
-    { name: 'Michał P.', stars: 5, text: 'Awaria o 2 w nocy — laweta INNSER całodobowo. Ewakuowali auto i zawieźli na serwis. Ewakuator szybko, cena uczciwa.' },
+    { name: 'Michał P.', stars: 5, text: 'Awaria o 2 w nocy — laweta INNSER całodobowo. Ewakuowali auto i zawieźli na serwis. Ewakuator przyjechał szybko, cena uczciwa.' },
     { name: 'Sarah M.', stars: 5, text: 'Potrzebowałam lawety po awarii. Ewakuator szybko na miejscu, kierowca konkretny, auto bez uszkodzeń. Polecam INNSER!' },
     { name: 'Артём К.', stars: 5, text: 'Auto nie odpalało — przyjechali i przykurzyli na kable. Od razu zapaliło. Szybka pomoc drogowa, dobra cena.' },
     { name: 'Magda K.', stars: 5, text: 'Samochód nie wyjechał z parkingu podziemnego. INNSER wyciągnął i dostarczył lawetą na warsztat — ostrożnie, bez rys. Dzięki!' },
@@ -206,7 +206,7 @@ export const GOOGLE_REVIEWS_HOME = {
     { name: 'Piotr R.', stars: 5, text: 'Laweta 24/7 — ewakuowali mnie z drogi w środku nocy. Dyspozytor spokojny, dojazd szybki. Numer 506-001-057 mam zapisany.' },
   ],
   en: [
-    { name: 'Michał P.', stars: 5, text: 'Broke down at 2 a.m. — INNSER flatbed runs 24/7. They towed the car to a garage. Fast tow truck, fair price.' },
+    { name: 'Michał P.', stars: 5, text: 'Broke down at 2 a.m. — INNSER flatbed runs 24/7. They towed the car to a garage. The tow truck arrived quickly, fair price.' },
     { name: 'Sarah M.', stars: 5, text: 'Needed a flatbed after a breakdown. Tow truck arrived quickly, careful driver, car undamaged. Recommend INNSER!' },
     { name: 'Artyom K.', stars: 5, text: 'Car wouldn’t start — they came and jump-started it with cables. Fired up straight away. Quick roadside help, good price.' },
     { name: 'Magda K.', stars: 5, text: 'Car wouldn’t leave the underground parking. INNSER pulled it out and delivered it by flatbed to the garage — carefully, no scratches. Thanks!' },
@@ -215,7 +215,7 @@ export const GOOGLE_REVIEWS_HOME = {
     { name: 'Piotr R.', stars: 5, text: 'Flatbed 24/7 — they towed me off the road in the middle of the night. Calm dispatcher, fast arrival. Saved 506-001-057.' },
   ],
   ru: [
-    { name: 'Михал П.', stars: 5, text: 'Поломка в 2 ночи — лавета INNSER круглосуточно. Эвакуировали машину и отвезли в сервис. Эвакуатор быстро, цена нормальная.' },
+    { name: 'Михал П.', stars: 5, text: 'Поломка в 2 ночи — лавета INNSER круглосуточно. Эвакуировали машину и отвезли в сервис. Эвакуатор приехал быстро, цена нормальная.' },
     { name: 'Сара М.', stars: 5, text: 'Нужна была лавета после аварии. Эвакуатор быстро на месте, водитель по делу, машину привезли без повреждений. Рекомендую INNSER!' },
     { name: 'Артём К.', stars: 5, text: 'Машина не заводилась — приехали и прикурили с проводов. Сразу завелась. Быстрая помощь на дороге, цена хорошая.' },
     { name: 'Магда К.', stars: 5, text: 'Машина не выехала с подземного паркинга. INNSER вытащил и доставил лаветой в сервис — аккуратно, без царапин. Спасибо!' },
@@ -224,7 +224,7 @@ export const GOOGLE_REVIEWS_HOME = {
     { name: 'Пётр Р.', stars: 5, text: 'Лавета круглосуточно — эвакуировали с дороги среди ночи. Диспетчер спокойный, приезд быстрый. Номер 506-001-057 сохранил.' },
   ],
   ua: [
-    { name: 'Міхал П.', stars: 5, text: 'Поломка о 2-й ночі — лафета INNSER цілодобово. Евакуювали авто й відвезли в сервіс. Евакуатор швидко, ціна нормальна.' },
+    { name: 'Міхал П.', stars: 5, text: 'Поломка о 2-й ночі — лафета INNSER цілодобово. Евакуювали авто й відвезли в сервіс. Евакуатор приїхав швидко, ціна нормальна.' },
     { name: 'Сара М.', stars: 5, text: 'Потрібна була лафета після аварії. Евакуатор швидко на місці, водій по справі, авто без пошкоджень. Рекомендую INNSER!' },
     { name: 'Артем К.', stars: 5, text: 'Авто не заводилось — приїхали й прикурили з проводів. Одразу завелось. Швидка допомога на дорозі, ціна гарна.' },
     { name: 'Магда К.', stars: 5, text: 'Авто не виїхало з підземного паркінгу. INNSER витягнув і доставив лафетою в сервіс — обережно, без подряпин. Дякую!' },
