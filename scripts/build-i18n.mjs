@@ -47,6 +47,10 @@ import {
   getHomeReviews,
   reviewsHtmlList,
 } from './svc-google-reviews.mjs';
+import {
+  geoReviewsForDistrictSlug,
+  geoReviewsForRoadSlug,
+} from './geo-google-reviews.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.join(__dirname, '..');
@@ -1109,13 +1113,24 @@ function replaceGoogleReviewsListHtml(html, reviews) {
   return html;
 }
 
-function bakeGoogleReviewsForPage(html, langCl, pageId) {
+function bakeGoogleReviewsForPage(html, langCl, pageId, tail) {
   if (!pageId || pageId === 'blog' || String(pageId).startsWith('blog-post-')) {
     return html;
   }
-  const reviews = /^svc\d+$/.test(pageId)
-    ? getSvcReviews(langCl, pageId)
-    : getHomeReviews(langCl);
+  const trimmed = String(tail || '').replace(/^\/+|\/+$/g, '');
+  let reviews;
+  const distM = /^dzielnice\/([a-z0-9-]+)$/.exec(trimmed);
+  const roadM = /^trasy\/([a-z0-9-]+)$/.exec(trimmed);
+  if (distM) {
+    reviews = geoReviewsForDistrictSlug(langCl, distM[1]);
+  } else if (roadM) {
+    reviews = geoReviewsForRoadSlug(langCl, roadM[1]);
+  } else if (/^svc\d+$/.test(pageId)) {
+    reviews = getSvcReviews(langCl, pageId);
+  } else {
+    reviews = getHomeReviews(langCl);
+  }
+  if (!reviews || !reviews.length) return html;
   return replaceGoogleReviewsListHtml(html, reviews);
 }
 
@@ -1189,7 +1204,7 @@ function writeDeepRouteHtmlCopies(raw) {
       if (keepId === 'services' || keepId === 'home') {
         html = injectStaticSvcGrids(html, extract, langCl, seg);
       }
-      html = bakeGoogleReviewsForPage(html, langCl, keepId || 'home');
+      html = bakeGoogleReviewsForPage(html, langCl, keepId || 'home', tail);
       fs.writeFileSync(path.join(dir, 'index.html'), html, 'utf8');
       n++;
     }
@@ -1317,7 +1332,7 @@ function buildLocaleHtml(raw, key) {
 
   html = patchHtmlLinkHrefs(html, L.pathSeg);
   html = bakeLocaleImgAlts(html, langCl);
-  html = bakeGoogleReviewsForPage(html, langCl, 'home');
+  html = bakeGoogleReviewsForPage(html, langCl, 'home', '');
 
   return html;
 }
