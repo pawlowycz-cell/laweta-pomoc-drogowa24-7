@@ -342,6 +342,42 @@ export const GOOGLE_REVIEWS_PRICES = {
   ],
 };
 
+/** Districts index (/dzielnice/) — mix of Warsaw districts + suburbs */
+export const GOOGLE_REVIEWS_DISTRICTS = {
+  pl: [
+    { name: 'Agata M.', stars: 5, text: 'Laweta na Mokotowie — szybko dojechali, załadunek spokojny. Potem woziłam auto też z Ursynowa. INNSER zna dzielnice Warszawy.' },
+    { name: 'Denis P.', stars: 5, text: 'Awaria na Woli. Dyspozytor od razu, ewakuator na miejscu. Później pomogli koledze w Pruszkowie — ten sam numer, ta sama jakość.' },
+    { name: 'Karolina Z.', stars: 5, text: 'Stałam na Pradze-Południe z dzieckiem. INNSER przyjechał szybko. Działają też na Bielanach i Bemowie — sprawdzone.' },
+    { name: 'Viktor H.', stars: 5, text: 'Holowanie z Piaseczna do serwisu w mieście. Cena z góry, dojazd OK. Obsługują dzielnice i przedmieścia — Legionowo, Marki też.' },
+    { name: 'Monika R.', stars: 5, text: 'Parking podziemny na Ochocie — wyciągnęli ostrożnie. Znajomi wzywali INNSER na Targówku i w Ząbkach. Polecam.' },
+    { name: 'Andrij S.', stars: 5, text: 'Laweta z Wilanowa i z Otwocka — zawsze na czas. Warszawa, dzielnice, okolice: jeden telefon 506-001-057.' },
+  ],
+  en: [
+    { name: 'Agata M.', stars: 5, text: 'Flatbed in Mokotów — quick arrival, calm loading. Later also from Ursynów. INNSER knows Warsaw’s districts.' },
+    { name: 'Denis P.', stars: 5, text: 'Broke down in Wola. Dispatcher straight away, tow on site. Later helped a mate in Pruszków — same number, same quality.' },
+    { name: 'Karolina Z.', stars: 5, text: 'Stranded in Praga-Południe with a kid. INNSER came fast. They cover Bielany and Bemowo too — checked.' },
+    { name: 'Viktor H.', stars: 5, text: 'Tow from Piaseczno to a city garage. Price upfront, ETA fine. Districts and suburbs — Legionowo, Marki as well.' },
+    { name: 'Monika R.', stars: 5, text: 'Underground parking in Ochota — pulled out carefully. Friends called INNSER in Targówek and Ząbki. Recommend.' },
+    { name: 'Andrij S.', stars: 5, text: 'Flatbed from Wilanów and from Otwock — always on time. Warsaw, districts, suburbs: one call 506-001-057.' },
+  ],
+  ru: [
+    { name: 'Агата М.', stars: 5, text: 'Лавета на Мокотуве — быстро приехали, погрузка спокойная. Потом возили и с Урсынова. INNSER знает районы Варшавы.' },
+    { name: 'Денис П.', stars: 5, text: 'Поломка на Воле. Диспетчер сразу, эвакуатор на месте. Потом помогли другу в Прушкуве — тот же номер, то же качество.' },
+    { name: 'Каролина З.', stars: 5, text: 'Стояла на Праге-Полудне с ребёнком. INNSER приехал быстро. Работают и на Белянах, и на Бемове — проверено.' },
+    { name: 'Виктор Х.', stars: 5, text: 'Эвакуация из Пясечно в сервис в городе. Цена заранее, приезд нормальный. Районы и пригороды — Легионово, Марки тоже.' },
+    { name: 'Моника Р.', stars: 5, text: 'Подземный паркинг на Охоте — вытащили аккуратно. Знакомые вызывали INNSER на Таргувеке и в Зомбках. Рекомендую.' },
+    { name: 'Андрий С.', stars: 5, text: 'Лавета с Виланува и из Отвоцка — всегда вовремя. Варшава, районы, пригороды: один звонок 506-001-057.' },
+  ],
+  ua: [
+    { name: 'Агата М.', stars: 5, text: 'Лафета на Мокотуві — швидко приїхали, завантаження спокійне. Потім возили й з Урсинова. INNSER знає райони Варшави.' },
+    { name: 'Денис П.', stars: 5, text: 'Поломка на Волі. Диспетчер одразу, евакуатор на місці. Потім допомогли другу в Прушкуві — той самий номер, та сама якість.' },
+    { name: 'Кароліна З.', stars: 5, text: 'Стояла на Празі-Полудне з дитиною. INNSER приїхав швидко. Працюють і на Білянах, і на Бемові — перевірено.' },
+    { name: 'Віктор Х.', stars: 5, text: 'Евакуація з Пясечно в сервіс у місті. Ціна заздалегідь, приїзд нормальний. Райони й передмістя — Легіоново, Маркі теж.' },
+    { name: 'Моніка Р.', stars: 5, text: 'Підземний паркінг на Охоті — витягли обережно. Знайомі викликали INNSER на Таргувеку й у Зомбках. Рекомендую.' },
+    { name: 'Андрій С.', stars: 5, text: 'Лафета з Вілянова й з Отвоцька — завжди вчасно. Варшава, райони, передмістя: один дзвінок 506-001-057.' },
+  ],
+};
+
 export function reviewsHtmlList(reviews) {
   return (reviews || [])
     .map((r) => {
@@ -385,4 +421,8 @@ export function getContactReviews(langCl) {
 
 export function getPricesReviews(langCl) {
   return GOOGLE_REVIEWS_PRICES[langCl] || GOOGLE_REVIEWS_PRICES.pl;
+}
+
+export function getDistrictsIndexReviews(langCl) {
+  return GOOGLE_REVIEWS_DISTRICTS[langCl] || GOOGLE_REVIEWS_DISTRICTS.pl;
 }

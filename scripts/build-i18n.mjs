@@ -48,6 +48,7 @@ import {
   getPartnersReviews,
   getContactReviews,
   getPricesReviews,
+  getDistrictsIndexReviews,
   reviewsHtmlList,
 } from './svc-google-reviews.mjs';
 import {
@@ -1136,6 +1137,8 @@ function bakeGoogleReviewsForPage(html, langCl, pageId, tail) {
     reviews = getContactReviews(langCl);
   } else if (pageId === 'prices') {
     reviews = getPricesReviews(langCl);
+  } else if (pageId === 'districts') {
+    reviews = getDistrictsIndexReviews(langCl);
   } else {
     reviews = getHomeReviews(langCl);
   }
