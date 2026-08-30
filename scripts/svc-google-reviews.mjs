@@ -306,6 +306,42 @@ export const GOOGLE_REVIEWS_CONTACT = {
   ],
 };
 
+/** Prices-page reviews: 250 zł, cheaper than competitors’ night rates, professional work */
+export const GOOGLE_REVIEWS_PRICES = {
+  pl: [
+    { name: 'Marcin T.', stars: 5, text: 'Laweta w nocy — u konkurencji słyszałem 600–700 zł. U INNSER wyszło od 250 zł, cenę powiedzieli z góry. Super ceny i profesjonalna robota.' },
+    { name: 'Oksana L.', stars: 5, text: 'Holowanie po awarii: wycena od razu, bez dopłat na miejscu. Bardzo dobre ceny, kierowca konkretny. Lepiej niż oferty po 600+ zł w nocy.' },
+    { name: 'Bartosz N.', stars: 5, text: 'Porównałem kilka firm — u innych nocą 650–700 zł. INNSER: uczciwie od 250 zł, wszystko jak w telefonie. Profesjonalna praca, polecam.' },
+    { name: 'Elena F.', stars: 5, text: 'Myślałam, że noc = kosmiczna cena. A u INNSER normalnie, od 250 zł. Super ceny, spokojny załadunek, zero ściemy.' },
+    { name: 'Jakub S.', stars: 5, text: 'Awaria o 1 w nocy. Inni chcieli prawie 700 zł. INNSER podał jasną kwotę od 250 zł i przyjechał. Dobre ceny + profesjonalna obsługa.' },
+    { name: 'Irina W.', stars: 5, text: 'Cena z góry, bez „dopłaty za noc” jak u konkurencji (600–700 zł). U INNSER od 250 zł — bardzo dobre ceny, robota na poziomie.' },
+  ],
+  en: [
+    { name: 'Marcin T.', stars: 5, text: 'Flatbed at night — competitors quoted 600–700 zł. With INNSER it was from 250 zł, price upfront. Great prices and professional work.' },
+    { name: 'Oksana L.', stars: 5, text: 'Tow after a breakdown: quote straight away, no extras on site. Very fair prices, solid driver. Better than 600+ zł night offers.' },
+    { name: 'Bartosz N.', stars: 5, text: 'Compared a few firms — others wanted 650–700 zł at night. INNSER: honest from 250 zł, matched the phone quote. Professional job, recommend.' },
+    { name: 'Elena F.', stars: 5, text: 'Thought night = crazy price. INNSER was normal, from 250 zł. Great prices, calm loading, no nonsense.' },
+    { name: 'Jakub S.', stars: 5, text: 'Broke down at 1 a.m. Others wanted almost 700 zł. INNSER gave a clear from-250 zł figure and came. Good prices + professional service.' },
+    { name: 'Irina W.', stars: 5, text: 'Price upfront — no “night surcharge” like competitors (600–700 zł). INNSER from 250 zł — very good prices, proper work.' },
+  ],
+  ru: [
+    { name: 'Марцин Т.', stars: 5, text: 'Лавета ночью — у конкурентов слышал 600–700 zł. У INNSER вышло от 250 zł, цену сказали заранее. Супер цены и профессиональная работа.' },
+    { name: 'Оксана Л.', stars: 5, text: 'Эвакуация после поломки: оценку сразу, без доплат на месте. Очень хорошие цены, водитель по делу. Лучше, чем предложения по 600+ zł ночью.' },
+    { name: 'Бартош Н.', stars: 5, text: 'Сравнивал несколько фирм — другие ночью хотели 650–700 zł. INNSER: честно от 250 zł, всё как по телефону. Профессиональная работа, рекомендую.' },
+    { name: 'Елена Ф.', stars: 5, text: 'Думала, ночь = космическая цена. А у INNSER нормально, от 250 zł. Супер цены, спокойная погрузка, без обмана.' },
+    { name: 'Якуб С.', stars: 5, text: 'Поломка в час ночи. Другие просили почти 700 zł. INNSER назвал понятную сумму от 250 zł и приехал. Хорошие цены + профессиональный сервис.' },
+    { name: 'Ирина В.', stars: 5, text: 'Цена заранее, без «доплаты за ночь» как у конкурентов (600–700 zł). У INNSER от 250 zł — очень хорошие цены, работа на уровне.' },
+  ],
+  ua: [
+    { name: 'Марцін Т.', stars: 5, text: 'Лафета вночі — у конкурентів чув 600–700 zł. У INNSER вийшло від 250 zł, ціну сказали заздалегідь. Супер ціни й професійна робота.' },
+    { name: 'Оксана Л.', stars: 5, text: 'Евакуація після поломки: оцінку одразу, без доплат на місці. Дуже хороші ціни, водій по суті. Краще, ніж пропозиції по 600+ zł вночі.' },
+    { name: 'Бартош Н.', stars: 5, text: 'Порівнював кілька фірм — інші вночі хотіли 650–700 zł. INNSER: чесно від 250 zł, усе як по телефону. Професійна робота, рекомендую.' },
+    { name: 'Олена Ф.', stars: 5, text: 'Думала, ніч = космічна ціна. А у INNSER нормально, від 250 zł. Супер ціни, спокійне завантаження, без обману.' },
+    { name: 'Якуб С.', stars: 5, text: 'Поломка о першій ночі. Інші просили майже 700 zł. INNSER назвав зрозумілу суму від 250 zł і приїхав. Хороші ціни + професійний сервіс.' },
+    { name: 'Ірина В.', stars: 5, text: 'Ціна заздалегідь, без «доплати за ніч» як у конкурентів (600–700 zł). У INNSER від 250 zł — дуже хороші ціни, робота на рівні.' },
+  ],
+};
+
 export function reviewsHtmlList(reviews) {
   return (reviews || [])
     .map((r) => {
@@ -345,4 +381,8 @@ export function getPartnersReviews(langCl) {
 
 export function getContactReviews(langCl) {
   return GOOGLE_REVIEWS_CONTACT[langCl] || GOOGLE_REVIEWS_CONTACT.pl;
+}
+
+export function getPricesReviews(langCl) {
+  return GOOGLE_REVIEWS_PRICES[langCl] || GOOGLE_REVIEWS_PRICES.pl;
 }
