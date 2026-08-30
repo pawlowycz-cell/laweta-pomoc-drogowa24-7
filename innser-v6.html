@@ -2274,6 +2274,8 @@ pl:{
   google_reviews_title:"OPINIE KLIENTÓW W GOOGLE",
   google_reviews_based:"Na podstawie opinii w Google Maps",
   google_reviews_cta:"⭐ Oceń nas w Google",
+  blog_related:"Powiązane artykuły",
+  blog_related_svc:"Powiązane usługi",
   google_reviews:[
     {name:"Michał P.",stars:5,text:"Zabrali mnie nocą z zepsutym autem, znaleźli świetny serwis, naprawili i odwieźli do domu. Wszystko za bardzo przyzwoitą cenę!"},
     {name:"Sarah M.",stars:5,text:"Bardzo zadowolona z lawety! Przyjechali szybko, kierowca uprzejmy i profesjonalny. Auto przewiezione bez żadnych uszkodzeń. Cena uczciwa. Zdecydowanie polecam!"},
@@ -2821,6 +2823,8 @@ en:{
   google_reviews_title:"GOOGLE CUSTOMER REVIEWS",
   google_reviews_based:"Based on Google Maps reviews",
   google_reviews_cta:"⭐ Rate us on Google",
+  blog_related:"Related articles",
+  blog_related_svc:"Related services",
   google_reviews:[
     {name:"Michał P.",stars:5,text:"Picked me up at night with a broken car, found a great workshop, fixed it and drove me home. Very fair price!"},
     {name:"Sarah M.",stars:5,text:"Really happy with the tow truck! Fast arrival, polite and professional driver. Car moved with no damage. Honest price — highly recommend!"},
@@ -3215,6 +3219,8 @@ ru:{
   google_reviews_title:"ОТЗЫВЫ КЛИЕНТОВ В GOOGLE",
   google_reviews_based:"На основе отзывов в Google Maps",
   google_reviews_cta:"⭐ Оцените нас в Google",
+  blog_related:"Похожие статьи",
+  blog_related_svc:"Похожие услуги",
   google_reviews:[
     {name:"Михал П.",stars:5,text:"Забрали ночью с сломанной машиной, нашли хороший сервис, починили и отвезли домой. Очень адекватная цена!"},
     {name:"Сара М.",stars:5,text:"Очень довольна лаветой! Приехали быстро, водитель вежливый и профессиональный. Авто без повреждений. Честная цена. Однозначно рекомендую!"},
@@ -3890,6 +3896,8 @@ ua:{
   google_reviews_title:"ВІДГУКИ КЛІЄНТІВ У GOOGLE",
   google_reviews_based:"На основі відгуків у Google Maps",
   google_reviews_cta:"⭐ Оцініть нас у Google",
+  blog_related:"Схожі статті",
+  blog_related_svc:"Схожі послуги",
   google_reviews:[
     {name:"Міхал П.",stars:5,text:"Забрали вночі зі зламаним авто, знайшли хороший сервіс, полагодили й відвезли додому. Дуже адекватна ціна!"},
     {name:"Сара М.",stars:5,text:"Дуже задоволена лафетою! Приїхали швидко, водій ввічливий і професійний. Авто без пошкоджень. Чесна ціна. Однозначно рекомендую!"},
@@ -4018,6 +4026,18 @@ const BLOGS = [
   {k:'b9_t',dk:'b9_d',icon:'♻️',date:'2026-03-28',post:'b9'},
   {k:'b10_t',dk:'b10_d',icon:'💵',date:'2026-03-28',post:'b10'},
 ];
+
+/* Topic-relevant links for blog posts — cuts identical 9-svc / reviews boilerplate */
+var BLOG_RELATED_POSTS = {
+  b1:['b5','b2','b3'], b2:['b8','b1','b6'], b3:['b6','b2','b1'], b4:['b9','b3','b6'],
+  b5:['b1','b2','b3'], b6:['b3','b2','b1'], b7:['b5','b1','b2'], b8:['b2','b6','b3'],
+  b9:['b10','b7','b4'], b10:['b9','b7','b3']
+};
+var BLOG_RELATED_SVCS = {
+  b1:['svc3','svc2','svc1'], b2:['svc1','svc6'], b3:['svc6','svc1'], b4:['svc9','svc6'],
+  b5:['svc2','svc3'], b6:['svc1','svc6'], b7:['svc5','svc1'], b8:['svc1','svc6'],
+  b9:['svc8','svc7'], b10:['svc7','svc8']
+};
 
 let CL='pl';
 
@@ -4965,6 +4985,9 @@ function SP(p,opts){
     if(replaceHistory&&p==='home') __innserHistCount=0;
   }
   updateCanonicalAndHreflang(p);
+  document.body.classList.toggle('blog-post-view', String(p).indexOf('blog-post-')===0);
+  var gr=document.getElementById('google-reviews-global');
+  if(gr) gr.hidden = String(p).indexOf('blog-post-')===0;
 }
 
 var imgs = ["/assets/gallery/jpg-62e60b37e1a4.jpg","/assets/gallery/svc2-odpalanie-na-kable-warszawa-innser.jpg","/assets/gallery/svc3-odpalanie-z-boostera-warszawa-innser.jpg","/assets/gallery/svc4-wymiana-kola-warszawa-innser.jpg","/assets/gallery/jpg-9f81b1ef5248.jpg"];
@@ -5140,6 +5163,8 @@ document.addEventListener('click', function(e){
         <a href="tel:+48506001057" style="display:inline-flex;align-items:center;gap:10px;background:var(--b);color:var(--y);font-family:var(--ff-d);font-size:1.4rem;letter-spacing:2px;padding:14px 36px;border-radius:50px;text-decoration:none;">📞 506-001-057</a>
       </div>
     </div>
+    <div id="bi-b7"></div>
+    <div id="blog-seo-b7" class="blog-seo-extras"></div>
 
   </div>
 </section>
@@ -5165,6 +5190,7 @@ document.addEventListener('click', function(e){
     <p style="margin-bottom:14px;" data-t="bp_b1_p5"></p>
   </div>
   <div id="bi-b1"></div>
+  <div id="blog-seo-b1" class="blog-seo-extras"></div>
 </div></div></section>
 </div>
 
@@ -5187,6 +5213,7 @@ document.addEventListener('click', function(e){
     <p style="margin-bottom:14px;" data-t="bp_b2_p5"></p>
   </div>
   <div id="bi-b2"></div>
+  <div id="blog-seo-b2" class="blog-seo-extras"></div>
 </div></div></section>
 </div>
 
@@ -5209,6 +5236,7 @@ document.addEventListener('click', function(e){
     <p style="margin-bottom:14px;" data-t="bp_b3_p5"></p>
   </div>
   <div id="bi-b3"></div>
+  <div id="blog-seo-b3" class="blog-seo-extras"></div>
 </div></div></section>
 </div>
 
@@ -5231,6 +5259,7 @@ document.addEventListener('click', function(e){
     <p style="margin-bottom:14px;" data-t="bp_b4_p5"></p>
   </div>
   <div id="bi-b4"></div>
+  <div id="blog-seo-b4" class="blog-seo-extras"></div>
 </div></div></section>
 </div>
 
@@ -5253,6 +5282,7 @@ document.addEventListener('click', function(e){
     <p style="margin-bottom:14px;" data-t="bp_b5_p5"></p>
   </div>
   <div id="bi-b5"></div>
+  <div id="blog-seo-b5" class="blog-seo-extras"></div>
 </div></div></section>
 </div>
 
@@ -5275,6 +5305,7 @@ document.addEventListener('click', function(e){
     <p style="margin-bottom:14px;" data-t="bp_b6_p5"></p>
   </div>
   <div id="bi-b6"></div>
+  <div id="blog-seo-b6" class="blog-seo-extras"></div>
 </div></div></section>
 </div>
 
@@ -5297,6 +5328,7 @@ document.addEventListener('click', function(e){
     <p style="margin-bottom:14px;" data-t="bp_b8_p5"></p>
   </div>
   <div id="bi-b8"></div>
+  <div id="blog-seo-b8" class="blog-seo-extras"></div>
 </div></div></section>
 </div>
 
@@ -5318,6 +5350,7 @@ document.addEventListener('click', function(e){
     <p style="margin-bottom:14px;" data-t="bp_b9_p5"></p>
   </div>
   <div id="bi-b9"></div>
+  <div id="blog-seo-b9" class="blog-seo-extras"></div>
 </div></div></section>
 </div>
 
@@ -5339,11 +5372,12 @@ document.addEventListener('click', function(e){
     <p style="margin-bottom:14px;" data-t="bp_b10_p5"></p>
   </div>
   <div id="bi-b10"></div>
+  <div id="blog-seo-b10" class="blog-seo-extras"></div>
 </div></div></section>
 </div>
 
-<!-- Google Reviews: placed after all .page sections so blog articles appear above it -->
-<section class="sec" style="background:var(--b);padding:40px 0 50px;">
+<!-- Google Reviews: after .page sections; hidden on blog-post routes (boilerplate noise) -->
+<section class="sec" id="google-reviews-global" style="background:var(--b);padding:40px 0 50px;">
 <div class="mx" style="max-width:700px;">
   <div class="sc" style="margin-bottom:28px;">
     <span class="stag">Google</span>
@@ -5385,6 +5419,14 @@ document.addEventListener('click', function(e){
 .b-ctext{font-size:.88rem;color:var(--gl);line-height:1.6;overflow-wrap:anywhere;word-break:break-word;}
 [id^="clist-"],[id^="utclist-"]{min-width:0;max-width:100%;overflow-x:hidden;}
 .blog-post-shell{min-width:0;}
+.blog-seo-extras{margin-top:28px;padding-top:24px;border-top:1px solid var(--b4);}
+.blog-seo-extras h3{font-family:var(--ff-d);font-size:1.05rem;letter-spacing:1px;color:var(--y);margin:0 0 12px;}
+.blog-seo-extras ul{list-style:none;padding:0;margin:0 0 22px;}
+.blog-seo-extras li{margin:0 0 8px;}
+.blog-seo-extras a{color:var(--gl);text-decoration:none;font-size:.92rem;line-height:1.5;border-bottom:1px solid rgba(255,209,0,.25);}
+.blog-seo-extras a:hover{color:var(--y);}
+body.blog-post-view #google-reviews-global{display:none!important;}
+body.blog-post-view .foot-col-svc{display:none!important;}
 @media(max-width:768px){
 #main-content input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]),
 #main-content textarea{font-size:16px!important;}
@@ -5911,6 +5953,35 @@ function buildInteractions(pid){
       }).join('');
     });
   });
+}
+
+function renderBlogSeoExtras(pid){
+  var box=document.getElementById('blog-seo-'+pid);
+  if(!box) return;
+  var t=T[CL]||{};
+  var posts=BLOG_RELATED_POSTS[pid]||[];
+  var svcs=BLOG_RELATED_SVCS[pid]||['svc1','svc6'];
+  var html='';
+  if(svcs.length){
+    html+='<h3>'+esc(t.blog_related_svc||'Powiązane usługi')+'</h3><ul>';
+    svcs.forEach(function(sid){
+      var label=t[sid+'_t']||sid;
+      var href=typeof innserPageHref==='function'?innserPageHref(sid,CL):('#'+sid);
+      html+='<li><a href="'+href+'" data-p="'+sid+'" onclick="SP(\''+sid+'\');return false;">'+esc(label)+'</a></li>';
+    });
+    html+='</ul>';
+  }
+  if(posts.length){
+    html+='<h3>'+esc(t.blog_related||'Powiązane artykuły')+'</h3><ul>';
+    posts.forEach(function(bp){
+      var label=t[bp+'_t']||bp;
+      var pageId='blog-post-'+bp;
+      var href=typeof innserPageHref==='function'?innserPageHref(pageId,CL):('/pl/blog/'+bp+'/');
+      html+='<li><a href="'+href+'" data-p="'+pageId+'" onclick="SP(\''+pageId+'\');return false;">'+esc(label)+'</a></li>';
+    });
+    html+='</ul>';
+  }
+  box.innerHTML=html;
 }
 
 async function doLike(pid){
@@ -7312,7 +7383,7 @@ document.addEventListener('DOMContentLoaded',function(){
     updateBackBtn(p);
     if(p.startsWith('blog-post-')){
       var pid=p.replace('blog-post-','');
-      setTimeout(function(){buildInteractions(pid);},50);
+      setTimeout(function(){buildInteractions(pid);renderBlogSeoExtras(pid);},50);
     }
     if(p==='blog'){
       setTimeout(function(){renderUserTopics();},100);
@@ -7331,16 +7402,6 @@ document.addEventListener('DOMContentLoaded',function(){
   if(typeof syncUrlToPage==='function'&&typeof currentPageSlug==='function') syncUrlToPage(currentPageSlug());
   if(typeof bindHomeGalScroll==='function') bindHomeGalScroll();
   if(typeof currentPageSlug==='function'&&(currentPageSlug()==='prices'||currentPageSlug()==='home')) setTimeout(initTowCalc,150);
-});
-// Init b7 interactions when its page opens
-document.addEventListener('DOMContentLoaded',function(){
-  var b7page=document.getElementById('p-blog-post-b7');
-  if(b7page && !document.getElementById('bi-b7')){
-    var div=document.createElement('div');
-    div.id='bi-b7';
-    var sec=b7page.querySelector('section .mx');
-    if(sec) sec.appendChild(div);
-  }
 });
 </script>
 
@@ -7415,7 +7476,7 @@ document.addEventListener('DOMContentLoaded',function(){
 <footer class="foot"><div class="mx">
   <div class="foot-g">
     <div class="foot-brand"><div class="logo" style="cursor:default;">INNSER</div><p data-t="foot_desc"><strong>Pomoc drogowa 24/7</strong>. <strong>Tania laweta</strong>, <strong>tanie holowanie Warszawa</strong> — zadzwoń po wycenę.</p></div>
-    <div><div class="foot-h" data-t="foot_svc">USŁUGI</div><a href="/pl/svc1/" data-p="svc1" onclick="SP('svc1');return false;" data-t="svc1_t">Pomoc Drogowa w Warszawie 24h</a><a href="/pl/svc2/" data-p="svc2" onclick="SP('svc2');return false;" data-t="svc2_t">Odpalanie na kable</a><a href="/pl/svc3/" data-p="svc3" onclick="SP('svc3');return false;" data-t="svc3_t">Odpalanie z Boostera</a><a href="/pl/svc4/" data-p="svc4" onclick="SP('svc4');return false;" data-t="svc4_t">Wymiana koła</a><a href="/pl/svc5/" data-p="svc5" onclick="SP('svc5');return false;" data-t="svc5_t">Otwieranie</a><a href="/pl/svc6/" data-p="svc6" onclick="SP('svc6');return false;" data-t="svc6_t">Laweta Warszawa 24h</a><a href="/pl/svc7/" data-p="svc7" onclick="SP('svc7');return false;" data-t="svc7_t">Skup aut za gotówkę</a><a href="/pl/svc8/" data-p="svc8" onclick="SP('svc8');return false;" data-t="svc8_t">Złomowanie pojazdów</a><a href="/pl/svc9/" data-p="svc9" onclick="SP('svc9');return false;" data-t="svc9_t">Laweta z parkingu podziemnego i wyciąganie z rowu</a></div>
+    <div class="foot-col-svc"><div class="foot-h" data-t="foot_svc">USŁUGI</div><a href="/pl/svc1/" data-p="svc1" onclick="SP('svc1');return false;" data-t="svc1_t">Pomoc Drogowa w Warszawie 24h</a><a href="/pl/svc2/" data-p="svc2" onclick="SP('svc2');return false;" data-t="svc2_t">Odpalanie na kable</a><a href="/pl/svc3/" data-p="svc3" onclick="SP('svc3');return false;" data-t="svc3_t">Odpalanie z Boostera</a><a href="/pl/svc4/" data-p="svc4" onclick="SP('svc4');return false;" data-t="svc4_t">Wymiana koła</a><a href="/pl/svc5/" data-p="svc5" onclick="SP('svc5');return false;" data-t="svc5_t">Otwieranie</a><a href="/pl/svc6/" data-p="svc6" onclick="SP('svc6');return false;" data-t="svc6_t">Laweta Warszawa 24h</a><a href="/pl/svc7/" data-p="svc7" onclick="SP('svc7');return false;" data-t="svc7_t">Skup aut za gotówkę</a><a href="/pl/svc8/" data-p="svc8" onclick="SP('svc8');return false;" data-t="svc8_t">Złomowanie pojazdów</a><a href="/pl/svc9/" data-p="svc9" onclick="SP('svc9');return false;" data-t="svc9_t">Laweta z parkingu podziemnego i wyciąganie z rowu</a></div>
     <div><div class="foot-h" data-t="foot_nav">NAWIGACJA</div><a href="/pl/" data-p="home" onclick="SP('home');return false;" data-t="nav_home">Strona główna</a><a href="/pl/services/" data-p="services" onclick="SP('services');return false;" data-t="nav_svc">Usługi</a><a href="/pl/prices/" data-p="prices" onclick="SP('prices');return false;" data-t="nav_prices">Ceny</a><a href="/pl/about/" data-p="about" onclick="SP('about');return false;" data-t="nav_about">Co robimy</a><a href="/pl/blog/" data-p="blog" onclick="SP('blog');return false;" data-t="nav_blog">Blog</a><a href="/pl/partners/" data-p="partners" onclick="SP('partners');return false;" data-t="nav_partners">Współpracja</a><a href="/pl/contact/" data-p="contact" onclick="SP('contact');return false;" data-t="nav_cnt">Kontakt</a><a href="/pl/polityka-prywatnosci/" data-p="privacy" onclick="SP('privacy');return false;" data-t="foot_priv">Polityka prywatności</a></div>
     <div><div class="foot-h" data-t="foot_cnt">KONTAKT</div><a href="tel:+48506001057">📞 506-001-057</a><a>⏰ 24/7</a><a>📍 Warszawa</a><a>🗣️ PL/EN/RU/UA</a></div>
   </div>

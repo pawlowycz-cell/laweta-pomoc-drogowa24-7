@@ -985,6 +985,83 @@ function patchHtmlSeoForTail(html, localePathSeg, tail, raw) {
   return out;
 }
 
+/** Blog posts: strip shared Google reviews + inject topic links (unique content ratio). */
+const BLOG_RELATED_POSTS = {
+  b1: ['b5', 'b2', 'b3'],
+  b2: ['b8', 'b1', 'b6'],
+  b3: ['b6', 'b2', 'b1'],
+  b4: ['b9', 'b3', 'b6'],
+  b5: ['b1', 'b2', 'b3'],
+  b6: ['b3', 'b2', 'b1'],
+  b7: ['b5', 'b1', 'b2'],
+  b8: ['b2', 'b6', 'b3'],
+  b9: ['b10', 'b7', 'b4'],
+  b10: ['b9', 'b7', 'b3'],
+};
+const BLOG_RELATED_SVCS = {
+  b1: ['svc3', 'svc2', 'svc1'],
+  b2: ['svc1', 'svc6'],
+  b3: ['svc6', 'svc1'],
+  b4: ['svc9', 'svc6'],
+  b5: ['svc2', 'svc3'],
+  b6: ['svc1', 'svc6'],
+  b7: ['svc5', 'svc1'],
+  b8: ['svc1', 'svc6'],
+  b9: ['svc8', 'svc7'],
+  b10: ['svc7', 'svc8'],
+};
+
+function buildBlogSeoExtrasHtml(pid, langCl, seg, extract) {
+  const posts = BLOG_RELATED_POSTS[pid] || [];
+  const svcs = BLOG_RELATED_SVCS[pid] || ['svc1', 'svc6'];
+  const svcTitle = extract(langCl, 'blog_related_svc') || 'Related services';
+  const postTitle = extract(langCl, 'blog_related') || 'Related articles';
+  let html = '';
+  if (svcs.length) {
+    html += `<h3>${escHtmlAttr(svcTitle)}</h3><ul>`;
+    for (const sid of svcs) {
+      const label = extract(langCl, `${sid}_t`) || sid;
+      html += `<li><a href="/${seg}/${sid}/">${escHtmlAttr(label)}</a></li>`;
+    }
+    html += '</ul>';
+  }
+  if (posts.length) {
+    html += `<h3>${escHtmlAttr(postTitle)}</h3><ul>`;
+    for (const bp of posts) {
+      const label = extract(langCl, `${bp}_t`) || bp;
+      html += `<li><a href="/${seg}/blog/${bp}/">${escHtmlAttr(label)}</a></li>`;
+    }
+    html += '</ul>';
+  }
+  return html;
+}
+
+function slimBlogPostBoilerplate(html, keepId, langCl, seg, extract) {
+  const m = /^blog-post-(b\d+)$/.exec(keepId);
+  if (!m) return html;
+  const pid = m[1];
+  // Remove identical Google reviews block (crawlable noise on every post).
+  html = html.replace(
+    /<!-- Google Reviews:[\s\S]*?<\/section>\s*(?=<\/main>)/,
+    ''
+  );
+  // Mark body for CSS that hides footer USŁUGI column.
+  html = html.replace(/<body\b([^>]*)>/i, (full, attrs) => {
+    if (/\bclass\s*=/.test(attrs)) {
+      return `<body${attrs.replace(/class\s*=\s*"([^"]*)"/i, 'class="$1 blog-post-view"')}>`;
+    }
+    return `<body class="blog-post-view"${attrs}>`;
+  });
+  const extras = buildBlogSeoExtrasHtml(pid, langCl, seg, extract);
+  const re = new RegExp(
+    `(<div id="blog-seo-${pid}" class="blog-seo-extras">)([\\s\\S]*?)(</div>)`
+  );
+  if (re.test(html)) {
+    html = html.replace(re, `$1${extras}$3`);
+  }
+  return html;
+}
+
 function writeDeepRouteHtmlCopies(raw) {
   const blogSlugs = discoverBlogPostSlugs(raw);
   const svcIds = discoverSvcPageIds(raw);
@@ -1042,6 +1119,9 @@ function writeDeepRouteHtmlCopies(raw) {
       const extract = (lc, field) => extractTranslationField(raw, lc, field);
       if (!(keepId && String(keepId).startsWith('blog-post-'))) {
         html = stripArticleJsonLd(html);
+      }
+      if (keepId && String(keepId).startsWith('blog-post-')) {
+        html = slimBlogPostBoilerplate(html, keepId, langCl, seg, extract);
       }
       if (keepId && /^svc\d+$/.test(keepId)) {
         html = injectSvcPageJsonLd(html, extract, langCl, seg, keepId);
