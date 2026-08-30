@@ -1,7 +1,7 @@
 {
   "name": "innser-warszawa-laweta",
   "private": true,
-  "version": "1.0.111",
+  "version": "1.0.112",
   "scripts": {
     "build": "node ../../scripts/build-i18n.mjs"
   },
