@@ -1114,7 +1114,7 @@ function replaceGoogleReviewsListHtml(html, reviews) {
 }
 
 function bakeGoogleReviewsForPage(html, langCl, pageId, tail) {
-  if (!pageId || pageId === 'blog' || String(pageId).startsWith('blog-post-')) {
+  if (!pageId || pageId === 'blog' || pageId === 'gallery' || String(pageId).startsWith('blog-post-')) {
     return html;
   }
   const trimmed = String(tail || '').replace(/^\/+|\/+$/g, '');

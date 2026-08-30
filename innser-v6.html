@@ -4980,9 +4980,10 @@ function SP(p,opts){
   }
   updateCanonicalAndHreflang(p);
   var isBlogPost=String(p).indexOf('blog-post-')===0;
-  var hideGoogleReviews=p==='blog'||isBlogPost;
+  var hideGoogleReviews=p==='blog'||isBlogPost||p==='gallery';
   document.body.classList.toggle('blog-post-view', isBlogPost);
-  document.body.classList.toggle('blog-view', hideGoogleReviews);
+  document.body.classList.toggle('blog-view', p==='blog'||isBlogPost);
+  document.body.classList.toggle('gallery-view', p==='gallery');
   var gr=document.getElementById('google-reviews-global');
   if(gr) gr.hidden = hideGoogleReviews;
   if(typeof renderGoogleReviews==='function') renderGoogleReviews();
