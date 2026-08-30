@@ -45,6 +45,7 @@ import {
 import {
   getSvcReviews,
   getHomeReviews,
+  getPartnersReviews,
   reviewsHtmlList,
 } from './svc-google-reviews.mjs';
 import {
@@ -1127,6 +1128,8 @@ function bakeGoogleReviewsForPage(html, langCl, pageId, tail) {
     reviews = geoReviewsForRoadSlug(langCl, roadM[1]);
   } else if (/^svc\d+$/.test(pageId)) {
     reviews = getSvcReviews(langCl, pageId);
+  } else if (pageId === 'partners') {
+    reviews = getPartnersReviews(langCl);
   } else {
     reviews = getHomeReviews(langCl);
   }
@@ -1194,6 +1197,10 @@ function writeDeepRouteHtmlCopies(raw) {
       }
       if (keepId === 'blog' || (keepId && String(keepId).startsWith('blog-post-'))) {
         html = slimBlogPostBoilerplate(html, keepId, langCl, seg, extract);
+      }
+      if (keepId === 'gallery') {
+        html = stripGoogleReviewsSection(html);
+        html = addBodyClass(html, 'gallery-view');
       }
       if (keepId && /^svc\d+$/.test(keepId)) {
         html = injectSvcPageJsonLd(html, extract, langCl, seg, keepId);

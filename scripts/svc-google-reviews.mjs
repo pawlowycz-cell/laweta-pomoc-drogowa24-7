@@ -234,6 +234,42 @@ export const GOOGLE_REVIEWS_HOME = {
   ],
 };
 
+/** B2B partnership reviews (warsztaty, taksówki, parkingi) for /partners/ */
+export const GOOGLE_REVIEWS_PARTNERS = {
+  pl: [
+    { name: 'Tomasz W.', stars: 5, text: 'Prowadzę Auto Serwis. Z INNSER współpracujemy już 3 lata — laweta zawsze na czas, auta dojeżdżają do warsztatu bez uszkodzeń. Nocą i w dzień biorą telefon. Super partner.' },
+    { name: 'Igor M.', stars: 5, text: 'Taksoflota — awarie u kierowców prawie codziennie. INNSER zawsze w kontakcie, dojazd szybki, stawki partnerskie jasne. Współpraca od lat, wszystko OK.' },
+    { name: 'Katarzyna L.', stars: 5, text: 'Parking podziemny w biurowcu. Klient nie wyjechał — INNSER przyjechał, ostrożnie wyciągnął. Współpracujemy spokojnie, zawsze można się dogadać wieczorem i w nocy.' },
+    { name: 'Paweł R.', stars: 5, text: 'Wulkanizacja 24h. Jak ktoś nie ma zapasu — dzwonię po lawetę INNSER. Przywożą auto do nas, punktualnie, bez dramatu. Współpraca rewelacyjna.' },
+    { name: 'Serhiy K.', stars: 5, text: 'Auto Komis: dowóz i odbiór aut od klientów. INNSER ogarnia transport między placami. Trzy lata współpracy — zawsze na czasie, zawsze na łączności. Polecam.' },
+    { name: 'Anna D.', stars: 5, text: 'Flota firmowa. Gdy auto staje, INNSER odbiera i wiezie do naszego serwisu. Dyspozytor spokojny, faktury w porządku. Współpracujemy i jest OK — dzień i noc.' },
+  ],
+  en: [
+    { name: 'Tomasz W.', stars: 5, text: 'I run a garage. We’ve worked with INNSER for 3 years — flatbed always on time, cars arrive undamaged. They pick up day and night. Great partner.' },
+    { name: 'Igor M.', stars: 5, text: 'Taxi fleet — drivers break down almost daily. INNSER stays reachable, arrives fast, partner rates are clear. Years of cooperation, all good.' },
+    { name: 'Katarzyna L.', stars: 5, text: 'Underground office parking. Car wouldn’t leave — INNSER came and pulled it out carefully. Easy to work with, evenings and nights included.' },
+    { name: 'Paweł R.', stars: 5, text: '24h tyre shop. No spare? I call INNSER. They bring the car to us on time, no drama. Excellent partnership.' },
+    { name: 'Serhiy K.', stars: 5, text: 'Car dealership lot: pickup and delivery for clients. INNSER handles moves between yards. Three years — always on time, always reachable. Recommend.' },
+    { name: 'Anna D.', stars: 5, text: 'Company fleet. When a car stops, INNSER picks it up and brings it to our workshop. Calm dispatcher, clean invoices. Day and night — all fine.' },
+  ],
+  ru: [
+    { name: 'Томаш В.', stars: 5, text: 'Держу автосервис. С INNSER сотрудничаем уже 3 года — лавета всегда вовремя, машины приезжают без повреждений. Берут трубку и ночью, и днём. Супер партнёр.' },
+    { name: 'Игорь М.', stars: 5, text: 'Таксопарк — поломки у водителей почти каждый день. INNSER всегда на связи, приезд быстрый, партнёрские цены понятные. Сотрудничаем давно, всё ок.' },
+    { name: 'Катажина Л.', stars: 5, text: 'Подземный паркинг в бизнес-центре. Клиент не выехал — INNSER приехал, аккуратно вытащил. Сотрудничаем спокойно, можно договориться вечером и ночью.' },
+    { name: 'Павел Р.', stars: 5, text: 'Вулканизация 24/7. Нет запаски — звоню за лаветой INNSER. Привозят авто к нам вовремя, без нервов. Сотрудничество отличное.' },
+    { name: 'Сергей К.', stars: 5, text: 'Автокомисс: привоз и забор машин у клиентов. INNSER возит между площадками. Уже три года — всегда вовремя, всегда на связи. Рекомендую.' },
+    { name: 'Анна Д.', stars: 5, text: 'Корпоративный автопарк. Машина встала — INNSER забирает и везёт в наш сервис. Диспетчер спокойный, документы в порядке. Сотрудничаем — днём и ночью всё супер.' },
+  ],
+  ua: [
+    { name: 'Томаш В.', stars: 5, text: 'Тримаю автосервіс. З INNSER співпрацюємо вже 3 роки — лафета завжди вчасно, авто приїжджають без пошкоджень. Беруть трубку і вночі, і вдень. Супер партнер.' },
+    { name: 'Ігор М.', stars: 5, text: 'Таксопарк — поломки у водіїв майже щодня. INNSER завжди на зв’язку, приїзд швидкий, партнерські ціни зрозумілі. Співпрацюємо давно, все ок.' },
+    { name: 'Катажина Л.', stars: 5, text: 'Підземний паркінг у бізнес-центрі. Клієнт не виїхав — INNSER приїхав, обережно витягнув. Співпрацюємо спокійно, можна домовитись увечері й уночі.' },
+    { name: 'Павло Р.', stars: 5, text: 'Вулканізація 24/7. Немає запаски — дзвоню по лафету INNSER. Привозять авто до нас вчасно, без нервів. Співпраця чудова.' },
+    { name: 'Сергій К.', stars: 5, text: 'Автокоміс: привіз і забір авто у клієнтів. INNSER возить між майданчиками. Вже три роки — завжди вчасно, завжди на зв’язку. Рекомендую.' },
+    { name: 'Анна Д.', stars: 5, text: 'Корпоративний автопарк. Авто стало — INNSER забирає й везе в наш сервіс. Диспетчер спокійний, документи в порядку. Співпрацюємо — вдень і вночі все супер.' },
+  ],
+};
+
 export function reviewsHtmlList(reviews) {
   return (reviews || [])
     .map((r) => {
@@ -265,4 +301,8 @@ export function getSvcReviews(langCl, svcId) {
 
 export function getHomeReviews(langCl) {
   return GOOGLE_REVIEWS_HOME[langCl] || GOOGLE_REVIEWS_HOME.pl;
+}
+
+export function getPartnersReviews(langCl) {
+  return GOOGLE_REVIEWS_PARTNERS[langCl] || GOOGLE_REVIEWS_PARTNERS.pl;
 }
