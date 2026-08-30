@@ -4985,9 +4985,12 @@ function SP(p,opts){
     if(replaceHistory&&p==='home') __innserHistCount=0;
   }
   updateCanonicalAndHreflang(p);
-  document.body.classList.toggle('blog-post-view', String(p).indexOf('blog-post-')===0);
+  var isBlogPost=String(p).indexOf('blog-post-')===0;
+  var hideGoogleReviews=p==='blog'||isBlogPost;
+  document.body.classList.toggle('blog-post-view', isBlogPost);
+  document.body.classList.toggle('blog-view', hideGoogleReviews);
   var gr=document.getElementById('google-reviews-global');
-  if(gr) gr.hidden = String(p).indexOf('blog-post-')===0;
+  if(gr) gr.hidden = hideGoogleReviews;
 }
 
 var imgs = ["/assets/gallery/jpg-62e60b37e1a4.jpg","/assets/gallery/svc2-odpalanie-na-kable-warszawa-innser.jpg","/assets/gallery/svc3-odpalanie-z-boostera-warszawa-innser.jpg","/assets/gallery/svc4-wymiana-kola-warszawa-innser.jpg","/assets/gallery/jpg-9f81b1ef5248.jpg"];
@@ -5425,6 +5428,7 @@ document.addEventListener('click', function(e){
 .blog-seo-extras li{margin:0 0 8px;}
 .blog-seo-extras a{color:var(--gl);text-decoration:none;font-size:.92rem;line-height:1.5;border-bottom:1px solid rgba(255,209,0,.25);}
 .blog-seo-extras a:hover{color:var(--y);}
+body.blog-view #google-reviews-global,
 body.blog-post-view #google-reviews-global{display:none!important;}
 body.blog-post-view .foot-col-svc{display:none!important;}
 @media(max-width:768px){

@@ -1036,22 +1036,36 @@ function buildBlogSeoExtrasHtml(pid, langCl, seg, extract) {
   return html;
 }
 
-function slimBlogPostBoilerplate(html, keepId, langCl, seg, extract) {
-  const m = /^blog-post-(b\d+)$/.exec(keepId);
-  if (!m) return html;
-  const pid = m[1];
-  // Remove identical Google reviews block (crawlable noise on every post).
-  html = html.replace(
+function addBodyClass(html, className) {
+  return html.replace(/<body\b([^>]*)>/i, (full, attrs) => {
+    if (new RegExp(`\\b${className}\\b`).test(attrs)) return full;
+    if (/\bclass\s*=/.test(attrs)) {
+      return `<body${attrs.replace(/class\s*=\s*"([^"]*)"/i, `class="$1 ${className}"`)}>`;
+    }
+    return `<body class="${className}"${attrs}>`;
+  });
+}
+
+function stripGoogleReviewsSection(html) {
+  return html.replace(
     /<!-- Google Reviews:[\s\S]*?<\/section>\s*(?=<\/main>)/,
     ''
   );
-  // Mark body for CSS that hides footer USŁUGI column.
-  html = html.replace(/<body\b([^>]*)>/i, (full, attrs) => {
-    if (/\bclass\s*=/.test(attrs)) {
-      return `<body${attrs.replace(/class\s*=\s*"([^"]*)"/i, 'class="$1 blog-post-view"')}>`;
-    }
-    return `<body class="blog-post-view"${attrs}>`;
-  });
+}
+
+function slimBlogPostBoilerplate(html, keepId, langCl, seg, extract) {
+  // Blog index + posts: no shared Google reviews block.
+  if (keepId === 'blog') {
+    html = stripGoogleReviewsSection(html);
+    return addBodyClass(html, 'blog-view');
+  }
+  const m = /^blog-post-(b\d+)$/.exec(keepId);
+  if (!m) return html;
+  const pid = m[1];
+  html = stripGoogleReviewsSection(html);
+  // Post pages: hide footer USŁUGI column + inject topic links.
+  html = addBodyClass(html, 'blog-view');
+  html = addBodyClass(html, 'blog-post-view');
   const extras = buildBlogSeoExtrasHtml(pid, langCl, seg, extract);
   const re = new RegExp(
     `(<div id="blog-seo-${pid}" class="blog-seo-extras">)([\\s\\S]*?)(</div>)`
@@ -1120,7 +1134,7 @@ function writeDeepRouteHtmlCopies(raw) {
       if (!(keepId && String(keepId).startsWith('blog-post-'))) {
         html = stripArticleJsonLd(html);
       }
-      if (keepId && String(keepId).startsWith('blog-post-')) {
+      if (keepId === 'blog' || (keepId && String(keepId).startsWith('blog-post-'))) {
         html = slimBlogPostBoilerplate(html, keepId, langCl, seg, extract);
       }
       if (keepId && /^svc\d+$/.test(keepId)) {
