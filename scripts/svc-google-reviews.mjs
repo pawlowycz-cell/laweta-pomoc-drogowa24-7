@@ -274,7 +274,7 @@ export const GOOGLE_REVIEWS_PARTNERS = {
 export const GOOGLE_REVIEWS_CONTACT = {
   pl: [
     { name: 'Natalia S.', stars: 5, text: 'Pisałam na WhatsApp o 2 w nocy — odpisali od razu, ustalili dojazd. Można pisać WhatsApp, Telegram, Viber, SMS albo mail. Super kontakt.' },
-    { name: 'Oleg V.', stars: 5, text: 'Dzwoniłem o 2 w nocy — wzięli telefon. Potem dopisałem lokalizację na Telegramie. INNSER zawsze na łączności. Polecam.' },
+    { name: 'Oleg V.', stars: 5, text: 'Dzwoniłem o 4 w nocy — wzięli telefon. Potem dopisałem lokalizację na Telegramie. INNSER zawsze na łączności. Polecam.' },
     { name: 'Helen M.', stars: 5, text: 'Nie lubię dzwonić — napisałam na Viber i mail. Odpowiedź szybka, cena jasna. WhatsApp, Telegram, SMS — wszystko działa. Super.' },
     { name: 'Damian K.', stars: 5, text: 'Awaria: napisałem SMS i WhatsApp. Odpowiedzieli w kilka minut, laweta przyjechała. Dobrze, że można pisać i dzwonić — zawsze na łączności.' },
     { name: 'Yulia R.', stars: 5, text: 'Napisałam na Telegram — dyspozytor od razu. Potem potwierdzili SMS-em. INNSER: WhatsApp, Telegram, Viber, mail — wszystko działa.' },
@@ -282,7 +282,7 @@ export const GOOGLE_REVIEWS_CONTACT = {
   ],
   en: [
     { name: 'Natalia S.', stars: 5, text: 'Messaged on WhatsApp at 2 a.m. — they replied straight away and set the ETA. WhatsApp, Telegram, Viber, SMS or e-mail. Great contact.' },
-    { name: 'Oleg V.', stars: 5, text: 'Called at 2 a.m. — they picked up. Then I sent the pin on Telegram. INNSER always reachable. Recommend.' },
+    { name: 'Oleg V.', stars: 5, text: 'Called at 4 a.m. — they picked up. Then I sent the pin on Telegram. INNSER always reachable. Recommend.' },
     { name: 'Helen M.', stars: 5, text: 'Prefer not to call — wrote on Viber and e-mail. Fast reply, clear price. WhatsApp, Telegram, SMS — all work. Great.' },
     { name: 'Damian K.', stars: 5, text: 'Breakdown: SMS and WhatsApp. Reply in minutes, flatbed came. Good that you can write or call — always in touch.' },
     { name: 'Yulia R.', stars: 5, text: 'Wrote on Telegram — dispatcher answered at once. Confirmed by SMS. INNSER: WhatsApp, Telegram, Viber, e-mail — all work.' },
@@ -290,7 +290,7 @@ export const GOOGLE_REVIEWS_CONTACT = {
   ],
   ru: [
     { name: 'Наталия С.', stars: 5, text: 'Писала в WhatsApp в 2 ночи — сразу ответили и согласовали приезд. Можно писать WhatsApp, Telegram, Viber, SMS или на e-mail. Супер контакт.' },
-    { name: 'Олег В.', stars: 5, text: 'Звонил в 2 ночи — взяли трубку. Потом скинул геолокацию в Telegram. INNSER всегда на связи. Рекомендую.' },
+    { name: 'Олег В.', stars: 5, text: 'Звонил в 4 ночи — взяли трубку. Потом скинул геолокацию в Telegram. INNSER всегда на связи. Рекомендую.' },
     { name: 'Хелен М.', stars: 5, text: 'Не люблю звонить — написала в Viber и на почту. Ответ быстрый, цена понятная. WhatsApp, Telegram, SMS — всё работает. Супер.' },
     { name: 'Дамиан К.', stars: 5, text: 'Поломка: написал SMS и WhatsApp. Ответили за пару минут, лавета приехала. Хорошо, что можно писать и звонить — всегда на связи.' },
     { name: 'Юлия Р.', stars: 5, text: 'Написала в Telegram — диспетчер сразу. Потом подтвердили SMS. INNSER: WhatsApp, Telegram, Viber, mail — всё работает.' },
@@ -298,7 +298,7 @@ export const GOOGLE_REVIEWS_CONTACT = {
   ],
   ua: [
     { name: 'Наталія С.', stars: 5, text: 'Писала у WhatsApp о 2-й ночі — одразу відповіли й узгодили приїзд. Можна писати WhatsApp, Telegram, Viber, SMS або на e-mail. Супер контакт.' },
-    { name: 'Олег В.', stars: 5, text: 'Дзвонив о 2-й ночі — взяли трубку. Потім скинув геолокацію в Telegram. INNSER завжди на зв’язку. Рекомендую.' },
+    { name: 'Олег В.', stars: 5, text: 'Дзвонив о 4-й ночі — взяли трубку. Потім скинув геолокацію в Telegram. INNSER завжди на зв’язку. Рекомендую.' },
     { name: 'Хелен М.', stars: 5, text: 'Не люблю дзвонити — написала у Viber і на пошту. Відповідь швидка, ціна зрозуміла. WhatsApp, Telegram, SMS — усе працює. Супер.' },
     { name: 'Даміан К.', stars: 5, text: 'Поломка: написав SMS і WhatsApp. Відповіли за пару хвилин, лафета приїхала. Добре, що можна писати й дзвонити — завжди на зв’язку.' },
     { name: 'Юлія Р.', stars: 5, text: 'Написала в Telegram — диспетчер одразу. Потім підтвердили SMS. INNSER: WhatsApp, Telegram, Viber, mail — усе працює.' },
