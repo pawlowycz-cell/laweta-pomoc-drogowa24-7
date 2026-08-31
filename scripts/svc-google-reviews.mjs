@@ -7,7 +7,7 @@ export const GOOGLE_REVIEWS_BY_SVC = {
   pl: {
     svc1: [
       { name: 'Marek W.', stars: 5, text: 'Awaria w nocy — zadzwoniłem po pomoc drogową. Dyspozytor INNSER od razu podał cenę, holownik szybko przyjechał i spokojnie odholował auto na serwis. Polecam.' },
-      { name: 'Natalia B.', stars: 5, text: 'Po stłuczce potrzebowałam ewakuatora. Dyspozytor wszystko wytłumaczył, dojazd szybki, załadunek spokojny. Dzięki INNSER za pomoc.' },
+      { name: 'Natalia B.', stars: 5, text: 'Po stłuczce potrzebowałam lawety. Dyspozytor wszystko wytłumaczył, dojazd szybki, załadunek spokojny. Dzięki INNSER za pomoc.' },
       { name: 'Tomasz L.', stars: 5, text: 'Policja kazała odholować auto po kontroli. Zadzwoniłem 506-001-057 — holownik INNSER był szybko, bez stresu, wszystko załatwione.' },
     ],
     svc2: [
@@ -197,8 +197,8 @@ export const GOOGLE_REVIEWS_BY_SVC = {
 /** Home / non-svc pages: short mixed set, names not used in svc lists above. */
 export const GOOGLE_REVIEWS_HOME = {
   pl: [
-    { name: 'Michał P.', stars: 5, text: 'Awaria o 2 w nocy — laweta INNSER całodobowo. Ewakuowali auto i zawieźli na serwis. Ewakuator przyjechał szybko, cena uczciwa.' },
-    { name: 'Sarah M.', stars: 5, text: 'Potrzebowałam lawety po awarii. Ewakuator szybko na miejscu, kierowca konkretny, auto bez uszkodzeń. Polecam INNSER!' },
+    { name: 'Michał P.', stars: 5, text: 'Awaria o 2 w nocy — laweta INNSER całodobowo. Odholowali auto i zawieźli na serwis. Holownik przyjechał szybko, cena uczciwa.' },
+    { name: 'Sarah M.', stars: 5, text: 'Potrzebowałam lawety po awarii. Pomoc drogowa szybko na miejscu, kierowca konkretny, auto bez uszkodzeń. Polecam INNSER!' },
     { name: 'Артём К.', stars: 5, text: 'Auto nie odpalało — przyjechali i przykurzyli na kable. Od razu zapaliło. Szybka pomoc drogowa, dobra cena.' },
     { name: 'Magda K.', stars: 5, text: 'Samochód nie wyjechał z parkingu podziemnego. INNSER wyciągnął i dostarczył lawetą na warsztat — ostrożnie, bez rys. Dzięki!' },
     { name: 'Andriy H.', stars: 5, text: 'Sprzedałem auto — autowykup u INNSER. Wycena, odebrali lawetą, gotówka od ręki. Skup aut bez ściemy, polecam.' },
@@ -346,7 +346,7 @@ export const GOOGLE_REVIEWS_PRICES = {
 export const GOOGLE_REVIEWS_DISTRICTS = {
   pl: [
     { name: 'Agata M.', stars: 5, text: 'Laweta na Mokotowie — szybko dojechali, załadunek spokojny. Potem woziłam auto też z Ursynowa. INNSER zna dzielnice Warszawy.' },
-    { name: 'Denis P.', stars: 5, text: 'Awaria na Woli. Dyspozytor od razu, ewakuator na miejscu. Później pomogli koledze w Pruszkowie — ten sam numer, ta sama jakość.' },
+    { name: 'Denis P.', stars: 5, text: 'Awaria na Woli. Dyspozytor od razu, laweta na miejscu. Później pomogli koledze w Pruszkowie — ten sam numer, ta sama jakość.' },
     { name: 'Karolina Z.', stars: 5, text: 'Stałam na Pradze-Południe z dzieckiem. INNSER przyjechał szybko. Działają też na Bielanach i Bemowie — sprawdzone.' },
     { name: 'Viktor H.', stars: 5, text: 'Holowanie z Piaseczna do serwisu w mieście. Cena z góry, dojazd OK. Obsługują dzielnice i przedmieścia — Legionowo, Marki też.' },
     { name: 'Monika R.', stars: 5, text: 'Parking podziemny na Ochocie — wyciągnęli ostrożnie. Znajomi wzywali INNSER na Targówku i w Ząbkach. Polecam.' },
