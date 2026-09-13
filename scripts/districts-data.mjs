@@ -554,12 +554,12 @@ const COPY = {
     indexDesc: 'INNSER в районах Варшавы и пригородах (Зомбки, Марки, Отвоцк, Прушкув, Пясечно…). Выберите свой — приезд 24/7.',
     seoTitle: (n) => `${n}: помощь на дороге 24/7 | район Варшавы | INNSER`,
     seoDesc: (n) =>
-      `Помощь на дороге в районе ${n} — приезд ~30 мин, 24/7. Разговариваем на русском. Городской эвакуатор Варшава — на /ru/ и /ru/svc1/. Лавета — /ru/svc6/. INNSER: 506-001-057.`,
+      `Помощь на дороге в районе ${n} — приезд ~30 мин, 24/7. Разговариваем на русском. Городская услуга — на /ru/ и /ru/svc1/. INNSER: 506-001-057.`,
     indexSeoTitle: 'Районы Варшавы и пригороды | INNSER',
     indexSeoDesc:
-      'Районы и пригороды Варшавы — Мокотув, Воля, Прага, Урсынув. Городской эвакуатор Варшава: /ru/ и /ru/svc1/. Лавета Варшава: /ru/svc6/. INNSER 24/7.',
+      'Районы и пригороды Варшавы — Мокотув, Воля, Прага, Урсынув. Городская услуга: /ru/ и /ru/svc1/. INNSER 24/7.',
     citywideHtml: (seg) =>
-      `<p class="sd">Нужен городской <a href="/${seg}/svc1/"><strong>эвакуатор Варшава</strong></a> или смотрите <a href="/${seg}/"><strong>главную</strong></a>? Здесь — локальная помощь в районе. Платформа: <a href="/${seg}/svc6/"><strong>лавета Варшава</strong></a>.</p>`,
+      `<p class="sd">Нужен городской <a href="/${seg}/svc1/"><strong>эвакуатор Варшава</strong></a>? Смотрите <a href="/${seg}/"><strong>главную</strong></a> и страницу услуги — здесь только помощь в районе. Платформа: <a href="/${seg}/svc6/"><strong>лавета Варшава</strong></a>.</p>`,
   },
   ua: {
     h1: (n) => n,
@@ -574,12 +574,12 @@ const COPY = {
     indexDesc: 'INNSER у районах Варшави та передмістях (Зомбки, Маркі, Отвоцьк, Прушкув, Пясечно…). Оберіть свій — приїзд 24/7.',
     seoTitle: (n) => `${n}: допомога на дорозі 24/7 | район Варшави | INNSER`,
     seoDesc: (n) =>
-      `Допомога на дорозі в районі ${n} — приїзд ~30 хв, 24/7. Розмовляємо українською. Міський евакуатор Варшава — на /uk/ і /uk/svc1/. Лафета — /uk/svc6/. INNSER: 506-001-057.`,
+      `Допомога на дорозі в районі ${n} — приїзд ~30 хв, 24/7. Розмовляємо українською. Міська послуга — на /uk/ і /uk/svc1/. INNSER: 506-001-057.`,
     indexSeoTitle: 'Райони Варшави та передмістя | INNSER',
     indexSeoDesc:
-      'Райони та передмістя Варшави — Мокотув, Воля, Прага, Урсинув. Міський евакуатор Варшава: /uk/ і /uk/svc1/. Лафета Варшава: /uk/svc6/. INNSER 24/7.',
+      'Райони та передмістя Варшави — Мокотув, Воля, Прага, Урсинув. Міська послуга: /uk/ і /uk/svc1/. INNSER 24/7.',
     citywideHtml: (seg) =>
-      `<p class="sd">Потрібен міський <a href="/${seg}/svc1/"><strong>евакуатор Варшава</strong></a> або <a href="/${seg}/"><strong>головна</strong></a>? Тут — локальна допомога в районі. Платформа: <a href="/${seg}/svc6/"><strong>лафета Варшава</strong></a>.</p>`,
+      `<p class="sd">Потрібен міський <a href="/${seg}/svc1/"><strong>евакуатор Варшава</strong></a>? Дивіться <a href="/${seg}/"><strong>головну</strong></a> і сторінку послуги — тут лише допомога в районі. Платформа: <a href="/${seg}/svc6/"><strong>лафета Варшава</strong></a>.</p>`,
   },
 };
 
@@ -603,7 +603,7 @@ const SVC_LABELS = {
     'Price calculator',
   ],
   ru: [
-    'Эвакуатор Варшава',
+    'Эвакуатор Варшава (вся услуга)',
     'Лавета Варшава',
     'Прикур',
     'Замена колеса',
@@ -612,7 +612,7 @@ const SVC_LABELS = {
     'Цены',
   ],
   ua: [
-    'Евакуатор Варшава',
+    'Евакуатор Варшава (вся послуга)',
     'Лафета Варшава',
     'Прикур',
     'Заміна колеса',
@@ -628,17 +628,7 @@ export function getDistrictSeoMeta(lang, slug) {
   const c = COPY[lang] || COPY.pl;
   const n = districtName(slug, lang);
   const kind = d.kind || 'district';
-  const kwByLang = {
-    pl: `pomoc drogowa ${n}, laweta ${n}, holowanie ${n}, dzielnica warszawa, INNSER`,
-    en: `roadside assistance ${n}, tow truck ${n}, Warsaw district, INNSER`,
-    ru: `помощь на дороге ${n}, район ${n} варшава, прикур ${n}, INNSER`,
-    ua: `допомога на дорозі ${n}, район ${n} варшава, прикур ${n}, INNSER`,
-  };
-  return {
-    title: c.seoTitle(n, kind),
-    desc: c.seoDesc(n, kind),
-    kw: kwByLang[lang] || kwByLang.pl,
-  };
+  return { title: c.seoTitle(n, kind), desc: c.seoDesc(n, kind) };
 }
 
 export function getDistrictsIndexSeoMeta(lang) {

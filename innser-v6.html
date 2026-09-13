@@ -4162,8 +4162,8 @@ function districtSvcLabels(lang){
   var m={
     pl:['Pomoc drogowa 24h','Holowanie / laweta','Odpalanie na kable','Wymiana koła','Otwieranie aut','Parking podziemny / rów','Cennik lawety'],
     en:['Roadside assistance 24/7','Towing / flatbed','Jump start','Tyre change','Car lockout','Underground parking / ditch','Price calculator'],
-    ru:['Эвакуатор Варшава','Лавета Варшава','Прикур','Замена колеса','Открытие авто','Подземный паркинг / кювет','Цены'],
-    ua:['Евакуатор Варшава','Лафета Варшава','Прикур','Заміна колеса','Відкриття авто','Підземний паркінг / кювет','Ціни']
+    ru:['Эвакуатор Варшава (вся услуга)','Лавета Варшава','Прикур','Замена колеса','Открытие авто','Подземный паркинг / кювет','Цены'],
+    ua:['Евакуатор Варшава (вся послуга)','Лафета Варшава','Прикур','Заміна колеса','Відкриття авто','Підземний паркінг / кювет','Ціни']
   };
   return m[lang]||m.pl;
 }
@@ -4200,10 +4200,10 @@ function districtCopy(lang){
     svc:'Наши услуги в Варшаве',near:function(n){return 'Также обслуживаем соседние районы и пригороды рядом с '+n+':';},
     link:function(n){return n;},
     seoT:function(n){return n+': помощь на дороге 24/7 | район Варшавы | INNSER';},
-    seoD:function(n){return 'Помощь на дороге в районе '+n+' — приезд ~30 мин, 24/7. Разговариваем на русском. Городской эвакуатор Варшава — на /ru/ и /ru/svc1/. Лавета — /ru/svc6/. INNSER: 506-001-057.';},
+    seoD:function(n){return 'Помощь на дороге в районе '+n+' — приезд ~30 мин, 24/7. Разговариваем на русском. Городская услуга — на /ru/ и /ru/svc1/. INNSER: 506-001-057.';},
     idxT:'Районы Варшавы и пригороды',idxD:'INNSER в районах Варшавы и пригородах (Зомбки, Марки, Отвоцк, Прушкув, Пясечно…). Выберите свой — приезд 24/7.',
-    idxSeoT:'Районы Варшавы и пригороды | INNSER',idxSeoD:'Районы и пригороды Варшавы — Мокотув, Воля, Прага, Урсынув. Городской эвакуатор Варшава: /ru/ и /ru/svc1/. Лавета Варшава: /ru/svc6/. INNSER 24/7.',
-    citywide:function(seg){return '<p class="sd">Нужен городской <a href="/'+(seg||'ru')+'/svc1/" data-p="svc1" onclick="SP(\'svc1\');return false;"><strong class="xb">эвакуатор Варшава</strong></a> или смотрите <a href="/'+(seg||'ru')+'/" data-p="home" onclick="SP(\'home\');return false;"><strong class="xb">главную</strong></a>? Здесь — локальная помощь в районе. Платформа: <a href="/'+(seg||'ru')+'/svc6/" data-p="svc6" onclick="SP(\'svc6\');return false;"><strong class="xb">лавета Варшава</strong></a>.</p>';},
+    idxSeoT:'Районы Варшавы и пригороды | INNSER',idxSeoD:'Районы и пригороды Варшавы — Мокотув, Воля, Прага, Урсынув. Городская услуга: /ru/ и /ru/svc1/. INNSER 24/7.',
+    citywide:function(seg){return '<p class="sd">Нужен городской <a href="/'+(seg||'ru')+'/svc1/" data-p="svc1" onclick="SP(\'svc1\');return false;"><strong class="xb">эвакуатор Варшава</strong></a>? Смотрите <a href="/'+(seg||'ru')+'/" data-p="home" onclick="SP(\'home\');return false;"><strong class="xb">главную</strong></a> — здесь только помощь в районе. Платформа: <a href="/'+(seg||'ru')+'/svc6/" data-p="svc6" onclick="SP(\'svc6\');return false;"><strong class="xb">лавета Варшава</strong></a>.</p>';},
     idxDist:'Районы Варшавы',idxSub:'Пригороды',idxRoads:'Трассы'
   };
   var ua={
@@ -4213,10 +4213,10 @@ function districtCopy(lang){
     svc:'Наші послуги у Варшаві',near:function(n){return 'Також обслуговуємо сусідні райони та передмістя біля '+n+':';},
     link:function(n){return n;},
     seoT:function(n){return n+': допомога на дорозі 24/7 | район Варшави | INNSER';},
-    seoD:function(n){return 'Допомога на дорозі в районі '+n+' — приїзд ~30 хв, 24/7. Розмовляємо українською. Міський евакуатор Варшава — на /uk/ і /uk/svc1/. Лафета — /uk/svc6/. INNSER: 506-001-057.';},
+    seoD:function(n){return 'Допомога на дорозі в районі '+n+' — приїзд ~30 хв, 24/7. Розмовляємо українською. Міська послуга — на /uk/ і /uk/svc1/. INNSER: 506-001-057.';},
     idxT:'Райони Варшави та передмістя',idxD:'INNSER у районах Варшави та передмістях (Зомбки, Маркі, Отвоцьк, Прушкув, Пясечно…). Оберіть свій — приїзд 24/7.',
-    idxSeoT:'Райони Варшави та передмістя | INNSER',idxSeoD:'Райони та передмістя Варшави — Мокотув, Воля, Прага, Урсинув. Міський евакуатор Варшава: /uk/ і /uk/svc1/. Лафета Варшава: /uk/svc6/. INNSER 24/7.',
-    citywide:function(seg){return '<p class="sd">Потрібен міський <a href="/'+(seg||'uk')+'/svc1/" data-p="svc1" onclick="SP(\'svc1\');return false;"><strong class="xb">евакуатор Варшава</strong></a> або <a href="/'+(seg||'uk')+'/" data-p="home" onclick="SP(\'home\');return false;"><strong class="xb">головна</strong></a>? Тут — локальна допомога в районі. Платформа: <a href="/'+(seg||'uk')+'/svc6/" data-p="svc6" onclick="SP(\'svc6\');return false;"><strong class="xb">лафета Варшава</strong></a>.</p>';},
+    idxSeoT:'Райони Варшави та передмістя | INNSER',idxSeoD:'Райони та передмістя Варшави — Мокотув, Воля, Прага, Урсинув. Міська послуга: /uk/ і /uk/svc1/. INNSER 24/7.',
+    citywide:function(seg){return '<p class="sd">Потрібен міський <a href="/'+(seg||'uk')+'/svc1/" data-p="svc1" onclick="SP(\'svc1\');return false;"><strong class="xb">евакуатор Варшава</strong></a>? Дивіться <a href="/'+(seg||'uk')+'/" data-p="home" onclick="SP(\'home\');return false;"><strong class="xb">головну</strong></a> — тут лише допомога в районі. Платформа: <a href="/'+(seg||'uk')+'/svc6/" data-p="svc6" onclick="SP(\'svc6\');return false;"><strong class="xb">лафета Варшава</strong></a>.</p>';},
     idxDist:'Райони Варшави',idxSub:'Передмістя',idxRoads:'Траси'
   };
   return ({pl:pl,en:en,ru:ru,ua:ua})[lang]||pl;
