@@ -623,12 +623,34 @@ function seoMetaForTail(raw, localePathSeg, tail) {
 
   if (trimmed === 'dzielnice') {
     const meta = getDistrictsIndexSeoMeta(langCl);
-    return { title: seoPageTitle(meta.title), desc: truncSeoDesc(meta.desc), kw: null };
+    return {
+      title: seoPageTitle(meta.title),
+      desc: truncSeoDesc(meta.desc),
+      kw:
+        langCl === 'ru'
+          ? 'районы варшавы, помощь на дороге район, пригороды варшава, INNSER'
+          : langCl === 'ua'
+            ? 'райони варшави, допомога на дорозі район, передмістя варшава, INNSER'
+            : langCl === 'en'
+              ? 'warsaw districts, roadside assistance district, suburbs warsaw, INNSER'
+              : 'dzielnice warszawa, pomoc drogowa dzielnica, okolice warszawy, INNSER',
+    };
   }
 
   if (trimmed === 'trasy') {
     const meta = getRoadsIndexSeoMeta(langCl);
-    return { title: seoPageTitle(meta.title), desc: truncSeoDesc(meta.desc), kw: null };
+    return {
+      title: seoPageTitle(meta.title),
+      desc: truncSeoDesc(meta.desc),
+      kw:
+        langCl === 'ru'
+          ? 'трассы варшава, помощь на трассе, A2 S7 S8, INNSER'
+          : langCl === 'ua'
+            ? 'траси варшава, допомога на трасі, A2 S7 S8, INNSER'
+            : langCl === 'en'
+              ? 'warsaw highways, roadside assistance motorway, A2 S7 S8, INNSER'
+              : 'trasy warszawa, pomoc drogowa autostrada, A2 S7 S8, INNSER',
+    };
   }
 
   if (trimmed === PRIVACY_PAGE_TAIL) {
@@ -642,14 +664,22 @@ function seoMetaForTail(raw, localePathSeg, tail) {
   if (distM) {
     const meta = getDistrictSeoMeta(langCl, distM[1]);
     if (!meta) return null;
-    return { title: seoPageTitle(meta.title), desc: truncSeoDesc(meta.desc), kw: null };
+    return {
+      title: seoPageTitle(meta.title),
+      desc: truncSeoDesc(meta.desc),
+      kw: meta.kw || null,
+    };
   }
 
   const roadM = /^trasy\/([a-z0-9-]+)$/.exec(trimmed);
   if (roadM) {
     const meta = getRoadSeoMeta(langCl, roadM[1]);
     if (!meta) return null;
-    return { title: seoPageTitle(meta.title), desc: truncSeoDesc(meta.desc), kw: null };
+    return {
+      title: seoPageTitle(meta.title),
+      desc: truncSeoDesc(meta.desc),
+      kw: meta.kw || null,
+    };
   }
 
   return null;

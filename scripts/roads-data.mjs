@@ -254,22 +254,22 @@ const SVC_LABELS = {
     'Price calculator',
   ],
   ru: [
-    'Помощь на дороге 24/7',
+    'Эвакуатор Варшава',
     'Лавета Варшава',
     'Прикур',
     'Замена колеса',
     'Открытие авто',
     'Подземный паркинг / кювет',
-    'Цены эвакуатора',
+    'Цены',
   ],
   ua: [
-    'Допомога на дорозі 24/7',
+    'Евакуатор Варшава',
     'Лафета Варшава',
     'Прикур',
     'Заміна колеса',
     'Відкриття авто',
     'Підземний паркінг / кювет',
-    'Ціни евакуатора',
+    'Ціни',
   ],
 };
 
@@ -278,7 +278,13 @@ export function getRoadSeoMeta(lang, slug) {
   if (!d) return null;
   const c = COPY[lang] || COPY.pl;
   const n = roadName(slug, lang);
-  return { title: c.seoTitle(n), desc: c.seoDesc(n) };
+  const kwByLang = {
+    pl: `pomoc drogowa ${n}, laweta ${n}, holowanie trasa, INNSER`,
+    en: `roadside assistance ${n}, tow truck ${n}, highway Warsaw, INNSER`,
+    ru: `помощь на трассе ${n}, ${n} варшава, прикур трасса, INNSER`,
+    ua: `допомога на трасі ${n}, ${n} варшава, прикур траса, INNSER`,
+  };
+  return { title: c.seoTitle(n), desc: c.seoDesc(n), kw: kwByLang[lang] || kwByLang.pl };
 }
 
 export function getRoadsIndexSeoMeta(lang) {
